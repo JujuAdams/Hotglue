@@ -22,6 +22,7 @@ function HotglueProject(_projectPath) constructor
     
     var _buffer = buffer_load(_projectPath);
     __yypText = buffer_read(_buffer, buffer_text);
+    __yypTextDirty = false;
     buffer_delete(_buffer);
     
     __yypJson = json_parse(__yypText);
@@ -36,10 +37,8 @@ function HotglueProject(_projectPath) constructor
     {
         var _folder = _yyFoldersArray[_i];
         
-        var _hotglueName = __HotglueProcessFolderPath(_folder.folderPath);
-        
         var _hotglueAsset = {
-            name: $"folder:{_hotglueName}",
+            name: $"folder:{__HotglueProcessFolderPath(_folder.folderPath)}",
             type: "folder",
             data: _folder,
         };
@@ -202,9 +201,49 @@ function HotglueProject(_projectPath) constructor
         __HotglueInsertIntoYYP(self, _newHotglueAsset);
         
         // 5. Save updated .yyp
+        SaveYYPIfDirty();
+    }
+    
+    static SaveYYPIfDirty = function()
+    {
+        if (not __yypTextDirty) return;
+        __yypTextDirty = false;
+        
         var _buffer = buffer_create(string_byte_length(__yypText), buffer_fixed, 1);
         buffer_write(_buffer, buffer_text, __yypText);
         buffer_save(_buffer, __projectPath);
         buffer_delete(_buffer);
+    }
+    
+    static EnsureFolderPath = function(_inPath, _thorough)
+    {
+        if ((_inPath == "") || (_inPath == "<root>"))
+        {
+            //The root always exists, duh
+            return;
+        }
+        
+        //Sanitize
+        var _path = string_replace_all(_inPath, "\\", "/");
+        
+        //Iterate over every stage in the path to ensure we have all the folders set up along the path
+        repeat(string_count("/", _path) + 1)
+        {
+            if (not variable_struct_exists(__quickAssetDict, $"folder:{_path}"))
+            {
+                var _hotglueAsset = {
+                    name: $"folder:{_path}",
+                    type: "folder",
+                    data: {
+                        name: filename_name(_path),
+                        folderPath: $"folders/{_path}.yy",
+                    },
+                };
+                
+                __HotglueInsertIntoYYP(self, _hotglueAsset);
+            }
+            
+            _path = filename_dir(_path);
+        }
     }
 }

@@ -28,12 +28,14 @@ function __HotglueFixYYReferences(_project, _hotglueAsset)
         var _parentPath = _json.parent.path;
         var _parentName = _json.parent.name;
         
-        var _newName = _project.__yypJson.name;
-        var _newPath = $"folders/{_project.__yypJson.name}.yy";
-        
         var _parentFolder = __HotglueProcessFolderPath(_parentPath);
-        if (not variable_struct_exists(_project.__quickAssetDict, $"folder:{_parentFolder}"))
+        if (_parentFolder == "<root>")
         {
+            //We'll always need to replace the parent folder for assets in the root
+            
+            var _newName = _project.__yypJson.name;
+            var _newPath = $"{_project.__yypJson.name}.yyp";
+            
             _string = string_replace_all(_string, $"    \"name\":\"{_parentName}\"", $"    \"name\":\"{_newName}\"");
             _string = string_replace_all(_string, $"    \"path\":\"{_parentPath}\"", $"    \"path\":\"{_newPath}\"");
             
@@ -41,6 +43,11 @@ function __HotglueFixYYReferences(_project, _hotglueAsset)
             buffer_write(_buffer, buffer_text, _string);
             buffer_save(_buffer, _absolutePath);
             buffer_delete(_buffer);
+        }
+        else
+        {
+            //Ensure the folder path exists
+            _project.EnsureFolderPath(_parentFolder);
         }
     }
     else

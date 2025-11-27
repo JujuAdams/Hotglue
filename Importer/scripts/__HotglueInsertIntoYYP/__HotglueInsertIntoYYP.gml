@@ -19,6 +19,11 @@ function __HotglueInsertIntoYYP(_project, _hotglueAsset)
         var _pos = string_pos(_substring, _yypString);
         _pos += string_length(_substring);
         
+        if (string_char_at(_yypString, _pos) == "]")
+        {
+            _yypString = string_insert("\n  ", _yypString, _pos);
+        }
+        
         if (string_char_at(_yypString, _pos) == "\r")
         {
             ++_pos;
@@ -34,7 +39,30 @@ function __HotglueInsertIntoYYP(_project, _hotglueAsset)
     }
     else if (_hotglueType == "folder")
     {
-        //TODO
+        var _substring = "  \"Folders\":[";
+        var _pos = string_pos(_substring, _yypString);
+        _pos += string_length(_substring);
+        
+        if (string_char_at(_yypString, _pos) == "]")
+        {
+            _yypString = string_insert("\n  ", _yypString, _pos);
+        }
+        
+        if (string_char_at(_yypString, _pos) == "\r")
+        {
+            ++_pos;
+        }
+        
+        if (string_char_at(_yypString, _pos) == "\n")
+        {
+            ++_pos;
+        }
+        
+        var _folderName = _hotglueAsset.data.name;
+        var _folderPath = _hotglueAsset.data.folderPath;
+        
+        var _insertString = $"    \{\"$GMFolder\":\"\",\"%Name\":\"{_folderName}\",\"folderPath\":\"{_folderPath}\",\"name\":\"{_folderName}\",\"resourceType\":\"GMFolder\",\"resourceVersion\":\"2.0\",\},\n";
+        _yypString = string_insert(_insertString, _yypString, _pos);
     }
     else if (_hotglueType == "included file")
     {
@@ -46,5 +74,7 @@ function __HotglueInsertIntoYYP(_project, _hotglueAsset)
     }
     
     _project.__yypText = _yypString;
+    _project.__yypTextDirty = true;
+    
     _project.__AddAsset(_hotglueAsset);
 }

@@ -27,6 +27,7 @@
     {"id":{"name":"object","path":"objects/object/object.yy",},},
     {"id":{"name":"roomA","path":"rooms/roomA/roomA.yy",},},
     {"id":{"name":"scriptA","path":"scripts/scriptA/scriptA.yy",},},
+    {"id":{"name":"scriptRoot","path":"scripts/scriptRoot/scriptRoot.yy",},},
     {"id":{"name":"shaderA","path":"shaders/shaderA/shaderA.yy",},},
     {"id":{"name":"soundA","path":"sounds/soundA/soundA.yy",},},
     {"id":{"name":"spriteA","path":"sprites/spriteA/spriteA.yy",},},
