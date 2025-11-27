@@ -177,6 +177,42 @@ function HotglueProject(_projectPath) constructor
         return _conflictArray;
     }
     
+    static ImportAll = function(_otherProject)
+    {
+        var _projectDirectory = filename_dir(__projectPath) + "/";
+        
+        var _assetArray = _otherProject.__quickAssetArray;
+        var _i = 0;
+        repeat(array_length(_assetArray))
+        {
+            var _sourceHotglueAsset = _assetArray[_i];
+            
+            if (GetAssetExists(_sourceHotglueAsset.name))
+            {
+                __HotglueError($"Asset \"{_sourceHotglueAsset.name}\" already exists in project \"{GetPath()}\"");
+            }
+            
+            var _newHotglueAsset = variable_clone(_sourceHotglueAsset);
+            
+            // 1. Ensure the user has Git set up
+            __HotglueAssertGit(_projectDirectory);
+            
+            // 2. Copy raw files
+            __HotglueCopyAsset(__projectPath, _otherProject.__projectPath, _sourceHotglueAsset);
+            
+            // 3. Fix folder references in the .yy
+            __HotglueFixYYReferences(self, _newHotglueAsset);
+            
+            // 4. Insert reference into .yyp
+            __HotglueInsertIntoYYP(self, _newHotglueAsset);
+            
+            ++_i;
+        }
+        
+        // 5. Save updated .yyp
+        SaveYYPIfDirty();
+    }
+    
     static ImportSingle = function(_otherProject, _assetName)
     {
         if (GetAssetExists(_assetName))
@@ -223,7 +259,7 @@ function HotglueProject(_projectPath) constructor
     
     static EnsureFolderPath = function(_inPath)
     {
-        if ((_inPath == "") || (_inPath == "<root>"))
+        if (_inPath == "")
         {
             //The root always exists, duh
             return;

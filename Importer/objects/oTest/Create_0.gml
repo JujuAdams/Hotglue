@@ -17,4 +17,4 @@ show_debug_message(json_stringify(projectA.GetConflicting(projectB), true));
 show_debug_message(json_stringify(projectA.GetConflicting(projectC), true));
 show_debug_message(json_stringify(projectB.GetConflicting(projectC), true));
 
-projectC.ImportSingle(projectB, "included file:testFolder/nestedTest.txt");
+projectC.ImportAll(projectA);

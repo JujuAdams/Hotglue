@@ -7,7 +7,7 @@ function __HotglueProcessFolderPath(_inFolderPath)
     //The root will reference a .yyp file
     if (filename_ext(_inFolderPath) == ".yyp")
     {
-        return "<root>";
+        return "";
     }
     
     //Strip off whatever trailing extension we have (usually `.yy`)

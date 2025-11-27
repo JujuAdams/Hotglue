@@ -29,7 +29,7 @@ function __HotglueFixYYReferences(_project, _hotglueAsset)
         var _parentName = _json.parent.name;
         
         var _parentFolder = __HotglueProcessFolderPath(_parentPath);
-        if (_parentFolder == "<root>")
+        if (_parentFolder == "")
         {
             //We'll always need to replace the parent folder for assets in the root
             
