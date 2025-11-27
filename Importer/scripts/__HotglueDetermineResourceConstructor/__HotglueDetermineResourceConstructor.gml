@@ -5,20 +5,20 @@
 function __HotglueDetermineResourceConstructor(_relativePath)
 {
     static _mapping = {
-        "animcurves" : __HotglueResourceUnhandled,
+        "animcurves" : __HotglueResourceAnimCurve,
         "extensions" : __HotglueResourceUnhandled,
-        "fonts"      : __HotglueResourceUnhandled,
+        "fonts"      : __HotglueResourceFont,
         "notes"      : __HotglueResourceNote,
         "objects"    : __HotglueResourceUnhandled,
-        "particles"  : __HotglueResourceUnhandled,
-        "paths"      : __HotglueResourceUnhandled,
+        "particles"  : __HotglueResourcePartSys,
+        "paths"      : __HotglueResourcePath,
         "rooms"      : __HotglueResourceUnhandled,
         "scripts"    : __HotglueResourceScript,
         "sequences"  : __HotglueResourceUnhandled,
-        "shaders"    : __HotglueResourceUnhandled,
+        "shaders"    : __HotglueResourceShader,
         "sounds"     : __HotglueResourceUnhandled,
         "sprites"    : __HotglueResourceUnhandled,
-        "tilesets"   : __HotglueResourceUnhandled,
+        "tilesets"   : __HotglueResourceTileset,
         "timelines"  : __HotglueResourceUnhandled,
     }
     
