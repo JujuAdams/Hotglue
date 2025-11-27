@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scriptB",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scriptB",
+  "parent":{
+    "name":"B",
+    "path":"B.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -19,12 +19,18 @@
   },
   "name":"A",
   "resources":[
-    {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"id":{"name":"extensionA","path":"extensions/extensionA/extensionA.yy",},},
+    {"id":{"name":"noteA","path":"notes/noteA/noteA.yy",},},
+    {"id":{"name":"roomA","path":"rooms/roomA/roomA.yy",},},
+    {"id":{"name":"scriptA","path":"scripts/scriptA/scriptA.yy",},},
+    {"id":{"name":"shaderA","path":"shaders/shaderA/shaderA.yy",},},
+    {"id":{"name":"soundA","path":"sounds/soundA/soundA.yy",},},
+    {"id":{"name":"spriteA","path":"sprites/spriteA/spriteA.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
-    {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"roomId":{"name":"roomA","path":"rooms/roomA/roomA.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
