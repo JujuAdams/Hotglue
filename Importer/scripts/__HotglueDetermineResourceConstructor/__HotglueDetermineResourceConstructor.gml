@@ -14,12 +14,12 @@ function __HotglueDetermineResourceConstructor(_relativePath)
         "paths"      : __HotglueResourcePath,
         "rooms"      : __HotglueResourceUnhandled,
         "scripts"    : __HotglueResourceScript,
-        "sequences"  : __HotglueResourceUnhandled,
+        "sequences"  : __HotglueResourceSequence,
         "shaders"    : __HotglueResourceShader,
-        "sounds"     : __HotglueResourceUnhandled,
+        "sounds"     : __HotglueResourceSound,
         "sprites"    : __HotglueResourceUnhandled,
         "tilesets"   : __HotglueResourceTileset,
-        "timelines"  : __HotglueResourceUnhandled,
+        "timelines"  : __HotglueResourceTimeline,
     }
     
     var _pos = string_pos("/", _relativePath);
