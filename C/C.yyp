@@ -21,9 +21,8 @@
   },
   "name":"C",
   "resources":[
+    {"id":{"name":"asset_get_stripped","path":"scripts/asset_get_stripped/asset_get_stripped.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
-    {"id":{"name":"scriptInGroup","path":"scripts/scriptInGroup/scriptInGroup.yy",},},
-    {"id":{"name":"scriptInRoot","path":"scripts/scriptInRoot/scriptInRoot.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
