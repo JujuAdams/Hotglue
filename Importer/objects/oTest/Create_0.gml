@@ -12,4 +12,4 @@ projectA = HotglueLoadYYMPS(global.repoRoot + "A/A.yymps");
 
 projectDestination = new HotglueProject(global.repoRoot + "C/C.yyp");
 
-projectDestination.ImportSingle(projectA, "resource:Script1");
+projectDestination.ImportAll(projectA);

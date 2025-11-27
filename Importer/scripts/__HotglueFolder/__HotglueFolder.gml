@@ -6,6 +6,7 @@ function __HotglueFolder(_folderStruct) constructor
 {
     static _system = __HotglueSystem();
     static type = "folder";
+    static implemented = true;
     
     name = $"folder:{__HotglueProcessFolderPath(_folderStruct.folderPath)}"
     data = _folderStruct;

@@ -6,16 +6,22 @@
 
 function __HotglueCopyRelativePathArray(_destinationDirectory, _sourceDirectory, _relativePathArray)
 {
-    if (GM_is_sandboxed)
-    {
-        __HotglueError("Please disable sandboxing for this platform.");
-    }
+    static _emptyBuffer = buffer_create(0, buffer_fixed, 1);
     
     var _i = 0;
     repeat(array_length(_relativePathArray))
     {
         var _relativePath = _relativePathArray[_i];
-        file_copy(_sourceDirectory + _relativePath, _destinationDirectory + _relativePath);
+        
+        if (file_exists(_sourceDirectory + _relativePath))
+        {
+            file_copy(_sourceDirectory + _relativePath, _destinationDirectory + _relativePath);
+        }
+        else
+        {
+            buffer_save(_emptyBuffer, _sourceDirectory + _relativePath);
+        }
+        
         ++_i;
     }
 }

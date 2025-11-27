@@ -153,10 +153,10 @@ function HotglueProject(_projectPath) constructor
     static ImportAll = function(_otherProject)
     {
         var _sourceDirectory = filename_dir(_otherProject.__projectPath) + "/";
-        var _projectDirectory = filename_dir(__projectPath) + "/";
+        var _destinationDirectory = filename_dir(__projectPath) + "/";
         
         // 1. Ensure the user has Git set up
-        __HotglueAssertGit(_projectDirectory);
+        __HotglueAssertGit(_destinationDirectory);
         
         var _assetArray = _otherProject.__quickAssetArray;
         var _i = 0;
@@ -169,10 +169,9 @@ function HotglueProject(_projectPath) constructor
                 __HotglueError($"Asset \"{_sourceHotglueAsset.name}\" already exists in project \"{GetPath()}\"");
             }
             
-            var _newHotglueAsset = variable_clone(_sourceHotglueAsset);
-            
             // 2. Copy raw files
-            _sourceHotglueAsset.__Copy(_sourceDirectory, _projectDirectory);
+            _sourceHotglueAsset.__Copy(_sourceDirectory, _destinationDirectory);
+            var _newHotglueAsset = variable_clone(_sourceHotglueAsset);
             
             // 3. Fix folder references in the .yy
             _newHotglueAsset.__FixYYReferences(self);
@@ -181,7 +180,10 @@ function HotglueProject(_projectPath) constructor
             _newHotglueAsset.__InsertIntoYYP(self);
             
             // 5. Formally add the new asset to our internal tracking
-            __AddAsset(_newHotglueAsset);
+            if (_newHotglueAsset.implemented)
+            {
+                __AddAsset(_newHotglueAsset);
+            }
             
             ++_i;
         }
@@ -203,17 +205,16 @@ function HotglueProject(_projectPath) constructor
         }
         
         var _sourceDirectory = filename_dir(_otherProject.__projectPath) + "/";
-        var _projectDirectory = filename_dir(__projectPath) + "/";
+        var _destinationDirectory = filename_dir(__projectPath) + "/";
         
         var _sourceHotglueAsset = _otherProject.__quickAssetDict[$ _assetName];
         
-        var _newHotglueAsset = variable_clone(_sourceHotglueAsset);
-        
         // 1. Ensure the user has Git set up
-        __HotglueAssertGit(_projectDirectory);
+        __HotglueAssertGit(_destinationDirectory);
         
         // 2. Copy raw files
-        _sourceHotglueAsset.__Copy(_sourceDirectory, _projectDirectory);
+        _sourceHotglueAsset.__Copy(_sourceDirectory, _destinationDirectory);
+        var _newHotglueAsset = variable_clone(_sourceHotglueAsset);
         
         // 3. Fix folder references in the .yy
         _newHotglueAsset.__FixYYReferences(self);
@@ -222,7 +223,10 @@ function HotglueProject(_projectPath) constructor
         _newHotglueAsset.__InsertIntoYYP(self);
         
         // 5. Formally add the new asset to our internal tracking
-        __AddAsset(_newHotglueAsset);
+        if (_newHotglueAsset.implemented)
+        {
+            __AddAsset(_newHotglueAsset);
+        }
         
         // 6. Save updated .yyp
         SaveYYPIfDirty(true);
@@ -243,7 +247,7 @@ function HotglueProject(_projectPath) constructor
     {
         if (_inPath == "")
         {
-            //The root always exists, duh
+            //The root always exists
             return;
         }
         

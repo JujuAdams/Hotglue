@@ -19,12 +19,12 @@
   },
   "name":"C",
   "resources":[
-    {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"id":{"name":"rMain","path":"rooms/rMain/rMain.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
-    {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"roomId":{"name":"rMain","path":"rooms/rMain/rMain.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[

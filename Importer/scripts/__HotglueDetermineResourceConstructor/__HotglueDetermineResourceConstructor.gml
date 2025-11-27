@@ -5,21 +5,21 @@
 function __HotglueDetermineResourceConstructor(_relativePath)
 {
     static _mapping = {
-        "animcurves" : __HotglueResourceScript,
-        "extensions" : __HotglueResourceScript,
-        "fonts"      : __HotglueResourceScript,
-        "notes"      : __HotglueResourceScript,
-        "objects"    : __HotglueResourceScript,
-        "particles"  : __HotglueResourceScript,
-        "paths"      : __HotglueResourceScript,
-        "rooms"      : __HotglueResourceScript,
+        "animcurves" : __HotglueResourceUnhandled,
+        "extensions" : __HotglueResourceUnhandled,
+        "fonts"      : __HotglueResourceUnhandled,
+        "notes"      : __HotglueResourceNote,
+        "objects"    : __HotglueResourceUnhandled,
+        "particles"  : __HotglueResourceUnhandled,
+        "paths"      : __HotglueResourceUnhandled,
+        "rooms"      : __HotglueResourceUnhandled,
         "scripts"    : __HotglueResourceScript,
-        "sequences"  : __HotglueResourceScript,
-        "shaders"    : __HotglueResourceScript,
-        "sounds"     : __HotglueResourceScript,
-        "sprites"    : __HotglueResourceScript,
-        "tilesets"   : __HotglueResourceScript,
-        "timelines"  : __HotglueResourceScript,
+        "sequences"  : __HotglueResourceUnhandled,
+        "shaders"    : __HotglueResourceUnhandled,
+        "sounds"     : __HotglueResourceUnhandled,
+        "sprites"    : __HotglueResourceUnhandled,
+        "tilesets"   : __HotglueResourceUnhandled,
+        "timelines"  : __HotglueResourceUnhandled,
     }
     
     var _pos = string_pos("/", _relativePath);

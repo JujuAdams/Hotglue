@@ -6,6 +6,7 @@ function __HotglueIncludedFile(_includedFileStruct) constructor
 {
     static _system = __HotglueSystem();
     static type = "included file";
+    static implemented = true;
     
     var _includedFileName = _includedFileStruct.filePath + "/" + _includedFileStruct.name;
     if (string_copy(_includedFileName, 1, 10) == "datafiles/")
