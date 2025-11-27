@@ -9,9 +9,7 @@
     "name":"Default",
   },
   "defaultScriptType":1,
-  "Folders":[
-    {"$GMFolder":"","%Name":"Group","folderPath":"folders/Group.yy","name":"Group","resourceType":"GMFolder","resourceVersion":"2.0",},
-  ],
+  "Folders":[],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[],
   "isEcma":false,
@@ -21,7 +19,6 @@
   },
   "name":"C",
   "resources":[
-    {"id":{"name":"asset_get_stripped","path":"scripts/asset_get_stripped/asset_get_stripped.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
   ],
   "resourceType":"GMProject",
