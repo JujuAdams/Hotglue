@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HotglueFixYYReferences",
+  "%Name":"__HotglueIncludedFile",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HotglueFixYYReferences",
+  "name":"__HotglueIncludedFile",
   "parent":{
-    "name":"(System)",
-    "path":"folders/Hotglue/(System).yy",
+    "name":"Classes",
+    "path":"folders/Hotglue/(System)/Classes.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

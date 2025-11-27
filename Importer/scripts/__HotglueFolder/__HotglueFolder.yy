@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HotglueCopyAsset",
+  "%Name":"__HotglueFolder",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HotglueCopyAsset",
+  "name":"__HotglueFolder",
   "parent":{
-    "name":"(System)",
-    "path":"folders/Hotglue/(System).yy",
+    "name":"Classes",
+    "path":"folders/Hotglue/(System)/Classes.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

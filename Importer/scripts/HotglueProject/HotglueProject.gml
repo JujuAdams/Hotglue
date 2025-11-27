@@ -21,11 +21,11 @@ function HotglueProject(_projectPath) constructor
     ///////
     
     var _buffer = buffer_load(_projectPath);
-    __yypText = buffer_read(_buffer, buffer_text);
+    __yypString = buffer_read(_buffer, buffer_text);
     __yypTextDirty = false;
     buffer_delete(_buffer);
     
-    __yypJson = json_parse(__yypText);
+    __yypJson = json_parse(__yypString);
     
     ///////
     // Folders
@@ -37,12 +37,7 @@ function HotglueProject(_projectPath) constructor
     {
         var _folder = _yyFoldersArray[_i];
         
-        var _hotglueAsset = {
-            name: $"folder:{__HotglueProcessFolderPath(_folder.folderPath)}",
-            type: "folder",
-            data: _folder,
-        };
-        
+        var _hotglueAsset = new __HotglueFolder(_folder);
         __AddAsset(_hotglueAsset);
         
         ++_i;
@@ -58,19 +53,8 @@ function HotglueProject(_projectPath) constructor
     {
         var _resource = _yyResourcesArray[_i].id;
         
-        var _resourceType = __HotglueDetermineResourceType(_resource.path);
-        if (_resourceType == "unknown")
-        {
-            __HotglueTrace($"Warning! Resource \"{_resource.path}\" has an unhandled type");
-        }
-        
-        var _hotglueAsset = {
-            name: $"resource:{_resource.name}",
-            type: "resource",
-            data: _resource,
-            resourceType: _resourceType,
-        };
-        
+        var _constructor = __HotglueDetermineResourceConstructor(_resource.path);
+        var _hotglueAsset = new _constructor(_resource);
         __AddAsset(_hotglueAsset);
         
         ++_i;
@@ -86,18 +70,7 @@ function HotglueProject(_projectPath) constructor
     {
         var _includedFile = _yyIncludedFilesArray[_i];
         
-        var _includedFileName = _includedFile.filePath + "/" + _includedFile.name;
-        if (string_copy(_includedFileName, 1, 10) == "datafiles/")
-        {
-            _includedFileName = string_delete(_includedFileName, 1, 10);
-        }
-        
-        var _hotglueAsset = {
-            name: $"included file:{_includedFileName}",
-            type: "included file",
-            data: _includedFile,
-        };
-        
+        var _hotglueAsset = new __HotglueIncludedFile(_includedFile);
         __AddAsset(_hotglueAsset);
         
         ++_i;
@@ -179,7 +152,11 @@ function HotglueProject(_projectPath) constructor
     
     static ImportAll = function(_otherProject)
     {
+        var _sourceDirectory = filename_dir(_otherProject.__projectPath) + "/";
         var _projectDirectory = filename_dir(__projectPath) + "/";
+        
+        // 1. Ensure the user has Git set up
+        __HotglueAssertGit(_projectDirectory);
         
         var _assetArray = _otherProject.__quickAssetArray;
         var _i = 0;
@@ -194,23 +171,23 @@ function HotglueProject(_projectPath) constructor
             
             var _newHotglueAsset = variable_clone(_sourceHotglueAsset);
             
-            // 1. Ensure the user has Git set up
-            __HotglueAssertGit(_projectDirectory);
-            
             // 2. Copy raw files
-            __HotglueCopyAsset(__projectPath, _otherProject.__projectPath, _sourceHotglueAsset);
+            _sourceHotglueAsset.__Copy(_sourceDirectory, _projectDirectory);
             
             // 3. Fix folder references in the .yy
-            __HotglueFixYYReferences(self, _newHotglueAsset);
+            _newHotglueAsset.__FixYYReferences(self);
             
             // 4. Insert reference into .yyp
-            __HotglueInsertIntoYYP(self, _newHotglueAsset);
+            _newHotglueAsset.__InsertIntoYYP(self);
+            
+            // 5. Formally add the new asset to our internal tracking
+            __AddAsset(_newHotglueAsset);
             
             ++_i;
         }
         
-        // 5. Save updated .yyp
-        SaveYYPIfDirty();
+        // 6. Save updated .yyp
+        SaveYYPIfDirty(true);
     }
     
     static ImportSingle = function(_otherProject, _assetName)
@@ -225,7 +202,9 @@ function HotglueProject(_projectPath) constructor
             __HotglueError($"Asset \"{_assetName}\" doesn't exists in project \"{_otherProject.GetPath()}\"");
         }
         
+        var _sourceDirectory = filename_dir(_otherProject.__projectPath) + "/";
         var _projectDirectory = filename_dir(__projectPath) + "/";
+        
         var _sourceHotglueAsset = _otherProject.__quickAssetDict[$ _assetName];
         
         var _newHotglueAsset = variable_clone(_sourceHotglueAsset);
@@ -234,25 +213,28 @@ function HotglueProject(_projectPath) constructor
         __HotglueAssertGit(_projectDirectory);
         
         // 2. Copy raw files
-        __HotglueCopyAsset(__projectPath, _otherProject.__projectPath, _sourceHotglueAsset);
+        _sourceHotglueAsset.__Copy(_sourceDirectory, _projectDirectory);
         
         // 3. Fix folder references in the .yy
-        __HotglueFixYYReferences(self, _newHotglueAsset);
+        _newHotglueAsset.__FixYYReferences(self);
         
         // 4. Insert reference into .yyp
-        __HotglueInsertIntoYYP(self, _newHotglueAsset);
+        _newHotglueAsset.__InsertIntoYYP(self);
         
-        // 5. Save updated .yyp
-        SaveYYPIfDirty();
+        // 5. Formally add the new asset to our internal tracking
+        __AddAsset(_newHotglueAsset);
+        
+        // 6. Save updated .yyp
+        SaveYYPIfDirty(true);
     }
     
-    static SaveYYPIfDirty = function()
+    static SaveYYPIfDirty = function(_force = false)
     {
-        if (not __yypTextDirty) return;
+        if ((not __yypTextDirty) && (not _force)) return;
         __yypTextDirty = false;
         
-        var _buffer = buffer_create(string_byte_length(__yypText), buffer_fixed, 1);
-        buffer_write(_buffer, buffer_text, __yypText);
+        var _buffer = buffer_create(string_byte_length(__yypString), buffer_fixed, 1);
+        buffer_write(_buffer, buffer_text, __yypString);
         buffer_save(_buffer, __projectPath);
         buffer_delete(_buffer);
     }
@@ -273,19 +255,28 @@ function HotglueProject(_projectPath) constructor
         {
             if (not variable_struct_exists(__quickAssetDict, $"folder:{_path}"))
             {
-                var _hotglueAsset = {
-                    name: $"folder:{_path}",
-                    type: "folder",
-                    data: {
-                        name: filename_name(_path),
-                        folderPath: $"folders/{_path}.yy",
-                    },
-                };
-                
-                __HotglueInsertIntoYYP(self, _hotglueAsset);
+                var _hotglueAsset = new __HotglueFolder({ folderPath: $"folders/{_path}.yy", name: filename_name(_path), });
+                _hotglueAsset.__InsertIntoYYP(self);
+                __AddAsset(_hotglueAsset);
             }
             
             _path = filename_dir(_path);
         }
+    }
+    
+    static __VerifyFilesUnzipped = function()
+    {
+        var _emptyBuffer = buffer_create(0, buffer_fixed, 1);
+        var _projectDirectory = filename_dir(__projectPath) + "/";
+        
+        var _quickAssetArray = __quickAssetArray;
+        var _i = 0;
+        repeat(array_length(_quickAssetArray))
+        {
+            _quickAssetArray[_i].__VerifyFileUnzipped(_projectDirectory, _emptyBuffer);
+            ++_i;
+        }
+        
+        buffer_delete(_emptyBuffer);
     }
 }

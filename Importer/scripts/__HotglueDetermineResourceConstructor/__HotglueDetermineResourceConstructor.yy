@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HotglueInsertIntoYYP",
+  "%Name":"__HotglueDetermineResourceConstructor",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HotglueInsertIntoYYP",
+  "name":"__HotglueDetermineResourceConstructor",
   "parent":{
     "name":"(System)",
     "path":"folders/Hotglue/(System).yy",

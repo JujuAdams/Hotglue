@@ -34,5 +34,8 @@ function HotglueLoadYYMPS(_yympsPath)
     var _json = json_parse(_string);
     var _displayName = _json.display_name;
     
-    return new HotglueProject(_directory + _displayName + ".yyp");
+    var _project = new HotglueProject(_directory + _displayName + ".yyp");
+    _project.__VerifyFilesUnzipped();
+    
+    return _project;
 }
