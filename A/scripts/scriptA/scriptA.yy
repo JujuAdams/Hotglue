@@ -6,7 +6,7 @@
   "name":"scriptA",
   "parent":{
     "name":"A",
-    "path":"A.yyp",
+    "path":"folders/A.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

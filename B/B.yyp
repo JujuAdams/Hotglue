@@ -9,7 +9,10 @@
     "name":"Default",
   },
   "defaultScriptType":1,
-  "Folders":[],
+  "Folders":[
+    {"$GMFolder":"","%Name":"B","folderPath":"folders/B.yy","name":"B","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Conflicting","folderPath":"folders/B/Conflicting.yy","name":"Conflicting","resourceType":"GMFolder","resourceVersion":"2.0",},
+  ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[],
   "isEcma":false,
@@ -21,6 +24,7 @@
   "resources":[
     {"id":{"name":"extensionB","path":"extensions/extensionB/extensionB.yy",},},
     {"id":{"name":"noteB","path":"notes/noteB/noteB.yy",},},
+    {"id":{"name":"object","path":"objects/object/object.yy",},},
     {"id":{"name":"roomB","path":"rooms/roomB/roomB.yy",},},
     {"id":{"name":"scriptB","path":"scripts/scriptB/scriptB.yy",},},
     {"id":{"name":"shaderB","path":"shaders/shaderB/shaderB.yy",},},

@@ -17,7 +17,7 @@
   "extensionVersion":"0.0.1",
   "files":[],
   "gradleinject":null,
-  "hasConvertedCodeInjection":false,
+  "hasConvertedCodeInjection":true,
   "helpfile":"",
   "HTML5CodeInjection":"",
   "html5Props":false,
@@ -41,7 +41,7 @@
   "packageId":"",
   "parent":{
     "name":"A",
-    "path":"A.yyp",
+    "path":"folders/A.yy",
   },
   "productId":"",
   "resourceType":"GMExtension",

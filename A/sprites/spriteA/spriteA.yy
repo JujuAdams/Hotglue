@@ -26,7 +26,7 @@
   "origin":0,
   "parent":{
     "name":"A",
-    "path":"A.yyp",
+    "path":"folders/A.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

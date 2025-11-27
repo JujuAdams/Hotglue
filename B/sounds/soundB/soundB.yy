@@ -15,7 +15,7 @@
   "name":"soundB",
   "parent":{
     "name":"B",
-    "path":"B.yyp",
+    "path":"folders/B.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

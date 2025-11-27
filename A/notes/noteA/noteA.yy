@@ -4,7 +4,7 @@
   "name":"noteA",
   "parent":{
     "name":"A",
-    "path":"A.yyp",
+    "path":"folders/A.yy",
   },
   "resourceType":"GMNotes",
   "resourceVersion":"2.0",
