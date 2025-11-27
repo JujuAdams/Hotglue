@@ -38,13 +38,16 @@ function __HotglueCopyAsset(_destinationProjectPath, _sourceProjectPath, _hotglu
             __HotglueCopyRelativePathArray(_destinationDirectory, _sourceDirectory, [ $"{_resourceName}.yy", $"{_resourceName}.gml" ]);
         }
     }
+    else if (_hotglueType == "included file")
+    {
+        var _destinationPath = _destinationProjectDirectory + _hotglueAsset.data.filePath + "/" + _hotglueAsset.data.name;
+        var _sourcePath = _sourceProjectDirectory + _hotglueAsset.data.filePath + "/" + _hotglueAsset.data.name;
+        
+        file_copy(_sourcePath, _destinationPath);
+    }
     else if (_hotglueType == "folder")
     {
         //Do nothing!
-    }
-    else if (_hotglueType == "included file")
-    {
-        var _destinationDirectory = _destinationProjectDirectory + "datafiles/";
     }
     else
     {

@@ -86,8 +86,14 @@ function HotglueProject(_projectPath) constructor
     {
         var _includedFile = _yyIncludedFilesArray[_i];
         
+        var _includedFileName = _includedFile.filePath + "/" + _includedFile.name;
+        if (string_copy(_includedFileName, 1, 10) == "datafiles/")
+        {
+            _includedFileName = string_delete(_includedFileName, 1, 10);
+        }
+        
         var _hotglueAsset = {
-            name: $"included file:{_includedFile.name}",
+            name: $"included file:{_includedFileName}",
             type: "included file",
             data: _includedFile,
         };
@@ -215,7 +221,7 @@ function HotglueProject(_projectPath) constructor
         buffer_delete(_buffer);
     }
     
-    static EnsureFolderPath = function(_inPath, _thorough)
+    static EnsureFolderPath = function(_inPath)
     {
         if ((_inPath == "") || (_inPath == "<root>"))
         {

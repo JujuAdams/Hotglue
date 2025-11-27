@@ -14,7 +14,10 @@
     {"$GMFolder":"","%Name":"Conflicting","folderPath":"folders/B/Conflicting.yy","name":"Conflicting","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "ForcedPrefabProjectReferences":[],
-  "IncludedFiles":[],
+  "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"test.txt","CopyToMask":-1,"filePath":"datafiles","name":"test.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"nestedTest.txt","CopyToMask":-1,"filePath":"datafiles/testFolder","name":"nestedTest.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+  ],
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
