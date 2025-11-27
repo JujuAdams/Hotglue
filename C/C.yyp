@@ -9,7 +9,9 @@
     "name":"Default",
   },
   "defaultScriptType":1,
-  "Folders":[],
+  "Folders":[
+    {"$GMFolder":"","%Name":"Group","folderPath":"folders/Group.yy","name":"Group","resourceType":"GMFolder","resourceVersion":"2.0",},
+  ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[],
   "isEcma":false,
@@ -20,6 +22,8 @@
   "name":"C",
   "resources":[
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"id":{"name":"scriptInGroup","path":"scripts/scriptInGroup/scriptInGroup.yy",},},
+    {"id":{"name":"scriptInRoot","path":"scripts/scriptInRoot/scriptInRoot.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",

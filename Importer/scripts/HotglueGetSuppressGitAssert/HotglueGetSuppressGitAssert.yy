@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueGetSuppressGitAssert",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueGetSuppressGitAssert",
+  "parent":{
+    "name":"Hotglue",
+    "path":"folders/Hotglue.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__HotglueCopyRelativePathArray",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__HotglueCopyRelativePathArray",
+  "parent":{
+    "name":"(System)",
+    "path":"folders/Hotglue/(System).yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

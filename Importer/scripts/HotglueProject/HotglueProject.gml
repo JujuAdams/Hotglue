@@ -1,0 +1,210 @@
+// Feather disable all
+
+/// @param projectPath
+
+function HotglueProject(_projectPath) constructor
+{
+    __HotglueTrace($"Creating project representation \"{_projectPath}\"");
+    
+    if (not file_exists(_projectPath))
+    {
+        __HotglueError($"\"{_projectPath}\" doesn't exist");
+    }
+    
+    __projectPath = _projectPath;
+    
+    __quickAssetArray = [];
+    __quickAssetDict  = {};
+    
+    ///////
+    // Load project .yyp
+    ///////
+    
+    var _buffer = buffer_load(_projectPath);
+    __yypText = buffer_read(_buffer, buffer_text);
+    buffer_delete(_buffer);
+    
+    __yypJson = json_parse(__yypText);
+    
+    ///////
+    // Folders
+    ///////
+    
+    var _yyFoldersArray = __yypJson.Folders;
+    var _i = 0;
+    repeat(array_length(_yyFoldersArray))
+    {
+        var _folder = _yyFoldersArray[_i];
+        
+        var _hotglueName = __HotglueProcessFolderPath(_folder.folderPath);
+        
+        var _hotglueAsset = {
+            name: $"folder:{_hotglueName}",
+            type: "folder",
+            data: _folder,
+        };
+        
+        __AddAsset(_hotglueAsset);
+        
+        ++_i;
+    }
+    
+    ///////
+    // Resources (scripts, rooms, objects, etc.)
+    ///////
+    
+    var _yyResourcesArray = __yypJson.resources;
+    var _i = 0;
+    repeat(array_length(_yyResourcesArray))
+    {
+        var _resource = _yyResourcesArray[_i].id;
+        
+        var _resourceType = __HotglueDetermineResourceType(_resource.path);
+        if (_resourceType == "unknown")
+        {
+            __HotglueTrace($"Warning! Resource \"{_resource.path}\" has an unhandled type");
+        }
+        
+        var _hotglueAsset = {
+            name: $"resource:{_resource.name}",
+            type: "resource",
+            data: _resource,
+            resourceType: _resourceType,
+        };
+        
+        __AddAsset(_hotglueAsset);
+        
+        ++_i;
+    }
+    
+    ///////
+    // Included Files
+    ///////
+    
+    var _yyIncludedFilesArray = __yypJson.IncludedFiles;
+    var _i = 0;
+    repeat(array_length(_yyIncludedFilesArray))
+    {
+        var _includedFile = _yyIncludedFilesArray[_i];
+        
+        var _hotglueAsset = {
+            name: $"included file:{_includedFile.name}",
+            type: "included file",
+            data: _includedFile,
+        };
+        
+        __AddAsset(_hotglueAsset);
+        
+        ++_i;
+    }
+    
+    array_sort(__quickAssetArray, function(_a, _b)
+    {
+        return (_a.name < _b.name)? -1 : 1;
+    });
+    
+    static __AddAsset = function(_hotglueAsset)
+    {
+        array_push(__quickAssetArray, _hotglueAsset);
+        __quickAssetDict[$ _hotglueAsset.name] = _hotglueAsset;
+    }
+    
+    
+    
+    
+    
+    static GetPath = function()
+    {
+        return __projectPath;
+    }
+    
+    static GetAssetArray = function()
+    {
+        return __quickAssetArray;
+    }
+    
+    static GetAssetExists = function(_target)
+    {
+        return variable_struct_exists(__quickAssetDict, _target);
+    }
+    
+    static GetNonConflicting = function(_otherProject)
+    {
+        var _nonconflictArray = [];
+        
+        var _quickAssetArray = __quickAssetArray;
+        var _otherAssetDict  = _otherProject.__quickAssetDict;
+        
+        var _i = 0;
+        repeat(array_length(_quickAssetArray))
+        {
+            var _assetName = _quickAssetArray[_i].name;
+            if (not variable_struct_exists(_otherAssetDict, _assetName))
+            {
+                array_push(_nonconflictArray, _assetName);
+            }
+            
+            ++_i;
+        }
+        
+        return _nonconflictArray;
+    }
+    
+    static GetConflicting = function(_otherProject)
+    {
+        var _conflictArray = [];
+        
+        var _quickAssetArray = __quickAssetArray;
+        var _otherAssetDict  = _otherProject.__quickAssetDict;
+        
+        var _i = 0;
+        repeat(array_length(_quickAssetArray))
+        {
+            var _assetName = _quickAssetArray[_i].name;
+            if (variable_struct_exists(_otherAssetDict, _assetName))
+            {
+                array_push(_conflictArray, _assetName);
+            }
+            
+            ++_i;
+        }
+        
+        return _conflictArray;
+    }
+    
+    static ImportSingle = function(_otherProject, _assetName)
+    {
+        if (GetAssetExists(_assetName))
+        {
+            __HotglueError($"Asset \"{_assetName}\" already exists in project \"{GetPath()}\"");
+        }
+        
+        if (not _otherProject.GetAssetExists(_assetName))
+        {
+            __HotglueError($"Asset \"{_assetName}\" doesn't exists in project \"{_otherProject.GetPath()}\"");
+        }
+        
+        var _projectDirectory = filename_dir(__projectPath) + "/";
+        var _sourceHotglueAsset = _otherProject.__quickAssetDict[$ _assetName];
+        
+        var _newHotglueAsset = variable_clone(_sourceHotglueAsset);
+        
+        // 1. Ensure the user has Git set up
+        __HotglueAssertGit(_projectDirectory);
+        
+        // 2. Copy raw files
+        __HotglueCopyAsset(__projectPath, _otherProject.__projectPath, _sourceHotglueAsset);
+        
+        // 3. Fix folder references in the .yy
+        __HotglueFixYYReferences(self, _newHotglueAsset);
+        
+        // 4. Insert reference into .yyp
+        __HotglueInsertIntoYYP(self, _newHotglueAsset);
+        
+        // 5. Save updated .yyp
+        var _buffer = buffer_create(string_byte_length(__yypText), buffer_fixed, 1);
+        buffer_write(_buffer, buffer_text, __yypText);
+        buffer_save(_buffer, __projectPath);
+        buffer_delete(_buffer);
+    }
+}
