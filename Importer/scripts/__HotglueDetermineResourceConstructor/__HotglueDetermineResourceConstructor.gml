@@ -6,10 +6,10 @@ function __HotglueDetermineResourceConstructor(_relativePath)
 {
     static _mapping = {
         "animcurves" : __HotglueResourceAnimCurve,
-        "extensions" : __HotglueResourceUnhandled,
+        "extensions" : __HotglueResourceExtension,
         "fonts"      : __HotglueResourceFont,
         "notes"      : __HotglueResourceNote,
-        "objects"    : __HotglueResourceUnhandled,
+        "objects"    : __HotglueResourceObject,
         "particles"  : __HotglueResourcePartSys,
         "paths"      : __HotglueResourcePath,
         "rooms"      : __HotglueResourceUnhandled,
