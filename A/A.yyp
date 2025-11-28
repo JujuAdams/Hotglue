@@ -29,6 +29,7 @@
     {"id":{"name":"ParticleSystem1","path":"particles/ParticleSystem1/ParticleSystem1.yy",},},
     {"id":{"name":"Path1","path":"paths/Path1/Path1.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"id":{"name":"RoomUI","path":"roomui/RoomUI/RoomUI.yy",},},
     {"id":{"name":"Script1","path":"scripts/Script1/Script1.yy",},},
     {"id":{"name":"Sequence1","path":"sequences/Sequence1/Sequence1.yy",},},
     {"id":{"name":"Shader1","path":"shaders/Shader1/Shader1.yy",},},
