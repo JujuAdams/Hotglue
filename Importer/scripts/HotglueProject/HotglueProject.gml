@@ -187,7 +187,7 @@ function HotglueProject(_projectPath) constructor
             ++_i;
         }
         
-        return __ImportFrom(_sourceProject, _assetArray);
+        return __ImportFrom(_sourceProject, _assetArray, _subfolder);
     }
     
     static __ImportFrom = function(_sourceProject, _assetArray, _subfolder = "")
