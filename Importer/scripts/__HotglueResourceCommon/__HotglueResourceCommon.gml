@@ -13,6 +13,20 @@ function __HotglueResourceCommon(_resourceStruct) constructor
         //TODO
     }
     
+    static __GetAbsolutePath = function(_project)
+    {
+        return filename_dir(_project.__projectPath) + "/" + data.path;
+    }
+    
+    static __GetYYJSON = function(_project)
+    {
+        var _buffer = buffer_load(__GetAbsolutePath(_project));
+        var _string = buffer_read(_buffer, buffer_text);
+        buffer_delete(_buffer);
+        
+        return json_parse(_string);
+    }
+    
     static __Copy = function(_sourceProjectDirectory, _destinationProjectDirectory)
     {
         var _relativeDirectory = filename_dir(data.path);
@@ -31,9 +45,7 @@ function __HotglueResourceCommon(_resourceStruct) constructor
     
     static __FixYYReferences = function(_project)
     {
-        var _absolutePath = filename_dir(_project.__projectPath) + "/" + data.path;
-        
-        var _buffer = buffer_load(_absolutePath);
+        var _buffer = buffer_load(__GetAbsolutePath(_project));
         var _string = buffer_read(_buffer, buffer_text);
         buffer_delete(_buffer);
         
@@ -54,7 +66,7 @@ function __HotglueResourceCommon(_resourceStruct) constructor
             
             var _buffer = buffer_create(string_byte_length(_string), buffer_fixed, 1);
             buffer_write(_buffer, buffer_text, _string);
-            buffer_save(_buffer, _absolutePath);
+            buffer_save(_buffer, __GetAbsolutePath(_project));
             buffer_delete(_buffer);
         }
         else

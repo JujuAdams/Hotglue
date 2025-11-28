@@ -17,6 +17,24 @@ function __HotglueResourcePartSys(_resourceStruct) : __HotglueResourceCommon(_re
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)
     {
-        //TODO
+        var _json = __GetYYJSON(_project);
+        
+        var _emitterArray = _json.emitters;
+        var _i = 0;
+        repeat(array_length(_emitterArray))
+        {
+            var _spriteData = _emitterArray[_i].spriteId;
+            if (is_struct(_spriteData))
+            {
+                var _spriteAssetName = $"resource:{_spriteData.name}";
+                if (not variable_struct_exists(_visitedDict, _spriteAssetName))
+                {
+                    array_push(_visitedArray, _spriteAssetName);
+                    _visitedDict[$ _spriteAssetName] = true;
+                }
+            }
+            
+            ++_i;
+        }
     }
 }

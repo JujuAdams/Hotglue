@@ -15,15 +15,9 @@ function __HotglueResourceTileset(_resourceStruct) : __HotglueResourceCommon(_re
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)
     {
-        var _absolutePath = filename_dir(_project.__projectPath) + "/" + data.path;
+        var _json = __GetYYJSON(_project);
         
-        var _buffer = buffer_load(_absolutePath);
-        var _string = buffer_read(_buffer, buffer_text);
-        buffer_delete(_buffer);
-        
-        var _json = json_parse(_string);
         var _spriteData = _json.spriteId;
-        
         if (is_struct(_spriteData))
         {
             var _spriteAssetName = $"resource:{_spriteData.name}";
