@@ -222,7 +222,7 @@ function HotglueProject(_projectPath) constructor
             // 6. Insert reference into .yyp
             _newHotglueAsset.__InsertIntoYYP(self, _subfolder);
             
-            // 7. Formally add the new asset to our internal tracking
+            // 7. Formally add the new asset to this project representation
             __AddAsset(_newHotglueAsset);
             
             ++_i;
