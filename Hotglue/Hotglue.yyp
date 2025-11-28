@@ -1,6 +1,6 @@
 {
   "$GMProject":"v1",
-  "%Name":"Importer",
+  "%Name":"Hotglue",
   "AudioGroups":[
     {"$GMAudioGroup":"v1","%Name":"audiogroup_default","exportDir":"","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
   ],
@@ -22,7 +22,7 @@
   "MetaData":{
     "IDEVersion":"2024.14.0.207",
   },
-  "name":"Importer",
+  "name":"Hotglue",
   "resources":[
     {"id":{"name":"oTest","path":"objects/oTest/oTest.yy",},},
     {"id":{"name":"rMain","path":"rooms/rMain/rMain.yy",},},

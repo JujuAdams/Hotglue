@@ -9,8 +9,8 @@
   "name":"oTest",
   "overriddenProperties":[],
   "parent":{
-    "name":"Importer",
-    "path":"Importer.yyp",
+    "name":"Hotglue",
+    "path":"Hotglue.yyp",
   },
   "parentObjectId":null,
   "persistent":false,

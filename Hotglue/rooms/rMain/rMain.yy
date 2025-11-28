@@ -17,8 +17,8 @@
   ],
   "name":"rMain",
   "parent":{
-    "name":"Importer",
-    "path":"Importer.yyp",
+    "name":"Hotglue",
+    "path":"Hotglue.yyp",
   },
   "parentRoom":null,
   "physicsSettings":{

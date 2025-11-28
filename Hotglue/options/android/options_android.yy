@@ -11,7 +11,7 @@
   "option_android_compile_sdk":"",
   "option_android_device_support":0,
   "option_android_display_layout":"",
-  "option_android_display_name":"Importer",
+  "option_android_display_name":"Hotglue",
   "option_android_edge_to_edge_display":false,
   "option_android_facebook_app_display_name":"",
   "option_android_facebook_id":"",

@@ -5,7 +5,7 @@
   "option_linux_allow_fullscreen":false,
   "option_linux_disable_sandbox":false,
   "option_linux_display_cursor":true,
-  "option_linux_display_name":"Importer",
+  "option_linux_display_name":"Hotglue",
   "option_linux_display_splash":false,
   "option_linux_enable_steam":false,
   "option_linux_homepage":"http://www.yoyogames.com",
