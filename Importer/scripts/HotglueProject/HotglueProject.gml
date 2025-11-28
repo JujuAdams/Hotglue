@@ -27,54 +27,33 @@ function HotglueProject(_projectPath) constructor
     
     __yypJson = json_parse(__yypString);
     
-    ///////
-    // Folders
-    ///////
-    
     var _yyFoldersArray = __yypJson.Folders;
     var _i = 0;
     repeat(array_length(_yyFoldersArray))
     {
-        var _folder = _yyFoldersArray[_i];
-        
-        var _hotglueAsset = new __HotglueFolder(_folder);
-        __AddAsset(_hotglueAsset);
-        
+        __AddAsset(new __HotglueFolder(_yyFoldersArray[_i]));
         ++_i;
     }
-    
-    ///////
-    // Resources (scripts, rooms, objects, etc.)
-    ///////
     
     var _yyResourcesArray = __yypJson.resources;
     var _i = 0;
     repeat(array_length(_yyResourcesArray))
     {
         var _resource = _yyResourcesArray[_i].id;
-        
         var _constructor = __HotglueDetermineResourceConstructor(_resource.path);
-        var _hotglueAsset = new _constructor(_resource);
-        __AddAsset(_hotglueAsset);
-        
+        __AddAsset(new _constructor(_resource));
         ++_i;
     }
-    
-    ///////
-    // Included Files
-    ///////
     
     var _yyIncludedFilesArray = __yypJson.IncludedFiles;
     var _i = 0;
     repeat(array_length(_yyIncludedFilesArray))
     {
-        var _includedFile = _yyIncludedFilesArray[_i];
-        
-        var _hotglueAsset = new __HotglueIncludedFile(_includedFile);
-        __AddAsset(_hotglueAsset);
-        
+        __AddAsset(new __HotglueIncludedFile(_yyIncludedFilesArray[_i]));
         ++_i;
     }
+    
+    //Pretty up the asset array
     
     array_sort(__quickAssetArray, function(_a, _b)
     {
@@ -167,15 +146,14 @@ function HotglueProject(_projectPath) constructor
             ++_i;
         }
         
-        var _i = 0;
-        repeat(array_length(_visitedArray))
+        for(var _i = 0; _i < array_length(_visitedArray); ++_i) //Array length can change
         {
             var _assetName = _visitedArray[_i];
             
             var _asset = __quickAssetDict[$ _assetName];
             if (_asset == undefined)
             {
-                __HotglueError("Asset \"{_assetName}\" not found in project");
+                __HotglueError($"Asset \"{_assetName}\" not found in project");
             }
             
             _asset.__GetExpandedAssets(self, _visitedArray, _visitedDict);
@@ -188,13 +166,38 @@ function HotglueProject(_projectPath) constructor
     
     static ImportAll = function(_otherProject)
     {
+        return __ImportDirect(_otherProject, _otherProject.__quickAssetArray);
+    }
+    
+    static Import = function(_otherProject, _assetNameArray)
+    {
+        if (not is_array(_assetNameArray))
+        {
+            _assetNameArray = [_assetNameArray];
+        }
+        
+        var _quickAssetDict = _otherProject.__quickAssetDict;
+        var _expandedAssetNameArray = _otherProject.GetExpandedAssets(_assetNameArray);
+        
+        var _assetArray = array_create(array_length(_expandedAssetNameArray));
+        var _i = 0;
+        repeat(array_length(_expandedAssetNameArray))
+        {
+            _assetArray[@ _i] = _quickAssetDict[$ _expandedAssetNameArray[_i]];
+            ++_i;
+        }
+        
+        return __ImportDirect(_otherProject, _assetArray);
+    }
+    
+    static __ImportDirect = function(_otherProject, _assetArray)
+    {
         var _sourceDirectory = filename_dir(_otherProject.__projectPath) + "/";
         var _destinationDirectory = filename_dir(__projectPath) + "/";
         
         // 1. Ensure the user has Git set up
         __HotglueAssertGit(_destinationDirectory);
         
-        var _assetArray = _otherProject.__quickAssetArray;
         var _i = 0;
         repeat(array_length(_assetArray))
         {
@@ -205,66 +208,23 @@ function HotglueProject(_projectPath) constructor
                 __HotglueError($"Asset \"{_sourceHotglueAsset.name}\" already exists in project \"{GetPath()}\"");
             }
             
-            // 2. Copy raw files
+            // 3. Copy raw files
             _sourceHotglueAsset.__Copy(_sourceDirectory, _destinationDirectory);
             var _newHotglueAsset = variable_clone(_sourceHotglueAsset);
             
-            // 3. Fix folder references in the .yy
+            // 4. Fix folder references in the .yy
             _newHotglueAsset.__FixYYReferences(self);
             
-            // 4. Insert reference into .yyp
+            // 5. Insert reference into .yyp
             _newHotglueAsset.__InsertIntoYYP(self);
             
-            // 5. Formally add the new asset to our internal tracking
-            if (_newHotglueAsset.implemented)
-            {
-                __AddAsset(_newHotglueAsset);
-            }
+            // 6. Formally add the new asset to our internal tracking
+            __AddAsset(_newHotglueAsset);
             
             ++_i;
         }
         
-        // 6. Save updated .yyp
-        SaveYYPIfDirty(true);
-    }
-    
-    static ImportSingle = function(_otherProject, _assetName)
-    {
-        if (GetAssetExists(_assetName))
-        {
-            __HotglueError($"Asset \"{_assetName}\" already exists in project \"{GetPath()}\"");
-        }
-        
-        if (not _otherProject.GetAssetExists(_assetName))
-        {
-            __HotglueError($"Asset \"{_assetName}\" doesn't exists in project \"{_otherProject.GetPath()}\"");
-        }
-        
-        var _sourceDirectory = filename_dir(_otherProject.__projectPath) + "/";
-        var _destinationDirectory = filename_dir(__projectPath) + "/";
-        
-        var _sourceHotglueAsset = _otherProject.__quickAssetDict[$ _assetName];
-        
-        // 1. Ensure the user has Git set up
-        __HotglueAssertGit(_destinationDirectory);
-        
-        // 2. Copy raw files
-        _sourceHotglueAsset.__Copy(_sourceDirectory, _destinationDirectory);
-        var _newHotglueAsset = variable_clone(_sourceHotglueAsset);
-        
-        // 3. Fix folder references in the .yy
-        _newHotglueAsset.__FixYYReferences(self);
-        
-        // 4. Insert reference into .yyp
-        _newHotglueAsset.__InsertIntoYYP(self);
-        
-        // 5. Formally add the new asset to our internal tracking
-        if (_newHotglueAsset.implemented)
-        {
-            __AddAsset(_newHotglueAsset);
-        }
-        
-        // 6. Save updated .yyp
+        // 7. Save updated .yyp
         SaveYYPIfDirty(true);
     }
     

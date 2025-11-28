@@ -5,7 +5,6 @@
 function __HotglueResourceRoom(_resourceStruct) : __HotglueResourceCommon(_resourceStruct) constructor
 {
     static resourceType = "room";
-    static implemented  = true;
     
     static __CopySpecific = function(_destinationDirectory, _sourceDirectory)
     {
@@ -44,7 +43,7 @@ function __HotglueResourceRoom(_resourceStruct) : __HotglueResourceCommon(_resou
         var _layerType = _layerData.resourceType;
         if (_layerType == "GMREffectLayer")
         {
-            //TODO - Handle textures/sprites assigned to effect layers
+            // TODO - Handle textures/sprites assigned to effect layers
         }
         else if (_layerType == "GMRAssetLayer")
         {
@@ -52,17 +51,17 @@ function __HotglueResourceRoom(_resourceStruct) : __HotglueResourceCommon(_resou
             var _i = 0;
             repeat(array_length(_assetArray))
             {
-                __HotglueTryAddingExpandedSpriteID(_assetArray[_i].spriteId, _visitedArray, _visitedDict);
+                __HotglueTryExpandingAssetID(_assetArray[_i].spriteId, _visitedArray, _visitedDict);
                 ++_i;
             }
         }
         else if (_layerType == "GMRTileLayer")
         {
-            __HotglueTryAddingExpandedSpriteID(_layerData.tilesetId, _visitedArray, _visitedDict);
+            __HotglueTryExpandingAssetID(_layerData.tilesetId, _visitedArray, _visitedDict);
         }
         else if (_layerType == "GMRBackgroundLayer")
         {
-            __HotglueTryAddingExpandedSpriteID(_layerData.spriteId, _visitedArray, _visitedDict);
+            __HotglueTryExpandingAssetID(_layerData.spriteId, _visitedArray, _visitedDict);
         }
         else if (_layerType == "GMRInstanceLayer")
         {
@@ -70,7 +69,10 @@ function __HotglueResourceRoom(_resourceStruct) : __HotglueResourceCommon(_resou
             var _i = 0;
             repeat(array_length(_instanceArray))
             {
-                __HotglueTryAddingExpandedSpriteID(_instanceArray[_i].objectId, _visitedArray, _visitedDict);
+                __HotglueTryExpandingAssetID(_instanceArray[_i].objectId, _visitedArray, _visitedDict);
+                
+                // TODO - Handle textures/sprites assigned to instance variable definitions
+                
                 ++_i;
             }
         }

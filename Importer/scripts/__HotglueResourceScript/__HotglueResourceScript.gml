@@ -5,7 +5,6 @@
 function __HotglueResourceNote(_resourceStruct) : __HotglueResourceCommon(_resourceStruct) constructor
 {
     static resourceType = "note";
-    static implemented  = true;
     
     static __CopySpecific = function(_destinationDirectory, _sourceDirectory)
     {

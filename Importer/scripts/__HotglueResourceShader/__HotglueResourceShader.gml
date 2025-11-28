@@ -5,7 +5,6 @@
 function __HotglueResourceShader(_resourceStruct) : __HotglueResourceCommon(_resourceStruct) constructor
 {
     static resourceType = "shader";
-    static implemented  = true;
     
     static __CopySpecific = function(_destinationDirectory, _sourceDirectory)
     {

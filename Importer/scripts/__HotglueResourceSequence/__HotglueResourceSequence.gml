@@ -5,7 +5,6 @@
 function __HotglueResourceSequence(_resourceStruct) : __HotglueResourceCommon(_resourceStruct) constructor
 {
     static resourceType = "sequence";
-    static implemented  = true;
     
     static __CopySpecific = function(_destinationDirectory, _sourceDirectory)
     {

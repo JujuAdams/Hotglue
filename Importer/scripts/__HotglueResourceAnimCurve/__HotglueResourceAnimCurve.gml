@@ -5,7 +5,6 @@
 function __HotglueResourceAnimCurve(_resourceStruct) : __HotglueResourceCommon(_resourceStruct) constructor
 {
     static resourceType = "animation curve";
-    static implemented  = true;
     
     static __CopySpecific = function(_destinationDirectory, _sourceDirectory)
     {

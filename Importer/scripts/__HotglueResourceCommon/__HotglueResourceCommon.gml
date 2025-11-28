@@ -10,7 +10,7 @@ function __HotglueResourceCommon(_resourceStruct) constructor
     
     static __VerifyFileUnzipped = function(_projectDirectory, _emptyBuffer)
     {
-        //TODO
+        // TODO
     }
     
     static __GetAbsolutePath = function(_project)

@@ -5,7 +5,6 @@
 function __HotglueResourceRoomUI(_resourceStruct) : __HotglueResourceCommon(_resourceStruct) constructor
 {
     static resourceType = "ui layer";
-    static implemented  = true;
     
     static __CopySpecific = function(_destinationDirectory, _sourceDirectory)
     {
@@ -15,6 +14,6 @@ function __HotglueResourceRoomUI(_resourceStruct) : __HotglueResourceCommon(_res
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)
     {
-        //Do nothing!
+        // TODO
     }
 }
