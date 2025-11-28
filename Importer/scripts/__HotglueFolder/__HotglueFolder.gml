@@ -22,12 +22,12 @@ function __HotglueFolder(_folderStruct) constructor
         //Do nothing!
     }
     
-    static __FixYYReferences = function(_project)
+    static __FixYYReferences = function(_project, _subfolder)
     {
         //Do nothing!
     }
     
-    static __InsertIntoYYP = function(_project)
+    static __InsertIntoYYP = function(_project, _subfolder)
     {
         var _yypString = _project.__yypString;
         
@@ -52,6 +52,26 @@ function __HotglueFolder(_folderStruct) constructor
         
         var _folderName = data.name;
         var _folderPath = data.folderPath;
+        
+        if (_subfolder != "")
+        {
+            _folderPath = __HotglueProcessFolderPath(_folderPath);
+            if (_folderPath == "")
+            {
+                //The root becomes the same as the subfolder itself. No need to add us to the .yyp
+                return;
+            }
+            else
+            {
+                var _comparison = string_copy(_subfolder + "/", 1, string_length(_folderPath) + 1);
+                if (_comparison != _folderPath + "/")
+                {
+                    name = $"folder:{_subfolder}/{_folderPath}";
+                    _folderPath = $"folders/{_subfolder}/{_folderPath}.yy";
+                    data.folderPath = _folderPath;
+                }
+            }
+        }
         
         var _insertString = $"    \{\"$GMFolder\":\"\",\"%Name\":\"{_folderName}\",\"folderPath\":\"{_folderPath}\",\"name\":\"{_folderName}\",\"resourceType\":\"GMFolder\",\"resourceVersion\":\"2.0\",\},\n";
         _project.__yypString = string_insert(_insertString, _yypString, _pos);

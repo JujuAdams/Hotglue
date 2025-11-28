@@ -30,7 +30,7 @@ function __HotglueIncludedFile(_includedFileStruct) constructor
         file_copy(_sourcePath, _destinationPath);
     }
     
-    static __FixYYReferences = function(_project)
+    static __FixYYReferences = function(_project, _subfolder)
     {
         //Do nothing!
     }

@@ -13,6 +13,7 @@
     {"$GMFolder":"","%Name":"Hotglue","folderPath":"folders/Hotglue.yy","name":"Hotglue","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"(System)","folderPath":"folders/Hotglue/(System).yy","name":"(System)","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Classes","folderPath":"folders/Hotglue/(System)/Classes.yy","name":"Classes","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Resource Types","folderPath":"folders/Hotglue/(System)/Classes/Resource Types.yy","name":"Resource Types","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[],

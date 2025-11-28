@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"__HotglueResourceRoom",
   "parent":{
-    "name":"Classes",
-    "path":"folders/Hotglue/(System)/Classes.yy",
+    "name":"Resource Types",
+    "path":"folders/Hotglue/(System)/Classes/Resource Types.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

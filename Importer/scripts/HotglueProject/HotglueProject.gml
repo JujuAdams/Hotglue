@@ -165,12 +165,12 @@ function HotglueProject(_projectPath) constructor
         return _visitedArray;
     }
     
-    static ImportAllFrom = function(_sourceProject)
+    static ImportAllFrom = function(_sourceProject, _subfolder = "")
     {
-        return __ImportFrom(_sourceProject, _sourceProject.__quickAssetArray);
+        return __ImportFrom(_sourceProject, _sourceProject.__quickAssetArray, _subfolder);
     }
     
-    static ImportFrom = function(_sourceProject, _assetNameArray)
+    static ImportFrom = function(_sourceProject, _assetNameArray, _subfolder = "")
     {
         if (not is_array(_assetNameArray))
         {
@@ -191,10 +191,15 @@ function HotglueProject(_projectPath) constructor
         return __ImportFrom(_sourceProject, _assetArray);
     }
     
-    static __ImportFrom = function(_sourceProject, _assetArray)
+    static __ImportFrom = function(_sourceProject, _assetArray, _subfolder = "")
     {
         // 1. Ensure the user has Git set up
         __HotglueAssertGit(__projectDirectory);
+        
+        if (_subfolder != "")
+        {
+            EnsureFolderPath(_subfolder);
+        }
         
         var _i = 0;
         repeat(array_length(_assetArray))
@@ -206,23 +211,25 @@ function HotglueProject(_projectPath) constructor
                 __HotglueError($"Asset \"{_sourceHotglueAsset.name}\" already exists in project \"{GetPath()}\"");
             }
             
-            // 3. Copy raw files
+            // 3. Copy files on disk
             _sourceHotglueAsset.__Copy(self, _sourceProject);
+            
+            // 4. Duplicate the asset representation
             var _newHotglueAsset = variable_clone(_sourceHotglueAsset);
             
-            // 4. Fix folder references in the .yy
-            _newHotglueAsset.__FixYYReferences(self);
+            // 5. Fix folder references in the .yy
+            _newHotglueAsset.__FixYYReferences(self, _subfolder);
             
-            // 5. Insert reference into .yyp
-            _newHotglueAsset.__InsertIntoYYP(self);
+            // 6. Insert reference into .yyp
+            _newHotglueAsset.__InsertIntoYYP(self, _subfolder);
             
-            // 6. Formally add the new asset to our internal tracking
+            // 7. Formally add the new asset to our internal tracking
             __AddAsset(_newHotglueAsset);
             
             ++_i;
         }
         
-        // 7. Save updated .yyp
+        // 8. Save updated .yyp
         SaveYYPIfDirty(true);
     }
     
@@ -254,7 +261,7 @@ function HotglueProject(_projectPath) constructor
             if (not variable_struct_exists(__quickAssetDict, $"folder:{_path}"))
             {
                 var _hotglueAsset = new __HotglueFolder({ folderPath: $"folders/{_path}.yy", name: filename_name(_path), });
-                _hotglueAsset.__InsertIntoYYP(self);
+                _hotglueAsset.__InsertIntoYYP(self, "");
                 __AddAsset(_hotglueAsset);
             }
             
