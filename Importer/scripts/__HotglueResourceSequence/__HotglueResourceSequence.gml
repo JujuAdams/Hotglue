@@ -29,17 +29,7 @@ function __HotglueResourceSequence(_resourceStruct) : __HotglueResourceCommon(_r
                 var _k = 0;
                 repeat(array_length(_channelArray))
                 {
-                    var _assetID = _channelArray[_k].Id;
-                    if (is_struct(_assetID))
-                    {
-                        var _assetName = $"resource:{_assetID.name}";
-                        if (not variable_struct_exists(_visitedDict, _assetName))
-                        {
-                            array_push(_visitedArray, _assetName);
-                            _visitedDict[$ _assetName] = true;
-                        }
-                    }
-                    
+                    __HotglueTryExpandingAssetID(_channelArray[_k].Id, _visitedArray, _visitedDict);
                     ++_k;
                 }
                 

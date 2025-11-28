@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HotglueExpandFolder",
+  "%Name":"__HotglueTryExpandingAssetID",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HotglueExpandFolder",
+  "name":"__HotglueTryExpandingAssetID",
   "parent":{
     "name":"(System)",
     "path":"folders/Hotglue/(System).yy",

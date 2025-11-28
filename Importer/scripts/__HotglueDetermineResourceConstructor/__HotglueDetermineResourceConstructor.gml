@@ -13,6 +13,7 @@ function __HotglueDetermineResourceConstructor(_relativePath)
         "particles"  : __HotglueResourcePartSys,
         "paths"      : __HotglueResourcePath,
         "rooms"      : __HotglueResourceRoom,
+        "roomui"     : __HotglueResourceRoomUI,
         "scripts"    : __HotglueResourceScript,
         "sequences"  : __HotglueResourceSequence,
         "shaders"    : __HotglueResourceShader,
