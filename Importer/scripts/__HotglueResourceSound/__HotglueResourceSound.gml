@@ -15,6 +15,8 @@ function __HotglueResourceSound(_resourceStruct) : __HotglueResourceCommon(_reso
         {
             array_push(_array, filename_dir(data.path) + "/" + _soundFilePath);
         }
+        
+        return _array;
     }
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)

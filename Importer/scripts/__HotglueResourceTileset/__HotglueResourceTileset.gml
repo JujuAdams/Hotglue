@@ -10,6 +10,8 @@ function __HotglueResourceTileset(_resourceStruct) : __HotglueResourceCommon(_re
     {
         array_push(_array, data.path);
         array_push(_array, filename_dir(data.path) + "/output_tileset.png");
+        
+        return _array;
     }
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)

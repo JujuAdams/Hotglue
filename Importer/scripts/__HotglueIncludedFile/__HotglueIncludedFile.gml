@@ -19,6 +19,8 @@ function __HotglueIncludedFile(_includedFileStruct) constructor
     static __GetFiles = function(_project, _array = [])
     {
         array_push(_array, data.filePath + "/" + data.name);
+        
+        return _array;
     }
     
     static __Copy = function(_destinationProject, _sourceProject)

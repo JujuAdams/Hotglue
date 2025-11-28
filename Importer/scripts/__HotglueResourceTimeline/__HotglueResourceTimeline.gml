@@ -19,6 +19,8 @@ function __HotglueResourceTimeline(_resourceStruct) : __HotglueResourceCommon(_r
             array_push(_array, $"{_localDirectory}moment_{_momentArray[_i].moment}.gml");
             ++_i;
         }
+        
+        return _array;
     }
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)

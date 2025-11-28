@@ -11,6 +11,8 @@ function __HotglueResourceShader(_resourceStruct) : __HotglueResourceCommon(_res
         array_push(_array, data.path);
         array_push(_array, filename_change_ext(data.path, ".fsh"));
         array_push(_array, filename_change_ext(data.path, ".vsh"));
+        
+        return _array;
     }
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)

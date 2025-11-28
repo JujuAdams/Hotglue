@@ -39,6 +39,8 @@ function __HotglueResourceExtension(_resourceStruct) : __HotglueResourceCommon(_
             
             file_find_close();
         }
+        
+        return _array;
     }
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)

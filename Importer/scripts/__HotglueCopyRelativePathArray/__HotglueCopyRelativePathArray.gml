@@ -6,8 +6,6 @@
 
 function __HotglueCopyRelativePathArray(_destinationDirectory, _sourceDirectory, _relativePathArray)
 {
-    static _emptyBuffer = buffer_create(0, buffer_fixed, 1);
-    
     var _i = 0;
     repeat(array_length(_relativePathArray))
     {
@@ -19,7 +17,7 @@ function __HotglueCopyRelativePathArray(_destinationDirectory, _sourceDirectory,
         }
         else
         {
-            buffer_save(_emptyBuffer, _sourceDirectory + _relativePath);
+            __HotglueError($"Could not find \"{_sourceDirectory + _relativePath}\"");
         }
         
         ++_i;

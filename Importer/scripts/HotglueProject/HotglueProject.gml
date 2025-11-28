@@ -165,20 +165,20 @@ function HotglueProject(_projectPath) constructor
         return _visitedArray;
     }
     
-    static ImportAll = function(_otherProject)
+    static ImportAllFrom = function(_sourceProject)
     {
-        return __ImportDirect(_otherProject, _otherProject.__quickAssetArray);
+        return __ImportFrom(_sourceProject, _sourceProject.__quickAssetArray);
     }
     
-    static Import = function(_otherProject, _assetNameArray)
+    static ImportFrom = function(_sourceProject, _assetNameArray)
     {
         if (not is_array(_assetNameArray))
         {
             _assetNameArray = [_assetNameArray];
         }
         
-        var _quickAssetDict = _otherProject.__quickAssetDict;
-        var _expandedAssetNameArray = _otherProject.GetExpandedAssets(_assetNameArray);
+        var _quickAssetDict = _sourceProject.__quickAssetDict;
+        var _expandedAssetNameArray = _sourceProject.GetExpandedAssets(_assetNameArray);
         
         var _assetArray = array_create(array_length(_expandedAssetNameArray));
         var _i = 0;
@@ -188,10 +188,10 @@ function HotglueProject(_projectPath) constructor
             ++_i;
         }
         
-        return __ImportDirect(_otherProject, _assetArray);
+        return __ImportFrom(_sourceProject, _assetArray);
     }
     
-    static __ImportDirect = function(_otherProject, _assetArray)
+    static __ImportFrom = function(_sourceProject, _assetArray)
     {
         // 1. Ensure the user has Git set up
         __HotglueAssertGit(__projectDirectory);
@@ -207,7 +207,7 @@ function HotglueProject(_projectPath) constructor
             }
             
             // 3. Copy raw files
-            _sourceHotglueAsset.__Copy(self, _otherProject);
+            _sourceHotglueAsset.__Copy(self, _sourceProject);
             var _newHotglueAsset = variable_clone(_sourceHotglueAsset);
             
             // 4. Fix folder references in the .yy

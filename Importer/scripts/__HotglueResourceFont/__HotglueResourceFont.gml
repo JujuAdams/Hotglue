@@ -10,6 +10,8 @@ function __HotglueResourceFont(_resourceStruct) : __HotglueResourceCommon(_resou
     {
         array_push(_array, data.path);
         array_push(_array, filename_change_ext(data.path, ".png"));
+        
+        return _array;
     }
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)

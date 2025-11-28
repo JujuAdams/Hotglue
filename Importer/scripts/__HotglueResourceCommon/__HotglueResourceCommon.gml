@@ -33,12 +33,14 @@ function __HotglueResourceCommon(_resourceStruct) constructor
         
         directory_create(_destinationDirectory);
         
-        __HotglueCopyRelativePathArray(_destinationProject.__projectDirectory, _sourceProject.__projectDirectory, __GetFiles(_project));
+        __HotglueCopyRelativePathArray(_destinationProject.__projectDirectory, _sourceProject.__projectDirectory, __GetFiles(_sourceProject));
     }
     
     static __FixYYReferences = function(_project)
     {
-        var _buffer = buffer_load(__GetAbsolutePath(_project));
+        var _absolutePath = __GetAbsolutePath(_project);
+        
+        var _buffer = buffer_load(_absolutePath);
         var _string = buffer_read(_buffer, buffer_text);
         buffer_delete(_buffer);
         
@@ -59,7 +61,7 @@ function __HotglueResourceCommon(_resourceStruct) constructor
             
             var _buffer = buffer_create(string_byte_length(_string), buffer_fixed, 1);
             buffer_write(_buffer, buffer_text, _string);
-            buffer_save(_buffer, __GetAbsolutePath(_project));
+            buffer_save(_buffer, _absolutePath);
             buffer_delete(_buffer);
         }
         else

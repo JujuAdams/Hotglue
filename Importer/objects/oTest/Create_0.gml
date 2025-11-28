@@ -11,4 +11,4 @@ projectA = HotglueLoadYYMPS(global.repoRoot + "A/A.yymps");
 //projectB = HotglueLoadYYMPS(global.repoRoot + "B/B.yymps");
 
 projectDestination = new HotglueProject(global.repoRoot + "C/C.yyp");
-projectDestination.ImportAll(projectA);
+projectDestination.ImportAllFrom(projectA);

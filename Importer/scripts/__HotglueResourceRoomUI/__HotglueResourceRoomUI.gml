@@ -9,6 +9,8 @@ function __HotglueResourceRoomUI(_resourceStruct) : __HotglueResourceCommon(_res
     static __GetFiles = function(_project, _array = [])
     {
         array_push(_array, data.path);
+        
+        return _array;
     }
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)

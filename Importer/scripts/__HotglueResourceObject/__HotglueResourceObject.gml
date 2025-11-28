@@ -62,6 +62,8 @@ function __HotglueResourceObject(_resourceStruct) : __HotglueResourceCommon(_res
             
             ++_i;
         }
+        
+        return _array;
     }
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)

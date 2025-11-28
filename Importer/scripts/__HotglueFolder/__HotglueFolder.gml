@@ -13,6 +13,8 @@ function __HotglueFolder(_folderStruct) constructor
     static __GetFiles = function(_project, _array = [])
     {
         //Do nothing
+        
+        return _array;
     }
     
     static __Copy = function(_destinationProject, _sourceProject)
