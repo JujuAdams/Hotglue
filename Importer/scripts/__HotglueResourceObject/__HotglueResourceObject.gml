@@ -6,18 +6,13 @@ function __HotglueResourceObject(_resourceStruct) : __HotglueResourceCommon(_res
 {
     static resourceType = "object";
     
-    static __CopySpecific = function(_destinationDirectory, _sourceDirectory)
+    static __GetFiles = function(_project, _array = [])
     {
-        var _resourceName = filename_change_ext(filename_name(data.path), "");
-        var _copyArray = [ $"{_resourceName}.yy" ];
+        var _localDirectory = filename_dir(data.path) + "/";
         
-        var _sourcePath = _sourceDirectory + _copyArray[0];
+        array_push(_array, data.path);
         
-        var _buffer = buffer_load(_sourcePath);
-        var _yyString = buffer_read(_buffer, buffer_text);
-        buffer_delete(_buffer);
-        
-        var _yyJson = json_parse(_yyString);
+        var _yyJson = __GetYYJSON(_project);
         var _eventArray = _yyJson.eventList;
         
         var _i = 0;
@@ -53,22 +48,20 @@ function __HotglueResourceObject(_resourceStruct) : __HotglueResourceCommon(_res
                 var _collisionObjectID = _yyJson[$ "collisionObjectId"];
                 if (_collisionObjectID == undefined)
                 {
-                    array_push(_copyArray, $"{data.name}_{_eventData.eventNum}.gml");
+                    array_push(_array, $"{_localDirectory}{data.name}_{_eventData.eventNum}.gml");
                 }
                 else
                 {
-                    array_push(_copyArray, $"{_collisionObjectID.name}_{_eventData.eventNum}.gml");
+                    array_push(_array, $"{_localDirectory}{_collisionObjectID.name}_{_eventData.eventNum}.gml");
                 }
             }
             else
             {
-                array_push(_copyArray, $"{_eventName}_{_eventData.eventNum}.gml");
+                array_push(_array, $"{_localDirectory}{_eventName}_{_eventData.eventNum}.gml");
             }
             
             ++_i;
         }
-        
-        __HotglueCopyRelativePathArray(_destinationDirectory, _sourceDirectory, _copyArray);
     }
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)

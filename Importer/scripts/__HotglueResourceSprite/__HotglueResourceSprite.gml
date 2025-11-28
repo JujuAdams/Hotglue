@@ -6,18 +6,14 @@ function __HotglueResourceSprite(_resourceStruct) : __HotglueResourceCommon(_res
 {
     static resourceType = "sprite";
     
-    static __CopySpecific = function(_destinationDirectory, _sourceDirectory)
+    static __GetFiles = function(_project, _array = [])
     {
-        var _resourceName = filename_change_ext(filename_name(data.path), "");
-        var _copyArray = [ $"{_resourceName}.yy" ];
+        var _localDirectory = filename_dir(data.path) + "/";
         
-        var _sourcePath = _sourceDirectory + _copyArray[0];
+        array_push(_array, data.path);
         
-        var _buffer = buffer_load(_sourcePath);
-        var _yyString = buffer_read(_buffer, buffer_text);
-        buffer_delete(_buffer);
+        var _yyJson = __GetYYJSON(_project);
         
-        var _yyJson = json_parse(_yyString);
         var _frameArray = _yyJson.frames;
         var _layerArray = _yyJson.layers;
         
@@ -26,19 +22,17 @@ function __HotglueResourceSprite(_resourceStruct) : __HotglueResourceCommon(_res
         {
             var _frameName = _frameArray[_i].name;
             
-            array_push(_copyArray, $"{_frameName}.png");
+            array_push(_array, $"{_localDirectory}{_frameName}.png");
             
             var _j = 0;
             repeat(array_length(_layerArray))
             {
-                array_push(_copyArray, $"layers/{_frameName}/{_layerArray[_i].name}.png");
+                array_push(_array, $"{_localDirectory}layers/{_frameName}/{_layerArray[_i].name}.png");
                 ++_j;
             }
             
             ++_i;
         }
-        
-        __HotglueCopyRelativePathArray(_destinationDirectory, _sourceDirectory, _copyArray);
     }
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)

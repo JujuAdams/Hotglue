@@ -6,10 +6,10 @@ function __HotglueResourceTileset(_resourceStruct) : __HotglueResourceCommon(_re
 {
     static resourceType = "tileset";
     
-    static __CopySpecific = function(_destinationDirectory, _sourceDirectory)
+    static __GetFiles = function(_project, _array = [])
     {
-        var _resourceName = filename_change_ext(filename_name(data.path), "");
-        __HotglueCopyRelativePathArray(_destinationDirectory, _sourceDirectory, [ $"{_resourceName}.yy", "output_tileset.png" ]);
+        array_push(_array, data.path);
+        array_push(_array, filename_dir(data.path) + "/output_tileset.png");
     }
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)

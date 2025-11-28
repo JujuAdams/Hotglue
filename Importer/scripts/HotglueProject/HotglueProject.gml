@@ -12,6 +12,7 @@ function HotglueProject(_projectPath) constructor
     }
     
     __projectPath = _projectPath;
+    __projectDirectory = filename_dir(__projectPath) + "/";
     
     __quickAssetArray = [];
     __quickAssetDict  = {};
@@ -192,11 +193,8 @@ function HotglueProject(_projectPath) constructor
     
     static __ImportDirect = function(_otherProject, _assetArray)
     {
-        var _sourceDirectory = filename_dir(_otherProject.__projectPath) + "/";
-        var _destinationDirectory = filename_dir(__projectPath) + "/";
-        
         // 1. Ensure the user has Git set up
-        __HotglueAssertGit(_destinationDirectory);
+        __HotglueAssertGit(__projectDirectory);
         
         var _i = 0;
         repeat(array_length(_assetArray))
@@ -209,7 +207,7 @@ function HotglueProject(_projectPath) constructor
             }
             
             // 3. Copy raw files
-            _sourceHotglueAsset.__Copy(_sourceDirectory, _destinationDirectory);
+            _sourceHotglueAsset.__Copy(self, _otherProject);
             var _newHotglueAsset = variable_clone(_sourceHotglueAsset);
             
             // 4. Fix folder references in the .yy
@@ -269,13 +267,33 @@ function HotglueProject(_projectPath) constructor
         var _emptyBuffer = buffer_create(0, buffer_fixed, 1);
         var _projectDirectory = filename_dir(__projectPath) + "/";
         
+        var _fileArray = [];
+        
         var _quickAssetArray = __quickAssetArray;
         var _i = 0;
         repeat(array_length(_quickAssetArray))
         {
-            _quickAssetArray[_i].__VerifyFileUnzipped(_projectDirectory, _emptyBuffer);
+            _quickAssetArray[_i].__GetFiles(self, _fileArray);
             ++_i;
         }
+        
+        var _filesMissing = 0;
+        var _i = 0;
+        repeat(array_length(_fileArray))
+        {
+            var _path = _projectDirectory + _fileArray[_i];
+            if (not file_exists(_path))
+            {
+                __HotglueTrace($"Warning! \"{_path}\" not found, creating an empty file in its place");
+                buffer_save(_emptyBuffer, _path);
+                
+                ++_filesMissing;
+            }
+            
+            ++_i;
+        }
+        
+        __HotglueTrace($"Expecting {array_length(_fileArray)} file(s), {_filesMissing} file(s) were missing");
         
         buffer_delete(_emptyBuffer);
     }

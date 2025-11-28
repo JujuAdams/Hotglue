@@ -6,23 +6,9 @@ function __HotglueResourceRoom(_resourceStruct) : __HotglueResourceCommon(_resou
 {
     static resourceType = "room";
     
-    static __CopySpecific = function(_destinationDirectory, _sourceDirectory)
+    static __GetFiles = function(_project, _array = [])
     {
-        // TODO - Handle room / instance GML code
-        
-        var _resourceName = filename_change_ext(filename_name(data.path), "");
-        var _copyArray = [ $"{_resourceName}.yy" ];
-        
-        var _sourcePath = _sourceDirectory + _copyArray[0];
-        
-        var _buffer = buffer_load(_sourcePath);
-        var _yyString = buffer_read(_buffer, buffer_text);
-        buffer_delete(_buffer);
-        
-        var _yyJson = json_parse(_yyString);
-        
-        var _resourceName = filename_change_ext(filename_name(data.path), "");
-        __HotglueCopyRelativePathArray(_destinationDirectory, _sourceDirectory, [ $"{_resourceName}.yy" ]);
+        array_push(_array, data.path);
     }
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)

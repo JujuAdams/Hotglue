@@ -6,25 +6,15 @@ function __HotglueResourceSound(_resourceStruct) : __HotglueResourceCommon(_reso
 {
     static resourceType = "sound";
     
-    static __CopySpecific = function(_destinationDirectory, _sourceDirectory)
+    static __GetFiles = function(_project, _array = [])
     {
-        var _resourceName = filename_change_ext(filename_name(data.path), "");
-        var _copyArray = [ $"{_resourceName}.yy" ];
+        array_push(_array, data.path);
         
-        var _sourcePath = _sourceDirectory + _copyArray[0];
-        
-        var _buffer = buffer_load(_sourcePath);
-        var _yyString = buffer_read(_buffer, buffer_text);
-        buffer_delete(_buffer);
-        
-        var _yyJson = json_parse(_yyString);
-        var _soundFilePath = _yyJson.soundFile;
+        var _soundFilePath = __GetYYJSON(_project).soundFile;
         if (_soundFilePath != "")
         {
-            array_push(_copyArray, _soundFilePath);
+            array_push(_array, filename_dir(data.path) + "/" + _soundFilePath);
         }
-        
-        __HotglueCopyRelativePathArray(_destinationDirectory, _sourceDirectory, _copyArray);
     }
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)

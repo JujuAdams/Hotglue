@@ -6,10 +6,11 @@ function __HotglueResourceShader(_resourceStruct) : __HotglueResourceCommon(_res
 {
     static resourceType = "shader";
     
-    static __CopySpecific = function(_destinationDirectory, _sourceDirectory)
+    static __GetFiles = function(_project, _array = [])
     {
-        var _resourceName = filename_change_ext(filename_name(data.path), "");
-        __HotglueCopyRelativePathArray(_destinationDirectory, _sourceDirectory, [ $"{_resourceName}.yy", $"{_resourceName}.fsh", $"{_resourceName}.vsh" ]);
+        array_push(_array, data.path);
+        array_push(_array, filename_change_ext(data.path, ".fsh"));
+        array_push(_array, filename_change_ext(data.path, ".vsh"));
     }
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)

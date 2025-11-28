@@ -10,12 +10,12 @@ function __HotglueFolder(_folderStruct) constructor
     name = $"folder:{__HotglueProcessFolderPath(_folderStruct.folderPath)}"
     data = _folderStruct;
     
-    static __VerifyFileUnzipped = function(_projectDirectory, _emptyBuffer)
+    static __GetFiles = function(_project, _array = [])
     {
-        //Do nothing!
+        //Do nothing
     }
     
-    static __Copy = function(_sourceProjectPath, _destinationProjectPath)
+    static __Copy = function(_destinationProject, _sourceProject)
     {
         //Do nothing!
     }

@@ -8,11 +8,6 @@ function __HotglueResourceCommon(_resourceStruct) constructor
     name = $"resource:{_resourceStruct.name}";
     data = _resourceStruct;
     
-    static __VerifyFileUnzipped = function(_projectDirectory, _emptyBuffer)
-    {
-        // TODO
-    }
-    
     static __GetAbsolutePath = function(_project)
     {
         return filename_dir(_project.__projectPath) + "/" + data.path;
@@ -27,11 +22,9 @@ function __HotglueResourceCommon(_resourceStruct) constructor
         return json_parse(_string);
     }
     
-    static __Copy = function(_sourceProjectDirectory, _destinationProjectDirectory)
+    static __Copy = function(_destinationProject, _sourceProject)
     {
-        var _relativeDirectory = filename_dir(data.path);
-        var _destinationDirectory = _destinationProjectDirectory + _relativeDirectory + "/";
-        var _sourceDirectory = _sourceProjectDirectory + _relativeDirectory + "/";
+        var _destinationDirectory = _destinationProject.__projectDirectory + filename_dir(data.path) + "/";
         
         if (_system.__destructiveCopy)
         {
@@ -40,7 +33,7 @@ function __HotglueResourceCommon(_resourceStruct) constructor
         
         directory_create(_destinationDirectory);
         
-        return __CopySpecific(_destinationDirectory, _sourceDirectory);
+        __HotglueCopyRelativePathArray(_destinationProject.__projectDirectory, _sourceProject.__projectDirectory, __GetFiles(_project));
     }
     
     static __FixYYReferences = function(_project)

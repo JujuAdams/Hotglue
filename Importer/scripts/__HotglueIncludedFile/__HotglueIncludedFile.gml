@@ -16,21 +16,15 @@ function __HotglueIncludedFile(_includedFileStruct) constructor
     name = $"included:{_includedFileName}";
     data = _includedFileStruct;
     
-    static __VerifyFileUnzipped = function(_projectDirectory, _emptyBuffer)
+    static __GetFiles = function(_project, _array = [])
     {
-        var _path = _projectDirectory + data.filePath + "/" + data.name;
-        if (not file_exists(_path))
-        {
-            __HotglueTrace($"Warning! Included file \"{_path}\" not found, creating an empty file in its place");
-            buffer_save(_emptyBuffer, _path);
-        }
+        array_push(_array, data.filePath + "/" + data.name);
     }
     
-    static __Copy = function(_sourceProjectDirectory, _destinationProjectDirectory)
+    static __Copy = function(_destinationProject, _sourceProject)
     {
-        var _destinationPath = _destinationProjectDirectory + data.filePath + "/" + data.name;
-        var _sourcePath = _sourceProjectDirectory + data.filePath + "/" + data.name;
-        
+        var _destinationPath = _destinationProject.__projectDirectory + data.filePath + "/" + data.name;
+        var _sourcePath = _sourceProject.__projectDirectory + data.filePath + "/" + data.name;
         file_copy(_sourcePath, _destinationPath);
     }
     
