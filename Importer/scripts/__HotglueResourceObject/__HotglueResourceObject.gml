@@ -76,6 +76,45 @@ function __HotglueResourceObject(_resourceStruct) : __HotglueResourceCommon(_res
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)
     {
-        //TODO
+        var _absolutePath = filename_dir(_project.__projectPath) + "/" + data.path;
+        
+        var _buffer = buffer_load(_absolutePath);
+        var _string = buffer_read(_buffer, buffer_text);
+        buffer_delete(_buffer);
+        
+        var _json = json_parse(_string);
+        
+        var _spriteData = _json.spriteId;
+        if (is_struct(_spriteData))
+        {
+            var _spriteAssetName = $"resource:{_spriteData.name}";
+            if (not variable_struct_exists(_visitedDict, _spriteAssetName))
+            {
+                array_push(_visitedArray, _spriteAssetName);
+                _visitedDict[$ _spriteAssetName] = true;
+            }
+        }
+        
+        var _maskData = _json.spriteMaskId;
+        if (is_struct(_maskData))
+        {
+            var _maskAssetName = $"resource:{_maskData.name}";
+            if (not variable_struct_exists(_visitedDict, _maskAssetName))
+            {
+                array_push(_visitedArray, _maskAssetName);
+                _visitedDict[$ _maskAssetName] = true;
+            }
+        }
+        
+        var _parentData = _json.parentObjectId;
+        if (is_struct(_parentData))
+        {
+            var _parentAssetName = $"resource:{_parentData.name}";
+            if (not variable_struct_exists(_visitedDict, _parentAssetName))
+            {
+                array_push(_visitedArray, _parentAssetName);
+                _visitedDict[$ _parentAssetName] = true;
+            }
+        }
     }
 }

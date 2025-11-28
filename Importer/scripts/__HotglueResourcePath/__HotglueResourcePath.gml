@@ -15,6 +15,6 @@ function __HotglueResourcePath(_resourceStruct) : __HotglueResourceCommon(_resou
     
     static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)
     {
-        //TODO
+        //Do nothing!
     }
 }
