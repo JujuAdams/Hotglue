@@ -10,5 +10,7 @@ global.repoRoot = filename_dir(filename_dir(GM_project_filename)) + "/";
 projectA = HotglueLoadYYMPS(global.repoRoot + "A/A.yymps");
 //projectB = HotglueLoadYYMPS(global.repoRoot + "B/B.yymps");
 
+projectA.GetExpandedAssets("resource:TileSet1");
+
 projectDestination = new HotglueProject(global.repoRoot + "C/C.yyp");
 projectDestination.ImportAll(projectA);

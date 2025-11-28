@@ -150,6 +150,42 @@ function HotglueProject(_projectPath) constructor
         return _conflictArray;
     }
     
+    static GetExpandedAssets = function(_assetArray)
+    {
+        if (not is_array(_assetArray))
+        {
+            _assetArray = [_assetArray];
+        }
+        
+        var _visitedArray = variable_clone(_assetArray);
+        var _visitedDict  = {};
+        
+        var _i = 0;
+        repeat(array_length(_visitedArray))
+        {
+            _visitedDict[$ _visitedArray[_i]] = true;
+            ++_i;
+        }
+        
+        var _i = 0;
+        repeat(array_length(_visitedArray))
+        {
+            var _assetName = _visitedArray[_i];
+            
+            var _asset = __quickAssetDict[$ _assetName];
+            if (_asset == undefined)
+            {
+                __HotglueError("Asset \"{_assetName}\" not found in project");
+            }
+            
+            _asset.__GetExpandedAssets(self, _visitedArray, _visitedDict);
+            
+            ++_i;
+        }
+        
+        return _visitedArray;
+    }
+    
     static ImportAll = function(_otherProject)
     {
         var _sourceDirectory = filename_dir(_otherProject.__projectPath) + "/";

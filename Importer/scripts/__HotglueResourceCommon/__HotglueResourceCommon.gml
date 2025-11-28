@@ -90,4 +90,9 @@ function __HotglueResourceCommon(_resourceStruct) constructor
         var _insertString = $"    \{\"id\":\{\"name\":\"{data.name}\",\"path\":\"{data.path}\",},},\n";
         _project.__yypString = string_insert(_insertString, _yypString, _pos);
     }
+    
+    static __GetExpandedAssets = function(_project, _visitedArray, _visitedDict)
+    {
+        __GetExpandedAssetsSpecific(_project, _visitedArray, _visitedDict);
+    }
 }

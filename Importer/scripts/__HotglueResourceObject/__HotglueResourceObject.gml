@@ -73,4 +73,9 @@ function __HotglueResourceObject(_resourceStruct) : __HotglueResourceCommon(_res
         
         __HotglueCopyRelativePathArray(_destinationDirectory, _sourceDirectory, _copyArray);
     }
+    
+    static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)
+    {
+        //TODO
+    }
 }

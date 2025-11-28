@@ -55,4 +55,9 @@ function __HotglueFolder(_folderStruct) constructor
         var _insertString = $"    \{\"$GMFolder\":\"\",\"%Name\":\"{_folderName}\",\"folderPath\":\"{_folderPath}\",\"name\":\"{_folderName}\",\"resourceType\":\"GMFolder\",\"resourceVersion\":\"2.0\",\},\n";
         _project.__yypString = string_insert(_insertString, _yypString, _pos);
     }
+    
+    static __GetExpandedAssets = function(_project, _visitedArray, _visitedDict)
+    {
+        //Do nothing!
+    }
 }

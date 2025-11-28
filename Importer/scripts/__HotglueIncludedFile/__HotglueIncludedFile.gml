@@ -14,7 +14,7 @@ function __HotglueIncludedFile(_includedFileStruct) constructor
         _includedFileName = string_delete(_includedFileName, 1, 10);
     }
     
-    name =  $"included file:{_includedFileName}";
+    name =  $"included:{_includedFileName}";
     data =  _includedFileStruct;
     
     static __VerifyFileUnzipped = function(_projectDirectory, _emptyBuffer)
@@ -43,5 +43,10 @@ function __HotglueIncludedFile(_includedFileStruct) constructor
     static __InsertIntoYYP = function(_project)
     {
         //TODO
+    }
+    
+    static __GetExpandedAssets = function(_project, _visitedArray, _visitedDict)
+    {
+        //Do nothing!
     }
 }

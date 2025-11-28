@@ -12,4 +12,9 @@ function __HotglueResourceNote(_resourceStruct) : __HotglueResourceCommon(_resou
         var _resourceName = filename_change_ext(filename_name(data.path), "");
         __HotglueCopyRelativePathArray(_destinationDirectory, _sourceDirectory, [ $"{_resourceName}.yy", $"{_resourceName}.txt" ]);
     }
+    
+    static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)
+    {
+        //Do nothing!
+    }
 }
