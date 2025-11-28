@@ -2,7 +2,7 @@
 
 /// @param projectPath
 
-function HotglueProject(_projectPath) constructor
+function __HotglueProject(_projectPath) constructor
 {
     __HotglueTrace($"Creating project representation \"{_projectPath}\"");
     
@@ -75,14 +75,29 @@ function HotglueProject(_projectPath) constructor
         return __projectPath;
     }
     
-    static GetAssetArray = function()
+    static GetDirectory = function()
     {
-        return __quickAssetArray;
+        return __projectDirectory;
     }
     
-    static GetAssetExists = function(_target)
+    static GetAssets = function()
     {
-        return variable_struct_exists(__quickAssetDict, _target);
+        var _array = [];
+        
+        var _quickAssetArray = __quickAssetArray;
+        var _i = 0;
+        repeat(array_length(_quickAssetArray))
+        {
+            array_push(_array, _quickAssetArray[_i].name);
+            ++_i;
+        }
+        
+        return _array;
+    }
+    
+    static GetAssetExists = function(_assetRef)
+    {
+        return variable_struct_exists(__quickAssetDict, _assetRef);
     }
     
     static GetNonConflicting = function(_otherProject)

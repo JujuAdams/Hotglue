@@ -1,5 +1,8 @@
 // Feather disable all
 
+/// Loads a .yyz file and returns an struct constructed by `__HotglueProject`. Please see
+/// `HotglueLoadYYP()` for struct methods that you can use.
+/// 
 /// @param path
 
 function HotglueLoadYYZ(_yyzPath)
@@ -41,7 +44,7 @@ function HotglueLoadYYZ(_yyzPath)
         __HotglueError("No .yyp file found inside archive");
     }
     
-    var _project = new HotglueProject(_directory + _projectPath);
+    var _project = new __HotglueProject(_directory + _projectPath);
     _project.__VerifyFilesUnzipped();
     
     return _project;

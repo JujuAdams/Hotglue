@@ -1,5 +1,8 @@
 // Feather disable all
 
+/// Loads a .yymps file and returns an struct constructed by `__HotglueProject`. Please see
+/// `HotglueLoadYYP()` for struct methods that you can use.
+/// 
 /// @param path
 
 function HotglueLoadYYMPS(_yympsPath)
@@ -34,7 +37,7 @@ function HotglueLoadYYMPS(_yympsPath)
     var _json = json_parse(_string);
     var _displayName = _json.display_name;
     
-    var _project = new HotglueProject(_directory + _displayName + ".yyp");
+    var _project = new __HotglueProject(_directory + _displayName + ".yyp");
     _project.__VerifyFilesUnzipped();
     
     return _project;

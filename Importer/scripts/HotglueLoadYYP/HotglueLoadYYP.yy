@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"HotglueProject",
+  "%Name":"HotglueLoadYYP",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HotglueProject",
+  "name":"HotglueLoadYYP",
   "parent":{
     "name":"Hotglue",
     "path":"folders/Hotglue.yy",
