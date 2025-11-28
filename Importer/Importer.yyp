@@ -55,6 +55,7 @@
     {"id":{"name":"__HotglueTryExpandingAssetID","path":"scripts/__HotglueTryExpandingAssetID/__HotglueTryExpandingAssetID.yy",},},
     {"id":{"name":"HotglueGetSuppressGitAssert","path":"scripts/HotglueGetSuppressGitAssert/HotglueGetSuppressGitAssert.yy",},},
     {"id":{"name":"HotglueLoadYYMPS","path":"scripts/HotglueLoadYYMPS/HotglueLoadYYMPS.yy",},},
+    {"id":{"name":"HotglueLoadYYZ","path":"scripts/HotglueLoadYYZ/HotglueLoadYYZ.yy",},},
     {"id":{"name":"HotglueProject","path":"scripts/HotglueProject/HotglueProject.yy",},},
     {"id":{"name":"HotglueSetSuppressGitAssert","path":"scripts/HotglueSetSuppressGitAssert/HotglueSetSuppressGitAssert.yy",},},
   ],
