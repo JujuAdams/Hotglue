@@ -37,7 +37,7 @@ function __HotglueResourceSprite(_resourceStruct) : __HotglueResourceCommon(_res
         return _array;
     }
     
-    static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)
+    static __GetExpandedAssets = function(_project, _visitedArray, _visitedDict)
     {
         //Do nothing!
     }

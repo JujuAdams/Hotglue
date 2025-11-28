@@ -14,7 +14,7 @@ function __HotglueResourceTileset(_resourceStruct) : __HotglueResourceCommon(_re
         return _array;
     }
     
-    static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)
+    static __GetExpandedAssets = function(_project, _visitedArray, _visitedDict)
     {
         __HotglueTryExpandingAssetID(__GetYYJSON(_project).spriteId, _visitedArray, _visitedDict);
     }

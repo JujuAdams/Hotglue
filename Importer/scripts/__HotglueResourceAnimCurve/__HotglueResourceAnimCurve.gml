@@ -13,7 +13,7 @@ function __HotglueResourceAnimCurve(_resourceStruct) : __HotglueResourceCommon(_
         return _array;
     }
     
-    static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)
+    static __GetExpandedAssets = function(_project, _visitedArray, _visitedDict)
     {
         //Do nothing!
     }

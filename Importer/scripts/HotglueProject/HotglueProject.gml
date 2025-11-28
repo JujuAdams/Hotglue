@@ -23,7 +23,6 @@ function HotglueProject(_projectPath) constructor
     
     var _buffer = buffer_load(_projectPath);
     __yypString = buffer_read(_buffer, buffer_text);
-    __yypTextDirty = false;
     buffer_delete(_buffer);
     
     __yypJson = json_parse(__yypString);
@@ -198,7 +197,7 @@ function HotglueProject(_projectPath) constructor
         
         if (_subfolder != "")
         {
-            EnsureFolderPath(_subfolder);
+            __EnsureFolderPath(_subfolder);
         }
         
         var _i = 0;
@@ -230,21 +229,13 @@ function HotglueProject(_projectPath) constructor
         }
         
         // 8. Save updated .yyp
-        SaveYYPIfDirty(true);
-    }
-    
-    static SaveYYPIfDirty = function(_force = false)
-    {
-        if ((not __yypTextDirty) && (not _force)) return;
-        __yypTextDirty = false;
-        
         var _buffer = buffer_create(string_byte_length(__yypString), buffer_fixed, 1);
         buffer_write(_buffer, buffer_text, __yypString);
         buffer_save(_buffer, __projectPath);
         buffer_delete(_buffer);
     }
     
-    static EnsureFolderPath = function(_inPath)
+    static __EnsureFolderPath = function(_inPath)
     {
         if (_inPath == "")
         {

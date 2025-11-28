@@ -19,7 +19,7 @@ function __HotglueResourceSound(_resourceStruct) : __HotglueResourceCommon(_reso
         return _array;
     }
     
-    static __GetExpandedAssetsSpecific = function(_project, _visitedArray, _visitedDict)
+    static __GetExpandedAssets = function(_project, _visitedArray, _visitedDict)
     {
         //Do nothing!
     }
