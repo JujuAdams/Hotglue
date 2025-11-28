@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HotglueResourceUnhandled",
+  "%Name":"__HotglueResourceSprite",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HotglueResourceUnhandled",
+  "name":"__HotglueResourceSprite",
   "parent":{
     "name":"Classes",
     "path":"folders/Hotglue/(System)/Classes.yy",

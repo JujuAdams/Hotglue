@@ -9,6 +9,8 @@ function __HotglueResourceObject(_resourceStruct) : __HotglueResourceCommon(_res
     
     static __CopySpecific = function(_destinationDirectory, _sourceDirectory)
     {
+        // TODO - Pull in referenced assets too maybe?
+        
         var _resourceName = filename_change_ext(filename_name(data.path), "");
         var _copyArray = [ $"{_resourceName}.yy" ];
         
