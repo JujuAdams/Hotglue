@@ -8,6 +8,8 @@ function __HotglueIncludedFile(_includedFileStruct) constructor
     static type = "included file";
     
     var _includedFileName = _includedFileStruct.filePath + "/" + _includedFileStruct.name;
+    path = _includedFileName;
+    
     if (string_copy(_includedFileName, 1, 10) == "datafiles/")
     {
         _includedFileName = string_delete(_includedFileName, 1, 10);
@@ -18,15 +20,15 @@ function __HotglueIncludedFile(_includedFileStruct) constructor
     
     static __GetFiles = function(_project, _array = [])
     {
-        array_push(_array, data.filePath + "/" + data.name);
+        array_push(_array, path);
         
         return _array;
     }
     
     static __Copy = function(_destinationProject, _sourceProject)
     {
-        var _destinationPath = _destinationProject.__projectDirectory + data.filePath + "/" + data.name;
-        var _sourcePath = _sourceProject.__projectDirectory + data.filePath + "/" + data.name;
+        var _destinationPath = _destinationProject.__projectDirectory + path;
+        var _sourcePath = _sourceProject.__projectDirectory + path;
         file_copy(_sourcePath, _destinationPath);
     }
     

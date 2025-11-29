@@ -55,5 +55,8 @@ function HotglueLoadYYP(_yypPath)
         __HotglueError($"\"{_yypPath}\" doesn't exist");
     }
     
-    return new __HotglueProject(_yypPath);
+    var _project = new __HotglueProject(_yypPath);
+    _project.__VerifyIncludedFilesExist();
+    
+    return _project;
 }

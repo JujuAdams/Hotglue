@@ -310,4 +310,40 @@ function __HotglueProject(_projectPath) constructor
         
         buffer_delete(_emptyBuffer);
     }
+    
+    static __VerifyIncludedFilesExist = function()
+    {
+        var _projectDirectory = filename_dir(__projectPath) + "/";
+        
+        var _filesExpected = 0;
+        var _filesMissing = 0;
+        
+        var _quickAssetArray = __quickAssetArray;
+        var _quickAssetDict  = __quickAssetDict;
+        
+        var _i = array_length(_quickAssetArray)-1;
+        repeat(array_length(_quickAssetArray))
+        {
+            var _asset = _quickAssetArray[_i];
+            
+            if (_asset.type == "included file")
+            {
+                ++_filesExpected;
+                
+                var _path = _projectDirectory + _asset.path;
+                if (not file_exists(_path))
+                {
+                    __HotglueTrace($"Warning! \"{_path}\" not found, removing from project manifest");
+                    ++_filesMissing;
+                    
+                    array_delete(_quickAssetArray, _i, 1);
+                    variable_struct_remove(_quickAssetDict, _asset.name);
+                }
+            }
+            
+            --_i;
+        }
+        
+        __HotglueTrace($"Expecting {_filesExpected} included file(s), {_filesMissing} file(s) were missing");
+    }
 }
