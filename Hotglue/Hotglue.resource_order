@@ -1,13 +1,13 @@
 {
   "FolderOrderSettings":[
-    {"name":"Hotglue","order":5,"path":"folders/Hotglue.yy",},
+    {"name":"Hotglue","order":1,"path":"folders/Hotglue.yy",},
     {"name":"(System)","order":3,"path":"folders/Hotglue/(System).yy",},
     {"name":"Classes","order":8,"path":"folders/Hotglue/(System)/Classes.yy",},
+    {"name":"(Internals)","order":3,"path":"folders/ImGM/(Internals).yy",},
   ],
   "ResourceOrderSettings":[
-    {"name":"oInterface","order":6,"path":"objects/oInterface/oInterface.yy",},
-    {"name":"oLanding","order":7,"path":"objects/oLanding/oLanding.yy",},
-    {"name":"oTest","order":1,"path":"objects/oTest/oTest.yy",},
+    {"name":"oInterface","order":3,"path":"objects/oInterface/oInterface.yy",},
+    {"name":"oLanding","order":2,"path":"objects/oLanding/oLanding.yy",},
     {"name":"rMain","order":4,"path":"rooms/rMain/rMain.yy",},
     {"name":"__HotglueAssertGit","order":2,"path":"scripts/__HotglueAssertGit/__HotglueAssertGit.yy",},
     {"name":"__HotglueCopyRelativePathArray","order":5,"path":"scripts/__HotglueCopyRelativePathArray/__HotglueCopyRelativePathArray.yy",},
@@ -35,9 +35,11 @@
     {"name":"__HotglueSystem","order":3,"path":"scripts/__HotglueSystem/__HotglueSystem.yy",},
     {"name":"__HotglueTrace","order":1,"path":"scripts/__HotglueTrace/__HotglueTrace.yy",},
     {"name":"__HotglueTryExpandingAssetID","order":7,"path":"scripts/__HotglueTryExpandingAssetID/__HotglueTryExpandingAssetID.yy",},
+    {"name":"__ImGuiConstants","order":2,"path":"scripts/__ImGuiConstants/__ImGuiConstants.yy",},
     {"name":"HotglueGetSuppressGitAssert","order":5,"path":"scripts/HotglueGetSuppressGitAssert/HotglueGetSuppressGitAssert.yy",},
     {"name":"HotglueLoadYYP","order":2,"path":"scripts/HotglueLoadYYP/HotglueLoadYYP.yy",},
     {"name":"HotglueLoadYYZ","order":1,"path":"scripts/HotglueLoadYYZ/HotglueLoadYYZ.yy",},
     {"name":"HotglueSetSuppressGitAssert","order":4,"path":"scripts/HotglueSetSuppressGitAssert/HotglueSetSuppressGitAssert.yy",},
+    {"name":"ImGuiContext","order":1,"path":"scripts/ImGuiContext/ImGuiContext.yy",},
   ],
 }
