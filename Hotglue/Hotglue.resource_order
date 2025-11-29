@@ -1,11 +1,14 @@
 {
   "FolderOrderSettings":[
-    {"name":"Hotglue","order":7,"path":"folders/Hotglue.yy",},
+    {"name":"Hotglue","order":5,"path":"folders/Hotglue.yy",},
     {"name":"(System)","order":3,"path":"folders/Hotglue/(System).yy",},
     {"name":"Classes","order":8,"path":"folders/Hotglue/(System)/Classes.yy",},
   ],
   "ResourceOrderSettings":[
-    {"name":"rMain","order":1,"path":"rooms/rMain/rMain.yy",},
+    {"name":"oInterface","order":6,"path":"objects/oInterface/oInterface.yy",},
+    {"name":"oLanding","order":7,"path":"objects/oLanding/oLanding.yy",},
+    {"name":"oTest","order":1,"path":"objects/oTest/oTest.yy",},
+    {"name":"rMain","order":4,"path":"rooms/rMain/rMain.yy",},
     {"name":"__HotglueAssertGit","order":2,"path":"scripts/__HotglueAssertGit/__HotglueAssertGit.yy",},
     {"name":"__HotglueCopyRelativePathArray","order":5,"path":"scripts/__HotglueCopyRelativePathArray/__HotglueCopyRelativePathArray.yy",},
     {"name":"__HotglueDetermineResourceConstructor","order":4,"path":"scripts/__HotglueDetermineResourceConstructor/__HotglueDetermineResourceConstructor.yy",},
