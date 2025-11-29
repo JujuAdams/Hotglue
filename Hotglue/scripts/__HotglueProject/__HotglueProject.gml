@@ -220,7 +220,7 @@ function __HotglueProject(_projectPath) constructor
         {
             var _sourceHotglueAsset = _assetArray[_i];
             
-            if (GetAssetExists(_sourceHotglueAsset.name))
+            if ((_sourceHotglueAsset.type != "folder") && GetAssetExists(_sourceHotglueAsset.name))
             {
                 __HotglueError($"Asset \"{_sourceHotglueAsset.name}\" already exists in project \"{GetPath()}\"");
             }
