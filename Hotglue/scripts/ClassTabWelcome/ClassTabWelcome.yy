@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"ClassTabWelcome",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ClassTabWelcome",
+  "parent":{
+    "name":"Classes",
+    "path":"folders/Interface/Classes.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

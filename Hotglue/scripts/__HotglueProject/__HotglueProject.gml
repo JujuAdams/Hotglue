@@ -297,7 +297,7 @@ function __HotglueProject(_projectPath) constructor
             var _path = _projectDirectory + _fileArray[_i];
             if (not file_exists(_path))
             {
-                __HotglueTrace($"Warning! \"{_path}\" not found, creating an empty file in its place");
+                __HotglueWarning($"\"{_path}\" not found, creating an empty file in its place");
                 buffer_save(_emptyBuffer, _path);
                 
                 ++_filesMissing;
@@ -306,7 +306,10 @@ function __HotglueProject(_projectPath) constructor
             ++_i;
         }
         
-        __HotglueTrace($"Expecting {array_length(_fileArray)} file(s), {_filesMissing} file(s) were missing");
+        if (_filesMissing > 0)
+        {
+            __HotglueWarning($"Expecting {array_length(_fileArray)} file(s), {_filesMissing} file(s) were missing");
+        }
         
         buffer_delete(_emptyBuffer);
     }
@@ -333,7 +336,7 @@ function __HotglueProject(_projectPath) constructor
                 var _path = _projectDirectory + _asset.path;
                 if (not file_exists(_path))
                 {
-                    __HotglueTrace($"Warning! \"{_path}\" not found, removing from project manifest");
+                    __HotglueWarning($"Warning! \"{_path}\" not found, removing from project manifest");
                     ++_filesMissing;
                     
                     array_delete(_quickAssetArray, _i, 1);
@@ -344,6 +347,9 @@ function __HotglueProject(_projectPath) constructor
             --_i;
         }
         
-        __HotglueTrace($"Expecting {_filesExpected} included file(s), {_filesMissing} file(s) were missing");
+        if (_filesMissing > 0)
+        {
+            __HotglueWarning($"Expecting {_filesExpected} included file(s), {_filesMissing} file(s) were missing");
+        }
     }
 }

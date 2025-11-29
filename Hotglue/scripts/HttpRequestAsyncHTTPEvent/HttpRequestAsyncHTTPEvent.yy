@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HttpRequestAsyncHTTPEvent",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HttpRequestAsyncHTTPEvent",
+  "parent":{
+    "name":"HTTP",
+    "path":"folders/HTTP.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

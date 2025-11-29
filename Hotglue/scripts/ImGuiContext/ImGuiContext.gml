@@ -154,13 +154,23 @@ function ImGuiContext(_xOffset, _yOffset, _width, _height, _configFlagsSet = ImG
         
         with(_result)
         {
-            xOffset = __xOffset;
-            yOffset = __yOffset;
-            width   = Display.Width;
-            height  = Display.Height;
+            xOffset = other.__xOffset;
+            yOffset = other.__yOffset;
+            width   = other.Display.Width;
+            height  = other.Display.Height;
         }
         
         return _result;
+    }
+    
+    static SetScale = function(_scale)
+    {
+        Display.Scale = _scale;
+    }
+    
+    static GetScale = function()
+    {
+        return Display.Scale;
     }
     
     static GetPointInside = function(_x, _y)

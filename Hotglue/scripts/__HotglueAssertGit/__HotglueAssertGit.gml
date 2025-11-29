@@ -16,7 +16,7 @@ function __HotglueAssertGit(_directory)
     {
         if (_system.__suppressGitAssert)
         {
-            __HotglueTrace("Warning! No .git directory found");
+            __HotglueWarning("No .git directory found");
         }
         else
         {

@@ -14,7 +14,10 @@ function __HotglueSystem()
     with(_system)
     {
         __suppressGitAssert = false;
-        __destructiveCopy = true;
+        __destructiveCopy   = true;
+        
+        __traceHandler   = function() {};
+        __warningHandler = function() {};
     }
     
     return _system;

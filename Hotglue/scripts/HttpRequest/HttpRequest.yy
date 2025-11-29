@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HttpRequest",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HttpRequest",
+  "parent":{
+    "name":"HTTP",
+    "path":"folders/HTTP.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
