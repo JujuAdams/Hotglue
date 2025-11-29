@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueGetDestructiveCopy",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueGetDestructiveCopy",
+  "parent":{
+    "name":"Hotglue",
+    "path":"folders/Hotglue.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

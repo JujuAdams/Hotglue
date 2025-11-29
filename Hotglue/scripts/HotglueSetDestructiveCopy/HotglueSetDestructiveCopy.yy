@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"ClassTabGitHub",
+  "%Name":"HotglueSetDestructiveCopy",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ClassTabGitHub",
+  "name":"HotglueSetDestructiveCopy",
   "parent":{
-    "name":"Classes",
-    "path":"folders/Interface/Classes.yy",
+    "name":"Hotglue",
+    "path":"folders/Hotglue.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

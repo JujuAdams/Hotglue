@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"ClassChannelGitHub",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ClassChannelGitHub",
+  "parent":{
+    "name":"Classes",
+    "path":"folders/Interface/Classes.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,8 +1,8 @@
 // Feather disable all
 
-function ClassTabGitHub() : ClassTab() constructor
+function ClassChannelGitHub() : ClassTab() constructor
 {
-    __channelURL = "https://raw.githubusercontent.com/JujuAdams/Hotglue-Index/refs/heads/main/github.json";
+    __channelURL = "";
     
     __linkArray = [];
     __selectedLink = undefined;
@@ -14,6 +14,26 @@ function ClassTabGitHub() : ClassTab() constructor
             Build();
             ImGuiEndTabItem();
         }
+    }
+    
+    static GetURL = function()
+    {
+        return __channelURL;
+    }
+    
+    static SetURL = function(_url, _allowRefresh = true)
+    {
+        if (_url != __channelURL)
+        {
+            __channelURL = _url;
+            
+            if (_allowRefresh)
+            {
+                Refresh();
+            }
+        }
+        
+        return self;
     }
     
     static Build = function()

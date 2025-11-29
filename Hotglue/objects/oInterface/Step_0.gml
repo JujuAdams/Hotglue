@@ -10,9 +10,9 @@ if (_return & ImGuiReturnMask.Return)
     projectTab.TabItem();
     
     var _i = 0;
-    repeat(array_length(channelTabArray))
+    repeat(array_length(channelArray))
     {
-        channelTabArray[_i].TabItem();
+        channelArray[_i].TabItem();
         ++_i;
     }
     
