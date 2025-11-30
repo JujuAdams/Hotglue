@@ -106,11 +106,11 @@ function ClassTabProject() : ClassTab() constructor
                             if (array_get_index(__looseFileViewArray, _path) < 0)
                             {
                                 array_push(__looseFileViewArray, new ClassInterfaceFileView(_looseFile));
-                                InterfaceTrace("Loaded \"{_path}\"");
+                                InterfaceTrace($"Loaded \"{_path}\"");
                             }
                             else
                             {
-                                InterfaceTrace("\"{_path}\" has already been loaded");
+                                InterfaceTrace($"\"{_path}\" has already been loaded");
                             }
                         }
                         catch(_error)

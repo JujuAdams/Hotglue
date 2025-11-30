@@ -80,7 +80,7 @@ function ClassInterfaceProjectView(_project) constructor
                 var _i = 0;
                 repeat(array_length(_comparisonData))
                 {
-                    _otherQuickAssetDict[$ $"resource:{_comparisonData[_i].GetName()}"] = true;
+                    _otherQuickAssetDict[$ $"resource:{_comparisonData[_i].__file.GetName()}"] = true;
                     ++_i;
                 }
             }

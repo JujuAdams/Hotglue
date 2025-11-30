@@ -1,5 +1,10 @@
 // Feather disable all
 
+// https://api.github.com/repos/jujuadams/dotobj/pulls
+// https://api.github.com/repos/JujuAdams/dotobj/pulls/12
+// https://api.github.com/repos/cicadian/dotobj_merge/contents
+// https://raw.githubusercontent.com/cicadian/dotobj_merge/master/README.md
+
 function ClassChannelGitHub() : ClassTab() constructor
 {
     __channelURL = "";

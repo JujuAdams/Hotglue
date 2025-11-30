@@ -269,15 +269,15 @@ function __HotglueProject(_projectPath) constructor
             var _looseFile = _looseFileArray[_i];
             
             // 2. Generate an asset
-            var _asset = _looseFile.__GenerateAsset(self, _subfolder);
+            var _asset = _looseFile.__GenerateAsset(self);
             
             if (GetAssetExists(_asset.name))
             {
-                __HotglueError($"Asset \"{_asset.GetName()}\" already exists in project \"{GetPath()}\"");
+                __HotglueError($"Asset \"{_asset.name}\" already exists in project \"{GetPath()}\"");
             }
             
             // 3. Create files on disk inside the project
-            _looseFile.__CreateFilesInProject(self, _asset);
+            _looseFile.__CreateFilesOnDisk(self, _asset, _subfolder);
             
             // 4. Insert reference into .yyp
             _asset.__InsertIntoYYP(self, ""); //Don't need a subfolder here because we generate a correct folder path already
