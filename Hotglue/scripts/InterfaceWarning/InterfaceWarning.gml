@@ -10,9 +10,10 @@ function InterfaceWarning(_string)
         with(logTab)
         {
             newWarnings = true;
-            array_push(warningArray, {
+            array_push(logArray, {
                 time: _currentDateTime,
                 text: _string,
+                warning: true,
             });
         }
         
@@ -22,7 +23,7 @@ function InterfaceWarning(_string)
             
             static Build = function()
             {
-                ImGuiText(__string);
+                ImGuiTextColored(__string, INTERFACE_COLOR_RED_TEXT);
             }
         })($"Warning! {_string}");
     }

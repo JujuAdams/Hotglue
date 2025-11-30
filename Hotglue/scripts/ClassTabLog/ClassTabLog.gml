@@ -4,7 +4,6 @@ function ClassTabLog() : ClassTab() constructor
 {
     logArray = [];
     newWarnings = false;
-    warningArray = [];
     
     static TabItem = function()
     {
@@ -21,21 +20,55 @@ function ClassTabLog() : ClassTab() constructor
         {
             newWarnings = false;
             
-            ImGuiSetCursorPosY(ImGuiGetCursorPosY() + 3);
+            var _logArray = logArray;
             
-            if (array_length(warningArray) <= 0)
+            if (ImGuiButton("Copy to clipboard"))
             {
-                ImGuiTextWrapped("No warnings! Yet!");
-            }
-            else
-            {
+                var _string = "";
+                
                 var _i = 0;
-                repeat(array_length(warningArray))
+                repeat(array_length(_logArray))
                 {
-                    ImGuiTextWrapped(warningArray[_i].text);
+                    var _log = _logArray[_i];
+                    _string += $"{date_datetime_string(_log.time)}{_log.warning? " Warning! " : " "}{_log.text}\n";
                     ++_i;
                 }
+                
+                clipboard_set_text(_string);
+                InterfaceStatusOnly("Copied log to clipboard");
             }
+            
+            ImGuiBeginTable("logTable", 2, ImGuiTableFlags.BordersInner);
+            
+            ImGuiTableSetupColumn("time", ImGuiTableColumnFlags.WidthFixed, 150);
+            ImGuiTableSetupColumn("message");
+            
+            var _i = 0;
+            repeat(array_length(_logArray))
+            {
+                var _log = _logArray[_i];
+                
+                ImGuiTableNextRow();
+                
+                ImGuiTableNextColumn();
+                ImGuiTextColored(date_datetime_string(_log.time), c_gray);
+                ImGuiTableNextColumn();
+                
+                if (_log.warning)
+                {
+                    ImGuiPushStyleColor(ImGuiCol.Text, INTERFACE_COLOR_RED_TEXT, 1);
+                    ImGuiTextWrapped(_log.text);
+                    ImGuiPopStyleColor();
+                }
+                else
+                {
+                    ImGuiTextWrapped(_log.text);
+                }
+                
+                ++_i;
+            }
+            
+            ImGuiEndTable();
             
             ImGuiEndTabItem();
         }

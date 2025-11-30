@@ -1,8 +1,10 @@
+logTab = new ClassTabLog();
+InterfaceTrace("Interface created");
+
 welcomeTab  = new ClassTabWelcome();
 projectTab  = new ClassTabProject();
 channelsTab = new ClassTabChannels();
 settingsTab = new ClassTabSettings();
-logTab      = new ClassTabLog();
 
 favoritesTab = new ClassChannelFavorites();
 localTab     = new ClassChannelLocal();

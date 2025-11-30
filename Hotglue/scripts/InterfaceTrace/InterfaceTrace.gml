@@ -12,6 +12,7 @@ function InterfaceTrace(_string)
             array_push(logArray, {
                 time: _currentDateTime,
                 text: _string,
+                warning: false,
             });
         }
     }
