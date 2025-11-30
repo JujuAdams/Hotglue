@@ -1,8 +1,11 @@
 welcomeTab  = new ClassTabWelcome();
 projectTab  = new ClassTabProject();
+channelsTab = new ClassTabChannels();
 settingsTab = new ClassTabSettings();
-warningsTab = new ClassTabWarnings();
+logTab      = new ClassTabLog();
 
+favoritesTab = new ClassChannelFavorites();
+localTab     = new ClassChannelLocal();
 channelArray = [];
 array_push(channelArray, new ClassChannelGitHub().SetURL("https://raw.githubusercontent.com/JujuAdams/Hotglue-Index/refs/heads/main/github.json"));
 

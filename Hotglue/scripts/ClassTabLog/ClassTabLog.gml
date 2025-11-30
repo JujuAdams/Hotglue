@@ -1,7 +1,8 @@
 // Feather disable all
 
-function ClassTabWarnings() : ClassTab() constructor
+function ClassTabLog() : ClassTab() constructor
 {
+    logArray = [];
     newWarnings = false;
     warningArray = [];
     
@@ -9,14 +10,14 @@ function ClassTabWarnings() : ClassTab() constructor
     {
         if (newWarnings)
         {
-            var _displayName = ((current_time mod 300) < 150)? "! Warnings !" : "  Warnings  ";
+            var _displayName = ((current_time mod 300) < 150)? "! Log !" : "  Log  ";
         }
         else
         {
-            var _displayName = "Warnings";
+            var _displayName = "Log";
         }
         
-        if (ImGuiBeginTabItem($"{_displayName}###warningsTab"))
+        if (ImGuiBeginTabItem($"{_displayName}###logTab"))
         {
             newWarnings = false;
             

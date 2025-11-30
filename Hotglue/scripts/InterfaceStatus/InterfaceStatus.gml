@@ -1,16 +1,15 @@
 // Feather disable all
 
-function InterfaceWarning(_string)
+function InterfaceStatus(_string)
 {
     var _currentDateTime = date_current_datetime();
-    show_debug_message($"{date_datetime_string(_currentDateTime)} Warning! {_string}");
+    show_debug_message($"{date_datetime_string(_currentDateTime)} {_string}");
     
     with(oInterface)
     {
         with(logTab)
         {
-            newWarnings = true;
-            array_push(warningArray, {
+            array_push(logArray, {
                 time: _currentDateTime,
                 text: _string,
             });
@@ -24,6 +23,6 @@ function InterfaceWarning(_string)
             {
                 ImGuiText(__string);
             }
-        })($"Warning! {_string}");
+        })(_string);
     }
 }

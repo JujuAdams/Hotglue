@@ -8,16 +8,9 @@ if (_return & ImGuiReturnMask.Return)
     
     welcomeTab.TabItem();
     projectTab.TabItem();
-    
-    var _i = 0;
-    repeat(array_length(channelArray))
-    {
-        channelArray[_i].TabItem();
-        ++_i;
-    }
-    
+    channelsTab.TabItem();
     settingsTab.TabItem();
-    warningsTab.TabItem();
+    logTab.TabItem();
     
     ImGuiEndTabBar();
 }
@@ -39,16 +32,3 @@ if (_return & ImGuiReturnMask.Return)
 }
 
 ImGuiEnd();
-
-//if (_exitModal) ImGuiOpenPopup("Exit?");
-//
-//ImGuiSetNextWindowPos(window_get_width()/2, window_get_height ()/2, ImGuiCond.Appearing, 0.5, 0.5);
-//if (ImGuiBeginPopupModal("Exit?", undefined, ImGuiWindowFlags.NoResize))
-//{
-//    ImGuiText("Are you sure you want to exit?");
-//    ImGuiSeparator();
-//    if (ImGuiButton("Yes")) game_end();
-//    ImGuiSameLine();
-//    if (ImGuiButton("Nevermind")) ImGuiCloseCurrentPopup();
-//    ImGuiEndPopup();
-//}

@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"ClassTabWarnings",
+  "%Name":"ClassInterfaceProjectView",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ClassTabWarnings",
+  "name":"ClassInterfaceProjectView",
   "parent":{
     "name":"Classes",
     "path":"folders/Interface/Classes.yy",

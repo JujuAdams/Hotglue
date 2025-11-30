@@ -8,6 +8,11 @@ function __HotglueResourceCommon(_resourceStruct) constructor
     name = $"resource:{_resourceStruct.name}";
     data = _resourceStruct;
     
+    static GetPath = function()
+    {
+        return data.path;
+    }
+    
     static __GetYYJSON = function(_project)
     {
         var _buffer = buffer_load(_project.__projectDirectory + data.path);

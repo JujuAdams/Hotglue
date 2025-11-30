@@ -8,8 +8,6 @@ function ClassTabSettings() : ClassTab() constructor
     {
         if (ImGuiBeginTabItem("Settings"))
         {
-            ImGuiSetCursorPosY(ImGuiGetCursorPosY() + 3);
-            
             ImGuiBeginChild("channelSelector", undefined, 200, ImGuiChildFlags.Border);
             var _channelArray = oInterface.channelArray;
             var _i = 0;
@@ -27,7 +25,7 @@ function ClassTabSettings() : ClassTab() constructor
             if (__advanced)
             {
                 ImGuiIndent();
-                ImGuiTextColored("Here be dragons.", c_red);
+                ImGuiTextColored("Here be dragons.", INTERFACE_COLOR_RED_TEXT);
                 HotglueSetSuppressGitAssert(ImGuiCheckbox("Suppress .git directory assert", HotglueGetSuppressGitAssert()));
                 HotglueSetDestructiveCopy(ImGuiCheckbox("Resource copy is destructive", HotglueGetDestructiveCopy()));
                 ImGuiUnindent();

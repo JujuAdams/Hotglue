@@ -7,8 +7,15 @@ function __HotglueFolder(_folderStruct) constructor
     static _system = __HotglueSystem();
     static type = "folder";
     
-    name = $"folder:{__HotglueProcessFolderPath(_folderStruct.folderPath)}"
+    var _path = __HotglueProcessFolderPath(_folderStruct.folderPath);
+    name = $"folder:{_path}"
     data = _folderStruct;
+    friendlyPath = (_path == "")? "<root>" : _path;
+    
+    static GetPath = function()
+    {
+        return friendlyPath;
+    }
     
     static __GetFiles = function(_project, _array = [])
     {

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__InterfaceConstants",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__InterfaceConstants",
+  "parent":{
+    "name":"Interface",
+    "path":"folders/Interface.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

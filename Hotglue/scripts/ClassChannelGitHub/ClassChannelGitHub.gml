@@ -88,6 +88,9 @@ function ClassChannelGitHub() : ClassTab() constructor
     
     static Refresh = function()
     {
+        InterfaceStatus($"Refreshing channel \"{__channelURL}\"");
+        array_resize(__linkArray, 0);
+        
         new HttpRequest(__channelURL)
         .Callback(function(_httpRequest, _success, _result)
         {
@@ -118,6 +121,7 @@ function ClassChannelGitHub() : ClassTab() constructor
                 }
         
                 SetLinkArray(_linkArray);
+                InterfaceStatus($"Refreshed channel \"{__channelURL}\". Found {array_length(__linkArray)} links");
             }
             else
             {
@@ -159,7 +163,7 @@ function ClassChannelGitHub() : ClassTab() constructor
         
         if (__selectedLink != undefined)
         {
-            var _selectedURL = __selectedLink.link;
+            var _selectedURL = __selectedLink.url;
             __selectedLink = undefined;
             
             var _i = 0;
