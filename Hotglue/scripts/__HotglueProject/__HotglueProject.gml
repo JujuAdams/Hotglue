@@ -205,6 +205,28 @@ function __HotglueProject(_projectPath) constructor
         return __ImportFrom(_sourceProject, _assetArray, _subfolder);
     }
     
+    static ImportFromLooseFiles = function(_looseFileArray, _subfolder = "")
+    {
+        var _assetArray = array_create(array_length(_looseFileArray));
+        var _i = 0;
+        repeat(array_length(_looseFileArray))
+        {
+            var _looseFile = _looseFileArray[_i];
+            
+            if (_looseFile.__asset == undefined)
+            {
+                __HotglueWarning($"Loose file \"{_looseFile.GetPath()}\" has not been prepared, using recommended import type ({_looseFile.GetRecommendedType()} / {_looseFile.GetRecommendedResourceType()})");
+                _looseFile.PrepareAsRecommended();
+            }
+            
+            _assetArray[@ _i] = _looseFile.__asset;
+            
+            ++_i;
+        }
+        
+        return __ImportFrom(_sourceProject, _assetArray, _subfolder);
+    }
+    
     static __ImportFrom = function(_sourceProject, _assetArray, _subfolder = "")
     {
         // 1. Ensure the user has Git set up

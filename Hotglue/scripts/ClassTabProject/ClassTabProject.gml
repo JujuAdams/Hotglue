@@ -8,12 +8,14 @@ function ClassTabProject() : ClassTab() constructor
     __directProject = undefined;
     __directView = undefined;
     
-    __looseFileArray = [];
+    __looseFileViewArray = [];
     
     static TabItem = function()
     {
         if (ImGuiBeginTabItem("Project"))
         {
+            var _importMode = undefined;
+            
             var _importButtonSize = 70;
             var _bigPaneSize = 0.5*(ImGuiGetWindowWidth() - _importButtonSize) - 16;
             
@@ -23,6 +25,8 @@ function ClassTabProject() : ClassTab() constructor
             
             if (ImGuiBeginTabItem("Local Project"))
             {
+                _importMode = "local project";
+                
                 ImGuiBeginChild("sourceInnerPane", undefined, undefined, ImGuiChildFlags.Border);
                 
                 if (__directProject != undefined)
@@ -86,6 +90,8 @@ function ClassTabProject() : ClassTab() constructor
             
             if (ImGuiBeginTabItem("Loose Files"))
             {
+                _importMode = "loose files";
+                
                 ImGuiBeginChild("sourceInnerPane", undefined, undefined, ImGuiChildFlags.Border);
                 
                 if (ImGuiButton("Add File..."))
@@ -97,9 +103,9 @@ function ClassTabProject() : ClassTab() constructor
                         {
                             var _looseFile = HotglueLoadLooseFile(_path);
                             
-                            if (array_get_index(__looseFileArray, _path) < 0)
+                            if (array_get_index(__looseFileViewArray, _path) < 0)
                             {
-                                array_push(__looseFileArray, new ClassInterfaceFileView(_looseFile));
+                                array_push(__looseFileViewArray, new ClassInterfaceFileView(_looseFile));
                                 InterfaceTrace("Loaded \"{_path}\"");
                             }
                             else
@@ -116,13 +122,13 @@ function ClassTabProject() : ClassTab() constructor
                 }
                 
                 var _i = 0;
-                repeat(array_length(__looseFileArray))
+                repeat(array_length(__looseFileViewArray))
                 {
-                    var _looseFile = __looseFileArray[_i];
+                    var _looseFile = __looseFileViewArray[_i];
                     
                     if (ImGuiButton($"X##{ptr(_looseFile)}"))
                     {
-                        array_delete(__looseFileArray, _i, 1);
+                        array_delete(__looseFileViewArray, _i, 1);
                     }
                     else
                     {
@@ -139,6 +145,8 @@ function ClassTabProject() : ClassTab() constructor
             
             if (ImGuiBeginTabItem("Imported Libraries"))
             {
+                _importMode = "imported libraries";
+                
                 ImGuiBeginChild("sourceInnerPane", undefined, undefined, ImGuiChildFlags.Border);
                 
                 if (__destinationProject != undefined)
@@ -157,6 +165,8 @@ function ClassTabProject() : ClassTab() constructor
             
             if (ImGuiBeginTabItem("Channels"))
             {
+                _importMode = "channels";
+                
                 ImGuiBeginChild("sourceInnerPane", undefined, undefined, ImGuiChildFlags.Border);
                 ImGuiEndChild();
                 
@@ -170,7 +180,39 @@ function ClassTabProject() : ClassTab() constructor
             ImGuiSameLine();
             ImGuiBeginChild("middlePane", _importButtonSize);
             ImGuiSetCursorPosY(ImGuiGetContentRegionMaxY()/2 - 10);
-            ImGuiButton("Import ->");
+            
+            ImGuiBeginDisabled(__destinationProject == undefined);
+            if (ImGuiButton("Import ->"))
+            {
+                if (_importMode == "local project")
+                {
+                    
+                }
+                else if (_importMode == "loose files")
+                {
+                    //Covert the array of loose file views into an array of the loose files themselves
+                    var _looseFileViewArray = __looseFileViewArray;
+                    var _looseFileArray = array_create(array_length(_looseFileViewArray));
+                    var _i = 0;
+                    repeat(array_length(_looseFileViewArray))
+                    {
+                        _looseFileArray[@ _i] = _looseFileViewArray[_i].__file;
+                        ++_i;
+                    }
+                    
+                    __destinationProject.ImportFromLooseFiles(_looseFileArray);
+                }
+                else if (_importMode == "imported libraries")
+                {
+                    
+                }
+                else if (_importMode == "channels")
+                {
+                    
+                }
+            }
+            ImGuiEndDisabled();
+            
             ImGuiEndChild();
             ImGuiSameLine();
             
@@ -207,7 +249,7 @@ function ClassTabProject() : ClassTab() constructor
                     
                     if (__destinationView != undefined)
                     {
-                        __destinationView.BuildAsDestination(is_struct(__directProject)? __directProject : __looseFileArray);
+                        __destinationView.BuildAsDestination(is_struct(__directProject)? __directProject : __looseFileViewArray);
                     }
                     
                     ImGuiEndChild();
