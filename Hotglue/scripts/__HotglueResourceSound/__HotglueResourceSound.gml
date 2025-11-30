@@ -6,6 +6,8 @@ function __HotglueResourceSound(_resourceStruct) : __HotglueResourceCommon(_reso
 {
     static resourceType = "sound";
     
+    //TODO - Reset audio group on import
+    
     static __GetFiles = function(_project, _array = [])
     {
         array_push(_array, data.path);

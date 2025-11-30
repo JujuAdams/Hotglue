@@ -6,6 +6,8 @@ function __HotglueResourceSprite(_resourceStruct) : __HotglueResourceCommon(_res
 {
     static resourceType = "sprite";
     
+    //TODO - Reset texture group on import
+    
     static __GetFiles = function(_project, _array = [])
     {
         var _localDirectory = filename_dir(data.path) + "/";

@@ -6,6 +6,8 @@ function __HotglueResourceTileset(_resourceStruct) : __HotglueResourceCommon(_re
 {
     static resourceType = "tileset";
     
+    //TODO - Reset texture group on import
+    
     static __GetFiles = function(_project, _array = [])
     {
         array_push(_array, data.path);

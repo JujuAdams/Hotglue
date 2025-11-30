@@ -68,5 +68,6 @@
     {"name":"InterfaceStatus","order":2,"path":"scripts/InterfaceStatus/InterfaceStatus.yy",},
     {"name":"InterfaceTrace","order":3,"path":"scripts/InterfaceTrace/InterfaceTrace.yy",},
     {"name":"InterfaceWarning","order":1,"path":"scripts/InterfaceWarning/InterfaceWarning.yy",},
+    {"name":"Sprite1","order":8,"path":"sprites/Sprite1/Sprite1.yy",},
   ],
 }
