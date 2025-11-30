@@ -22,9 +22,6 @@
   ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[
-    {"$GMIncludedFile":"","%Name":"andlso.ttf","CopyToMask":-1,"filePath":"datafiles/fonts","name":"andlso.ttf","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"LICENSE.txt","CopyToMask":-1,"filePath":"datafiles/fonts","name":"LICENSE.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"Roboto-Regular.ttf","CopyToMask":-1,"filePath":"datafiles/fonts","name":"Roboto-Regular.ttf","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"template_note.yy","CopyToMask":-1,"filePath":"datafiles","name":"template_note.yy","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"template_script.yy","CopyToMask":-1,"filePath":"datafiles","name":"template_script.yy","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"template_sound.yy","CopyToMask":-1,"filePath":"datafiles","name":"template_sound.yy","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
@@ -112,7 +109,6 @@
     {"id":{"name":"InterfaceStatus","path":"scripts/InterfaceStatus/InterfaceStatus.yy",},},
     {"id":{"name":"InterfaceTrace","path":"scripts/InterfaceTrace/InterfaceTrace.yy",},},
     {"id":{"name":"InterfaceWarning","path":"scripts/InterfaceWarning/InterfaceWarning.yy",},},
-    {"id":{"name":"Sprite1","path":"sprites/Sprite1/Sprite1.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",

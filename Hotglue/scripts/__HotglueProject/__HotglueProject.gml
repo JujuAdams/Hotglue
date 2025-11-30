@@ -68,7 +68,10 @@ function __HotglueProject(_projectPath) constructor
     
     
     
-    
+    static GetName = function()
+    {
+        return __yypJson.name;
+    }
     
     static GetPath = function()
     {
@@ -181,7 +184,7 @@ function __HotglueProject(_projectPath) constructor
     
     static ImportAllFrom = function(_sourceProject, _subfolder = "")
     {
-        return __ImportFrom(_sourceProject, _sourceProject.__quickAssetArray, _subfolder);
+        return __ImportFromProject(_sourceProject, _sourceProject.__quickAssetArray, _subfolder);
     }
     
     static ImportFrom = function(_sourceProject, _assetNameArray, _subfolder = "")
@@ -202,32 +205,10 @@ function __HotglueProject(_projectPath) constructor
             ++_i;
         }
         
-        return __ImportFrom(_sourceProject, _assetArray, _subfolder);
+        return __ImportFromProject(_sourceProject, _assetArray, _subfolder);
     }
     
-    static ImportFromLooseFiles = function(_looseFileArray, _subfolder = "")
-    {
-        var _assetArray = array_create(array_length(_looseFileArray));
-        var _i = 0;
-        repeat(array_length(_looseFileArray))
-        {
-            var _looseFile = _looseFileArray[_i];
-            
-            if (_looseFile.__asset == undefined)
-            {
-                __HotglueWarning($"Loose file \"{_looseFile.GetPath()}\" has not been prepared, using recommended import type ({_looseFile.GetRecommendedType()} / {_looseFile.GetRecommendedResourceType()})");
-                _looseFile.PrepareAsRecommended();
-            }
-            
-            _assetArray[@ _i] = _looseFile.__asset;
-            
-            ++_i;
-        }
-        
-        return __ImportFrom(_sourceProject, _assetArray, _subfolder);
-    }
-    
-    static __ImportFrom = function(_sourceProject, _assetArray, _subfolder = "")
+    static __ImportFromProject = function(_sourceProject, _assetArray, _subfolder = "")
     {
         // 1. Ensure the user has Git set up
         __HotglueAssertGit(__projectDirectory);
@@ -266,6 +247,48 @@ function __HotglueProject(_projectPath) constructor
         }
         
         // 8. Save updated .yyp
+        var _buffer = buffer_create(string_byte_length(__yypString), buffer_fixed, 1);
+        buffer_write(_buffer, buffer_text, __yypString);
+        buffer_save(_buffer, __projectPath);
+        buffer_delete(_buffer);
+    }
+    
+    static ImportFromLooseFiles = function(_looseFileArray, _subfolder = "")
+    {
+        // 1. Ensure the user has Git set up
+        __HotglueAssertGit(__projectDirectory);
+        
+        if (_subfolder != "")
+        {
+            __EnsureFolderPath(_subfolder);
+        }
+        
+        var _i = 0;
+        repeat(array_length(_looseFileArray))
+        {
+            var _looseFile = _looseFileArray[_i];
+            
+            // 2. Generate an asset
+            var _asset = _looseFile.__GenerateAsset(self, _subfolder);
+            
+            if (GetAssetExists(_asset.name))
+            {
+                __HotglueError($"Asset \"{_asset.GetName()}\" already exists in project \"{GetPath()}\"");
+            }
+            
+            // 3. Create files on disk inside the project
+            _looseFile.__CreateFilesInProject(self, _asset);
+            
+            // 4. Insert reference into .yyp
+            _asset.__InsertIntoYYP(self, ""); //Don't need a subfolder here because we generate a correct folder path already
+            
+            // 5. Formally add the new asset to this project representation
+            __AddAsset(_asset);
+            
+            ++_i;
+        }
+        
+        // 6. Save updated .yyp
         var _buffer = buffer_create(string_byte_length(__yypString), buffer_fixed, 1);
         buffer_write(_buffer, buffer_text, __yypString);
         buffer_save(_buffer, __projectPath);

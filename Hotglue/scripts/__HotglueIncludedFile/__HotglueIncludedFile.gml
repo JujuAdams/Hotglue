@@ -42,7 +42,7 @@ function __HotglueIncludedFile(_includedFileStruct) constructor
         //Do nothing!
     }
     
-    static __InsertIntoYYP = function(_project)
+    static __InsertIntoYYP = function(_project, _subfolder_UNUSED)
     {
         var _yypString = _project.__yypString;
         
