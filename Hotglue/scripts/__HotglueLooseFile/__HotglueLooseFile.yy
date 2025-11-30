@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__HotglueLooseFile",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__HotglueLooseFile",
+  "parent":{
+    "name":"Classes",
+    "path":"folders/Hotglue/(System)/Classes.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

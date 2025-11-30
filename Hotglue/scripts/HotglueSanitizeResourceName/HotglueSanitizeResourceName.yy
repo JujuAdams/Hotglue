@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HotglueGML",
+  "%Name":"HotglueSanitizeResourceName",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HotglueGML",
+  "name":"HotglueSanitizeResourceName",
   "parent":{
-    "name":"Classes",
-    "path":"folders/Hotglue/(System)/Classes.yy",
+    "name":"Hotglue",
+    "path":"folders/Hotglue.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

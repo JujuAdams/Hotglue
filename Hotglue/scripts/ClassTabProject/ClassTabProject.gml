@@ -95,7 +95,7 @@ function ClassTabProject() : ClassTab() constructor
                     {
                         try
                         {
-                            var _looseFile = HotglueLoadGML(_path);
+                            var _looseFile = HotglueLoadLooseFile(_path);
                             
                             if (array_get_index(__looseFileArray, _path) < 0)
                             {
@@ -120,7 +120,7 @@ function ClassTabProject() : ClassTab() constructor
                 {
                     var _looseFile = __looseFileArray[_i];
                     
-                    if (ImGuiSmallButton($"x###{ptr(_looseFile)}"))
+                    if (ImGuiButton($"X##{ptr(_looseFile)}"))
                     {
                         array_delete(__looseFileArray, _i, 1);
                     }

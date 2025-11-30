@@ -2,17 +2,17 @@
 
 /// @param path
 
-function HotglueLoadGML(_gmlPath)
+function HotglueLoadLooseFile(_path)
 {
     if (GM_is_sandboxed)
     {
         __HotglueError("Please disable sandboxing for this platform.");
     }
     
-    if (not file_exists(_gmlPath))
+    if (not file_exists(_path))
     {
-        __HotglueError($"\"{_gmlPath}\" doesn't exist");
+        __HotglueError($"\"{_path}\" doesn't exist");
     }
     
-    return new __HotglueGML(_gmlPath);
+    return new __HotglueLooseFile(_path);
 }

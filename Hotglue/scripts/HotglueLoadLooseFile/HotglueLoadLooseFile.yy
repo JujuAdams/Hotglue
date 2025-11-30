@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"HotglueLoadGML",
+  "%Name":"HotglueLoadLooseFile",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HotglueLoadGML",
+  "name":"HotglueLoadLooseFile",
   "parent":{
     "name":"Hotglue",
     "path":"folders/Hotglue.yy",
