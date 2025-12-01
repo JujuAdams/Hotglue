@@ -14,10 +14,14 @@ function __ClassSource(_url, _variant, _name, _remote) constructor
     __name    = _name;
     __variant = _variant;
     
-    __cachePath = undefined;
-    __cacheDirectory = undefined;
+    __unpackState = 0; // 0 = waiting, 1 = pending, 2 = unpacked
+    __inTempCache = false;
     
-    __unpacking = false;
+    __unpackedPath      = undefined;
+    __unpackedDirectory = undefined;
+    
+    
+    
     
     static GetURL = function()
     {
@@ -39,54 +43,85 @@ function __ClassSource(_url, _variant, _name, _remote) constructor
         return __variant;
     }
     
-    static GetPath = function()
+    static GetExists = function()
     {
-        if (__cachePath == undefined)
+        if (__cached)
         {
-            __Unpack();
+            return (GetPath() != undefined);
         }
-        
-        return __cachePath;
+        else
+        {
+            if (GetPath() != undefined) return true;
+            return GetUnpacking()? undefined : false;
+        }
     }
     
-    static GetDirectory = function()
+    static GetPath = function(_allowCache = true)
     {
-        if (__cacheDirectory == undefined)
-        {
-            __Unpack();
-        }
-        
-        return __cacheDirectory;
+        if (_allowCache) __Unpack();
+        return __unpackedPath;
     }
     
-    static GetUnpacking = function()
+    static GetDirectory = function(_allowCache = true)
     {
-        return __unpacking;
+        if (_allowCache) __Unpack();
+        return __unpackedDirectory;
+    }
+    
+    static GetUnpackPending = function()
+    {
+        return (__unpackState == 1);
+    }
+    
+    static GetUnpacked = function()
+    {
+        return (__unpackState == 2);
     }
     
     static ClearCache = function()
     {
-        if (__cacheDirectory == undefined) return;
+        if (__unpackState == 0) return;
         
-        directory_destroy(__cacheDirectory);
+        if (__inTempCache)
+        {
+            directory_destroy(__cacheDirectory);
+        }
         
-        __cachePath = undefined;
-        __cacheDirectory = undefined;
+        __unpackState = 0;
+        __inTempCache = false;
+        
+        __unpackedPath      = undefined;
+        __unpackedDirectory = undefined;
     }
     
     static __Unpack = function()
     {
-        if (__cachePath != undefined) return;
+        if (__unpackState != 0) return;
         if (__unpacking) return;
         
         if (__remote)
         {
-            __unpacking = true;
-            //TODO - Send HTTP request
+            __unpackState = 1;
+            __inTempCache = true;
+            
+            http_get_file(__url, "cache");
         }
         else
         {
-            //TODO - Unzip
+            __unpackState = 2;
+            __inTempCache = false;
+            
+            var _extension = filename_ext(__url);
+            if ((_extension == ".yyp") || (_extension == ".yymps") || (_extension == ".yyz"))
+            {
+                __unpackedPath      = __url;
+                __unpackedDirectory = filename_dir(__url) + "/";
+            }
+            else
+            {
+                __unpackedPath      = undefined;
+                __unpackedDirectory = undefined;
+            }
         }
     }
 }

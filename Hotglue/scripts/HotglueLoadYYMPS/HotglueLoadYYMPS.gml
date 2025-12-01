@@ -33,12 +33,7 @@ function HotglueLoadYYMPS(_yympsPath)
     var _buffer = buffer_load(_metadataPath);
     var _string = buffer_read(_buffer, buffer_text);
     buffer_delete(_buffer);
+    var _metadataJSON = json_parse(_string);
     
-    var _json = json_parse(_string);
-    var _displayName = _json.display_name;
-    
-    var _project = new __HotglueProject(_directory + _displayName + ".yyp");
-    _project.__VerifyFilesUnzipped();
-    
-    return _project;
+    return HotglueLoadYYMPSUnpacked(_directory + _metadataJSON.display_name + ".yyp", _metadataJSON);
 }

@@ -24,28 +24,5 @@ function HotglueLoadYYZ(_yyzPath)
     
     zip_unzip(_yyzPath, _directory);
     
-    var _projectPath = undefined;
-    var _path = file_find_first($"{_directory}/*.yyp", 0);
-    while(_path != "")
-    {
-        if (_projectPath != undefined)
-        {
-            __HotglueError("Multiple .yyp files found inside archive");
-        }
-        
-        _projectPath = _path;
-        _path = file_find_next();
-    }
-    
-    file_find_close();
-    
-    if (_projectPath == undefined)
-    {
-        __HotglueError("No .yyp file found inside archive");
-    }
-    
-    var _project = new __HotglueProject(_directory + _projectPath);
-    _project.__VerifyFilesUnzipped();
-    
-    return _project;
+    return HotglueLoadYYZUnpacked(_directory);
 }

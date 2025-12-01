@@ -3,7 +3,7 @@
 /// @param url
 /// @param variant
 
-function SourceExistsLocally(_url, _variant)
+function SourceInDictionary(_url, _variant)
 {
     static _dictionary = __SourceCacheSystem().__dictionary;
     

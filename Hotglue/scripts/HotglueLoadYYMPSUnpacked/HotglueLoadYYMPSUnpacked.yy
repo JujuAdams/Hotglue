@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"SourceExistsLocally",
+  "%Name":"HotglueLoadYYMPSUnpacked",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"SourceExistsLocally",
+  "name":"HotglueLoadYYMPSUnpacked",
   "parent":{
-    "name":"Source Cache",
-    "path":"folders/Source Cache.yy",
+    "name":"Hotglue",
+    "path":"folders/Hotglue.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
