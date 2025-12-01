@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"InterfaceGuessNameFromURL",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"InterfaceGuessNameFromURL",
+  "parent":{
+    "name":"Interface",
+    "path":"folders/Interface.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
