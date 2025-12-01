@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"InterfaceSettingsReset",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"InterfaceSettingsReset",
+  "parent":{
+    "name":"Settings",
+    "path":"folders/Interface/Settings.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

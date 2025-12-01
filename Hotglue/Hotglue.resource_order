@@ -6,6 +6,7 @@
     {"name":"HTTP","order":7,"path":"folders/HTTP.yy",},
     {"name":"(Internals)","order":3,"path":"folders/ImGM/(Internals).yy",},
     {"name":"Interface","order":2,"path":"folders/Interface.yy",},
+    {"name":"Settings","order":9,"path":"folders/Interface/Settings.yy",},
   ],
   "ResourceOrderSettings":[
     {"name":"oHTTPRequestHandler","order":4,"path":"objects/oHTTPRequestHandler/oHTTPRequestHandler.yy",},
@@ -66,6 +67,10 @@
     {"name":"HotglueSetWarningHandler","order":9,"path":"scripts/HotglueSetWarningHandler/HotglueSetWarningHandler.yy",},
     {"name":"HttpRequestAsyncHTTPEvent","order":2,"path":"scripts/HttpRequestAsyncHTTPEvent/HttpRequestAsyncHTTPEvent.yy",},
     {"name":"ImGuiContext","order":1,"path":"scripts/ImGuiContext/ImGuiContext.yy",},
+    {"name":"InterfaceSettingGet","order":3,"path":"scripts/InterfaceSettingGet/InterfaceSettingGet.yy",},
+    {"name":"InterfaceSettingSet","order":4,"path":"scripts/InterfaceSettingSet/InterfaceSettingSet.yy",},
+    {"name":"InterfaceSettingsLoad","order":1,"path":"scripts/InterfaceSettingsLoad/InterfaceSettingsLoad.yy",},
+    {"name":"InterfaceSettingsReset","order":2,"path":"scripts/InterfaceSettingsReset/InterfaceSettingsReset.yy",},
     {"name":"InterfaceStatus","order":2,"path":"scripts/InterfaceStatus/InterfaceStatus.yy",},
     {"name":"InterfaceStatusOnly","order":3,"path":"scripts/InterfaceStatusOnly/InterfaceStatusOnly.yy",},
     {"name":"InterfaceTrace","order":4,"path":"scripts/InterfaceTrace/InterfaceTrace.yy",},
