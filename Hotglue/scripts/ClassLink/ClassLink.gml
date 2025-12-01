@@ -19,6 +19,11 @@ function ClassLink(_url, _standbyName) constructor
         return __customName ?? (__officialName ?? __standbyName);
     }
     
+    static GetEdittable = function()
+    {
+        return false;
+    }
+    
     static GetVersionString = function()
     {
         return "0.0.0-alpha";
@@ -41,12 +46,14 @@ function ClassLink(_url, _standbyName) constructor
     
     static GetMetadataExists = function()
     {
+        //TODO
         return false;
     }
     
     static CreateMetadata = function()
     {
-        
+        if (not GetEdittable()) return;
+        //TODO
     }
     
     static BuildForView = function()
@@ -63,7 +70,27 @@ function ClassLink(_url, _standbyName) constructor
         ImGuiTableNextColumn();
         ImGuiText("* Favourite *");
         ImGuiTableNextColumn();
-        ImGuiCheckbox("##favorite", false);
+        
+        var _favoriteArray = InterfaceSettingGet("favoriteLinks");
+        var _oldFavorite = (array_get_index(_favoriteArray, GetURL()) >= 0);
+        var _newFavorite = ImGuiCheckbox("##favorite", _oldFavorite);
+        if (_newFavorite != _oldFavorite)
+        {
+            if (_newFavorite)
+            {
+                array_push(InterfaceSettingGet("favoriteLinks"), GetURL());
+                InterfaceStatus($"Favourited \"{GetURL()}\"");
+            }
+            else
+            {
+                var _index = array_get_index(_favoriteArray, GetURL());
+                if (_index >= 0) array_delete(_favoriteArray, _index, 1);
+                InterfaceStatus($"Unfavourited \"{GetURL()}\"");
+            }
+            
+            oInterface.favoritesTab.dirty = true;
+            InterfaceSettingsSave();
+        }
         
         ImGuiTableNextRow();
         ImGuiTableNextColumn();

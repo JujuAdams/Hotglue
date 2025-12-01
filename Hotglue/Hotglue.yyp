@@ -31,7 +31,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.1.210",
+    "IDEVersion":"2024.14.0.207",
   },
   "name":"Hotglue",
   "resources":[
@@ -41,6 +41,7 @@
     {"id":{"name":"oInterface","path":"objects/oInterface/oInterface.yy",},},
     {"id":{"name":"oLanding","path":"objects/oLanding/oLanding.yy",},},
     {"id":{"name":"rMain","path":"rooms/rMain/rMain.yy",},},
+    {"id":{"name":"__ClassChannelCommon","path":"scripts/__ClassChannelCommon/__ClassChannelCommon.yy",},},
     {"id":{"name":"__HotglueAssertGit","path":"scripts/__HotglueAssertGit/__HotglueAssertGit.yy",},},
     {"id":{"name":"__HotglueCopyRelativePathArray","path":"scripts/__HotglueCopyRelativePathArray/__HotglueCopyRelativePathArray.yy",},},
     {"id":{"name":"__HotglueDetermineResourceConstructor","path":"scripts/__HotglueDetermineResourceConstructor/__HotglueDetermineResourceConstructor.yy",},},

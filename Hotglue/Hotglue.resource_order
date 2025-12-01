@@ -13,6 +13,7 @@
     {"name":"oInterface","order":5,"path":"objects/oInterface/oInterface.yy",},
     {"name":"oLanding","order":3,"path":"objects/oLanding/oLanding.yy",},
     {"name":"rMain","order":6,"path":"rooms/rMain/rMain.yy",},
+    {"name":"__ClassChannelCommon","order":12,"path":"scripts/__ClassChannelCommon/__ClassChannelCommon.yy",},
     {"name":"__HotglueAssertGit","order":3,"path":"scripts/__HotglueAssertGit/__HotglueAssertGit.yy",},
     {"name":"__HotglueCopyRelativePathArray","order":6,"path":"scripts/__HotglueCopyRelativePathArray/__HotglueCopyRelativePathArray.yy",},
     {"name":"__HotglueDetermineResourceConstructor","order":5,"path":"scripts/__HotglueDetermineResourceConstructor/__HotglueDetermineResourceConstructor.yy",},

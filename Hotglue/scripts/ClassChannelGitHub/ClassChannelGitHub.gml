@@ -5,32 +5,20 @@
 // https://api.github.com/repos/cicadian/dotobj_merge/contents
 // https://raw.githubusercontent.com/cicadian/dotobj_merge/master/README.md
 
-function ClassChannelGitHub() : ClassTab() constructor
+function ClassChannelGitHub() : __ClassChannelCommon("GitHub") constructor
 {
-    __channelURL = "";
-    
-    __linkArray = [];
-    __selectedLink = undefined;
-    
-    static TabItem = function()
-    {
-        if (ImGuiBeginTabItem("GitHub"))
-        {
-            Build();
-            ImGuiEndTabItem();
-        }
-    }
+    __url = "";
     
     static GetURL = function()
     {
-        return __channelURL;
+        return __url;
     }
     
     static SetURL = function(_url, _allowRefresh = true)
     {
-        if (_url != __channelURL)
+        if (_url != __url)
         {
-            __channelURL = _url;
+            __url = _url;
             
             if (_allowRefresh)
             {
@@ -41,62 +29,40 @@ function ClassChannelGitHub() : ClassTab() constructor
         return self;
     }
     
-    static Build = function()
+    static BuildHeader = function()
     {
-        ImGuiText(__channelURL);
+        ImGuiText(__url);
         ImGuiSameLine();
         ImGuiSetCursorPosX(ImGuiGetCursorPosX() + 20);
         if (ImGuiButton("Refresh"))
         {
             Refresh();
         }
-        
-        ImGuiBeginChild("leftPane", 250, undefined, ImGuiChildFlags.Border);
-        
-        var _linkArray = __linkArray;
-        if (array_length(_linkArray) <= 0)
+    }
+    
+    static BuildRightPanel = function()
+    {
+        if (not __selectedLink.GetMetadataExists())
         {
-            ImGuiTextWrapped("No links found.\n\nPlease refresh this channel and check for warnings.");
-        }
-        else
-        {
-            var _i = 0;
-            repeat(array_length(_linkArray))
-            {
-                if (ImGuiSelectable(_linkArray[_i].name))
-                {
-                    __selectedLink = _linkArray[_i];
-                }
-                
-                ++_i;
-            }
-        }
-        
-        ImGuiEndChild();
-        
-        ImGuiSameLine();
-        ImGuiBeginChild("rightPane", undefined, undefined, ImGuiChildFlags.Border);
-        
-        if (__selectedLink == undefined)
-        {
-            ImGuiText("Please select a link from the left-hand side.");
-        }
-        else
-        {
-            ImGuiTextWrapped(__selectedLink.url);
+            ImGuiTextColored("\"Hotglue Metadata\" Note asset not found.", INTERFACE_COLOR_RED_TEXT);
             ImGuiNewLine();
-            ImGuiTextWrapped(__selectedLink.name);
         }
+            
+        __selectedLink.BuildForView();
         
-        ImGuiEndChild();
+        ImGuiNewLine();
+        if (ImGuiButton("Refresh"))
+        {
+            
+        }
     }
     
     static Refresh = function()
     {
-        InterfaceStatus($"Refreshing channel \"{__channelURL}\"");
+        InterfaceStatus($"Refreshing channel \"{__url}\"");
         array_resize(__linkArray, 0);
         
-        new HttpRequest(__channelURL)
+        new HttpRequest(__url)
         .Callback(function(_httpRequest, _success, _result)
         {
             if (not _success)
@@ -126,7 +92,7 @@ function ClassChannelGitHub() : ClassTab() constructor
                 }
         
                 SetLinkArray(_linkArray);
-                InterfaceStatus($"Refreshed channel \"{__channelURL}\". Found {array_length(__linkArray)} links");
+                InterfaceStatus($"Refreshed channel \"{__url}\". Found {array_length(__linkArray)} links");
             }
             else
             {
@@ -158,23 +124,21 @@ function ClassChannelGitHub() : ClassTab() constructor
             
             _name = string_delete(_name, 1, _pos + string_length(_substring)-1);
             
-            array_push(_linkArray, {
-                url:  _inputURL,
-                name: _name,
-            });
+            var _link = new ClassLink(_inputURL, _name);
+            array_push(_linkArray, _link);
             
             ++_i;
         }
         
         if (__selectedLink != undefined)
         {
-            var _selectedURL = __selectedLink.url;
+            var _selectedURL = __selectedLink.GetURL();
             __selectedLink = undefined;
             
             var _i = 0;
             repeat(array_length(_linkArray))
             {
-                if (_linkArray[_i].url == _selectedURL)
+                if (_linkArray[_i].GetURL() == _selectedURL)
                 {
                     __selectedLink = _linkArray[_i];
                     break;

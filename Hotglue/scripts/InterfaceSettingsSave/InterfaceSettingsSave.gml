@@ -9,5 +9,5 @@ function InterfaceSettingsSave()
         buffer_delete(_buffer);
     }
     
-    InterfaceStatus("Settings saved");
+    InterfaceTrace("Settings saved");
 }

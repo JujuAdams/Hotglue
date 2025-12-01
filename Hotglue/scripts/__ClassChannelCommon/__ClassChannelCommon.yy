@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__ClassChannelCommon",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__ClassChannelCommon",
+  "parent":{
+    "name":"Classes",
+    "path":"folders/Interface/Classes.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
