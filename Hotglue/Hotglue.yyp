@@ -86,6 +86,7 @@
     {"id":{"name":"ClassChannelLocal","path":"scripts/ClassChannelLocal/ClassChannelLocal.yy",},},
     {"id":{"name":"ClassInterfaceFileView","path":"scripts/ClassInterfaceFileView/ClassInterfaceFileView.yy",},},
     {"id":{"name":"ClassInterfaceProjectView","path":"scripts/ClassInterfaceProjectView/ClassInterfaceProjectView.yy",},},
+    {"id":{"name":"ClassLink","path":"scripts/ClassLink/ClassLink.yy",},},
     {"id":{"name":"ClassTab","path":"scripts/ClassTab/ClassTab.yy",},},
     {"id":{"name":"ClassTabChannels","path":"scripts/ClassTabChannels/ClassTabChannels.yy",},},
     {"id":{"name":"ClassTabLog","path":"scripts/ClassTabLog/ClassTabLog.yy",},},

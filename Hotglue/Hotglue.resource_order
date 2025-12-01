@@ -48,6 +48,7 @@
     {"name":"ClassChannelLocal","order":7,"path":"scripts/ClassChannelLocal/ClassChannelLocal.yy",},
     {"name":"ClassInterfaceFileView","order":10,"path":"scripts/ClassInterfaceFileView/ClassInterfaceFileView.yy",},
     {"name":"ClassInterfaceProjectView","order":9,"path":"scripts/ClassInterfaceProjectView/ClassInterfaceProjectView.yy",},
+    {"name":"ClassLink","order":11,"path":"scripts/ClassLink/ClassLink.yy",},
     {"name":"ClassTabChannels","order":4,"path":"scripts/ClassTabChannels/ClassTabChannels.yy",},
     {"name":"ClassTabLog","order":5,"path":"scripts/ClassTabLog/ClassTabLog.yy",},
     {"name":"ClassTabProject","order":2,"path":"scripts/ClassTabProject/ClassTabProject.yy",},

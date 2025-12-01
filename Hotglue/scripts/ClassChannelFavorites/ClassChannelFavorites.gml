@@ -7,7 +7,7 @@ function ClassChannelFavorites() : ClassTab() constructor
     
     static TabItem = function()
     {
-        if (ImGuiBeginTabItem("*Favourites"))
+        if (ImGuiBeginTabItem("* Favourites *"))
         {
             Build();
             ImGuiEndTabItem();
