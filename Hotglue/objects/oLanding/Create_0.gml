@@ -9,8 +9,8 @@ HotglueClearUnzipCache();
 //    HotglueClearReleaseCache();
 //}
 
-//HotglueChannelRead("https://raw.githubusercontent.com/JujuAdams/Hotglue-Index/refs/heads/main/github.json",
-//function(_channel, _success)
+//var _channel = HotglueEnsureChannel("https://raw.githubusercontent.com/JujuAdams/Hotglue-Index/refs/heads/main/github.json");
+//_channel.Refresh(function(_channel, _success)
 //{
 //    var _linkArray = _channel.GetURLArray();
 //    var _i = 0;
@@ -41,4 +41,3 @@ HotglueClearUnzipCache();
 
 instance_destroy();
 instance_create_depth(0, 0, 0, oInterface);
-

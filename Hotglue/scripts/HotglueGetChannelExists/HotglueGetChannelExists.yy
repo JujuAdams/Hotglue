@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"HotglueChannelRead",
+  "%Name":"HotglueGetChannelExists",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HotglueChannelRead",
+  "name":"HotglueGetChannelExists",
   "parent":{
     "name":"Channels",
     "path":"folders/Hotglue/Channels.yy",

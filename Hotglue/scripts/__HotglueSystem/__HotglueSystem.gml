@@ -16,6 +16,8 @@ function __HotglueSystem()
         __suppressGitAssert = false;
         __destructiveCopy   = true;
         
+        __channelArray = [];
+        
         __githubUserAccessToken = undefined;
         
         //Port to connect on as part of the `.requestAuthenticationViaWebPage()` flow. This must match the callback URL entered whe creating your GitHub app.
