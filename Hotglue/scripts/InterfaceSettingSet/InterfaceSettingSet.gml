@@ -1,4 +1,4 @@
-/// @parma key
+/// @param key
 /// @param value
 
 function InterfaceSettingSet(_key, _value)

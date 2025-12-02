@@ -82,7 +82,6 @@
     {"name":"ClassTabWelcome","order":1,"path":"scripts/ClassTabWelcome/ClassTabWelcome.yy",},
     {"name":"HotglueClearReleaseCache","order":10,"path":"scripts/HotglueClearReleaseCache/HotglueClearReleaseCache.yy",},
     {"name":"HotglueClearUnzipCache","order":11,"path":"scripts/HotglueClearUnzipCache/HotglueClearUnzipCache.yy",},
-    {"name":"HotglueEnsureRemoteChannel","order":1,"path":"scripts/HotglueEnsureRemoteChannel/HotglueEnsureRemoteChannel.yy",},
     {"name":"HotglueGetChannelByIndex","order":4,"path":"scripts/HotglueGetChannelByIndex/HotglueGetChannelByIndex.yy",},
     {"name":"HotglueGetChannelByURL","order":3,"path":"scripts/HotglueGetChannelByURL/HotglueGetChannelByURL.yy",},
     {"name":"HotglueGetChannelCount","order":5,"path":"scripts/HotglueGetChannelCount/HotglueGetChannelCount.yy",},

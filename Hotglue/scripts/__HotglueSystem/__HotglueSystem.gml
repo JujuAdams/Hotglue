@@ -17,6 +17,8 @@ function __HotglueSystem()
         __destructiveCopy   = true;
         
         __channelArray = [];
+        array_push(__channelArray, new __HotglueChannelLocal("Favourites", "@favorites"));
+        array_push(__channelArray, new __HotglueChannelLocal("Local", "@locals"));
         
         __githubUserAccessToken = undefined;
         

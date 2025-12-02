@@ -1,6 +1,9 @@
 // Feather disable all
 
-function __HotglueChannelLocal() : __HotglueChannelCommon(undefined) constructor
+/// @param name
+/// @param url
+
+function __HotglueChannelLocal(_name, _url) : __HotglueChannelCommon(_name, _url) constructor
 {
     __repositoryArray = [];
     

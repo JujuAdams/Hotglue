@@ -1,18 +1,25 @@
 // Feather disable all
 
+/// @param name
 /// @param url
 
-function __HotglueChannelCommon(_url) constructor
+function __HotglueChannelCommon(_name, _url) constructor
 {
     static _repoConstructor = __HotglueRepositoryLocal;
     
-    __url = _url;
+    __name = _name;
+    __url  = _url;
     
     __repositoryArray = [];
     
     __refreshCallback = undefined;
     
     
+    
+    static GetURL = function()
+    {
+        return __url;
+    }
     
     static Serialize = function()
     {
