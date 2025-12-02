@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__HotglueAsyncNetworkingEvent",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__HotglueAsyncNetworkingEvent",
+  "parent":{
+    "name":"(System)",
+    "path":"folders/Hotglue/(System).yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

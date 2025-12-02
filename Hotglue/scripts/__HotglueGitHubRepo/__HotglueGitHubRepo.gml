@@ -68,7 +68,7 @@ function __HotglueGitHubRepo(_url) constructor
         if ((not __hotglueJSONCollected) && (__hotglueJSONRequest == undefined))
         {
             __HotglueTrace($"Getting hotglue.json from root of \"{__webURL}\"");
-            __hotglueJSONRequest = new __HotglueClassHttpRequest(__apiURL + "contents/hotglue.json");
+            __hotglueJSONRequest = new __HotglueClassHttpRequest($"{__apiURL}contents/hotglue.json");
             
             __hotglueJSONRequest.Callback(function(_httpRequest, _success, _result)
             {
@@ -181,7 +181,7 @@ function __HotglueGitHubRepo(_url) constructor
                                                                                    _githubRelease.assets_url)
                                     
                                     array_push(_releasesArray, _release);
-                                    __HotglueTrace($"Found release \"{_githubRelease.name}\"");
+                                    //__HotglueTrace($"Found release \"{_githubRelease.name}\"");
                                     
                                     if ((__latestStable == undefined) && (not _githubRelease.prerelease))
                                     {

@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"HotglueWebAuthFlow",
+  "%Name":"HotglueChannelRead",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HotglueWebAuthFlow",
+  "name":"HotglueChannelRead",
   "parent":{
-    "name":"HTTP",
-    "path":"folders/Hotglue/HTTP.yy",
+    "name":"Hotglue",
+    "path":"folders/Hotglue.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

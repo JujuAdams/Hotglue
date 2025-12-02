@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"HotglueReadGitHubRepository",
+  "%Name":"HotglueGitHubWebAuthFlow",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HotglueReadGitHubRepository",
+  "name":"HotglueGitHubWebAuthFlow",
   "parent":{
-    "name":"HTTP",
-    "path":"folders/Hotglue/HTTP.yy",
+    "name":"GitHub",
+    "path":"folders/Hotglue/GitHub.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

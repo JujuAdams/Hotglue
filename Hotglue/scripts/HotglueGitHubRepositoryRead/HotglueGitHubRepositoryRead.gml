@@ -3,7 +3,7 @@
 /// @param url
 /// @param [callback]
 
-function HotglueReadGitHubRepository(_url, _callback = undefined)
+function HotglueGitHubRepositoryRead(_url, _callback = undefined)
 {
     var _repo = new __HotglueGitHubRepo(_url)
     _repo.GetHotglueJSON();

@@ -16,7 +16,7 @@ function __HotglueSystem()
         __suppressGitAssert = false;
         __destructiveCopy   = true;
         
-        __githubUserAuthToken = undefined;
+        __githubUserAccessToken = undefined;
         
         //Port to connect on as part of the `.requestAuthenticationViaWebPage()` flow. This must match the callback URL entered whe creating your GitHub app.
         //e.g. Setting `GITHUB_GML_LOCALHOST_PORT` to `52499` means that you should use `http://localhost:52499/` for the callback URL.
@@ -32,6 +32,13 @@ function __HotglueSystem()
             __HotglueEnsureObject();
         },
         [], -1));
+        
+        __HotglueLoadGitHubAccessToken();
+    }
+    
+    if (GM_build_type == "run")
+    {
+        global.Hotglue = _system;
     }
     
     return _system;

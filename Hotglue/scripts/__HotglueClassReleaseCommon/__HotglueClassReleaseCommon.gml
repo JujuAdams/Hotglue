@@ -108,6 +108,8 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
         
         if (file_exists(__downloadPath))
         {
+            __HotglueTrace($"\"{_url}\" has been cached, returning local path");
+            
             if (is_callable(_callback))
             {
                 call_later(1, time_source_units_frames, method({

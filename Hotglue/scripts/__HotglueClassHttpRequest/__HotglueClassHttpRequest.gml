@@ -2,10 +2,12 @@
 
 /// @param url
 /// @param [method=GET]
+/// @param [allowBearerToken=true]
 
-function __HotglueClassHttpRequest(_url, _method = "GET") constructor
+function __HotglueClassHttpRequest(_url, _method = "GET", _allowBearerToken = true) constructor
 {
-    static _httpRequestMap = __HotglueSystem().__httpRequestMap;
+    static _system         = __HotglueSystem();
+    static _httpRequestMap = _system.__httpRequestMap;
     
     __url    = _url;
     __method = _method;
@@ -17,6 +19,16 @@ function __HotglueClassHttpRequest(_url, _method = "GET") constructor
     __requestID = undefined;
     
     __result = undefined;
+    
+    //Detect if we need a GitHub bearer token
+    if ((string_pos("github.com/", _url) > 0)
+    ||  (string_pos("githubcontent.com/", _url) > 0))
+    {
+        if (_system.__githubUserAccessToken != undefined)
+        {
+            __headerStruct[$ "Bearer"] = _system.__githubUserAccessToken;
+        }
+    }
     
     
     
