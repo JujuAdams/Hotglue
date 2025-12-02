@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"HotglueLoadYYZ",
   "parent":{
-    "name":"Hotglue",
-    "path":"folders/Hotglue.yy",
+    "name":"Loaders",
+    "path":"folders/Hotglue/Loaders.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

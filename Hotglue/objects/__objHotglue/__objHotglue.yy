@@ -1,15 +1,16 @@
 {
   "$GMObject":"",
-  "%Name":"oHTTPRequestHandler",
+  "%Name":"__objHotglue",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":62,"eventType":7,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":3,"eventType":7,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"oHTTPRequestHandler",
+  "name":"__objHotglue",
   "overriddenProperties":[],
   "parent":{
-    "name":"Hotglue",
-    "path":"Hotglue.yyp",
+    "name":"(System)",
+    "path":"folders/Hotglue/(System).yy",
   },
   "parentObjectId":null,
   "persistent":false,

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueClearReleaseCache",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueClearReleaseCache",
+  "parent":{
+    "name":"Hotglue",
+    "path":"folders/Hotglue.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

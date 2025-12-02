@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueLoadYYPZipped",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueLoadYYPZipped",
+  "parent":{
+    "name":"Loaders",
+    "path":"folders/Hotglue/Loaders.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

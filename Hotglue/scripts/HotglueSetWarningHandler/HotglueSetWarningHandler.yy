@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"HotglueSetWarningHandler",
   "parent":{
-    "name":"Hotglue",
-    "path":"folders/Hotglue.yy",
+    "name":"Other",
+    "path":"folders/Hotglue/Other.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

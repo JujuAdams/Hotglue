@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueDownload",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueDownload",
+  "parent":{
+    "name":"HTTP",
+    "path":"folders/Hotglue/HTTP.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

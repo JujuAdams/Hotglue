@@ -14,21 +14,31 @@ function HotglueLoadYYMPS(_yympsPath)
     
     if (not file_exists(_yympsPath))
     {
-        __HotglueError($"\"{_yympsPath}\" doesn't exist");
+        __HotglueWarning($"\"{_yympsPath}\" doesn't exist");
+        return undefined;
     }
     
-    var _hash = md5_string_unicode(_yympsPath);
+    var _directory = $"{HOTGLUE_UNZIP_CACHE_DIRECTORY}{md5_string_unicode(_yympsPath)}/";
+    directory_destroy(_directory);
     
-    var _directory = game_save_id + $"temp-{_hash}/";
-    directory_destroy(_directory)
-    
-    zip_unzip(_yympsPath, _directory);
+    if (zip_unzip(_yympsPath, _directory) <= 0)
+    {
+        __HotglueWarning($"Failed to unzip \"{_yympsPath}\" to \"{_directory}\"");
+        directory_destroy(_directory);
+        
+        return undefined;
+    }
     
     var _metadataPath = _directory + "metadata.json";
     if (not file_exists(_metadataPath))
     {
-        __HotglueError($"\"{_metadataPath}\" doesn't exist");
+        __HotglueWarning($"\"{_metadataPath}\" doesn't exist, aborting");
+        directory_destroy(_directory);
+        
+        return undefined;
     }
+    
+    //FIXME - try..catch this
     
     var _buffer = buffer_load(_metadataPath);
     var _string = buffer_read(_buffer, buffer_text);

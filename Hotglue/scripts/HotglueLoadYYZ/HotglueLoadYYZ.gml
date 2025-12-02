@@ -14,15 +14,22 @@ function HotglueLoadYYZ(_yyzPath)
     
     if (not file_exists(_yyzPath))
     {
-        __HotglueError($"\"{_yyzPath}\" doesn't exist");
+        __HotglueWarning($"\"{_yyzPath}\" doesn't exist");
+        return undefined;
     }
     
-    var _hash = md5_string_unicode(_yyzPath);
+    var _directory = $"{HOTGLUE_UNZIP_CACHE_DIRECTORY}{md5_string_unicode(_yyzPath)}/";
+    directory_destroy(_directory);
     
-    var _directory = game_save_id + $"temp-{_hash}/";
-    directory_destroy(_directory)
-    
-    zip_unzip(_yyzPath, _directory);
-    
-    return HotglueLoadYYZUnpacked(_directory);
+    if (zip_unzip(_yyzPath, _directory) <= 0)
+    {
+        __HotglueWarning($"Failed to unzip \"{_yyzPath}\" to \"{_directory}\"");
+        directory_destroy(_directory);
+        
+        return undefined;
+    }
+    else
+    {
+        return HotglueLoadYYZUnpacked(_directory);
+    }
 }

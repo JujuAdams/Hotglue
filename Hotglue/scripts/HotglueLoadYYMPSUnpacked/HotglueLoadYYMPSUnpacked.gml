@@ -26,7 +26,7 @@ function HotglueLoadYYMPSUnpacked(_yypPath, _metadataJSON = undefined)
         var _buffer = buffer_load(_metadataPath);
         var _string = buffer_read(_buffer, buffer_text);
         buffer_delete(_buffer);
-        var _metadataJSON = json_parse(_string);
+        _metadataJSON = json_parse(_string);
     }
     
     var _project = new __HotglueProject(_yypPath);

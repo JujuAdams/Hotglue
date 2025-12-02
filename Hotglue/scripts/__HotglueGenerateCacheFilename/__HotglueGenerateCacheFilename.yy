@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__HotglueGenerateCacheFilename",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__HotglueGenerateCacheFilename",
+  "parent":{
+    "name":"(System)",
+    "path":"folders/Hotglue/(System).yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

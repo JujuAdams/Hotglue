@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HttpRequestSystem",
+  "%Name":"__HotglueConstants",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HttpRequestSystem",
+  "name":"__HotglueConstants",
   "parent":{
-    "name":"HTTP",
-    "path":"folders/HTTP.yy",
+    "name":"Hotglue",
+    "path":"folders/Hotglue.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

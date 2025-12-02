@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"HotglueGetDestructiveCopy",
   "parent":{
-    "name":"Hotglue",
-    "path":"folders/Hotglue.yy",
+    "name":"Settings",
+    "path":"folders/Hotglue/Settings.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

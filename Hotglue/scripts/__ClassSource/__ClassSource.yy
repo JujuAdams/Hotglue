@@ -6,7 +6,7 @@
   "name":"__ClassSource",
   "parent":{
     "name":"Source Cache",
-    "path":"folders/Source Cache.yy",
+    "path":"folders/Hotglue/Source Cache.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

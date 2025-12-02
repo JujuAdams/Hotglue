@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"HttpRequestAsyncHTTPEvent",
+  "%Name":"HotglueGitHubGetMetadata",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HttpRequestAsyncHTTPEvent",
+  "name":"HotglueGitHubGetMetadata",
   "parent":{
     "name":"HTTP",
-    "path":"folders/HTTP.yy",
+    "path":"folders/Hotglue/HTTP.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

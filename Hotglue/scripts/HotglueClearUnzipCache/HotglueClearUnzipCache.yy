@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueClearUnzipCache",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueClearUnzipCache",
+  "parent":{
+    "name":"Hotglue",
+    "path":"folders/Hotglue.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

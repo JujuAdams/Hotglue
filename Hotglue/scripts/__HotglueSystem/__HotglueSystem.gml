@@ -16,8 +16,19 @@ function __HotglueSystem()
         __suppressGitAssert = false;
         __destructiveCopy   = true;
         
-        __traceHandler   = function() {};
-        __warningHandler = function() {};
+        __traceHandler   = function(_string) { show_debug_message($"Hotglue: {_string}"); };
+        __warningHandler = function(_string) { show_debug_message($"Hotglue: Warning! {_string}"); };
+        
+        __httpRequestMap = ds_map_create();
+        
+        time_source_start(time_source_create(time_source_global, 1, time_source_units_frames, function()
+        {
+            if (not instance_exists(__objHotglue))
+            {
+                instance_create_depth(0, 0, 0, __objHotglue);
+            }
+        },
+        [], -1));
     }
     
     return _system;

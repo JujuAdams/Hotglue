@@ -3,9 +3,9 @@
 /// @param url
 /// @param [method=GET]
 
-function HttpRequest(_url, _method = "GET") constructor
+function __HotglueClassHttpRequest(_url, _method = "GET") constructor
 {
-    static _system = __HttpRequestSystem();
+    static _httpRequestMap = __HotglueSystem().__httpRequestMap;
     
     __url    = _url;
     __method = _method;
@@ -18,12 +18,7 @@ function HttpRequest(_url, _method = "GET") constructor
     
     __result = undefined;
     
-    __childrenArray = [];
     
-    if (_system.__currentHttpRequest != undefined)
-    {
-        array_push(_system.__currentHttpRequest.__childrenArray, self);
-    }
     
     static GetURL = function()
     {
@@ -112,7 +107,7 @@ function HttpRequest(_url, _method = "GET") constructor
             var _headerMap = json_decode(json_stringify(__headerStruct));
             
             __requestID = http_request(__url, __method, _headerMap, __body);
-            array_push(_system.__httpRequestArray, self);
+            _httpRequestMap[? __requestID] = self;
             
             ds_map_destroy(_headerMap);
         }

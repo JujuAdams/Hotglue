@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__HotglueGitHubRepo",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__HotglueGitHubRepo",
+  "parent":{
+    "name":"Classes",
+    "path":"folders/Hotglue/(System)/Classes.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
