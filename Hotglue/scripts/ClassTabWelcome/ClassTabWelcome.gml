@@ -8,10 +8,38 @@ function ClassTabWelcome() : ClassTab() constructor
         {
             ImGuiSetCursorPosY(ImGuiGetCursorPosY() + 3);
             ImGuiTextWrapped("Welcome to Hotglue by Juju Adams. This is version 0.0.0, 2025-11-09.");
-            ImGuiTextWrapped("ImGui is by Omar Cornut. ImGui implementation (ImGM) by knno, based on work by Nommiin.");
-            ImGuiTextWrapped("GitHub.gml by Alub.");
-            ImGuiNewLine();
             ImGuiTextWrapped("Hotglue is a GameMaker 2024.14 import tool. It will help you import and update libraries in your GameMaker games.");
+            ImGuiNewLine();
+            ImGuiTextWrapped("ImGui is by Omar Cornut. ImGui implementation (ImGM) by knno, based on work by Nommiin.");
+            ImGuiTextWrapped("GitHub authorization flow based on `GitHub.gml` by Alub.");
+            
+            if (not extension_exists("execute_shell_simple_ext"))
+            {
+                ImGuiNewLine();
+                ImGuiTextWrapped("Hotglue has support for `execute_shell_simple` by YellowAfterlife. This is, however, a paid asset. Please visit the link below, toss YellowAfterlife some money, and download the extension.");
+                ImGuiTextLinkOpenURL("execute_shell_simple on itch.io", "https://yellowafterlife.itch.io/gamemaker-execute-shell-simple");
+            }
+            
+            if ((HOTGLUE_GITHUB_CLIENT_ID == "") || (HOTGLUE_GITHUB_CLIENT_SECRET == ""))
+            {
+                ImGuiNewLine();
+                ImGuiPushStyleColor(ImGuiCol.Text, INTERFACE_COLOR_RED_TEXT, 1);
+                ImGuiTextWrapped("GitHub has relatively tight rate limiting. To get around the rate limits, you should authorize Hotglue as a GitHub app. This build does not contain a client ID and/or client secret and so cannot connect to GitHub for authorization. Please see `__HotglueConfig`.");
+                ImGuiPopStyleColor();
+            }
+            else
+            {
+                if (not HotglueGetGitHubAccessTokenAvailable())
+                {
+                    ImGuiNewLine();
+                    ImGuiTextWrapped("GitHub has relatively tight rate limiting. To get around the rate limits, you should authorize Hotglue as a GitHub app. Please click this button to start the authorization flow:");
+                    if (ImGuiButton("Authorize GitHub"))
+                    {
+                        InterfaceGitHubAuthFlow();
+                    }
+                }
+            }
+            
             ImGuiEndTabItem();
         }
     }

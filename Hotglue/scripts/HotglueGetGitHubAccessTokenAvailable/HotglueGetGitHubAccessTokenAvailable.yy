@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueGetGitHubAccessTokenAvailable",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueGetGitHubAccessTokenAvailable",
+  "parent":{
+    "name":"Other",
+    "path":"folders/Hotglue/Other.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

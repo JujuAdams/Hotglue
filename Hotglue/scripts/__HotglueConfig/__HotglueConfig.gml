@@ -1,4 +1,4 @@
 // Feather disable all
 
-#macro HOUTGLUE_GITHUB_CLIENT_ID  ""
-#macro HOUTGLUE_GITHUB_CLIENT_SECRET  ""
+#macro HOTGLUE_GITHUB_CLIENT_ID  ""
+#macro HOTGLUE_GITHUB_CLIENT_SECRET  ""

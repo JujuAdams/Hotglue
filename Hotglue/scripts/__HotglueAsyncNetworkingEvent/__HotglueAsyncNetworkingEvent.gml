@@ -41,7 +41,7 @@ function __HotglueAsyncNetworkingEvent()
                     var _codeEndPos = _codePos + string_length("GET /?code=");
                     var _code = string_copy(_string, _codeEndPos, _httpPos - _codeEndPos);
                     
-                    var _params = $"client_id={HOUTGLUE_GITHUB_CLIENT_ID}&client_secret={HOUTGLUE_GITHUB_CLIENT_SECRET}&code={_code}";
+                    var _params = $"client_id={HOTGLUE_GITHUB_CLIENT_ID}&client_secret={HOTGLUE_GITHUB_CLIENT_SECRET}&code={_code}";
                     
                     var _request = new __HotglueClassHttpRequest($"https://github.com/login/oauth/access_token?{_params}", "POST", false);
                     _request.AddHeader("Accept", "application/json");

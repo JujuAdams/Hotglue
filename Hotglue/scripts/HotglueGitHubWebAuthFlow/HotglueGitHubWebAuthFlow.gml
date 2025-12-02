@@ -50,7 +50,7 @@ function HotglueGitHubWebAuthFlow(_callback)
             if (__server >= 0)
             {
                 __HotglueTrace("Opening web page for authorization");
-                url_open($"https://github.com/login/oauth/authorize?client_id={HOUTGLUE_GITHUB_CLIENT_ID}&scope={HOTGLUE_GITHUB_AUTH_SCOPE}");
+                url_open($"https://github.com/login/oauth/authorize?client_id={HOTGLUE_GITHUB_CLIENT_ID}&scope={HOTGLUE_GITHUB_AUTH_SCOPE}");
             }
         }
     }

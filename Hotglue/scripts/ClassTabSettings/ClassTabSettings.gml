@@ -8,6 +8,27 @@ function ClassTabSettings() : ClassTab() constructor
     {
         if (ImGuiBeginTabItem("Settings"))
         {
+            if ((HOTGLUE_GITHUB_CLIENT_ID == "") || (HOTGLUE_GITHUB_CLIENT_SECRET == ""))
+            {
+                ImGuiTextColored("GitHub client ID and/or client secret not set (please see `__HotglueConfig`).\nGitHub access token not available.", INTERFACE_COLOR_ORANGE_TEXT);
+            }
+            else
+            {
+                if (HotglueGetGitHubAccessTokenAvailable())
+                {
+                    ImGuiText("GitHub access token available.");
+                }
+                else
+                {
+                    ImGuiTextColored("GitHub access token not available.", INTERFACE_COLOR_ORANGE_TEXT);
+                    if (ImGuiButton("Authorize GitHub"))
+                    {
+                    }
+                }
+            }
+            
+            ImGuiNewLine();
+            
             __advanced = ImGuiCheckbox("I know what I'm doing", __advanced);
             if (__advanced)
             {

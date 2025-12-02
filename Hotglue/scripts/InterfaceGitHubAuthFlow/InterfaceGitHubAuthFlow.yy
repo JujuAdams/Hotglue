@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"InterfaceGitHubAuthFlow",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"InterfaceGitHubAuthFlow",
+  "parent":{
+    "name":"Interface",
+    "path":"folders/Interface.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
