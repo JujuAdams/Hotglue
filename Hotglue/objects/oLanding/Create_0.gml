@@ -12,12 +12,14 @@ HotglueClearUnzipCache();
 //var _channel = HotglueEnsureChannel("https://raw.githubusercontent.com/JujuAdams/Hotglue-Index/refs/heads/main/github.json");
 //_channel.Refresh(function(_channel, _success)
 //{
-//    var _linkArray = _channel.GetURLArray();
+//    var _repositoryArray = _channel.GetRepositoryArray();
 //    var _i = 0;
-//    repeat(array_length(_linkArray))
+//    repeat(array_length(_repositoryArray))
 //    {
-//        HotglueGitHubRepositoryRead(_linkArray[_i],
-//        function(_repository)
+//        var _repository = _repositoryArray[_i];
+//        _repository.GetHotglueJSON();
+//        _repository.GetReleases();
+//        _repository.SetFinalCallback(function(_repository)
 //        {
 //            var _latestStable = _repository.GetLatestStable();
 //            if (is_struct(_latestStable))

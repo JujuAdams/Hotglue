@@ -2,7 +2,7 @@
 
 /// @param url
 
-function __HotglueGitHubRepo(_url) constructor
+function __HotglueRepositoryGitHub(_url) constructor
 {
     if (string_char_at(_url, string_length(_url)) != "/")
     {
@@ -24,6 +24,8 @@ function __HotglueGitHubRepo(_url) constructor
     __latestRelease = undefined;
     
     __finalCallback = undefined;
+    
+    
     
     static SetFinalCallback = function(_callback)
     {

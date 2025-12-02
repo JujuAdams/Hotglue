@@ -22,7 +22,7 @@ function __HotglueClassHttpRequest(_url, _method = "GET", _allowBearerToken = tr
     
     //Detect if we need a GitHub bearer token
     if ((string_pos("github.com/", _url) > 0)
-    ||  (string_pos("githubcontent.com/", _url) > 0))
+    ||  (string_pos("githubusercontent.com/", _url) > 0))
     {
         if (_system.__githubUserAccessToken != undefined)
         {

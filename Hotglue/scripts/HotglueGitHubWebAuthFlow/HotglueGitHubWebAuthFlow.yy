@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"HotglueGitHubWebAuthFlow",
   "parent":{
-    "name":"GitHub",
-    "path":"folders/Hotglue/GitHub.yy",
+    "name":"Other",
+    "path":"folders/Hotglue/Other.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

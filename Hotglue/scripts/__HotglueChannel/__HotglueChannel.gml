@@ -8,13 +8,14 @@ function __HotglueChannel(_url) constructor
     
     __refreshCallback = undefined;
     
-    __urlArray = [];
+    __repositoryArray = [];
+    
     __httpRequest = undefined;
     __httpSuccess = false;
     
-    static GetURLArray = function()
+    static GetRepositoryArray = function()
     {
-        return __urlArray;
+        return __repositoryArray;
     }
     
     static GetHTTPSuccess = function()
@@ -74,17 +75,17 @@ function __HotglueChannel(_url) constructor
                             {
                                 __HotglueTrace($"Refreshed channel \"{__url}\". Found {array_length(_urlArray)} links");
                                 
+                                var _repositoryArray = __repositoryArray;
+                                array_resize(_repositoryArray, 0);
+                                
                                 var _i = 0;
                                 repeat(array_length(_urlArray))
                                 {
-                                    __HotglueTrace($"\"{_urlArray[_i]}\"");
+                                    array_push(_repositoryArray, new __HotglueRepositoryGitHub(_urlArray[_i]));
                                     ++_i;
                                 }
                                 
                                 _success = true;
-                                
-                                array_resize(__urlArray, 0);
-                                array_copy(__urlArray, 0, _urlArray, 0, array_length(_urlArray));
                             }
                         }
                         else
