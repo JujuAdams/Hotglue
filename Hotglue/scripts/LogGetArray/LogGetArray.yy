@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"LogGetArray",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"LogGetArray",
+  "parent":{
+    "name":"Log",
+    "path":"folders/Log.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

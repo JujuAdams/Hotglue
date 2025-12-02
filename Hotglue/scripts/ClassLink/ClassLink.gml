@@ -79,13 +79,13 @@ function ClassLink(_url, _standbyName) constructor
             if (_newFavorite)
             {
                 array_push(InterfaceSettingGet("favoriteLinks"), GetURL());
-                InterfaceStatus($"Favourited \"{GetURL()}\"");
+                LogTraceAndStatus($"Favourited \"{GetURL()}\"");
             }
             else
             {
                 var _index = array_get_index(_favoriteArray, GetURL());
                 if (_index >= 0) array_delete(_favoriteArray, _index, 1);
-                InterfaceStatus($"Unfavourited \"{GetURL()}\"");
+                LogTraceAndStatus($"Unfavourited \"{GetURL()}\"");
             }
             
             oInterface.favoritesTab.dirty = true;

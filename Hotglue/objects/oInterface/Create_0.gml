@@ -1,6 +1,6 @@
 logTab = new ClassTabLog();
 
-InterfaceTrace("Interface created");
+LogTrace("Interface created");
 
 welcomeTab  = new ClassTabWelcome();
 projectTab  = new ClassTabProject();
@@ -34,16 +34,15 @@ repeat(array_length(_settingsChannelArray))
     }
     else
     {
-        InterfaceWarning($"Channel could not be loaded    {json_stringify(_settingsChannel)}");
+        LogWarning($"Channel could not be loaded    {json_stringify(_settingsChannel)}");
     }
     
     ++_i;
 }
 
-InterfaceStatus($"Loaded {array_length(channelArray)} channels");
+LogTraceAndStatus($"Loaded {array_length(channelArray)} channels");
 
 context = new ImGuiContext(0, 0, window_get_width(), window_get_height(),
                            ImGuiConfigFlags.DockingEnable);
 
-status = undefined;
-staticBarHeight = 32;
+statusBarHeight = 32;

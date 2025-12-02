@@ -2,7 +2,7 @@ function InterfaceSettingsLoad()
 {
     if (not instance_exists(oInterface))
     {
-        InterfaceWarning("`oInterface` has not been created yet");
+        LogWarning("`oInterface` has not been created yet");
         return;
     }
     
@@ -17,5 +17,5 @@ function InterfaceSettingsLoad()
         HotglueGetChannelByURL("@locals").Deserialize(InterfaceSettingGet("locals", []));
     }
     
-    InterfaceStatus("Settings loaded");
+    LogTraceAndStatus("Settings loaded");
 }

@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"InterfaceTrace",
+  "%Name":"LogTraceAndStatus",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"InterfaceTrace",
+  "name":"LogTraceAndStatus",
   "parent":{
-    "name":"Interface",
-    "path":"folders/Interface.yy",
+    "name":"Log",
+    "path":"folders/Log.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

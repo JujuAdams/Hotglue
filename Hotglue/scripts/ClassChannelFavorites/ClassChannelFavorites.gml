@@ -24,7 +24,7 @@ function ClassChannelFavorites() : __ClassChannelCommon("* Favourites *") constr
             ++_i;
         }
         
-        InterfaceTrace($"Rebuilt favourited links");
+        LogTrace($"Rebuilt favourited links");
         
         if (__selectedLink != undefined)
         {

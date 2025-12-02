@@ -35,7 +35,7 @@ function ClassTabProject() : ClassTab() constructor
                     ImGuiSameLine();
                     if (ImGuiSmallButton("Close"))
                     {
-                        InterfaceStatus($"Closed \"{__directProject.GetPath()}\"");
+                        LogTraceAndStatus($"Closed \"{__directProject.GetPath()}\"");
                         __directProject = undefined;
                         __directView = undefined;
                     }
@@ -60,12 +60,12 @@ function ClassTabProject() : ClassTab() constructor
                                     __directProject = HotglueLoadYYP(_path);
                                     __directView = new ClassInterfaceProjectView(__directProject);
                                     
-                                    InterfaceStatus($"Loaded \"{_path}\"");
+                                    LogTraceAndStatus($"Loaded \"{_path}\"");
                                 }
                                 catch(_error)
                                 {
-                                    InterfaceWarning(_error[$ "message"] ?? string(_error));
-                                    InterfaceWarning($"Failed to load \"{_path}\"");
+                                    LogWarning(_error[$ "message"] ?? string(_error));
+                                    LogWarning($"Failed to load \"{_path}\"");
                                     
                                     __directProject = undefined;
                                     __directView = undefined;
@@ -73,11 +73,11 @@ function ClassTabProject() : ClassTab() constructor
                             }
                             else if (filename_ext(_path) == ".gml")
                             {
-                                InterfaceStatus($"Loaded \"{_path}\"");
+                                LogTraceAndStatus($"Loaded \"{_path}\"");
                             }
                             else
                             {
-                                InterfaceStatus($"File type not supported \"{_path}\"");
+                                LogTraceAndStatus($"File type not supported \"{_path}\"");
                             }
                         }
                     }
@@ -106,17 +106,17 @@ function ClassTabProject() : ClassTab() constructor
                             if (array_get_index(__looseFileViewArray, _path) < 0)
                             {
                                 array_push(__looseFileViewArray, new ClassInterfaceFileView(_looseFile));
-                                InterfaceTrace($"Loaded \"{_path}\"");
+                                LogTrace($"Loaded \"{_path}\"");
                             }
                             else
                             {
-                                InterfaceTrace($"\"{_path}\" has already been loaded");
+                                LogTrace($"\"{_path}\" has already been loaded");
                             }
                         }
                         catch(_error)
                         {
-                            InterfaceWarning(_error[$ "message"] ?? string(_error));
-                            InterfaceWarning($"Failed to load \"{_path}\"");
+                            LogWarning(_error[$ "message"] ?? string(_error));
+                            LogWarning($"Failed to load \"{_path}\"");
                         }
                     }
                 }
@@ -230,7 +230,7 @@ function ClassTabProject() : ClassTab() constructor
                     ImGuiSameLine();
                     if (ImGuiSmallButton("Close"))
                     {
-                        InterfaceStatus($"Closed \"{__destinationProject.GetPath()}\"");
+                        LogTraceAndStatus($"Closed \"{__destinationProject.GetPath()}\"");
                         __destinationProject = undefined;
                         __destinationView = undefined;
                     }
@@ -274,12 +274,12 @@ function ClassTabProject() : ClassTab() constructor
                             __destinationProject = HotglueLoadYYP(_path);
                             __destinationView = new ClassInterfaceProjectView(__destinationProject);
                             
-                            InterfaceStatus($"Loaded \"{_path}\"");
+                            LogTraceAndStatus($"Loaded \"{_path}\"");
                         }
                         catch(_error)
                         {
-                            InterfaceWarning(_error[$ "message"] ?? string(_error));
-                            InterfaceWarning($"Failed to load \"{_path}\"");
+                            LogWarning(_error[$ "message"] ?? string(_error));
+                            LogWarning($"Failed to load \"{_path}\"");
                             __destinationProject = undefined;
                             __destinationView = undefined;
                         }

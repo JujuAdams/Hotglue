@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"LogSetStatus",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"LogSetStatus",
+  "parent":{
+    "name":"Log",
+    "path":"folders/Log.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

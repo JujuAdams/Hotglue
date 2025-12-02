@@ -2,12 +2,9 @@
 
 function ClassTabLog() : ClassTab() constructor
 {
-    logArray = [];
-    newWarnings = false;
-    
     static TabItem = function()
     {
-        if (newWarnings)
+        if (LogGetNewWarnings())
         {
             var _displayName = ((current_time mod 300) < 150)? "! Log !" : "  Log  ";
         }
@@ -18,9 +15,9 @@ function ClassTabLog() : ClassTab() constructor
         
         if (ImGuiBeginTabItem($"{_displayName}###logTab"))
         {
-            newWarnings = false;
+            LogSetNewWarnings(false);
             
-            var _logArray = logArray;
+            var _logArray = LogGetArray();
             
             if (ImGuiButton("Copy to clipboard"))
             {
@@ -35,7 +32,7 @@ function ClassTabLog() : ClassTab() constructor
                 }
                 
                 clipboard_set_text(_string);
-                InterfaceStatusOnly("Copied log to clipboard");
+                LogSetStatus("Copied log to clipboard");
             }
             
             ImGuiBeginTable("logTable", 2, ImGuiTableFlags.BordersInner);

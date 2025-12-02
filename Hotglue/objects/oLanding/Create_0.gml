@@ -1,7 +1,8 @@
 // Feather disable all
 
-HotglueSetTraceHandler(InterfaceTrace);
-HotglueSetWarningHandler(InterfaceWarning);
+LogTrace("Application booted");
+LogTrace($"GM_build_type = \"{GM_build_type}\", debug_mode = {debug_mode}, os_type = {os_type}");
+
 HotglueClearUnzipCache();
 
 //if (debug_mode)
@@ -28,7 +29,7 @@ HotglueClearUnzipCache();
 //                {
 //                    if (_success && is_struct(_project))
 //                    {
-//                        InterfaceStatus($"Loaded \"{_project.GetPath()}\"");
+//                        LogTraceAndStatus($"Loaded \"{_project.GetPath()}\"");
 //                        execute_shell_simple(filename_dir(_project.GetPath()));
 //                    }
 //                });
@@ -40,6 +41,14 @@ HotglueClearUnzipCache();
 //});
 
 //TODO - CLI
+
+LogTrace($"parameter_count = {parameter_count()}");
+var _i = 0;
+repeat(parameter_count())
+{
+    LogTrace($"parameter {_i} = {parameter_string(_i)}");
+    ++_i;
+}
 
 instance_destroy();
 instance_create_depth(0, 0, 0, oInterface);

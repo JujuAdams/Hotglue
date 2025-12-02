@@ -16,7 +16,7 @@ function ClassChannelLocal() : __ClassChannelCommon("Local") constructor
                 {
                     var _link = new ClassLink(_path, filename_name(_path));
                     array_push(__linkArray, _link);
-                    InterfaceStatus($"Added local link \"{_path}\"");
+                    LogTraceAndStatus($"Added local link \"{_path}\"");
                     
                     if (array_length(__linkArray) == 1)
                     {
@@ -25,7 +25,7 @@ function ClassChannelLocal() : __ClassChannelCommon("Local") constructor
                 }
                 else
                 {
-                    InterfaceStatus($"File extension \"{_extension}\" unsupported ({_path})");
+                    LogTraceAndStatus($"File extension \"{_extension}\" unsupported ({_path})");
                 }
             }
         }

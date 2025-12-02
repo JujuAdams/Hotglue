@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"InterfaceWarning",
+  "%Name":"__LogSystem",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"InterfaceWarning",
+  "name":"__LogSystem",
   "parent":{
-    "name":"Interface",
-    "path":"folders/Interface.yy",
+    "name":"Log",
+    "path":"folders/Log.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

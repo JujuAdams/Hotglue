@@ -12,5 +12,5 @@ function InterfaceSettingsSave()
         buffer_delete(_buffer);
     }
     
-    InterfaceTrace("Settings saved");
+    LogTrace("Settings saved");
 }

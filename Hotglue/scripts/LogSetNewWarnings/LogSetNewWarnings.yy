@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"LogSetNewWarnings",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"LogSetNewWarnings",
+  "parent":{
+    "name":"Log",
+    "path":"folders/Log.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -14,5 +14,5 @@ function InterfaceSettingsReset()
         };
     }
     
-    InterfaceTrace("Settings reset");
+    LogTrace("Settings reset");
 }

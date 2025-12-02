@@ -5,7 +5,7 @@ function InterfaceSettingSet(_key, _value)
 {
     if (not instance_exists(oInterface))
     {
-        InterfaceWarning("`oInterface` has not been created yet");
+        LogWarning("`oInterface` has not been created yet");
         return;
     }
     

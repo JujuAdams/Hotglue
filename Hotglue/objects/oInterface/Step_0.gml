@@ -1,4 +1,4 @@
-ImGuiSetNextWindowSize(context.GetRegion().width, context.GetRegion().height - staticBarHeight, ImGuiCond.Always);
+ImGuiSetNextWindowSize(context.GetRegion().width, context.GetRegion().height - statusBarHeight, ImGuiCond.Always);
 ImGuiSetNextWindowPos(0, 0, ImGuiCond.Always);
 
 var _return = ImGuiBegin("mainWindow", true, ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoMove);
@@ -16,18 +16,19 @@ if (_return & ImGuiReturnMask.Return)
 }
 ImGuiEnd();
 
-ImGuiSetNextWindowSize(context.GetRegion().width, staticBarHeight, ImGuiCond.Always);
+ImGuiSetNextWindowSize(context.GetRegion().width, statusBarHeight, ImGuiCond.Always);
 ImGuiSetNextWindowPos(0, context.GetRegion().height, undefined, 0, 1, ImGuiCond.Always);
 var _return = ImGuiBegin("statusBarWindow", true, ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar);
 if (_return & ImGuiReturnMask.Return)
 {
-    if (status == undefined)
+    var _status = LogGetStatus();
+    if (is_callable(_status))
     {
-        ImGuiText("Ready!");
+        _status();
     }
     else
     {
-        status.Build();
+        ImGuiText(string(_status ?? "Ready!"));
     }
 }
 
