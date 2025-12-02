@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__HotglueChannelGitHub",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__HotglueChannelGitHub",
+  "parent":{
+    "name":"Channels",
+    "path":"folders/Hotglue/(System)/Classes/Channels.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HotglueRepositoryGitHub",
+  "%Name":"__HotglueRepositoryCommon",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HotglueRepositoryGitHub",
+  "name":"__HotglueRepositoryCommon",
   "parent":{
     "name":"Repositories",
     "path":"folders/Hotglue/(System)/Classes/Repositories.yy",

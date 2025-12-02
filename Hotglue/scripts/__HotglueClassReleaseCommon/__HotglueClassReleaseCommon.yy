@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"__HotglueClassReleaseCommon",
   "parent":{
-    "name":"Classes",
-    "path":"folders/Hotglue/(System)/Classes.yy",
+    "name":"Releases",
+    "path":"folders/Hotglue/(System)/Classes/Releases.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

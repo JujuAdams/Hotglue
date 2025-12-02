@@ -101,7 +101,8 @@ function ClassLink(_url, _standbyName) constructor
         ImGuiTableNextRow();
         ImGuiTableNextColumn();
         
-        var _clicked = ImGuiTextLink("Semantic Version");
+        ImGuiTextLink("Semantic Version");
+        var _clicked = ImGuiIsItemClicked();
         if (ImGuiBeginItemTooltip())
         {
             ImGuiText($"Open \"https://semver.org/\"");
@@ -110,7 +111,7 @@ function ClassLink(_url, _standbyName) constructor
         
         if (_clicked)
         {
-            
+            url_open("https://semver.org/");
         }
         
         ImGuiTableNextColumn();
@@ -121,7 +122,8 @@ function ClassLink(_url, _standbyName) constructor
         ImGuiText("URL");
         ImGuiTableNextColumn();
         
-        var _clicked = ImGuiTextLink(GetURL());
+        ImGuiTextLink(GetURL());
+        var _clicked = ImGuiIsItemClicked();
         if (ImGuiBeginItemTooltip())
         {
             ImGuiText($"Open \"{GetURL()}\"");
@@ -130,7 +132,14 @@ function ClassLink(_url, _standbyName) constructor
         
         if (_clicked)
         {
-            
+            if (InterfaceGuessURLIsRemote(GetURL()))
+            {
+                url_open(GetURL());
+            }
+            else
+            {
+                execute_shell_simple(filename_dir(GetURL()));
+            }
         }
         
         ImGuiTableNextRow();
@@ -154,7 +163,8 @@ function ClassLink(_url, _standbyName) constructor
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
             
-            var _clicked = ImGuiTextLink(_dependency.name);
+            ImGuiTextLink(_dependency.name);
+            var _clicked = ImGuiIsItemClicked();
             if (ImGuiBeginItemTooltip())
             {
                 ImGuiText($"Open \"{_dependency.url}\"");
@@ -163,7 +173,14 @@ function ClassLink(_url, _standbyName) constructor
             
             if (_clicked)
             {
-                
+                if (InterfaceGuessURLIsRemote(_dependency.url))
+                {
+                    url_open(GetURL());
+                }
+                else
+                {
+                    execute_shell_simple(filename_dir(_dependency.url));
+                }
             }
             
             ImGuiTableNextColumn();
@@ -178,7 +195,8 @@ function ClassLink(_url, _standbyName) constructor
         ImGuiTableNextRow();
         ImGuiTableNextColumn();
         
-        var _clicked = ImGuiTextLink("Scripting");
+        ImGuiTextLink("Scripting");
+        var _clicked = ImGuiIsItemClicked();
         if (ImGuiBeginItemTooltip())
         {
             ImGuiText($"View scripting");
@@ -231,7 +249,8 @@ function ClassLink(_url, _standbyName) constructor
         ImGuiTableNextRow();
         ImGuiTableNextColumn();
         
-        var _clicked = ImGuiTextLink("Semantic Version");
+        ImGuiTextLink("Semantic Version");
+        var _clicked = ImGuiIsItemClicked();
         if (ImGuiBeginItemTooltip())
         {
             ImGuiText($"Open \"https://semver.org/\"");
@@ -240,7 +259,7 @@ function ClassLink(_url, _standbyName) constructor
         
         if (_clicked)
         {
-            
+            url_open("https://semver.org/");
         }
         
         ImGuiTableNextColumn();
@@ -282,7 +301,8 @@ function ClassLink(_url, _standbyName) constructor
         ImGuiText("URL");
         ImGuiTableNextColumn();
         
-        var _clicked = ImGuiTextLink(GetURL());
+        ImGuiTextLink(GetURL());
+        var _clicked = ImGuiIsItemClicked();
         if (ImGuiBeginItemTooltip())
         {
             ImGuiText($"Open \"{GetURL()}\"");
@@ -291,7 +311,14 @@ function ClassLink(_url, _standbyName) constructor
         
         if (_clicked)
         {
-            
+            if (InterfaceGuessURLIsRemote(GetURL()))
+            {
+                url_open(GetURL());
+            }
+            else
+            {
+                execute_shell_simple(filename_dir(GetURL()));
+            }
         }
         
         ImGuiTableNextRow();
@@ -315,7 +342,8 @@ function ClassLink(_url, _standbyName) constructor
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
             
-            var _clicked = ImGuiTextLink(_dependency.name);
+            ImGuiTextLink(_dependency.name);
+            var _clicked = ImGuiIsItemClicked();
             if (ImGuiBeginItemTooltip())
             {
                 ImGuiText($"Open \"{_dependency.url}\"");
@@ -324,7 +352,14 @@ function ClassLink(_url, _standbyName) constructor
             
             if (_clicked)
             {
-                
+                if (InterfaceGuessURLIsRemote(_dependency.url))
+                {
+                    url_open(GetURL());
+                }
+                else
+                {
+                    execute_shell_simple(filename_dir(_dependency.url));
+                }
             }
             
             ImGuiTableNextColumn();
@@ -339,7 +374,8 @@ function ClassLink(_url, _standbyName) constructor
         ImGuiTableNextRow();
         ImGuiTableNextColumn();
         
-        var _clicked = ImGuiTextLink("Scripting");
+        ImGuiTextLink("Scripting");
+        var _clicked = ImGuiIsItemClicked();
         if (ImGuiBeginItemTooltip())
         {
             ImGuiText($"Edit scripting");

@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"HotglueEnsureChannel",
+  "%Name":"__HotglueChannelLocal",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HotglueEnsureChannel",
+  "name":"__HotglueChannelLocal",
   "parent":{
     "name":"Channels",
-    "path":"folders/Hotglue/Channels.yy",
+    "path":"folders/Hotglue/(System)/Classes/Channels.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

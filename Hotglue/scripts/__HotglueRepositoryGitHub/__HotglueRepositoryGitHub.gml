@@ -2,7 +2,7 @@
 
 /// @param url
 
-function __HotglueRepositoryGitHub(_url) constructor
+function __HotglueRepositoryGitHub(_url) : __HotglueRepositoryCommon(_url) constructor
 {
     if (string_char_at(_url, string_length(_url)) != "/")
     {
@@ -25,25 +25,19 @@ function __HotglueRepositoryGitHub(_url) constructor
     
     __finalCallback = undefined;
     
-    
-    
-    static SetFinalCallback = function(_callback)
+    //Figure out a friendly name for the repository
+    var _name = _url;
+    if (string_char_at(_name, string_length(_name)) == "/")
     {
-        __finalCallback = _callback;
-        
-        return self;
+        _name = string_delete(_name, string_length(_name), 1);
     }
     
-    static __ExecuteFinalCallback = function()
-    {
-        if ((__hotglueJSONRequest == undefined) && (__releasesRequest == undefined))
-        {
-            if (is_callable(__finalCallback))
-            {
-                __finalCallback(self);
-            }
-        }
-    }
+    var _substring = "github.com/";
+    var _pos = string_pos(_substring, _name);
+    
+    __name = string_delete(_name, 1, _pos + string_length(_substring)-1);
+    
+    
     
     static GetLatestStable = function()
     {

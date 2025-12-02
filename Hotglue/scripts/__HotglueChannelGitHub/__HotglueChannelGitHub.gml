@@ -2,21 +2,14 @@
 
 /// @param url
 
-function __HotglueChannel(_url) constructor
+function __HotglueChannelGitHub(_url) : __HotglueChannelCommon(_url) constructor
 {
-    __url = _url;
-    
-    __refreshCallback = undefined;
-    
-    __repositoryArray = [];
+    static _repoConstructor = __HotglueRepositoryGitHub;
     
     __httpRequest = undefined;
     __httpSuccess = false;
     
-    static GetRepositoryArray = function()
-    {
-        return __repositoryArray;
-    }
+    
     
     static GetHTTPSuccess = function()
     {
@@ -75,15 +68,7 @@ function __HotglueChannel(_url) constructor
                             {
                                 __HotglueTrace($"Refreshed channel \"{__url}\". Found {array_length(_urlArray)} links");
                                 
-                                var _repositoryArray = __repositoryArray;
-                                array_resize(_repositoryArray, 0);
-                                
-                                var _i = 0;
-                                repeat(array_length(_urlArray))
-                                {
-                                    array_push(_repositoryArray, new __HotglueRepositoryGitHub(_urlArray[_i]));
-                                    ++_i;
-                                }
+                                Deserialize(_urlArray);
                                 
                                 _success = true;
                             }
@@ -106,32 +91,4 @@ function __HotglueChannel(_url) constructor
             __httpRequest.Send();
         }
     }
-    
-    //static SetLinkArray = function(_inputArray)
-    //{
-    //    var _urlArray = __urlArray;
-    //    array_resize(_urlArray, 0);
-    //    
-    //    var _i = 0;
-    //    repeat(array_length(_inputArray))
-    //    {
-    //        var _inputURL = _inputArray[_i];
-    //        
-    //        var _name = _inputURL;
-    //        if (string_char_at(_name, string_length(_name)) == "/")
-    //        {
-    //            _name = string_delete(_name, string_length(_name), 1);
-    //        }
-    //        
-    //        var _substring = "github.com/";
-    //        var _pos = string_pos(_substring, _name);
-    //        
-    //        _name = string_delete(_name, 1, _pos + string_length(_substring)-1);
-    //        
-    //        var _link = new ClassLink(_inputURL, _name);
-    //        array_push(_urlArray, _link);
-    //        
-    //        ++_i;
-    //    }
-    //}
 }
