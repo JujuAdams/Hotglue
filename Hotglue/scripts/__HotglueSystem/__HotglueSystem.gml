@@ -16,6 +16,12 @@ function __HotglueSystem()
         __suppressGitAssert = false;
         __destructiveCopy   = true;
         
+        __githubUserAuthToken = undefined;
+        
+        //Port to connect on as part of the `.requestAuthenticationViaWebPage()` flow. This must match the callback URL entered whe creating your GitHub app.
+        //e.g. Setting `GITHUB_GML_LOCALHOST_PORT` to `52499` means that you should use `http://localhost:52499/` for the callback URL.
+        __localhostPort = 52499;
+        
         __traceHandler   = function(_string) { show_debug_message($"Hotglue: {_string}"); };
         __warningHandler = function(_string) { show_debug_message($"Hotglue: Warning! {_string}"); };
         
@@ -23,10 +29,7 @@ function __HotglueSystem()
         
         time_source_start(time_source_create(time_source_global, 1, time_source_units_frames, function()
         {
-            if (not instance_exists(__objHotglue))
-            {
-                instance_create_depth(0, 0, 0, __objHotglue);
-            }
+            __HotglueEnsureObject();
         },
         [], -1));
     }

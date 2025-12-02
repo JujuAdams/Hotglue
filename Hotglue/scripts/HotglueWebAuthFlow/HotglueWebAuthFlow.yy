@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"HotglueGitHubGetMetadata",
+  "%Name":"HotglueWebAuthFlow",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HotglueGitHubGetMetadata",
+  "name":"HotglueWebAuthFlow",
   "parent":{
     "name":"HTTP",
     "path":"folders/Hotglue/HTTP.yy",

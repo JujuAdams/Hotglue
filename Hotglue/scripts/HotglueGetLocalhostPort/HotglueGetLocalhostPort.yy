@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"HotglueDownload",
+  "%Name":"HotglueGetLocalhostPort",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HotglueDownload",
+  "name":"HotglueGetLocalhostPort",
   "parent":{
-    "name":"HTTP",
-    "path":"folders/Hotglue/HTTP.yy",
+    "name":"Settings",
+    "path":"folders/Hotglue/Settings.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
