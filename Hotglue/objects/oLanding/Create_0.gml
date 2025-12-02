@@ -32,6 +32,7 @@ function(_channel, _success)
                     if (_success && is_struct(_project))
                     {
                         InterfaceStatus($"Loaded \"{_project.GetPath()}\"");
+                        execute_shell_simple(filename_dir(_project.GetPath()));
                     }
                 });
             }

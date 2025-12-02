@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueGetExecuteShellAvailable",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueGetExecuteShellAvailable",
+  "parent":{
+    "name":"Other",
+    "path":"folders/Hotglue/Other.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
