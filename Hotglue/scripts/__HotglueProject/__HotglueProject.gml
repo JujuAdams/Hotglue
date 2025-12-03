@@ -27,6 +27,12 @@ function __HotglueProject(_projectPath) constructor
     
     __yypJson = json_parse(__yypString);
     
+    static __AddAsset = function(_hotglueAsset)
+    {
+        array_push(__quickAssetArray, _hotglueAsset);
+        __quickAssetDict[$ _hotglueAsset.name] = _hotglueAsset;
+    }
+    
     var _yyFoldersArray = __yypJson.Folders;
     var _i = 0;
     repeat(array_length(_yyFoldersArray))
@@ -60,11 +66,8 @@ function __HotglueProject(_projectPath) constructor
         return (_a.name < _b.name)? -1 : 1;
     });
     
-    static __AddAsset = function(_hotglueAsset)
-    {
-        array_push(__quickAssetArray, _hotglueAsset);
-        __quickAssetDict[$ _hotglueAsset.name] = _hotglueAsset;
-    }
+    __structure = new __HotglueProjectStructure(self);
+    __structureDirty = true;
     
     
     
@@ -81,6 +84,17 @@ function __HotglueProject(_projectPath) constructor
     static GetDirectory = function()
     {
         return __projectDirectory;
+    }
+    
+    static GetProjectStructure = function()
+    {
+        if (__structureDirty)
+        {
+            __structureDirty = false;
+            __structure.Rebuild();
+        }
+        
+        return __structure.GetRebuilding()? undefined : __structure;
     }
     
     static GetAssets = function()

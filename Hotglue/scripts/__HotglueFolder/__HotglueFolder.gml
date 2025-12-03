@@ -10,7 +10,7 @@ function __HotglueFolder(_folderStruct) constructor
     var _path = __HotglueProcessFolderPath(_folderStruct.folderPath);
     name = $"folder:{_path}"
     data = _folderStruct;
-    friendlyPath = (_path == "")? "<root>" : _path;
+    friendlyPath = _path;
     
     static GetPath = function()
     {

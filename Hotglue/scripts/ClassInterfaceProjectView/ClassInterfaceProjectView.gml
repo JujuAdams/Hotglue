@@ -21,6 +21,13 @@ function ClassInterfaceProjectView(_project) constructor
     
     static BuildAsSource = function(_otherProject = undefined)
     {
+        var _projectStructure = __project.GetProjectStructure();
+        if (_projectStructure == undefined)
+        {
+            ImGuiText($"Project structure rebuilding, please wait... ({100*__project.__structure.GetRebuildingProgress()}%%)");
+            return;
+        }
+        
         var _otherQuickAssetDict = (_otherProject == undefined)? {} : _otherProject.__quickAssetDict;
         
         var _quickAssetArray = __project.__quickAssetArray;
@@ -66,6 +73,13 @@ function ClassInterfaceProjectView(_project) constructor
     
     static BuildAsDestination = function(_comparisonData = undefined)
     {
+        var _projectStructure = __project.GetProjectStructure();
+        if (_projectStructure == undefined)
+        {
+            ImGuiText($"Project structure rebuilding, please wait... ({100*__project.__structure.GetRebuildingProgress()}%%)");
+            return;
+        }
+        
         if (is_struct(_comparisonData))
         {
             var _otherQuickAssetDict = _comparisonData.__quickAssetDict;

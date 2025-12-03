@@ -1,9 +1,9 @@
 {
   "FolderOrderSettings":[
-    {"name":"Log","order":3,"path":"folders/Log.yy",},
     {"name":"Hotglue","order":1,"path":"folders/Hotglue.yy",},
     {"name":"Classes","order":9,"path":"folders/Hotglue/(System)/Classes.yy",},
     {"name":"Channels","order":16,"path":"folders/Hotglue/(System)/Classes/Channels.yy",},
+    {"name":"Project Structure","order":22,"path":"folders/Hotglue/(System)/Classes/Project Structure.yy",},
     {"name":"Releases","order":18,"path":"folders/Hotglue/(System)/Classes/Releases.yy",},
     {"name":"Repositories","order":17,"path":"folders/Hotglue/(System)/Classes/Repositories.yy",},
     {"name":"Channels","order":3,"path":"folders/Hotglue/Channels.yy",},
@@ -14,6 +14,7 @@
     {"name":"(Internals)","order":3,"path":"folders/ImGM/(Internals).yy",},
     {"name":"Interface","order":2,"path":"folders/Interface.yy",},
     {"name":"Settings","order":6,"path":"folders/Interface/Settings.yy",},
+    {"name":"Log","order":3,"path":"folders/Log.yy",},
   ],
   "ResourceOrderSettings":[
     {"name":"execute_shell_simple_ext","order":7,"path":"extensions/execute_shell_simple_ext/execute_shell_simple_ext.yy",},
@@ -42,6 +43,13 @@
     {"name":"__HotglueIncludedFile","order":3,"path":"scripts/__HotglueIncludedFile/__HotglueIncludedFile.yy",},
     {"name":"__HotglueLoadGitHubAccessToken","order":17,"path":"scripts/__HotglueLoadGitHubAccessToken/__HotglueLoadGitHubAccessToken.yy",},
     {"name":"__HotglueLooseFile","order":5,"path":"scripts/__HotglueLooseFile/__HotglueLooseFile.yy",},
+    {"name":"__HotglueNodeCommon","order":5,"path":"scripts/__HotglueNodeCommon/__HotglueNodeCommon.yy",},
+    {"name":"__HotglueNodeIncludedFile","order":7,"path":"scripts/__HotglueNodeIncludedFile/__HotglueNodeIncludedFile.yy",},
+    {"name":"__HotglueNodeIncludedFilesFolder","order":4,"path":"scripts/__HotglueNodeIncludedFilesFolder/__HotglueNodeIncludedFilesFolder.yy",},
+    {"name":"__HotglueNodeIncludedFilesRoot","order":3,"path":"scripts/__HotglueNodeIncludedFilesRoot/__HotglueNodeIncludedFilesRoot.yy",},
+    {"name":"__HotglueNodeProjectFolder","order":2,"path":"scripts/__HotglueNodeProjectFolder/__HotglueNodeProjectFolder.yy",},
+    {"name":"__HotglueNodeProjectRoot","order":1,"path":"scripts/__HotglueNodeProjectRoot/__HotglueNodeProjectRoot.yy",},
+    {"name":"__HotglueNodeResource","order":6,"path":"scripts/__HotglueNodeResource/__HotglueNodeResource.yy",},
     {"name":"__HotglueProcessFolderPath","order":7,"path":"scripts/__HotglueProcessFolderPath/__HotglueProcessFolderPath.yy",},
     {"name":"__HotglueProject","order":4,"path":"scripts/__HotglueProject/__HotglueProject.yy",},
     {"name":"__HotglueRepositoryCommon","order":2,"path":"scripts/__HotglueRepositoryCommon/__HotglueRepositoryCommon.yy",},
