@@ -7,8 +7,8 @@ function ClassInterfaceProjectView(_project) constructor
     __project = _project;
     
     __selectedDict     = {};
-    __prevAnyCollision = {};
-    __prevAnySelected  = {};
+    __anyCollisionDict = {};
+    __anySelectedDict  = {};
     
     static Build = function()
     {
@@ -21,35 +21,20 @@ function ClassInterfaceProjectView(_project) constructor
         }
     }
     
-    static BuildAsSource = function(_otherProject = undefined)
-    {
-        var _projectStructure = __project.GetProjectStructure();
-        if (_projectStructure == undefined)
-        {
-            ImGuiText($"Project structure rebuilding, please wait... ({100*__project.__structure.GetRebuildingProgress()}%%)");
-            return;
-        }
-        
-        var _collisionDictionary = (_otherProject == undefined)? {} : _otherProject.__quickAssetDict;
-        
-        __BuildAsSourceInner(_projectStructure.__rootNode, _collisionDictionary);
-        __BuildAsSourceInner(_projectStructure.__includedFilesNode, _collisionDictionary);
-    }
-    
     static __GetSelected = function(_node)
     {
-        return struct_exists(__selectedDict, _node.GetHotglueName());
+        return struct_exists(__selectedDict, ptr(_node));
     }
     
     static __SetSelected = function(_node, _state)
     {
         if (_state)
         {
-            __selectedDict[$ _node.GetHotglueName()] = true;
+            __selectedDict[$ ptr(_node)] = _node;
         }
         else
         {
-            struct_remove(__selectedDict, _node.GetHotglueName());
+            struct_remove(__selectedDict, ptr(_node));
         }
         
         if (_node.__isFolder)
@@ -64,38 +49,84 @@ function ClassInterfaceProjectView(_project) constructor
         }
     }
     
-    static __BuildAsSourceInner = function(_node, _collisionDictionary)
+    static BuildAsSource = function(_otherProject = undefined)
+    {
+        var _projectStructure = __project.GetProjectStructure();
+        if (_projectStructure == undefined)
+        {
+            ImGuiText($"Project structure rebuilding, please wait... ({100*__project.__structure.GetRebuildingProgress()}%%)");
+            return;
+        }
+        
+        var _collisionDictionary = (_otherProject == undefined)? {} : _otherProject.__quickAssetDict;
+        
+        __BuildAsSourceSweep(_projectStructure.__rootNode, _collisionDictionary);
+        __BuildAsSourceSweep(_projectStructure.__includedFilesNode, _collisionDictionary);
+        
+        __BuildAsSourceInner(_projectStructure.__rootNode, _collisionDictionary);
+        __BuildAsSourceInner(_projectStructure.__includedFilesNode, _collisionDictionary);
+    }
+    
+    static __BuildAsSourceSweep = function(_node, _collisionDictionary)
     {
         static _return = {};
+        
+        var _hotglueName = _node.GetHotglueName();
         
         var _anyCollision = false;
         var _anySelected  = false;
         
-        var _selected = __GetSelected(_node);
+        var _children = _node.GetChildren();
+        var _i = 0;
+        repeat(array_length(_children))
+        {
+            __BuildAsSourceSweep(_children[_i], _collisionDictionary);
+            
+            _anyCollision |= _return.__anyCollision;
+            _anySelected  |= _return.__anySelected;
         
+            ++_i;
+        }
+        
+        __anyCollisionDict[$ ptr(_node)] = _anyCollision;
+        __anySelectedDict[$  ptr(_node)] = _anySelected;
+        
+        _return.__anyCollision = _anyCollision | ((_hotglueName != undefined) && struct_exists(_collisionDictionary, _hotglueName));
+        _return.__anySelected  = _anySelected  | __GetSelected(_node);
+        
+        return _return;
+    }
+    
+    static __BuildAsSourceInner = function(_node, _collisionDictionary)
+    {
         var _hotglueName = _node.GetHotglueName();
-        var _collision = ((_hotglueName != undefined) && struct_exists(_collisionDictionary, _hotglueName));
         
-        if (_node.__selectable)
-        {
-            ImGuiCheckbox($"###{ptr(_node)}_selected", struct_exists(__selectedDict, _hotglueName));
-            
-            if (ImGuiIsItemClicked())
-            {
-                _selected = not _selected;
-                __SetSelected(_node, _selected);
-            }
-            
-            ImGuiSameLine();
-        }
-        else
-        {
-            ImGuiDummy(0, 18);
-            ImGuiSameLine();
-        }
+        var _collision = ((_hotglueName != undefined) && struct_exists(_collisionDictionary, _hotglueName));
+        var _selected  = __GetSelected(_node);
+        
+        var _anyCollision = __anyCollisionDict[$ ptr(_node)];
+        var _anySelected  = __anySelectedDict[$  ptr(_node)];
         
         if (_node.__isFolder)
         {
+            if (_node.__selectable)
+            {
+                ImGuiCheckboxFlags($"###{ptr(_node)}_selected", _anySelected + 2*_selected, 3);
+                
+                if (ImGuiIsItemClicked())
+                {
+                    _selected = not _selected;
+                    __SetSelected(_node, _selected);
+                }
+            
+                ImGuiSameLine();
+            }
+            else
+            {
+                ImGuiDummy(0, 18);
+                ImGuiSameLine();
+            }
+            
             var _popColor = false;
             
             if (_collision)
@@ -103,7 +134,7 @@ function ClassInterfaceProjectView(_project) constructor
                 ImGuiPushStyleColor(ImGuiCol.Text, INTERFACE_COLOR_RED_TEXT, 1);
                 _popColor = true;
             }
-            else if (__prevAnyCollision[$ ptr(_node)] ?? false)
+            else if (_anyCollision)
             {
                 ImGuiPushStyleColor(ImGuiCol.Text, INTERFACE_COLOR_ORANGE_TEXT, 1);
                 _popColor = true;
@@ -133,10 +164,6 @@ function ClassInterfaceProjectView(_project) constructor
                     repeat(array_length(_children))
                     {
                         __BuildAsSourceInner(_children[_i], _collisionDictionary);
-                        
-                        _anyCollision |= _return.__collision;
-                        _anySelected  |= _return.__selected;
-        
                         ++_i;
                     }
                 }
@@ -146,8 +173,21 @@ function ClassInterfaceProjectView(_project) constructor
         }
         else
         {
+            if (_node.__selectable)
+            {
+                ImGuiCheckbox($"###{ptr(_node)}_selected", _selected);
+                if (ImGuiIsItemClicked())
+                {
+                    _selected = not _selected;
+                    __SetSelected(_node, _selected);
+                }
+                
+                ImGuiSameLine();
+            }
+            
             if (_collision) ImGuiPushStyleColor(ImGuiCol.Text, INTERFACE_COLOR_RED_TEXT, 1);
             ImGuiTreeNodeEx($"{_node.GetName()}##{ptr(_node)}", ImGuiTreeNodeFlags.Leaf);
+            if (_collision) ImGuiPopStyleColor();
             
             if (ImGuiIsItemClicked())
             {
@@ -155,24 +195,8 @@ function ClassInterfaceProjectView(_project) constructor
                 __SetSelected(_node, _selected);
             }
             
-            if (_collision) ImGuiPopStyleColor();
-            
             ImGuiTreePop();
         }
-        
-        _anyCollision |= _collision;
-        _anySelected  |= __GetSelected(_node);
-        
-        _return.__collision = _anyCollision;
-        _return.__selected  = _anySelected;
-        
-        if (_node.__isFolder)
-        {
-            __prevAnyCollision[$ ptr(_node)] = _anyCollision;
-            __prevAnySelected[$  ptr(_node)] = _anySelected;
-        }
-        
-        return _return;
     }
     
     static BuildAsDestination = function(_comparisonData = undefined)
