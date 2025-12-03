@@ -8,9 +8,6 @@ function ClassTabProject() : ClassTab() constructor
     __directProject = undefined;
     __directView = undefined;
     
-    __updateProject = undefined;
-    __updateView = undefined;
-    
     __installProject = undefined;
     __installView = undefined;
     
@@ -151,26 +148,6 @@ function ClassTabProject() : ClassTab() constructor
                 ImGuiEndTabItem();
             }
             
-            if (ImGuiBeginTabItem("Imported Libraries"))
-            {
-                _importMode = "imported libraries";
-                
-                ImGuiBeginChild("sourceInnerPane", undefined, undefined, ImGuiChildFlags.Border);
-                
-                if (__destinationProject != undefined)
-                {
-                    ImGuiText("No destination project loaded.");
-                }
-                else
-                {
-                    
-                }
-                
-                ImGuiEndChild();
-                
-                ImGuiEndTabItem();
-            }
-            
             if (ImGuiBeginTabItem("Channels"))
             {
                 _importMode = "channels";
@@ -196,10 +173,6 @@ function ClassTabProject() : ClassTab() constructor
             else if (_importMode == "loose files")
             {
                 ImGuiBeginDisabled((array_length(__looseFileViewArray) <= 0) || (__destinationProject == undefined));
-            }
-            else if (_importMode == "imported libraries")
-            {
-                ImGuiBeginDisabled((__updateProject == undefined) || (__destinationProject == undefined));
             }
             else if (_importMode == "channels")
             {
@@ -228,11 +201,9 @@ function ClassTabProject() : ClassTab() constructor
                         ++_i;
                     }
                     
+                    LogTraceAndStatus($"Starting import of loose files into \"{__destinationProject.GetPath()}\"");
                     __destinationProject.ImportFromLooseFiles(_looseFileArray);
-                }
-                else if (_importMode == "imported libraries")
-                {
-                    __destinationProject.ImportAllFrom(__updateProject);
+                    LogTraceAndStatus($"Finished importing loose files into \"{__destinationProject.GetPath()}\"");
                 }
                 else if (_importMode == "channels")
                 {

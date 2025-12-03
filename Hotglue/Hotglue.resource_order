@@ -10,7 +10,7 @@
     {"name":"Loaders","order":5,"path":"folders/Hotglue/Loaders.yy",},
     {"name":"Other","order":7,"path":"folders/Hotglue/Other.yy",},
     {"name":"Settings","order":6,"path":"folders/Hotglue/Settings.yy",},
-    {"name":"Source Cache","order":1,"path":"folders/Hotglue/Source Cache.yy",},
+    {"name":"Source Cache","order":8,"path":"folders/Source Cache.yy",},
     {"name":"(Internals)","order":3,"path":"folders/ImGM/(Internals).yy",},
     {"name":"Interface","order":2,"path":"folders/Interface.yy",},
     {"name":"Settings","order":6,"path":"folders/Interface/Settings.yy",},

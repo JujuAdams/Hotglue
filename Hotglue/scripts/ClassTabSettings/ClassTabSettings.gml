@@ -8,6 +8,24 @@ function ClassTabSettings() : ClassTab() constructor
     {
         if (ImGuiBeginTabItem("Settings"))
         {
+            ImGuiSetCursorPosY(ImGuiGetCursorPosY() + 6);
+            
+            if (ImGuiButton("Clear release cache"))
+            {
+                HotglueClearReleaseCache();
+                LogTraceAndStatus("Cleared release cache");
+            }
+            
+            ImGuiSameLine();
+            
+            if (ImGuiButton("Clear unzip cache"))
+            {
+                HotglueClearUnzipCache();
+                LogTraceAndStatus("Cleared unzip cache");
+            }
+            
+            ImGuiNewLine();
+            
             if ((HOTGLUE_GITHUB_CLIENT_ID == "") || (HOTGLUE_GITHUB_CLIENT_SECRET == ""))
             {
                 ImGuiTextColored("GitHub client ID and/or client secret not set (please see `__HotglueConfig`).\nGitHub access token not available.", INTERFACE_COLOR_ORANGE_TEXT);

@@ -22,7 +22,7 @@
     {"$GMFolder":"","%Name":"Loaders","folderPath":"folders/Hotglue/Loaders.yy","name":"Loaders","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Other","folderPath":"folders/Hotglue/Other.yy","name":"Other","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Settings","folderPath":"folders/Hotglue/Settings.yy","name":"Settings","resourceType":"GMFolder","resourceVersion":"2.0",},
-    {"$GMFolder":"","%Name":"Source Cache","folderPath":"folders/Hotglue/Source Cache.yy","name":"Source Cache","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Source Cache","folderPath":"folders/Source Cache.yy","name":"Source Cache","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"ImGM","folderPath":"folders/ImGM.yy","name":"ImGM","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"(Internals)","folderPath":"folders/ImGM/(Internals).yy","name":"(Internals)","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Interface","folderPath":"folders/Interface.yy","name":"Interface","resourceType":"GMFolder","resourceVersion":"2.0",},

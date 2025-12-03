@@ -6,7 +6,7 @@
   "name":"SourceInDictionary",
   "parent":{
     "name":"Source Cache",
-    "path":"folders/Hotglue/Source Cache.yy",
+    "path":"folders/Source Cache.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

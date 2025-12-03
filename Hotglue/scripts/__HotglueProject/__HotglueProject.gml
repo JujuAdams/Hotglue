@@ -284,6 +284,8 @@ function __HotglueProject(_projectPath) constructor
         {
             var _looseFile = _looseFileArray[_i];
             
+            __HotglueTrace($"Importing \"{_looseFile.GetPath()}\" as {_looseFile.GetType()} \"{_looseFile.GetName()}\"");
+            
             // 2. Generate an asset
             var _asset = _looseFile.__GenerateAsset(self);
             
