@@ -10,6 +10,34 @@ function ClassInterfaceProjectView(_project) constructor
     __anyCollisionDict = {};
     __anySelectedDict  = {};
     
+    static GetSelectedCount = function()
+    {
+        return struct_names_count(__selectedDict);
+    }
+    
+    static GetAssetArray = function()
+    {
+        var _pidArray = [];
+        var _selectedDict = __selectedDict;
+        
+        var _keyArray = struct_get_names(_selectedDict);
+        var _i = 0;
+        repeat(array_length(_keyArray))
+        {
+            var _node = _selectedDict[$ _keyArray[_i]];
+            
+            var _asset = _node.__asset;
+            if (_asset != undefined)
+            {
+                array_push(_pidArray, _asset.GetName());
+            }
+            
+            ++_i;
+        }
+        
+        return _pidArray;
+    }
+    
     static Build = function()
     {
         var _quickAssetArray = __project.__quickAssetArray;
@@ -49,7 +77,7 @@ function ClassInterfaceProjectView(_project) constructor
         }
     }
     
-    static BuildAsSource = function(_otherProject = undefined)
+    static BuildTreeAsSource = function(_otherProject = undefined)
     {
         var _projectStructure = __project.GetProjectStructure();
         if (_projectStructure == undefined)
@@ -60,14 +88,14 @@ function ClassInterfaceProjectView(_project) constructor
         
         var _collisionDictionary = (_otherProject == undefined)? {} : _otherProject.__quickAssetDict;
         
-        __BuildAsSourceSweep(_projectStructure.__rootNode, _collisionDictionary);
-        __BuildAsSourceSweep(_projectStructure.__includedFilesNode, _collisionDictionary);
+        __BuildTreeAsSourceSweep(_projectStructure.__rootNode, _collisionDictionary);
+        __BuildTreeAsSourceSweep(_projectStructure.__includedFilesNode, _collisionDictionary);
         
-        __BuildAsSourceInner(_projectStructure.__rootNode, _collisionDictionary);
-        __BuildAsSourceInner(_projectStructure.__includedFilesNode, _collisionDictionary);
+        __BuildTreeAsSourceInner(_projectStructure.__rootNode, _collisionDictionary);
+        __BuildTreeAsSourceInner(_projectStructure.__includedFilesNode, _collisionDictionary);
     }
     
-    static __BuildAsSourceSweep = function(_node, _collisionDictionary)
+    static __BuildTreeAsSourceSweep = function(_node, _collisionDictionary)
     {
         static _return = {};
         
@@ -80,7 +108,7 @@ function ClassInterfaceProjectView(_project) constructor
         var _i = 0;
         repeat(array_length(_children))
         {
-            __BuildAsSourceSweep(_children[_i], _collisionDictionary);
+            __BuildTreeAsSourceSweep(_children[_i], _collisionDictionary);
             
             _anyCollision |= _return.__anyCollision;
             _anySelected  |= _return.__anySelected;
@@ -97,7 +125,7 @@ function ClassInterfaceProjectView(_project) constructor
         return _return;
     }
     
-    static __BuildAsSourceInner = function(_node, _collisionDictionary)
+    static __BuildTreeAsSourceInner = function(_node, _collisionDictionary)
     {
         var _hotglueName = _node.GetHotglueName();
         
@@ -163,7 +191,7 @@ function ClassInterfaceProjectView(_project) constructor
                     var _i = 0;
                     repeat(array_length(_children))
                     {
-                        __BuildAsSourceInner(_children[_i], _collisionDictionary);
+                        __BuildTreeAsSourceInner(_children[_i], _collisionDictionary);
                         ++_i;
                     }
                 }
@@ -199,7 +227,7 @@ function ClassInterfaceProjectView(_project) constructor
         }
     }
     
-    static BuildAsDestination = function(_comparisonData = undefined)
+    static BuildTreeAsDestination = function(_comparisonData = undefined)
     {
         var _projectStructure = __project.GetProjectStructure();
         if (_projectStructure == undefined)

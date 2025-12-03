@@ -8,6 +8,12 @@ function ClassTabProject() : ClassTab() constructor
     __directProject = undefined;
     __directView = undefined;
     
+    __updateProject = undefined;
+    __updateView = undefined;
+    
+    __installProject = undefined;
+    __installView = undefined;
+    
     __looseFileViewArray = [];
     
     static TabItem = function()
@@ -42,7 +48,7 @@ function ClassTabProject() : ClassTab() constructor
                     else
                     {
                         ImGuiBeginChild("sourceProjectPane");
-                        __directView.BuildAsSource(__destinationProject);
+                        __directView.BuildTreeAsSource(__destinationProject);
                         ImGuiEndChild();
                     }
                 }
@@ -183,16 +189,36 @@ function ClassTabProject() : ClassTab() constructor
             ImGuiBeginChild("middlePane", _importButtonSize);
             ImGuiSetCursorPosY(ImGuiGetContentRegionMaxY()/2 - 10);
             
-            ImGuiBeginDisabled(__destinationProject == undefined);
+            if (_importMode == "local project")
+            {
+                ImGuiBeginDisabled((__directProject == undefined) || (__directView == undefined) || (__directView.GetSelectedCount() <= 0) || (__destinationProject == undefined));
+            }
+            else if (_importMode == "loose files")
+            {
+                ImGuiBeginDisabled((array_length(__looseFileViewArray) <= 0) || (__destinationProject == undefined));
+            }
+            else if (_importMode == "imported libraries")
+            {
+                ImGuiBeginDisabled((__updateProject == undefined) || (__destinationProject == undefined));
+            }
+            else if (_importMode == "channels")
+            {
+                ImGuiBeginDisabled((__installProject == undefined) || (__destinationProject == undefined));
+            }
+            else
+            {
+                ImGuiBeginDisabled(false);
+            }
+            
             if (ImGuiButton("Import ->"))
             {
                 if (_importMode == "local project")
                 {
-                    
+                    __destinationProject.ImportFrom(__directProject, __directView.GetAssetArray());
                 }
                 else if (_importMode == "loose files")
                 {
-                    //Covert the array of loose file views into an array of the loose files themselves
+                    //Convert the array of loose file views into an array of the loose files themselves
                     var _looseFileViewArray = __looseFileViewArray;
                     var _looseFileArray = array_create(array_length(_looseFileViewArray));
                     var _i = 0;
@@ -206,13 +232,14 @@ function ClassTabProject() : ClassTab() constructor
                 }
                 else if (_importMode == "imported libraries")
                 {
-                    
+                    __destinationProject.ImportAllFrom(__updateProject);
                 }
                 else if (_importMode == "channels")
                 {
-                    
+                    __destinationProject.ImportAllFrom(__installProject);
                 }
             }
+            
             ImGuiEndDisabled();
             
             ImGuiEndChild();
@@ -253,7 +280,7 @@ function ClassTabProject() : ClassTab() constructor
                     
                     if (__destinationView != undefined)
                     {
-                        __destinationView.BuildAsDestination(is_struct(__directProject)? __directProject : __looseFileViewArray);
+                        __destinationView.BuildTreeAsDestination(is_struct(__directProject)? __directProject : __looseFileViewArray);
                     }
                     
                     ImGuiEndChild();
