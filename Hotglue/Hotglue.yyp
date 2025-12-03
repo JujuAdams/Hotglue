@@ -56,6 +56,7 @@
     {"id":{"name":"__HotglueChannelCommon","path":"scripts/__HotglueChannelCommon/__HotglueChannelCommon.yy",},},
     {"id":{"name":"__HotglueChannelFavorites","path":"scripts/__HotglueChannelFavorites/__HotglueChannelFavorites.yy",},},
     {"id":{"name":"__HotglueChannelGitHub","path":"scripts/__HotglueChannelGitHub/__HotglueChannelGitHub.yy",},},
+    {"id":{"name":"__HotglueChannelGMK","path":"scripts/__HotglueChannelGMK/__HotglueChannelGMK.yy",},},
     {"id":{"name":"__HotglueChannelLocal","path":"scripts/__HotglueChannelLocal/__HotglueChannelLocal.yy",},},
     {"id":{"name":"__HotglueClassHttpGetFile","path":"scripts/__HotglueClassHttpGetFile/__HotglueClassHttpGetFile.yy",},},
     {"id":{"name":"__HotglueClassHttpRequest","path":"scripts/__HotglueClassHttpRequest/__HotglueClassHttpRequest.yy",},},
