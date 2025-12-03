@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"InterfaceEnsureRepositoryView",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"InterfaceEnsureRepositoryView",
+  "parent":{
+    "name":"Interface",
+    "path":"folders/Interface.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

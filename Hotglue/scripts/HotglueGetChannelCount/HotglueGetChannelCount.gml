@@ -1,6 +1,6 @@
 // Feather disable all
 
-function HotglueGetChannel()
+function HotglueGetChannelCount()
 {
     static _channelArray = __HotglueSystem().__channelArray;
     

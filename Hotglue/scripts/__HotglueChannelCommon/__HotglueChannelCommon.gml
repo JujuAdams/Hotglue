@@ -14,6 +14,8 @@ function __HotglueChannelCommon(_name, _url) constructor
     
     __refreshCallback = undefined;
     
+    __HotglueTrace($"Channel \"{_name}\" created for \"{_url}\"");
+    
     
     
     static GetName = function()
@@ -56,7 +58,15 @@ function __HotglueChannelCommon(_name, _url) constructor
     
     static AddRepository = function(_url)
     {
-        array_push(__repositoryArray, new _repoConstructor(_url));
+        var _repository = new _repoConstructor(_url);
+        array_push(__repositoryArray, _repository);
+        LogTraceAndStatus($"Added repository \"{_url}\" to channel \"{__name}\"");
+        return _repository;
+    }
+    
+    static GetRepositoryCount = function()
+    {
+        return array_length(__repositoryArray);
     }
     
     static GetRepositoryArray = function()

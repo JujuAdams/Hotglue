@@ -9,21 +9,8 @@ function __HotglueRepositoryGitHub(_url) : __HotglueRepositoryCommon(_url) const
         _url += "/";
     }
     
-    __webURL = _url;
+    __url = _url;
     __apiURL = "https://api.github.com/repos/" + string_delete(_url, 1, string_pos(".com/", _url)-1 + 5);
-    
-    __hotglueJSON          = undefined;
-    __hotglueJSONCollected = false;
-    __hotglueJSONRequest   = undefined;
-    
-    __releasesArray     = [];
-    __releasesCollected = false;
-    __releasesRequest   = undefined;
-    
-    __latestStable  = undefined;
-    __latestRelease = undefined;
-    
-    __finalCallback = undefined;
     
     //Figure out a friendly name for the repository
     var _name = _url;
@@ -63,7 +50,7 @@ function __HotglueRepositoryGitHub(_url) : __HotglueRepositoryCommon(_url) const
     {
         if ((not __hotglueJSONCollected) && (__hotglueJSONRequest == undefined))
         {
-            __HotglueTrace($"Getting hotglue.json from root of \"{__webURL}\"");
+            __HotglueTrace($"Getting hotglue.json from root of \"{__url}\"");
             __hotglueJSONRequest = new __HotglueClassHttpRequest($"{__apiURL}contents/hotglue.json");
             
             __hotglueJSONRequest.Callback(function(_httpRequest, _success, _result)
@@ -120,7 +107,7 @@ function __HotglueRepositoryGitHub(_url) : __HotglueRepositoryCommon(_url) const
     {
         if ((not __releasesCollected) && (__releasesRequest == undefined))
         {
-            __HotglueTrace($"Getting releases from \"{__webURL}\"");
+            __HotglueTrace($"Getting releases from \"{__url}\"");
             __releasesRequest = new __HotglueClassHttpRequest($"{__apiURL}releases?per_page={HOTGLUE_MAX_GITHUB_RELEASES}");
             
             __releasesRequest.Callback(function(_httpRequest, _success, _result)

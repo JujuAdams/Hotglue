@@ -9,7 +9,7 @@ function InterfaceEnsureChannelView(_channel)
         var _channelView = channelViewDict[$ ptr(_channel)];
         if (_channelView == undefined)
         {
-            var _channelView = new InterfaceEnsureChannelView(_channel);
+            var _channelView = new ClassInterfaceChannelView(_channel);
             channelViewDict[$ ptr(_channel)] = _channelView;
         }
         

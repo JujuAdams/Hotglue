@@ -152,7 +152,17 @@ function ClassTabProject() : ClassTab() constructor
             {
                 _importMode = "channels";
                 
-                ImGuiBeginChild("sourceInnerPane", undefined, undefined, ImGuiChildFlags.Border);
+                ImGuiBeginChild("sourceInnerPane");
+                ImGuiBeginTabBar("tabBar");
+                
+                var _i = 0;
+                repeat(HotglueGetChannelCount())
+                {
+                    InterfaceEnsureChannelView(HotglueGetChannelByIndex(_i)).BuildHalfViewTab();
+                    ++_i;
+                }
+                
+                ImGuiEndTabBar();
                 ImGuiEndChild();
                 
                 ImGuiEndTabItem();

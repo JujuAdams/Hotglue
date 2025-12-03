@@ -10,23 +10,35 @@ function ClassInterfaceChannelView(_channel) constructor
     
     
     
-    static TabItem = function()
+    static BuildHalfViewTab = function()
     {
         if (ImGuiBeginTabItem(__channel.GetName()))
         {
-            BuildHeader();
-            BuildLeftPanel();
+            ImGuiBeginChild("leftPane", undefined, undefined, ImGuiChildFlags.Border);
             
-            ImGuiSameLine();
-            ImGuiBeginChild("rightPane", undefined, undefined, ImGuiChildFlags.Border);
-            
-            if (__selectedContent == undefined)
+            if (ImGuiBeginCombo($"##combo_{ptr(self)}", (__selectedRepository == undefined)? "None selected" : __selectedRepository.GetName(), ImGuiComboFlags.None))
             {
-                ImGuiText("No content selected.");
+                var _repositoryArray = __channel.GetRepositoryArray();
+                var _i = 0;
+                repeat(array_length(_repositoryArray))
+                {
+                    var _repository = _repositoryArray[_i];
+                    if (ImGuiSelectable($"{_repository.GetName()}##{ptr(_repository)}", (__selectedRepository == _repository)))
+                    {
+                        __selectedRepository = _repository;
+                    }
+                    
+                    ++_i;
+                }
+                
+                ImGuiEndCombo();
             }
-            else
+            
+            ImGuiNewLine();
+            
+            if (__selectedRepository != undefined)
             {
-                BuildRightPanel();
+                InterfaceEnsureRepositoryView(__selectedRepository).Build();
             }
             
             ImGuiEndChild();
@@ -34,104 +46,94 @@ function ClassInterfaceChannelView(_channel) constructor
         }
     }
     
-    static BuildHeader = function()
+    static BuildFullViewTab = function()
     {
-        //var _linkArray = __channel.GetRepositoryArray();
-        //array_resize(_linkArray, 0);
-        //
-        //var _favoriteURLArray = InterfaceSettingGet("favoriteLinks");
-        //var _i = 0;
-        //repeat(array_length(_favoriteURLArray))
-        //{
-        //    var _url = _favoriteURLArray[_i];
-        //    array_push(_linkArray, new ClassLink(_url, _url));
-        //    ++_i;
-        //}
-        //
-        //LogTrace($"Rebuilt favourited links");
-        //
-        //if (__selectedLink != undefined)
-        //{
-        //    var _selectedURL = __selectedLink.GetURL();
-        //    __selectedLink = undefined;
-        //    
-        //    var _i = 0;
-        //    repeat(array_length(_linkArray))
-        //    {
-        //        if (_linkArray[_i].GetURL() == _selectedURL)
-        //        {
-        //            __selectedLink = _linkArray[_i];
-        //            break;
-        //        }
-        //        
-        //        ++_i;
-        //    }
-        //}
-    }
-    
-    static BuildLeftPanel = function()
-    {
-        ImGuiBeginChild("leftPaneOuter", 250, undefined, ImGuiChildFlags.Border);
-        
-        BuildLeftPanelHeader();
-        
-        ImGuiBeginChild("leftPaneInner");
-        
-        var _linkArray = __linkArray;
-        if (array_length(_linkArray) <= 0)
+        if (ImGuiBeginTabItem(__channel.GetName()))
         {
-            ImGuiTextWrapped("No links have been added.");
-        }
-        else
-        {
-            var _i = 0;
-            repeat(array_length(_linkArray))
+            if (is_instanceof(__channel, __HotglueChannelGitHub))
             {
-                var _link = _linkArray[_i];
-                if (ImGuiSelectable(_link.GetName(), __selectedContent == _link))
+                if (ImGuiButton("Refresh"))
                 {
-                    __selectedContent = _link;
+                    Refresh();
                 }
                 
-                ++_i;
-            }
-        }
-        
-        ImGuiEndChild();
-        ImGuiEndChild();
-    }
-    
-    static BuildRightPanel = function()
-    {
-        if (not __selectedLink.GetMetadataExists())
-        {
-            ImGuiTextColored("\"Hotglue Metadata\" Note asset not found.", INTERFACE_COLOR_RED_TEXT);
-            
-            if (__selectedLink.GetEdittable())
-            {
                 ImGuiSameLine();
-                ImGuiTextLink("Click here to create metadata.");
+                ImGuiDummy(20, 0);
+                ImGuiSameLine();
+                ImGuiText(__channel.GetURL());
             }
             
-            ImGuiNewLine();
+            ImGuiBeginChild("leftPaneOuter", 250, undefined, ImGuiChildFlags.Border);
             
-            __selectedLink.BuildForView();
-        }
-        else
-        {
-            __selectedLink.BuildForEdit();
-        }
+            if (is_instanceof(__channel, __HotglueChannelLocal))
+            {
+                if (ImGuiButton("Add content..."))
+                {
+                    var _path = get_open_filename("*.*", "");
+                    if (_path != "")
+                    {
+                        var _extension = filename_ext(_path);
+                        if ((_extension == ".yyp")
+                        ||  (_extension == ".yymps")
+                        ||  (_extension == ".yyz"))
+                        {
+                            var _repository = __channel.AddRepository(_path);
+                            
+                            if (__channel.GetRepositoryCount() == 1)
+                            {
+                                __selectedRepository = _repository;
+                            }
+                        }
+                        else
+                        {
+                            LogTraceAndStatus($"File extension \"{_extension}\" unsupported ({_path})");
+                        }
+                    }
+                }
+            }
+            
+            ImGuiBeginChild("leftPaneInner");
         
-        ImGuiNewLine();
-        if (ImGuiButton("Refresh"))
-        {
+            var _repositoryArray = __channel.GetRepositoryArray();
+            if (array_length(_repositoryArray) <= 0)
+            {
+                ImGuiTextWrapped("No content has been added.");
+            }
+            else
+            {
+                var _i = 0;
+                repeat(array_length(_repositoryArray))
+                {
+                    var _repository = _repositoryArray[_i];
+                    if (ImGuiSelectable(_repository.GetName(), __selectedRepository == _repository))
+                    {
+                        __selectedRepository = _repository;
+                    }
+                    
+                    ++_i;
+                }
+            }
             
-        }
-        
-        ImGuiSameLine();
-        if (ImGuiButton("Remove from list"))
-        {
+            ImGuiEndChild();
+            ImGuiEndChild();
             
+            ImGuiSameLine();
+            ImGuiBeginChild("rightPane", undefined, undefined, ImGuiChildFlags.Border);
+            
+            if (__selectedRepository == undefined)
+            {
+                ImGuiText("No content selected.");
+            }
+            else
+            {
+                if (__selectedRepository != undefined)
+                {
+                    InterfaceEnsureRepositoryView(__selectedRepository).Build();
+                }
+            }
+            
+            ImGuiEndChild();
+            ImGuiEndTabItem();
         }
     }
 }

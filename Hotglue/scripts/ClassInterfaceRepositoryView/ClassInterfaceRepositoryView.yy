@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"ClassInterfaceRepoView",
+  "%Name":"ClassInterfaceRepositoryView",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ClassInterfaceRepoView",
+  "name":"ClassInterfaceRepositoryView",
   "parent":{
     "name":"Classes",
     "path":"folders/Interface/Classes.yy",

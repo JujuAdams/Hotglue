@@ -16,10 +16,6 @@ function __HotglueSystem()
         __suppressGitAssert = false;
         __destructiveCopy   = true;
         
-        __channelArray = [];
-        array_push(__channelArray, new __HotglueChannelLocal("Favourites", "@favorites"));
-        array_push(__channelArray, new __HotglueChannelLocal("Local", "@locals"));
-        
         __githubUserAccessToken = undefined;
         
         //Port to connect on as part of the `.requestAuthenticationViaWebPage()` flow. This must match the callback URL entered whe creating your GitHub app.
@@ -30,6 +26,10 @@ function __HotglueSystem()
         __warningHandler = function(_string) { show_debug_message($"Hotglue: Warning! {_string}"); };
         
         __httpRequestMap = ds_map_create();
+        
+        __channelArray = [];
+        array_push(__channelArray, new __HotglueChannelFavorites("* Favourites *", "@favorites"));
+        array_push(__channelArray, new __HotglueChannelLocal("Local", "@locals"));
         
         time_source_start(time_source_create(time_source_global, 1, time_source_units_frames, function()
         {

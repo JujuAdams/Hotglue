@@ -4,6 +4,28 @@
 
 function __HotglueRepositoryCommon(_url) constructor
 {
+    __url = _url
+    
+    __hotglueJSON          = undefined;
+    __hotglueJSONCollected = false;
+    __hotglueJSONRequest   = undefined;
+    
+    __releasesArray     = [];
+    __releasesCollected = false;
+    __releasesRequest   = undefined;
+    
+    __latestStable  = undefined;
+    __latestRelease = undefined;
+    
+    __finalCallback = undefined;
+    
+    
+    
+    static GetURL = function()
+    {
+        return __url;
+    }
+    
     static GetName = function()
     {
         return __name;

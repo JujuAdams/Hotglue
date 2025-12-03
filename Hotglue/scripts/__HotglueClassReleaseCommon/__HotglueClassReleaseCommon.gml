@@ -44,6 +44,11 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
         return __downloadURL;
     }
     
+    static GetDownloadPath = function()
+    {
+        return __downloadPath;
+    }
+    
     static GetDescription = function()
     {
         return __description;
@@ -52,6 +57,11 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
     static GetStable = function()
     {
         return __stable;
+    }
+    
+    static GetDownloaded = function()
+    {
+        return file_exists(__downloadPath);
     }
     
     static LoadProject = function(_callback)

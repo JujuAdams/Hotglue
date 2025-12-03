@@ -11,21 +11,24 @@ function __HotglueRepositoryLocal(_url) : __HotglueRepositoryCommon(_url) constr
     
     static GetLatestStable = function()
     {
-        
+        //TODO - Return the one and only release
+        return undefined;
     }
     
     static GetLatestRelease = function()
     {
-        
-    }
-    
-    static GetHotglueJSON = function()
-    {
-        
+        //TODO - Return the one and only release
+        return undefined;
     }
     
     static GetReleases = function()
     {
-        
+        return __releasesArray;
+    }
+    
+    static GetHotglueJSON = function()
+    {
+        //TODO - Return the file from disk
+        return undefined;
     }
 }
