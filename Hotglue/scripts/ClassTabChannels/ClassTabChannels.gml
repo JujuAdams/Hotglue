@@ -9,14 +9,10 @@ function ClassTabChannels() : ClassTab() constructor
             ImGuiBeginChild("channelSelector");
             ImGuiBeginTabBar("tabBar");
             
-            oInterface.favoritesTab.TabItem();
-            oInterface.localTab.TabItem();
-            
-            var _channelArray = oInterface.channelArray;
             var _i = 0;
-            repeat(array_length(_channelArray))
+            repeat(HotglueGetChannelCount())
             {
-                _channelArray[_i].TabItem();
+                InterfaceEnsureChannelView(HotglueGetChannelByIndex(_i)).TabItem();
                 ++_i;
             }
             

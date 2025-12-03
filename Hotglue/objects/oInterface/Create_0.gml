@@ -2,14 +2,19 @@ logTab = new ClassTabLog();
 
 LogTrace("Interface created");
 
+context = new ImGuiContext(0, 0, window_get_width(), window_get_height(),
+                           ImGuiConfigFlags.DockingEnable);
+
+LogTrace("ImGui context created");
+
 welcomeTab  = new ClassTabWelcome();
 projectTab  = new ClassTabProject();
 channelsTab = new ClassTabChannels();
 settingsTab = new ClassTabSettings();
 
-favoritesTab = new ClassChannelFavorites();
-localTab     = new ClassChannelLocal();
-channelArray = [];
+LogTrace("Interface tabs created");
+
+channelViewDict = {};
 
 InterfaceSettingsReset();
 
@@ -22,27 +27,6 @@ else
     InterfaceSettingsSave();
 }
 
-var _settingsChannelArray = InterfaceSettingGet("channels", []);
-var _i = 0;
-repeat(array_length(_settingsChannelArray))
-{
-    var _settingsChannel = _settingsChannelArray[_i];
-    
-    if (_settingsChannel.type == "github")
-    {
-        array_push(channelArray, new ClassChannelGitHub().SetURL(_settingsChannel.url));
-    }
-    else
-    {
-        LogWarning($"Channel could not be loaded    {json_stringify(_settingsChannel)}");
-    }
-    
-    ++_i;
-}
-
-LogTraceAndStatus($"Loaded {array_length(channelArray)} channels");
-
-context = new ImGuiContext(0, 0, window_get_width(), window_get_height(),
-                           ImGuiConfigFlags.DockingEnable);
+HotglueEnsureRemoteChannel("GitHub", "https://raw.githubusercontent.com/JujuAdams/Hotglue-Index/refs/heads/main/github.json");
 
 statusBarHeight = 32;

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"InterfaceEnsureChannelView",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"InterfaceEnsureChannelView",
+  "parent":{
+    "name":"Interface",
+    "path":"folders/Interface.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

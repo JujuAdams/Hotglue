@@ -2,7 +2,7 @@
 
 /// @param url
 
-function __HotglueChannelGitHub(_url) : __HotglueChannelCommon(_url) constructor
+function __HotglueChannelGitHub(_name, _url) : __HotglueChannelCommon(_name, _url) constructor
 {
     static _repoConstructor = __HotglueRepositoryGitHub;
     

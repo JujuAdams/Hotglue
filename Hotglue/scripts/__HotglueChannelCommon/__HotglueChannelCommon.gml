@@ -16,6 +16,11 @@ function __HotglueChannelCommon(_name, _url) constructor
     
     
     
+    static GetName = function()
+    {
+        return __name;
+    }
+    
     static GetURL = function()
     {
         return __url;
