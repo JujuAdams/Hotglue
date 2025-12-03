@@ -41,7 +41,9 @@ function ClassTabProject() : ClassTab() constructor
                     }
                     else
                     {
+                        ImGuiBeginChild("sourceProjectPane");
                         __directView.BuildAsSource(__destinationProject);
+                        ImGuiEndChild();
                     }
                 }
                 else
@@ -236,6 +238,8 @@ function ClassTabProject() : ClassTab() constructor
                     }
                     else
                     {
+                        ImGuiBeginChild("destinationProjectPane");
+                        ImGuiEndChild();
                     }
                     
                     ImGuiEndChild();
