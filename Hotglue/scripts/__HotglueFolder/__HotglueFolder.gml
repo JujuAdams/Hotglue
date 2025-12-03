@@ -12,6 +12,11 @@ function __HotglueFolder(_folderStruct) constructor
     data = _folderStruct;
     friendlyPath = _path;
     
+    static GetName = function()
+    {
+        return name;
+    }
+    
     static GetPath = function()
     {
         return friendlyPath;

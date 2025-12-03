@@ -5,6 +5,8 @@
 
 function __HotglueNodeProjectFolder(_asset, _projectStructure) : __HotglueNodeCommon(_asset, _projectStructure) constructor
 {
+    static __isFolder = true;
+    
     __children = [];
     
     static __Add = function(_node)

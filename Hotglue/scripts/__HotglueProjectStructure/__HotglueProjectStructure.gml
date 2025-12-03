@@ -46,7 +46,10 @@ function __HotglueProjectStructure(_project) constructor
         __rebuilding = true;
         __rebuildIndex = 0;
         
-        LogTraceAndStatus($"Rebuilding project structure for \"{__project.GetName()}\"");
+        __rootNode.__Clear();
+        __includedFilesNode.__Clear();
+        
+        LogTraceAndStatus($"Rebuilding project structure for \"{__project.GetPath()}\"");
     }
     
     static GetRebuilding = function()
@@ -81,7 +84,7 @@ function __HotglueProjectStructure(_project) constructor
                 buffer_delete(_buffer);
                 var _yyJSON = json_parse(_yyString);
                 
-                __EnsureFolderPath(__rootNode, __HotglueProcessFolderPath(_yyJSON.parent.path)).__Add(new __HotglueNodeResource(_asset, self));
+                __EnsureFolderPath(__rootNode, $"{__HotglueProcessFolderPath(_yyJSON.parent.path)}/").__Add(new __HotglueNodeResource(_asset, self));
             }
             else if (_assetType == "folder")
             {
@@ -98,7 +101,7 @@ function __HotglueProjectStructure(_project) constructor
         if (__rebuildIndex >= _count)
         {
             __rebuilding = false;
-            LogTraceAndStatus($"Completed rebuild of project structure for \"{__project.GetName()}\"");
+            LogTraceAndStatus($"Completed rebuild of project structure for \"{__project.GetPath()}\"");
         }
     }
     
@@ -119,50 +122,3 @@ function __HotglueProjectStructure(_project) constructor
         return _node;
     }
 }
-
-
-//static __ImGuiFolderTreeView = function()
-//{
-//    var _clicked = undefined;
-//    
-//    var _label = ImGuiHelperLabel(__name, true);
-//    var _open = ImGuiTreeNodeEx(_label, ImGuiTreeNodeFlags.OpenOnArrow | ImGuiTreeNodeFlags.OpenOnDoubleClick)
-//    
-//    if (ImGuiIsItemClicked() && (not ImGuiIsItemToggledOpen()))
-//    {
-//        _clicked = self;
-//    }
-//    
-//    if (_open)
-//    {
-//        var _folderArray = __folderArray;
-//        var _i = 0;
-//        repeat(array_length(_folderArray))
-//        {
-//            var _childClicked = _folderArray[_i].__ImGuiFolderTreeView();
-//            if (_childClicked != undefined)
-//            {
-//                _clicked = _childClicked;
-//            }
-//            
-//            ++_i;
-//        }
-//        
-//        var _assetArray = __assetArray;
-//        var _i = 0;
-//        repeat(array_length(_assetArray))
-//        {
-//            var _childClicked = _assetArray[_i].__ImGuiFolderTreeView();
-//            if (_childClicked != undefined)
-//            {
-//                _clicked = _childClicked;
-//            }
-//            
-//            ++_i;
-//        }
-//        
-//        ImGuiTreePop();
-//    }
-//    
-//    return _clicked;
-//}

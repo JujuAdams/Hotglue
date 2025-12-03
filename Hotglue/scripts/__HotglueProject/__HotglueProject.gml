@@ -265,6 +265,8 @@ function __HotglueProject(_projectPath) constructor
         buffer_write(_buffer, buffer_text, __yypString);
         buffer_save(_buffer, __projectPath);
         buffer_delete(_buffer);
+        
+        __structureDirty = true;
     }
     
     static ImportFromLooseFiles = function(_looseFileArray, _subfolder = "")
@@ -307,6 +309,8 @@ function __HotglueProject(_projectPath) constructor
         buffer_write(_buffer, buffer_text, __yypString);
         buffer_save(_buffer, __projectPath);
         buffer_delete(_buffer);
+        
+        __structureDirty = true;
     }
     
     static __EnsureFolderPath = function(_inPath)

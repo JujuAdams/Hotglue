@@ -18,6 +18,11 @@ function __HotglueIncludedFile(_includedFileStruct) constructor
     name = $"included:{_includedFileName}";
     data = _includedFileStruct;
     
+    static GetName = function()
+    {
+        return name;
+    }
+    
     static GetPath = function()
     {
         return path;

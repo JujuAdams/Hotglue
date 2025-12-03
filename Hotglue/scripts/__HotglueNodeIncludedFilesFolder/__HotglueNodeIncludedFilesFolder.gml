@@ -5,6 +5,9 @@
 
 function __HotglueNodeIncludedFilesFolder(_name, _projectStructure) : __HotglueNodeCommon(undefined, _projectStructure) constructor
 {
+    static __isFolder = true;
+    static __selectable = false;
+    
     __name = _name;
     
     __children = [];

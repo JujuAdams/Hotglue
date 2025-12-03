@@ -4,6 +4,9 @@
 
 function __HotglueNodeIncludedFilesRoot(_projectStructure) : __HotglueNodeCommon(undefined, _projectStructure) constructor
 {
+    static __isFolder = true;
+    static __selectable = false;
+    
     __children = [];
     
     static GetName = function()
@@ -19,6 +22,11 @@ function __HotglueNodeIncludedFilesRoot(_projectStructure) : __HotglueNodeCommon
     static __Add = function(_node)
     {
         array_push(__children, _node);
+    }
+    
+    static __Clear = function()
+    {
+        array_resize(__children, 0);
     }
     
     static GetChildren = function()

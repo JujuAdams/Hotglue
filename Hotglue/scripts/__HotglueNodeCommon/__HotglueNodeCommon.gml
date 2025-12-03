@@ -5,6 +5,9 @@
 
 function __HotglueNodeCommon(_asset, _projectStructure) constructor
 {
+    static __isFolder = false;
+    static __selectable = true;
+    
     __asset = _asset;
     __projectStructure = _projectStructure;
     

@@ -8,6 +8,11 @@ function __HotglueResourceCommon(_resourceStruct) constructor
     name = $"resource:{_resourceStruct.name}";
     data = _resourceStruct;
     
+    static GetName = function()
+    {
+        return name;
+    }
+    
     static GetPath = function()
     {
         return data.path;
