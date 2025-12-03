@@ -5,7 +5,6 @@
 function __HotglueNodeProjectRoot(_projectStructure) : __HotglueNodeCommon(undefined, _projectStructure) constructor
 {
     static __isFolder = true;
-    static __selectable = false;
     
     __children = [];
     

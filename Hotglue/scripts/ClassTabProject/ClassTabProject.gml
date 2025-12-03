@@ -46,7 +46,7 @@ function ClassTabProject() : ClassTab() constructor
                 }
                 else
                 {
-                    ImGuiText("No project loaded.");
+                    ImGuiText("No source project loaded.");
                     
                     if (ImGuiButton("Load project..."))
                     {

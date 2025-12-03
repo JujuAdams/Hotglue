@@ -75,8 +75,6 @@ function __HotglueProjectStructure(_project) constructor
             var _assetType = _asset.type;
             var _assetPath = _asset.GetPath();
             
-            show_debug_message(_asset.name);
-            
             if (_assetType == "resource")
             {
                 var _buffer = buffer_load($"{_projectDirectory}{_assetPath}");
