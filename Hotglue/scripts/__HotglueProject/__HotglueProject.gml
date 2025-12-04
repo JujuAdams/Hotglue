@@ -94,7 +94,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     static GetName = function()
     {
-        return __yypJson.name;
+        return (__hotglueMetadata == undefined)? __yypJson.name : __hotglueMetadata[0].name;
     }
     
     static GetPath = function()
@@ -144,7 +144,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         {
             __hotglueMetadata = [
                 {
-                    name: filename_change_ext(filename_name(__projectPath), ""),
+                    name: __yypJson.name,
                     version: {
                         major: "",
                         minor: "",

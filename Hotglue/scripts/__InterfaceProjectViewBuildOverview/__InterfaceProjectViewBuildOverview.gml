@@ -2,6 +2,17 @@
 
 function __InterfaceProjectViewBuildOverview()
 {
+    __InputString = method(undefined, function(_pointer, _hint)
+    {
+        var _oldString = _pointer.__Get();
+        var _newString = ImGuiInputTextWithHint($"##{_hint}", _hint, _oldString);
+        if (_oldString != _newString)
+        {
+            _pointer.__Set(_newString);
+            __project.__SaveHotglueMetadata();
+        }
+    });
+    
     __InputVersionString = method(undefined, function(_pointer, _hint)
     {
         var _oldString = string(_pointer.__Get());
@@ -83,9 +94,13 @@ function __InterfaceProjectViewBuildOverview()
             ImGuiTableNextColumn();
             ImGuiText("Name");
             ImGuiTableNextColumn();
-            ImGuiTextWrapped(__project.GetName());
+            __InputString(new __HotglueClassPointer(__project.__hotglueMetadata[0], "name"), "name");
             ImGuiTableNextColumn();
-            ImGuiSmallButton("Reset##name");
+            if (ImGuiSmallButton("Reset##name"))
+            {
+                __project.__hotglueMetadata[0].name = __project.__yypJson.name;
+                __project.__SaveHotglueMetadata();
+            }
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
@@ -117,17 +132,8 @@ function __InterfaceProjectViewBuildOverview()
             __InputVersionString(new __HotglueClassPointer(__project.__hotglueMetadata[0].version, "patch"), "patch");
             ImGuiSameLine();
             ImGuiSetNextItemWidth(200);
-            
-            var _oldString = __project.__hotglueMetadata[0].version.extension;
-            var _newString = ImGuiInputTextWithHint("##semverExt", "-extension", _oldString);
-            if (_oldString != _newString)
-            {
-                __project.__hotglueMetadata[0].version.extension = _newString;
-                __project.__SaveHotglueMetadata();
-            }
-            
+            __InputString(new __HotglueClassPointer(__project.__hotglueMetadata[0].version, "extension"), "extension");
             ImGuiTableNextColumn();
-            
             if (ImGuiSmallButton("Reset##version"))
             {
                 with(__project.__hotglueMetadata[0].version)
@@ -137,6 +143,8 @@ function __InterfaceProjectViewBuildOverview()
                     patch = "";
                     extension = "";
                 }
+                
+                __project.__SaveHotglueMetadata();
             }
             
             ImGuiTableNextRow();
@@ -144,7 +152,17 @@ function __InterfaceProjectViewBuildOverview()
             ImGuiText(".yymps overrides version");
             
             ImGuiTableNextColumn();
-            ImGuiCheckbox("##yympsOverridesVersion", true);
+            
+            var _oldValue = __project.__hotglueMetadata[0].yympsOverridesVersion;
+            var _newValue = ImGuiCheckbox($"##yympsOverridesVersion", _oldValue);
+            if (_oldValue != _newValue)
+            {
+                __project.__hotglueMetadata[0].yympsOverridesVersion = _newValue;
+                __project.__SaveHotglueMetadata();
+            }
+            
+            ImGuiSameLine();
+            ImGuiDummy(20, 0);
             ImGuiSameLine();
             ImGuiTextLink("What is this?");
             if (ImGuiBeginItemTooltip())
