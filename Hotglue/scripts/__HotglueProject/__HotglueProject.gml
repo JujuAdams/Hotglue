@@ -117,6 +117,19 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         return __editable;
     }
     
+    static GetVersionString = function()
+    {
+        if  (__hotglueMetadata == undefined)
+        {
+            return "0.0.0";
+        }
+        
+        with(__hotglueMetadata[0].version)
+        {
+            return $"{(major == "")? "0" : major}.{(minor == "")? "0" : minor}.{(patch == "")? "0" : patch}{extension}";
+        }
+    }
+    
     static GetHotglueMetadataExists = function()
     {
         return (__hotglueMetadata != undefined);
@@ -127,23 +140,25 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         if (not __editable) return;
         if (__hotglueMetadata != undefined) return;
         
-        __hotglueMetadata = [
-            {
-                name: filename_change_ext(filename_name(__projectPath), ""),
-                version: {
-                    major: 1,
-                    minor: 0,
-                    patch: 0,
-                    extension: "",
+        if (__hotglueMetadata == undefined)
+        {
+            __hotglueMetadata = [
+                {
+                    name: filename_change_ext(filename_name(__projectPath), ""),
+                    version: {
+                        major: "",
+                        minor: "",
+                        patch: "",
+                        extension: "",
+                    },
+                    yympsOverridesVersion: true,
                 },
-                yympsOverridesVersion: true,
-            },
-            [],
-        ];
+                [],
+            ];
+        }
         
         var _tempFilename = HOTGLUE_TEMP_CACHE_DIRECTORY + "hotglue_metadata.json";
         var _string = json_stringify(__hotglueMetadata, true);
-        
         var _buffer = buffer_create(string_byte_length(_string), buffer_fixed, 1);
         buffer_write(_buffer, buffer_text, _string);
         buffer_save(_buffer, _tempFilename);
@@ -155,6 +170,26 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         ImportFromLooseFiles(_looseFile);
         
         file_delete(_tempFilename);
+    }
+    
+    static __SaveHotglueMetadata = function()
+    {
+        if (not __editable) return;
+        if (__hotglueMetadata == undefined) return;
+        
+        var _path = $"{__projectDirectory}notes/hotglue_metadata/hotglue_metadata.txt";
+        
+        if (not file_exists(_path))
+        {
+            EnsureHotglueMetadata();
+            return;
+        }
+        
+        var _string = json_stringify(__hotglueMetadata, true);
+        var _buffer = buffer_create(string_byte_length(_string), buffer_fixed, 1);
+        buffer_write(_buffer, buffer_text, _string);
+        buffer_save(_buffer, _path);
+        buffer_delete(_buffer);
     }
     
     static GetProjectStructure = function()

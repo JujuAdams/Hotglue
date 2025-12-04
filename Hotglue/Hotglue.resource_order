@@ -31,6 +31,7 @@
     {"name":"__HotglueChannelLocal","order":2,"path":"scripts/__HotglueChannelLocal/__HotglueChannelLocal.yy",},
     {"name":"__HotglueClassHttpGetFile","order":13,"path":"scripts/__HotglueClassHttpGetFile/__HotglueClassHttpGetFile.yy",},
     {"name":"__HotglueClassHttpRequest","order":12,"path":"scripts/__HotglueClassHttpRequest/__HotglueClassHttpRequest.yy",},
+    {"name":"__HotglueClassPointer","order":23,"path":"scripts/__HotglueClassPointer/__HotglueClassPointer.yy",},
     {"name":"__HotglueClassReleaseGitHub","order":1,"path":"scripts/__HotglueClassReleaseGitHub/__HotglueClassReleaseGitHub.yy",},
     {"name":"__HotglueConfig","order":6,"path":"scripts/__HotglueConfig/__HotglueConfig.yy",},
     {"name":"__HotglueConstants","order":5,"path":"scripts/__HotglueConstants/__HotglueConstants.yy",},

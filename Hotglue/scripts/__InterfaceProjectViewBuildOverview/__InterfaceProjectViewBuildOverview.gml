@@ -2,6 +2,40 @@
 
 function __InterfaceProjectViewBuildOverview()
 {
+    __InputVersionString = method(undefined, function(_pointer, _hint)
+    {
+        var _oldString = string(_pointer.__Get());
+        
+        ImGuiSetNextItemWidth(40);
+        var _newString = ImGuiInputTextWithHint($"##{_hint}", _hint, _oldString);
+        if (_oldString != _newString)
+        {
+            var _value = undefined;
+            
+            if (_newString == "")
+            {
+                _value = _newString;
+            }
+            else
+            {
+                try
+                {
+                    _value = string_format(floor(abs(real(_newString))), 0, 0);
+                }
+                catch(_error)
+                {
+                    
+                }
+            }
+            
+            if (_value != undefined)
+            {
+                _pointer.__Set(_value);
+                __project.__SaveHotglueMetadata();
+            }
+        }
+    });
+    
     BuildOverview = method(undefined, function()
     {
         var _editable = __project.GetEditable();
@@ -70,25 +104,40 @@ function __InterfaceProjectViewBuildOverview()
             }
             
             ImGuiTableNextColumn();
-            ImGuiText("0.0.0-alpha");
-            //ImGuiText(GetVersionString());
-            ImGuiSetNextItemWidth(40);
-            ImGuiInputTextWithHint("##semverMajor", "MAJOR", "");
+            ImGuiText(__project.GetVersionString());
+            
+            __InputVersionString(new __HotglueClassPointer(__project.__hotglueMetadata[0].version, "major"), "MAJOR");
             ImGuiSameLine();
             ImGuiText(".");
             ImGuiSameLine();
-            ImGuiSetNextItemWidth(40);
-            ImGuiInputTextWithHint("##semverMinor", "Minor", "");
+            __InputVersionString(new __HotglueClassPointer(__project.__hotglueMetadata[0].version, "minor"), "Minor");
             ImGuiSameLine();
             ImGuiText(".");
             ImGuiSameLine();
-            ImGuiSetNextItemWidth(40);
-            ImGuiInputTextWithHint("##semverPatch", "patch", "");
+            __InputVersionString(new __HotglueClassPointer(__project.__hotglueMetadata[0].version, "patch"), "patch");
             ImGuiSameLine();
             ImGuiSetNextItemWidth(200);
-            ImGuiInputTextWithHint("##semverExt", "-extension", "");
+            
+            var _oldString = __project.__hotglueMetadata[0].version.extension;
+            var _newString = ImGuiInputTextWithHint("##semverExt", "-extension", _oldString);
+            if (_oldString != _newString)
+            {
+                __project.__hotglueMetadata[0].version.extension = _newString;
+                __project.__SaveHotglueMetadata();
+            }
+            
             ImGuiTableNextColumn();
-            ImGuiSmallButton("Reset##version");
+            
+            if (ImGuiSmallButton("Reset##version"))
+            {
+                with(__project.__hotglueMetadata[0].version)
+                {
+                    major = "";
+                    minor = "";
+                    patch = "";
+                    extension = "";
+                }
+            }
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
@@ -100,13 +149,15 @@ function __InterfaceProjectViewBuildOverview()
             ImGuiTextLink("What is this?");
             if (ImGuiBeginItemTooltip())
             {
-                ImGuiText($"Enable to allow .yymps exports to override the version set in \"hotglue.json\".\nThis makes .yymps export more convenient.");
+                ImGuiText($"Override the Hotglue version with the version specified when exporting a .yymps from the GameMaker IDE.\n\nThis means you don't need to keep updating the Hotglue metadata with every release.");
                 ImGuiEndTooltip();
             }
+            ImGuiTableNextColumn();
+            ImGuiSmallButton("Reset##yympsOverridesVersion");
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
-            ImGuiText("URL");
+            ImGuiText("Origin");
             ImGuiTableNextColumn();
             
             ImGuiTextLink(__project.GetURL());
@@ -278,7 +329,7 @@ function __InterfaceProjectViewBuildOverview()
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
-            ImGuiText("URL");
+            ImGuiText("Origin");
             ImGuiTableNextColumn();
             
             ImGuiTextLink(__project.GetURL());

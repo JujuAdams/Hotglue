@@ -61,6 +61,7 @@
     {"id":{"name":"__HotglueChannelLocal","path":"scripts/__HotglueChannelLocal/__HotglueChannelLocal.yy",},},
     {"id":{"name":"__HotglueClassHttpGetFile","path":"scripts/__HotglueClassHttpGetFile/__HotglueClassHttpGetFile.yy",},},
     {"id":{"name":"__HotglueClassHttpRequest","path":"scripts/__HotglueClassHttpRequest/__HotglueClassHttpRequest.yy",},},
+    {"id":{"name":"__HotglueClassPointer","path":"scripts/__HotglueClassPointer/__HotglueClassPointer.yy",},},
     {"id":{"name":"__HotglueClassReleaseCommon","path":"scripts/__HotglueClassReleaseCommon/__HotglueClassReleaseCommon.yy",},},
     {"id":{"name":"__HotglueClassReleaseGitHub","path":"scripts/__HotglueClassReleaseGitHub/__HotglueClassReleaseGitHub.yy",},},
     {"id":{"name":"__HotglueConfig","path":"scripts/__HotglueConfig/__HotglueConfig.yy",},},
