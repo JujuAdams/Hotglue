@@ -99,8 +99,23 @@ function ClassInterfaceRepositoryView(_repository) constructor
             
             if (__projectView != undefined)
             {
-                ImGuiBeginChild("projectPreview", undefined, undefined, ImGuiChildFlags.Border);
-                __projectView.BuildTreeAsDestination();
+                ImGuiNewLine();
+                ImGuiBeginChild("projectPreview");
+                ImGuiBeginTabBar("projectPreviewTabBar");
+                
+                if (ImGuiBeginTabItem("Overview"))
+                {
+                    __projectView.BuildOverview();
+                    ImGuiEndTabItem();
+                }
+                
+                if (ImGuiBeginTabItem("Resources"))
+                {
+                    __projectView.BuildTreeAsDestination();
+                    ImGuiEndTabItem();
+                }
+                
+                ImGuiEndTabBar();
                 ImGuiEndChild();
             }
         }
