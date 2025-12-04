@@ -127,9 +127,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         if (not __editable) return;
         if (__hotglueMetadata != undefined) return;
         
-        var _tempFilename = HOTGLUE_TEMP_CACHE_DIRECTORY + "hotglue_metadata.json";
-        
-        var _string = json_stringify([
+        __hotglueMetadata = [
             {
                 name: filename_change_ext(filename_name(__projectPath), ""),
                 version: {
@@ -141,7 +139,10 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
                 yympsOverridesVersion: true,
             },
             [],
-        ], true);
+        ];
+        
+        var _tempFilename = HOTGLUE_TEMP_CACHE_DIRECTORY + "hotglue_metadata.json";
+        var _string = json_stringify(__hotglueMetadata, true);
         
         var _buffer = buffer_create(string_byte_length(_string), buffer_fixed, 1);
         buffer_write(_buffer, buffer_text, _string);
