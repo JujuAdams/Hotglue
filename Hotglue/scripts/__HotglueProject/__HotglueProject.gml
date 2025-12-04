@@ -151,7 +151,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
                         patch: "",
                         extension: "",
                     },
-                    yympsOverridesVersion: true,
+                    yympsOverridesVersion: false,
                 },
                 [],
             ];

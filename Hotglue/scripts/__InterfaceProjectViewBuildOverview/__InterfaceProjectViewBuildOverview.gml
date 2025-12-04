@@ -171,7 +171,11 @@ function __InterfaceProjectViewBuildOverview()
                 ImGuiEndTooltip();
             }
             ImGuiTableNextColumn();
-            ImGuiSmallButton("Reset##yympsOverridesVersion");
+            if (ImGuiSmallButton("Reset##yympsOverridesVersion"))
+            {
+                __project.__hotglueMetadata[0].yympsOverridesVersion = false;
+                __project.__SaveHotglueMetadata();
+            }
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
