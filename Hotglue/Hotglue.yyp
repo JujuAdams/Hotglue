@@ -130,7 +130,6 @@
     {"id":{"name":"ClassInterfaceFileView","path":"scripts/ClassInterfaceFileView/ClassInterfaceFileView.yy",},},
     {"id":{"name":"ClassInterfaceProjectView","path":"scripts/ClassInterfaceProjectView/ClassInterfaceProjectView.yy",},},
     {"id":{"name":"ClassInterfaceRepositoryView","path":"scripts/ClassInterfaceRepositoryView/ClassInterfaceRepositoryView.yy",},},
-    {"id":{"name":"ClassLink","path":"scripts/ClassLink/ClassLink.yy",},},
     {"id":{"name":"ClassTab","path":"scripts/ClassTab/ClassTab.yy",},},
     {"id":{"name":"ClassTabChannels","path":"scripts/ClassTabChannels/ClassTabChannels.yy",},},
     {"id":{"name":"ClassTabInspector","path":"scripts/ClassTabInspector/ClassTabInspector.yy",},},

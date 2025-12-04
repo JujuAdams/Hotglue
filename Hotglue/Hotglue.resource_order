@@ -85,7 +85,6 @@
     {"name":"ClassInterfaceChannelView","order":9,"path":"scripts/ClassInterfaceChannelView/ClassInterfaceChannelView.yy",},
     {"name":"ClassInterfaceFileView","order":8,"path":"scripts/ClassInterfaceFileView/ClassInterfaceFileView.yy",},
     {"name":"ClassInterfaceRepositoryView","order":10,"path":"scripts/ClassInterfaceRepositoryView/ClassInterfaceRepositoryView.yy",},
-    {"name":"ClassLink","order":12,"path":"scripts/ClassLink/ClassLink.yy",},
     {"name":"ClassTabChannels","order":4,"path":"scripts/ClassTabChannels/ClassTabChannels.yy",},
     {"name":"ClassTabInspector","order":5,"path":"scripts/ClassTabInspector/ClassTabInspector.yy",},
     {"name":"ClassTabLog","order":6,"path":"scripts/ClassTabLog/ClassTabLog.yy",},
