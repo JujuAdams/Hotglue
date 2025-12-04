@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueDirectoryHasGit",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueDirectoryHasGit",
+  "parent":{
+    "name":"Other",
+    "path":"folders/Hotglue/Other.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

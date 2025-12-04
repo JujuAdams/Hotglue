@@ -1,8 +1,9 @@
 // Feather disable all
 
 /// @param directory
+/// @param [sourceURL]
 
-function HotglueLoadYYZUnpacked(_directory)
+function HotglueLoadYYZUnpacked(_directory, _sourceURL = undefined)
 {
     if (GM_is_sandboxed)
     {
@@ -34,7 +35,7 @@ function HotglueLoadYYZUnpacked(_directory)
         __HotglueError("No .yyp file found inside directory");
     }
     
-    var _project = new __HotglueProject(_directory + _projectPath);
+    var _project = new __HotglueProject(_directory + _projectPath, false, _sourceURL);
     _project.__VerifyFilesUnzipped();
     
     return _project;

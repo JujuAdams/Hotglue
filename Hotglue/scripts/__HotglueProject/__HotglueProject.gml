@@ -1,8 +1,10 @@
 // Feather disable all
 
 /// @param projectPath
+/// @param editable
+/// @param sourceURL
 
-function __HotglueProject(_projectPath) constructor
+function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
 {
     __HotglueTrace($"Creating project representation \"{_projectPath}\"");
     
@@ -11,8 +13,14 @@ function __HotglueProject(_projectPath) constructor
         __HotglueError($"\"{_projectPath}\" doesn't exist");
     }
     
+    
     __projectPath = _projectPath;
+    __editable    = _editable;
+    __url         = _sourceURL;
+    
     __projectDirectory = filename_dir(__projectPath) + "/";
+    
+    __hotglueMetadata = undefined;
     
     __quickAssetArray = [];
     __quickAssetDict  = {};
@@ -46,8 +54,21 @@ function __HotglueProject(_projectPath) constructor
     repeat(array_length(_yyResourcesArray))
     {
         var _resource = _yyResourcesArray[_i].id;
-        var _constructor = __HotglueDetermineResourceConstructor(_resource.path);
-        __AddAsset(new _constructor(_resource));
+        
+        if (_resource.name == "hotglue_metadata")
+        {
+            var _buffer = buffer_load(__projectDirectory + filename_change_ext(_resource.path, ".txt"));
+            var _string = buffer_read(_buffer, buffer_text);
+            buffer_delete(_buffer);
+            
+            __hotglueMetadata = json_parse(_string);
+        }
+        else
+        {
+            var _constructor = __HotglueDetermineResourceConstructor(_resource.path);
+            __AddAsset(new _constructor(_resource));
+        }
+        
         ++_i;
     }
     
@@ -84,6 +105,55 @@ function __HotglueProject(_projectPath) constructor
     static GetDirectory = function()
     {
         return __projectDirectory;
+    }
+    
+    static GetURL = function()
+    {
+        return __url;
+    }
+    
+    static GetEditable = function()
+    {
+        return __editable;
+    }
+    
+    static GetHotglueMetadataExists = function()
+    {
+        return (__hotglueMetadata != undefined);
+    }
+    
+    static EnsureHotglueMetadata = function()
+    {
+        if (not __editable) return;
+        if (__hotglueMetadata != undefined) return;
+        
+        var _tempFilename = HOTGLUE_TEMP_CACHE_DIRECTORY + "hotglue_metadata.json";
+        
+        var _string = json_stringify([
+            {
+                name: filename_change_ext(filename_name(__projectPath), ""),
+                version: {
+                    major: 1,
+                    minor: 0,
+                    patch: 0,
+                    extension: "",
+                },
+                yympsOverridesVersion: true,
+            },
+            [],
+        ], true);
+        
+        var _buffer = buffer_create(string_byte_length(_string), buffer_fixed, 1);
+        buffer_write(_buffer, buffer_text, _string);
+        buffer_save(_buffer, _tempFilename);
+        buffer_delete(_buffer);
+        
+        var _looseFile = HotglueLoadLooseFile(_tempFilename);
+        _looseFile.SetType("note");
+        
+        ImportFromLooseFiles(_looseFile);
+        
+        file_delete(_tempFilename);
     }
     
     static GetProjectStructure = function()
@@ -271,6 +341,11 @@ function __HotglueProject(_projectPath) constructor
     
     static ImportFromLooseFiles = function(_looseFileArray, _subfolder = "")
     {
+        if (not is_array(_looseFileArray))
+        {
+            _looseFileArray = [_looseFileArray];
+        }
+        
         // 1. Ensure the user has Git set up
         __HotglueAssertGit(__projectDirectory);
         

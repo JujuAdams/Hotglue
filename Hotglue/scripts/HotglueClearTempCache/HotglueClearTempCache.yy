@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueClearTempCache",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueClearTempCache",
+  "parent":{
+    "name":"Hotglue",
+    "path":"folders/Hotglue.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -42,8 +42,10 @@
 ///   `sprExample` as a background image then the returned array will contain all three resources.
 /// 
 /// @param path
+/// @param [editable=true]
+/// @param [sourceURL=path]
 
-function HotglueLoadYYP(_yypPath)
+function HotglueLoadYYP(_yypPath, _editable = true, _sourceURL = _yypPath)
 {
     if (GM_is_sandboxed)
     {
@@ -55,7 +57,7 @@ function HotglueLoadYYP(_yypPath)
         __HotglueError($"\"{_yypPath}\" doesn't exist");
     }
     
-    var _project = new __HotglueProject(_yypPath);
+    var _project = new __HotglueProject(_yypPath, _editable, _sourceURL);
     _project.__VerifyIncludedFilesExist();
     
     return _project;

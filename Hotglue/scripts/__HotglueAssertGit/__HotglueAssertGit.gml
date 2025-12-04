@@ -6,13 +6,7 @@ function __HotglueAssertGit(_directory)
 {
     static _system = __HotglueSystem();
     
-    if (directory_exists(_directory + "/.git"))
-    {
-        return true;
-    }
-    
-    var _newDirectory = filename_dir(_directory);
-    if (_newDirectory == _directory)
+    if (not HotglueDirectoryHasGit(_directory))
     {
         if (_system.__suppressGitAssert)
         {
@@ -26,5 +20,5 @@ function __HotglueAssertGit(_directory)
         return false;
     }
     
-    return __HotglueAssertGit(_newDirectory);
+    return true;
 }

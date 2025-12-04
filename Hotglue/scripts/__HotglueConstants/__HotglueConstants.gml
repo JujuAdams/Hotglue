@@ -6,5 +6,6 @@
 #macro HOTGLUE_AUTH_CACHE_DIRECTORY     (game_save_id + "cache/auth/")
 #macro HOTGLUE_UNZIP_CACHE_DIRECTORY    (game_save_id + "cache/unzip/")
 #macro HOTGLUE_RELEASE_CACHE_DIRECTORY  (game_save_id + "cache/releases/")
+#macro HOTGLUE_TEMP_CACHE_DIRECTORY     (game_save_id + "cache/temp/")
 
 #macro HOTGLUE_GITHUB_AUTH_SCOPE  ""

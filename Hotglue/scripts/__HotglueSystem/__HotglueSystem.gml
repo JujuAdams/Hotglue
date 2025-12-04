@@ -40,6 +40,7 @@ function __HotglueSystem()
         },
         [], -1));
         
+        HotglueClearTempCache();
         __HotglueLoadGitHubAccessToken();
         
         _gmkChannel.Refresh();

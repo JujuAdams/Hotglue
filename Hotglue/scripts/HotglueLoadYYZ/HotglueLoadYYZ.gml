@@ -4,8 +4,9 @@
 /// `HotglueLoadYYP()` for struct methods that you can use.
 /// 
 /// @param path
+/// @param [sourceURL=path]
 
-function HotglueLoadYYZ(_yyzPath)
+function HotglueLoadYYZ(_yyzPath, _sourceURL = _yyzPath)
 {
     if (GM_is_sandboxed)
     {
@@ -30,6 +31,6 @@ function HotglueLoadYYZ(_yyzPath)
     }
     else
     {
-        return HotglueLoadYYZUnpacked(_directory);
+        return HotglueLoadYYZUnpacked(_directory, _sourceURL);
     }
 }

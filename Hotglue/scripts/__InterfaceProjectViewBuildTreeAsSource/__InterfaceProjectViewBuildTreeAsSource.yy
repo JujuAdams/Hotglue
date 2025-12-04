@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"ClassInterfaceProjectView",
+  "%Name":"__InterfaceProjectViewBuildTreeAsSource",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ClassInterfaceProjectView",
+  "name":"__InterfaceProjectViewBuildTreeAsSource",
   "parent":{
     "name":"Project View",
     "path":"folders/Interface/Classes/Project View.yy",

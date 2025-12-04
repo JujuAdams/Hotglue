@@ -9,6 +9,7 @@ if (_return & ImGuiReturnMask.Return)
     welcomeTab.TabItem();
     projectTab.TabItem();
     channelsTab.TabItem();
+    inspectorTab.TabItem();
     settingsTab.TabItem();
     logTab.TabItem();
     

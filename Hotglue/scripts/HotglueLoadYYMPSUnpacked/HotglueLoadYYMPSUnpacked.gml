@@ -1,9 +1,10 @@
 // Feather disable all
 
 /// @param path
+/// @param [sourceURL=path]
 /// @param [metadataJSON]
 
-function HotglueLoadYYMPSUnpacked(_yypPath, _metadataJSON = undefined)
+function HotglueLoadYYMPSUnpacked(_yypPath, _sourceURL = _yypPath, _metadataJSON = undefined)
 {
     if (GM_is_sandboxed)
     {
@@ -29,7 +30,7 @@ function HotglueLoadYYMPSUnpacked(_yypPath, _metadataJSON = undefined)
         _metadataJSON = json_parse(_string);
     }
     
-    var _project = new __HotglueProject(_yypPath);
+    var _project = new __HotglueProject(_yypPath, false, _sourceURL);
     _project.__VerifyFilesUnzipped();
     
     //TODO - Pull out .yymps data

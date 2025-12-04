@@ -4,8 +4,9 @@
 /// `HotglueLoadYYP()` for struct methods that you can use.
 /// 
 /// @param path
+/// @param [sourceURL=path]
 
-function HotglueLoadYYMPS(_yympsPath)
+function HotglueLoadYYMPS(_yympsPath, _sourceURL = _yympsPath)
 {
     if (GM_is_sandboxed)
     {
@@ -45,5 +46,5 @@ function HotglueLoadYYMPS(_yympsPath)
     buffer_delete(_buffer);
     var _metadataJSON = json_parse(_string);
     
-    return HotglueLoadYYMPSUnpacked(_directory + _metadataJSON.display_name + ".yyp", _metadataJSON);
+    return HotglueLoadYYMPSUnpacked(_directory + _metadataJSON.display_name + ".yyp", _sourceURL, _metadataJSON);
 }

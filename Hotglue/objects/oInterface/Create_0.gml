@@ -7,10 +7,11 @@ context = new ImGuiContext(0, 0, window_get_width(), window_get_height(),
 
 LogTrace("ImGui context created");
 
-welcomeTab  = new ClassTabWelcome();
-projectTab  = new ClassTabProject();
-channelsTab = new ClassTabChannels();
-settingsTab = new ClassTabSettings();
+welcomeTab   = new ClassTabWelcome();
+projectTab   = new ClassTabProject();
+channelsTab  = new ClassTabChannels();
+inspectorTab = new ClassTabInspector();
+settingsTab  = new ClassTabSettings();
 
 LogTrace("Interface tabs created");
 

@@ -236,22 +236,12 @@ function ClassTabProject() : ClassTab() constructor
                 {
                     ImGuiBeginChild("destinationInnerPane", undefined, undefined, ImGuiChildFlags.Border);
                     
-                    ImGuiText(__destinationProject.GetPath());
-                    ImGuiSameLine();
-                    if (ImGuiSmallButton("Close"))
+                    if (__destinationView != undefined)
                     {
-                        LogTraceAndStatus($"Closed \"{__destinationProject.GetPath()}\"");
-                        __destinationProject = undefined;
-                        __destinationView = undefined;
-                    }
-                    else
-                    {
-                        ImGuiBeginChild("destinationProjectPane");
-                        ImGuiEndChild();
+                        __destinationView.BuildOverview();
                     }
                     
                     ImGuiEndChild();
-                    
                     ImGuiEndTabItem();
                 }
                 
