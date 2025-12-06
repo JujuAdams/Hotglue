@@ -4,7 +4,7 @@
 /// @param [sourceURL=path]
 /// @param [metadataJSON]
 
-function HotglueLoadYYMPSUnpacked(_yypPath, _sourceURL = _yypPath, _metadataJSON = undefined)
+function __HotglueLoadYYMPSUnpacked(_yypPath, _sourceURL = _yypPath, _metadataJSON = undefined)
 {
     if (GM_is_sandboxed)
     {

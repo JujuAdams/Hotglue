@@ -3,7 +3,7 @@
 /// @param path
 /// @param [sourceURL=path]
 
-function HotglueLoadYYPZipped(_zipPath, _sourceURL = _zipPath)
+function __HotglueLoadYYPZipped(_zipPath, _sourceURL = _zipPath)
 {
     if (GM_is_sandboxed)
     {
@@ -28,6 +28,6 @@ function HotglueLoadYYPZipped(_zipPath, _sourceURL = _zipPath)
     }
     else
     {
-        return HotglueLoadYYZUnpacked(_directory, _sourceURL);
+        return __HotglueLoadYYZUnpacked(_directory, _sourceURL);
     }
 }

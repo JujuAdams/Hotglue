@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"HotglueLoadLooseFile",
   "parent":{
-    "name":"Loaders",
-    "path":"folders/Hotglue/Loaders.yy",
+    "name":"Hotglue",
+    "path":"folders/Hotglue.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

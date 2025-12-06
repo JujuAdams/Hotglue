@@ -23,7 +23,7 @@ function ClassTabInspector() : ClassTab() constructor
                         }
                         else
                         {
-                            __project = HotglueLoadYYP(_path);
+                            __project = HotglueProjectLocalEnsure(_path);
                             __view = new ClassInterfaceProjectView(__project);
                             LogTraceAndStatus($"Loaded \"{__project.GetPath()}\" for inspection");
                         }

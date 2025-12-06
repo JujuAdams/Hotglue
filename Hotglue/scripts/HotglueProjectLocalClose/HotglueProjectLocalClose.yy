@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"HotglueLoadYYP",
+  "%Name":"HotglueProjectLocalClose",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HotglueLoadYYP",
+  "name":"HotglueProjectLocalClose",
   "parent":{
-    "name":"Loaders",
-    "path":"folders/Hotglue/Loaders.yy",
+    "name":"Projects",
+    "path":"folders/Hotglue/Projects.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

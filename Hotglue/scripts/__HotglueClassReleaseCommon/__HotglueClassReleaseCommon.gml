@@ -78,20 +78,8 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
             }
             else
             {
-                var _extension = filename_ext(_result);
-                if (_extension == ".yymps")
-                {
-                    _project = HotglueLoadYYMPS(_result);
-                }
-                else if (_extension == ".yyz")
-                {
-                    _project = HotglueLoadYYZ(_result);
-                }
-                else if (_extension == ".zip")
-                {
-                    _project = HotglueLoadYYPZipped(_result);
-                }
-                else
+                var _project = HotglueProjectRemoteEnsure(_result, __webURL);
+                if (_project == undefined)
                 {
                     __HotglueWarning($"Release \"{__webURL}\" downloaded a file with an invalid extension \"{_result}\"");
                     _success = false;

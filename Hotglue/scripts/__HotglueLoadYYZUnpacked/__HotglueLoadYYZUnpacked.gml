@@ -3,7 +3,7 @@
 /// @param directory
 /// @param [sourceURL]
 
-function HotglueLoadYYZUnpacked(_directory, _sourceURL = undefined)
+function __HotglueLoadYYZUnpacked(_directory, _sourceURL = undefined)
 {
     if (GM_is_sandboxed)
     {

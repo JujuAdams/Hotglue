@@ -13,6 +13,9 @@ function __HotglueSystem()
     _system = {};
     with(_system)
     {
+        __traceHandler   = function(_string) { show_debug_message($"Hotglue: {_string}"); };
+        __warningHandler = function(_string) { show_debug_message($"Hotglue: Warning! {_string}"); };
+        
         __suppressGitAssert = false;
         __destructiveCopy   = true;
         
@@ -22,10 +25,10 @@ function __HotglueSystem()
         //e.g. Setting `GITHUB_GML_LOCALHOST_PORT` to `52499` means that you should use `http://localhost:52499/` for the callback URL.
         __localhostPort = 52499;
         
-        __traceHandler   = function(_string) { show_debug_message($"Hotglue: {_string}"); };
-        __warningHandler = function(_string) { show_debug_message($"Hotglue: Warning! {_string}"); };
-        
         __httpRequestMap = ds_map_create();
+        
+        __projectByPathDict = {};
+        __projectBySourceURLDict = {};
         
         __channelArray = [];
         array_push(__channelArray, new __HotglueChannelFavorites("* Favourites *", "@favorites"));

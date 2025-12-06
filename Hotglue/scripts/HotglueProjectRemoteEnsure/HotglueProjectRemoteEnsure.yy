@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueProjectRemoteEnsure",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueProjectRemoteEnsure",
+  "parent":{
+    "name":"Projects",
+    "path":"folders/Hotglue/Projects.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

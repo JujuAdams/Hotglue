@@ -1,12 +1,12 @@
 // Feather disable all
 
 /// Loads a .yyz file and returns an struct constructed by `__HotglueProject`. Please see
-/// `HotglueLoadYYP()` for struct methods that you can use.
+/// `__HotglueLoadYYP()` for struct methods that you can use.
 /// 
 /// @param path
 /// @param [sourceURL=path]
 
-function HotglueLoadYYZ(_yyzPath, _sourceURL = _yyzPath)
+function __HotglueLoadYYZ(_yyzPath, _sourceURL = _yyzPath)
 {
     if (GM_is_sandboxed)
     {
@@ -31,6 +31,6 @@ function HotglueLoadYYZ(_yyzPath, _sourceURL = _yyzPath)
     }
     else
     {
-        return HotglueLoadYYZUnpacked(_directory, _sourceURL);
+        return __HotglueLoadYYZUnpacked(_directory, _sourceURL);
     }
 }

@@ -6,7 +6,7 @@
 /// @param path
 /// @param [sourceURL=path]
 
-function HotglueLoadYYMPS(_yympsPath, _sourceURL = _yympsPath)
+function __HotglueLoadYYMPS(_yympsPath, _sourceURL = _yympsPath)
 {
     if (GM_is_sandboxed)
     {

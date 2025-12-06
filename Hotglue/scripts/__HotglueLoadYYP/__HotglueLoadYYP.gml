@@ -45,7 +45,7 @@
 /// @param [editable=true]
 /// @param [sourceURL=path]
 
-function HotglueLoadYYP(_yypPath, _editable = true, _sourceURL = _yypPath)
+function __HotglueLoadYYP(_yypPath, _editable = true, _sourceURL = _yypPath)
 {
     if (GM_is_sandboxed)
     {

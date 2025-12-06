@@ -62,7 +62,7 @@ function ClassTabProject() : ClassTab() constructor
                             {
                                 try
                                 {
-                                    __directProject = HotglueLoadYYP(_path);
+                                    __directProject = HotglueProjectLocalEnsure(_path);
                                     __directView = new ClassInterfaceProjectView(__directProject);
                                     
                                     LogTraceAndStatus($"Loaded \"{_path}\"");
@@ -75,10 +75,6 @@ function ClassTabProject() : ClassTab() constructor
                                     __directProject = undefined;
                                     __directView = undefined;
                                 }
-                            }
-                            else if (filename_ext(_path) == ".gml")
-                            {
-                                LogTraceAndStatus($"Loaded \"{_path}\"");
                             }
                             else
                             {
@@ -271,19 +267,26 @@ function ClassTabProject() : ClassTab() constructor
                     var _path = get_open_filename("GameMaker Project (.yyp)|*.yyp", "");
                     if (_path != "")
                     {
-                        try
+                        if (filename_ext(_path) == ".yyp")
                         {
-                            __destinationProject = HotglueLoadYYP(_path);
-                            __destinationView = new ClassInterfaceProjectView(__destinationProject);
-                            
-                            LogTraceAndStatus($"Loaded \"{_path}\"");
+                            try
+                            {
+                                __destinationProject = HotglueProjectLocalEnsure(_path);
+                                __destinationView = new ClassInterfaceProjectView(__destinationProject);
+                                
+                                LogTraceAndStatus($"Loaded \"{_path}\"");
+                            }
+                            catch(_error)
+                            {
+                                LogWarning(_error[$ "message"] ?? string(_error));
+                                LogWarning($"Failed to load \"{_path}\"");
+                                __destinationProject = undefined;
+                                __destinationView = undefined;
+                            }
                         }
-                        catch(_error)
+                        else
                         {
-                            LogWarning(_error[$ "message"] ?? string(_error));
-                            LogWarning($"Failed to load \"{_path}\"");
-                            __destinationProject = undefined;
-                            __destinationView = undefined;
+                            LogTraceAndStatus($"File type not supported \"{_path}\"");
                         }
                     }
                 }

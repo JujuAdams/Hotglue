@@ -6,13 +6,15 @@
 
 function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
 {
+    static _projectByPathDict = __HotglueSystem().__projectByPathDict;
+    static _projectBySourceURLDict = __HotglueSystem().__projectBySourceURLDict;
+    
     __HotglueTrace($"Creating project representation \"{_projectPath}\"");
     
     if (not file_exists(_projectPath))
     {
         __HotglueError($"\"{_projectPath}\" doesn't exist");
     }
-    
     
     __projectPath = _projectPath;
     __editable    = _editable;
@@ -128,6 +130,12 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         {
             return $"{(major == "")? "0" : major}.{(minor == "")? "0" : minor}.{(patch == "")? "0" : patch}{extension}";
         }
+    }
+    
+    static __DeleteGlobalReferences = function()
+    {
+        struct_remove(_projectByPathDict,  __projectPath);
+        struct_remove(_projectBySourceURLDict, __url);
     }
     
     static GetHotglueMetadataExists = function()

@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"HotglueLoadYYZUnpacked",
+  "%Name":"HotglueProjectRemoteGet",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HotglueLoadYYZUnpacked",
+  "name":"HotglueProjectRemoteGet",
   "parent":{
-    "name":"Loaders",
-    "path":"folders/Hotglue/Loaders.yy",
+    "name":"Projects",
+    "path":"folders/Hotglue/Projects.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
