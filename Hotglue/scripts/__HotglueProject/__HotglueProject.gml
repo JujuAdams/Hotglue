@@ -24,75 +24,81 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     __hotglueMetadata = undefined;
     
-    __quickAssetArray = [];
-    __quickAssetDict  = {};
-    
-    ///////
-    // Load project .yyp
-    ///////
-    
-    var _buffer = buffer_load(_projectPath);
-    __yypString = buffer_read(_buffer, buffer_text);
-    buffer_delete(_buffer);
-    
-    __yypJson = json_parse(__yypString);
-    
-    static __AddAsset = function(_hotglueAsset)
-    {
-        array_push(__quickAssetArray, _hotglueAsset);
-        __quickAssetDict[$ _hotglueAsset.name] = _hotglueAsset;
-    }
-    
-    var _yyFoldersArray = __yypJson.Folders;
-    var _i = 0;
-    repeat(array_length(_yyFoldersArray))
-    {
-        __AddAsset(new __HotglueFolder(_yyFoldersArray[_i]));
-        ++_i;
-    }
-    
-    var _yyResourcesArray = __yypJson.resources;
-    var _i = 0;
-    repeat(array_length(_yyResourcesArray))
-    {
-        var _resource = _yyResourcesArray[_i].id;
-        
-        if (_resource.name == "hotglue_metadata")
-        {
-            var _buffer = buffer_load(__projectDirectory + filename_change_ext(_resource.path, ".txt"));
-            var _string = buffer_read(_buffer, buffer_text);
-            buffer_delete(_buffer);
-            
-            __hotglueMetadata = json_parse(_string);
-        }
-        else
-        {
-            var _constructor = __HotglueDetermineResourceConstructor(_resource.path);
-            __AddAsset(new _constructor(_resource));
-        }
-        
-        ++_i;
-    }
-    
-    var _yyIncludedFilesArray = __yypJson.IncludedFiles;
-    var _i = 0;
-    repeat(array_length(_yyIncludedFilesArray))
-    {
-        __AddAsset(new __HotglueIncludedFile(_yyIncludedFilesArray[_i]));
-        ++_i;
-    }
-    
-    //Pretty up the asset array
-    
-    array_sort(__quickAssetArray, function(_a, _b)
-    {
-        return (_a.name < _b.name)? -1 : 1;
-    });
-    
     __structure = new __HotglueProjectStructure(self);
-    __structureDirty = true;
+    
+    Refresh();
     
     
+    
+    static Refresh = function()
+    {
+        __quickAssetArray = [];
+        __quickAssetDict  = {};
+        
+        ///////
+        // Load project .yyp
+        ///////
+        
+        var _buffer = buffer_load(__projectPath);
+        __yypString = buffer_read(_buffer, buffer_text);
+        buffer_delete(_buffer);
+        
+        __yypJson = json_parse(__yypString);
+        
+        static __AddAsset = function(_hotglueAsset)
+        {
+            array_push(__quickAssetArray, _hotglueAsset);
+            __quickAssetDict[$ _hotglueAsset.name] = _hotglueAsset;
+        }
+        
+        var _yyFoldersArray = __yypJson.Folders;
+        var _i = 0;
+        repeat(array_length(_yyFoldersArray))
+        {
+            __AddAsset(new __HotglueFolder(_yyFoldersArray[_i]));
+            ++_i;
+        }
+        
+        var _yyResourcesArray = __yypJson.resources;
+        var _i = 0;
+        repeat(array_length(_yyResourcesArray))
+        {
+            var _resource = _yyResourcesArray[_i].id;
+            
+            if (_resource.name == "hotglue_metadata")
+            {
+                var _buffer = buffer_load(__projectDirectory + filename_change_ext(_resource.path, ".txt"));
+                var _string = buffer_read(_buffer, buffer_text);
+                buffer_delete(_buffer);
+                
+                __hotglueMetadata = json_parse(_string);
+            }
+            else
+            {
+                var _constructor = __HotglueDetermineResourceConstructor(_resource.path);
+                __AddAsset(new _constructor(_resource));
+            }
+            
+            ++_i;
+        }
+        
+        var _yyIncludedFilesArray = __yypJson.IncludedFiles;
+        var _i = 0;
+        repeat(array_length(_yyIncludedFilesArray))
+        {
+            __AddAsset(new __HotglueIncludedFile(_yyIncludedFilesArray[_i]));
+            ++_i;
+        }
+        
+        //Pretty up the asset array
+        
+        array_sort(__quickAssetArray, function(_a, _b)
+        {
+            return (_a.name < _b.name)? -1 : 1;
+        });
+        
+        __structureDirty = true;
+    }
     
     static GetName = function()
     {

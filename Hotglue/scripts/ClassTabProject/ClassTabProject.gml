@@ -35,6 +35,13 @@ function ClassTabProject() : ClassTab() constructor
                 if (__directProject != undefined)
                 {
                     ImGuiText(__directProject.GetPath());
+                    
+                    ImGuiSameLine();
+                    if (ImGuiSmallButton("Refresh"))
+                    {
+                        __directProject.Refresh();
+                    }
+                    
                     ImGuiSameLine();
                     if (ImGuiSmallButton("Close"))
                     {

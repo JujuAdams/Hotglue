@@ -33,8 +33,15 @@ function ClassTabInspector() : ClassTab() constructor
             else
             {
                 ImGuiText(__project.GetPath());
+                    
                 ImGuiSameLine();
-                if (ImGuiButton("Close"))
+                if (ImGuiSmallButton("Refresh"))
+                {
+                    __project.Refresh();
+                }
+                
+                ImGuiSameLine();
+                if (ImGuiSmallButton("Close"))
                 {
                     LogTraceAndStatus($"Closed \"{__project.GetPath()}\"");
                     
