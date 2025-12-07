@@ -207,50 +207,7 @@ function __InterfaceProjectViewBuildOverview()
             ImGuiText("Dependencies");
             ImGuiTableNextColumn();
             
-            //var _dependenciesArray = GetDependencies();
-            //
-            //ImGuiPopStyleVar();
-            //ImGuiBeginTable("overviewTable", 2);
-            //
-            //ImGuiTableSetupColumn("name", ImGuiTableColumnFlags.WidthFixed, 120);
-            //ImGuiTableSetupColumn("version");
-            //
-            //var _i = 0;
-            //repeat(array_length(_dependenciesArray))
-            //{
-            //    var _dependency = _dependenciesArray[_i];
-            //    
-            //    ImGuiTableNextRow();
-            //    ImGuiTableNextColumn();
-            //    
-            //    ImGuiTextLink(_dependency.name);
-            //    var _clicked = ImGuiIsItemClicked();
-            //    if (ImGuiBeginItemTooltip())
-            //    {
-            //        ImGuiText($"Open \"{_dependency.url}\"");
-            //        ImGuiEndTooltip();
-            //    }
-            //    
-            //    if (_clicked)
-            //    {
-            //        if (InterfaceGuessURLIsRemote(_dependency.url))
-            //        {
-            //            url_open(GetURL());
-            //        }
-            //        else
-            //        {
-            //            execute_shell_simple(filename_dir(_dependency.url));
-            //        }
-            //    }
-            //    
-            //    ImGuiTableNextColumn();
-            //    ImGuiTextWrapped(_dependency.version);
-            //    
-            //    ++_i;
-            //}
-            //
-            //ImGuiEndTable();
-            //ImGuiPushStyleVarY(ImGuiStyleVar.CellPadding, _cellPadding);
+            BuildDependenciesTable();
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
@@ -379,50 +336,7 @@ function __InterfaceProjectViewBuildOverview()
             ImGuiText("Dependencies");
             ImGuiTableNextColumn();
             
-            //var _dependenciesArray = GetDependencies();
-            //
-            //ImGuiPopStyleVar();
-            //ImGuiBeginTable("overviewTable", 2);
-            //
-            //ImGuiTableSetupColumn("name", ImGuiTableColumnFlags.WidthFixed, 120);
-            //ImGuiTableSetupColumn("version");
-            //
-            //var _i = 0;
-            //repeat(array_length(_dependenciesArray))
-            //{
-            //    var _dependency = _dependenciesArray[_i];
-            //    
-            //    ImGuiTableNextRow();
-            //    ImGuiTableNextColumn();
-            //    
-            //    ImGuiTextLink(_dependency.name);
-            //    var _clicked = ImGuiIsItemClicked();
-            //    if (ImGuiBeginItemTooltip())
-            //    {
-            //        ImGuiText($"Open \"{_dependency.url}\"");
-            //        ImGuiEndTooltip();
-            //    }
-            //    
-            //    if (_clicked)
-            //    {
-            //        if (InterfaceGuessURLIsRemote(_dependency.url))
-            //        {
-            //            url_open(GetURL());
-            //        }
-            //        else
-            //        {
-            //            execute_shell_simple(filename_dir(_dependency.url));
-            //        }
-            //    }
-            //    
-            //    ImGuiTableNextColumn();
-            //    ImGuiTextWrapped(_dependency.version);
-            //    
-            //    ++_i;
-            //}
-            //
-            //ImGuiEndTable();
-            //ImGuiPushStyleVarY(ImGuiStyleVar.CellPadding, _cellPadding);
+            BuildDependenciesTable();
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
@@ -452,5 +366,54 @@ function __InterfaceProjectViewBuildOverview()
             ImGuiEndTable();
             ImGuiPopStyleVar();
         }
+    });
+    
+    BuildDependenciesTable = method(undefined, function()
+    {
+        var _cellPadding = 8;
+        var _dependenciesArray = __project.GetDependencies();
+        
+        ImGuiPopStyleVar();
+        ImGuiBeginTable("dependencyTable", 2);
+        
+        ImGuiTableSetupColumn("name", ImGuiTableColumnFlags.WidthFixed, 120);
+        ImGuiTableSetupColumn("version");
+        
+        var _i = 0;
+        repeat(array_length(_dependenciesArray))
+        {
+            var _dependency = _dependenciesArray[_i];
+            
+            ImGuiTableNextRow();
+            ImGuiTableNextColumn();
+            
+            ImGuiTextLink(_dependency.name);
+            var _clicked = ImGuiIsItemClicked();
+            if (ImGuiBeginItemTooltip())
+            {
+                ImGuiText($"Open \"{_dependency.origin}\"");
+                ImGuiEndTooltip();
+            }
+            
+            if (_clicked)
+            {
+                if (InterfaceGuessURLIsRemote(_dependency.origin))
+                {
+                    url_open(GetURL());
+                }
+                else
+                {
+                    execute_shell_simple(filename_dir(_dependency.origin));
+                }
+            }
+            
+            ImGuiTableNextColumn();
+            ImGuiTextWrapped(_dependency.version);
+            
+            ++_i;
+        }
+        
+        ImGuiEndTable();
+        ImGuiPushStyleVarY(ImGuiStyleVar.CellPadding, _cellPadding);
     });
 }

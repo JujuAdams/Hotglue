@@ -32,8 +32,6 @@ function __HotglueLoadYYMPSUnpacked(_yypPath, _sourceURL = _yypPath, _metadataJS
     
     var _project = new __HotglueProject(_yypPath, false, _sourceURL);
     _project.__VerifyFilesUnzipped();
-    
-    //TODO - Pull out .yymps data
-    
+    _project.__SetYYMPSMetadata(_metadataJSON);
     return _project;
 }

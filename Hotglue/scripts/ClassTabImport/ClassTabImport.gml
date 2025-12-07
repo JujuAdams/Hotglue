@@ -244,6 +244,8 @@ function ClassTabImport() : ClassTab() constructor
                 }
                 else if (_importMode == "channels")
                 {
+                    __destinationProject.EnsureHotglueMetadata();
+                    
                     _selectedRelease.LoadProject(function(_project, _success)
                     {
                         if (_success)

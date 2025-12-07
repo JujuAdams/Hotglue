@@ -68,6 +68,7 @@
     {"id":{"name":"__HotglueConfig","path":"scripts/__HotglueConfig/__HotglueConfig.yy",},},
     {"id":{"name":"__HotglueConstants","path":"scripts/__HotglueConstants/__HotglueConstants.yy",},},
     {"id":{"name":"__HotglueCopyRelativePathArray","path":"scripts/__HotglueCopyRelativePathArray/__HotglueCopyRelativePathArray.yy",},},
+    {"id":{"name":"__HotglueCreateMetadata","path":"scripts/__HotglueCreateMetadata/__HotglueCreateMetadata.yy",},},
     {"id":{"name":"__HotglueDetermineResourceConstructor","path":"scripts/__HotglueDetermineResourceConstructor/__HotglueDetermineResourceConstructor.yy",},},
     {"id":{"name":"__HotglueEnsureObject","path":"scripts/__HotglueEnsureObject/__HotglueEnsureObject.yy",},},
     {"id":{"name":"__HotglueError","path":"scripts/__HotglueError/__HotglueError.yy",},},

@@ -18,10 +18,11 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     __projectPath = _projectPath;
     __editable    = _editable;
-    __url         = _sourceURL;
+    __sourceURL   = _sourceURL;
     
     __projectDirectory = filename_dir(__projectPath) + "/";
     
+    __yympsMetadata   = undefined;
     __hotglueMetadata = undefined;
     
     __structure = new __HotglueProjectStructure(self);
@@ -67,7 +68,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
             }
             else
             {
-                if (not GetVersionSupported())
+                if (not GetYYPVersionSupported())
                 {
                     __HotglueWarning($"\"MetaData.IDEVersion\" value invalid ({__yypVersion}) for \"{__projectPath}\"");
                     return;
@@ -130,6 +131,23 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         return (__hotglueMetadata == undefined)? __yypJson.name : __hotglueMetadata[0].name;
     }
     
+    static GetVersionString = function()
+    {
+        if (is_struct(__hotglueMetadata) && (not __hotglueMetadata.yympsOverridesVersion))
+        {
+            with(__hotglueMetadata[0].version)
+            {
+                return $"{(major == "")? "0" : major}.{(minor == "")? "0" : minor}.{(patch == "")? "0" : patch}{extension}";
+            }
+        }
+        else if (is_struct(__yympsMetadata))
+        {
+            return __yympsMetadata.version;
+        }
+        
+        return "0.0.0";
+    }
+    
     static GetPath = function()
     {
         return __projectPath;
@@ -142,7 +160,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     static GetURL = function()
     {
-        return __url;
+        return __sourceURL;
     }
     
     static GetEditable = function()
@@ -150,7 +168,17 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         return __editable;
     }
     
-    static GetVersionSupported = function(_version = __yypVersion)
+    static GetYYPName = function()
+    {
+        return __yypJson.name;
+    }
+    
+    static GetYYPVersion = function()
+    {
+        return __yypVersion;
+    }
+    
+    static GetYYPVersionSupported = function(_version = __yypVersion)
     {
         return (is_string(_version) && (string_copy(_version, 1, 7) == "2024.14"));
     }
@@ -160,23 +188,10 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         return __loadedSuccessfully;
     }
     
-    static GetVersionString = function()
-    {
-        if  (__hotglueMetadata == undefined)
-        {
-            return "0.0.0";
-        }
-        
-        with(__hotglueMetadata[0].version)
-        {
-            return $"{(major == "")? "0" : major}.{(minor == "")? "0" : minor}.{(patch == "")? "0" : patch}{extension}";
-        }
-    }
-    
     static __DeleteGlobalReferences = function()
     {
         struct_remove(_projectByPathDict,  __projectPath);
-        struct_remove(_projectBySourceURLDict, __url);
+        struct_remove(_projectBySourceURLDict, __sourceURL);
     }
     
     static GetHotglueMetadataExists = function()
@@ -189,22 +204,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         if (not __editable) return;
         if (__hotglueMetadata != undefined) return;
         
-        if (__hotglueMetadata == undefined)
-        {
-            __hotglueMetadata = [
-                {
-                    name: __yypJson.name,
-                    version: {
-                        major: "",
-                        minor: "",
-                        patch: "",
-                        extension: "",
-                    },
-                    yympsOverridesVersion: false,
-                },
-                [],
-            ];
-        }
+        __hotglueMetadata = __HotglueCreateMetadata(__yypJson.name);
         
         var _tempFilename = HOTGLUE_TEMP_CACHE_DIRECTORY + "hotglue_metadata.json";
         var _string = json_stringify(__hotglueMetadata, true);
@@ -322,6 +322,12 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         return _conflictArray;
     }
     
+    static GetDependencies = function()
+    {
+        static _emptyArray = [];
+        return (__hotglueMetadata == undefined)? _emptyArray : __hotglueMetadata[1];
+    }
+    
     static GetExpandedAssets = function(_assetArray)
     {
         if (not is_array(_assetArray))
@@ -359,7 +365,20 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     static ImportAllFrom = function(_sourceProject, _subfolder = "")
     {
-        return __ImportFromProject(_sourceProject, _sourceProject.__quickAssetArray, _subfolder);
+        if (GetHotglueMetadataExists())
+        {
+            array_push(__hotglueMetadata[1], {
+                name:    _sourceProject.GetName(),
+                version: _sourceProject.GetVersionString(),
+                origin:  _sourceProject.GetURL(),
+            });
+            
+            __SaveHotglueMetadata();
+        }
+        
+        var _result = __ImportFromProject(_sourceProject, _sourceProject.__quickAssetArray, _subfolder);
+        
+        return _result;
     }
     
     static ImportFrom = function(_sourceProject, _assetNameArray, _subfolder = "")
@@ -403,20 +422,23 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
                 __HotglueError($"Asset \"{_sourceHotglueAsset.name}\" already exists in project \"{GetPath()}\"");
             }
             
-            // 3. Copy files on disk
-            _sourceHotglueAsset.__Copy(self, _sourceProject);
-            
-            // 4. Duplicate the asset representation
-            var _newHotglueAsset = variable_clone(_sourceHotglueAsset);
-            
-            // 5. Fix folder references in the .yy
-            _newHotglueAsset.__FixYYReferences(self, _subfolder);
-            
-            // 6. Insert reference into .yyp
-            _newHotglueAsset.__InsertIntoYYP(self, _subfolder);
-            
-            // 7. Formally add the new asset to this project representation
-            __AddAsset(_newHotglueAsset);
+            if (_sourceHotglueAsset.GetName() != "hotglue_metadata")
+            {
+                // 3. Copy files on disk
+                _sourceHotglueAsset.__Copy(self, _sourceProject);
+                
+                // 4. Duplicate the asset representation
+                var _newHotglueAsset = variable_clone(_sourceHotglueAsset);
+                
+                // 5. Fix folder references in the .yy
+                _newHotglueAsset.__FixYYReferences(self, _subfolder);
+                
+                // 6. Insert reference into .yyp
+                _newHotglueAsset.__InsertIntoYYP(self, _subfolder);
+                
+                // 7. Formally add the new asset to this project representation
+                __AddAsset(_newHotglueAsset);
+            }
             
             ++_i;
         }
@@ -466,8 +488,11 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
             // 4. Insert reference into .yyp
             _asset.__InsertIntoYYP(self, ""); //Don't need a subfolder here because we generate a correct folder path already
             
-            // 5. Formally add the new asset to this project representation
-            __AddAsset(_asset);
+            if (_asset.GetName() != "hotglue_metadata")
+            {
+                // 5. Formally add the new asset to this project representation
+                __AddAsset(_asset);
+            }
             
             ++_i;
         }
@@ -582,5 +607,11 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         {
             __HotglueWarning($"Expecting {_filesExpected} included file(s), {_filesMissing} file(s) were missing");
         }
+    }
+    
+    static __SetYYMPSMetadata = function(_yympsMetadata)
+    {
+        __yympsMetadata = _yympsMetadata;
+        return self;
     }
 }
