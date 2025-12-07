@@ -18,6 +18,11 @@ function __HotglueClassReleaseGitHub(_name, _datetimeString, _webURL, _downloadU
     
     
     
+    static GetPrimaryAssetURL = function()
+    {
+        return __primaryAssetURL;
+    }
+    
     static Download = function(_callback)
     {
         if (__assetsCollected)

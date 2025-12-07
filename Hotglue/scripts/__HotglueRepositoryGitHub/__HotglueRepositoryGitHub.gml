@@ -9,8 +9,11 @@ function __HotglueRepositoryGitHub(_url) : __HotglueRepositoryCommon(_url) const
         _url += "/";
     }
     
+    var _repoLocation = string_delete(_url, 1, string_pos(".com/", _url)-1 + 5);
+    
     __url = _url;
-    __apiURL = "https://api.github.com/repos/" + string_delete(_url, 1, string_pos(".com/", _url)-1 + 5);
+    __apiURL = $"https://api.github.com/repos/{_repoLocation}";
+    __rawURL = $"https://raw.githubusercontent.com/{_repoLocation}";
     
     //Figure out a friendly name for the repository
     var _name = _url;
@@ -46,17 +49,18 @@ function __HotglueRepositoryGitHub(_url) : __HotglueRepositoryCommon(_url) const
         return __latestRelease;
     }
     
-    static GetHotglueJSON = function()
+    static GetReadme = function()
     {
-        if ((not __hotglueJSONCollected) && (__hotglueJSONRequest == undefined))
+        if ((not __readmeCollected) && (__readmeRequest == undefined))
         {
-            __HotglueTrace($"Getting hotglue.json from root of \"{__url}\"");
-            __hotglueJSONRequest = new __HotglueClassHttpRequest($"{__apiURL}contents/hotglue.json");
+            __HotglueTrace($"Getting README.md from root of \"{__url}\"");
             
-            __hotglueJSONRequest.Callback(function(_httpRequest, _success, _result)
+            __readmeRequest = new __HotglueClassHttpRequest($"{__rawURL}master/README.md");
+            
+            __readmeRequest.Callback(function(_httpRequest, _success, _result)
             {
-                __hotglueJSONCollected = true;
-                __hotglueJSONRequest = undefined;
+                __readmeCollected = true;
+                __readmeRequest = undefined;
                 
                 if (not _success)
                 {
@@ -64,43 +68,17 @@ function __HotglueRepositoryGitHub(_url) : __HotglueRepositoryCommon(_url) const
                 }
                 else
                 {
-                    try
-                    {
-                        var _json = json_parse(_result);
-                    }
-                    catch(_error)
-                    {
-                        show_debug_message(_error);
-                        __HotglueWarning($"\"{_httpRequest.GetURL()}\" was successful but failed to parse");
-                        _success = false;
-                    }
-                
-                    if (_success)
-                    {
-                        _success = false;
-                        
-                        var _version = _json[$ "version"];
-                        if (is_numeric(_version) && (_version == 0))
-                        {
-                            __hotglueJSON = _json;
-                            _success = true;
-                            
-                            __HotglueTrace($"\"{_httpRequest.GetURL()}\" found hotglue.json");
-                        }
-                        else
-                        {
-                            __HotglueWarning($"\"{_httpRequest.GetURL()}\" version \"{_version}\" unsupported");
-                        }
-                    }
+                    __readme = _result;
+                    __HotglueTrace($"\"{_httpRequest.GetURL()}\" found README.md");
                 }
                 
                 __ExecuteFinalCallback();
             });
             
-            __hotglueJSONRequest.Send();
+            __readmeRequest.Send();
         }
         
-        return __hotglueJSON;
+        return __readme;
     }
     
     static GetReleases = function()

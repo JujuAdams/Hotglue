@@ -7,18 +7,21 @@ function __HotglueRepositoryLocal(_url) : __HotglueRepositoryCommon(_url) constr
     //Figure out a friendly name for the repository
     __name = filename_name(_url);
     
+    __release = __HotglueClassReleaseCommon(__name, undefined, _url, _url, "", true);
+    __releasesArray[@ 0] = __release;
     
     
+       
     static GetLatestStable = function()
     {
         //TODO - Return the one and only release
-        return undefined;
+        return __release;
     }
     
     static GetLatestRelease = function()
     {
         //TODO - Return the one and only release
-        return undefined;
+        return __release;
     }
     
     static GetReleases = function()
@@ -26,7 +29,7 @@ function __HotglueRepositoryLocal(_url) : __HotglueRepositoryCommon(_url) constr
         return __releasesArray;
     }
     
-    static GetHotglueJSON = function()
+    static GetReadme = function()
     {
         //TODO - Return the file from disk
         return undefined;

@@ -65,7 +65,11 @@ function ClassInterfaceChannelView(_channel) constructor
             
             ImGuiBeginChild("leftPaneOuter", 250, undefined, ImGuiChildFlags.Border);
             
-            if (is_instanceof(__channel, __HotglueChannelLocal))
+            if (is_instanceof(__channel, __HotglueChannelFavorites))
+            {
+                
+            }
+            else if (is_instanceof(__channel, __HotglueChannelLocal))
             {
                 if (ImGuiButton("Add content..."))
                 {
@@ -118,7 +122,7 @@ function ClassInterfaceChannelView(_channel) constructor
             ImGuiEndChild();
             
             ImGuiSameLine();
-            ImGuiBeginChild("rightPane", undefined, undefined, ImGuiChildFlags.Border);
+            ImGuiBeginChild("rightPane");
             
             if (__selectedRepository == undefined)
             {

@@ -18,7 +18,7 @@ HotglueClearUnzipCache();
 //    repeat(array_length(_repositoryArray))
 //    {
 //        var _repository = _repositoryArray[_i];
-//        _repository.GetHotglueJSON();
+//        _repository.GetReadme();
 //        _repository.GetReleases();
 //        _repository.SetFinalCallback(function(_repository)
 //        {

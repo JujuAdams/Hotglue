@@ -6,9 +6,9 @@ function __HotglueRepositoryCommon(_url) constructor
 {
     __url = _url
     
-    __hotglueJSON          = undefined;
-    __hotglueJSONCollected = false;
-    __hotglueJSONRequest   = undefined;
+    __readme          = undefined;
+    __readmeCollected = false;
+    __readmeRequest   = undefined;
     
     __releasesArray     = [];
     __releasesCollected = false;
@@ -40,7 +40,7 @@ function __HotglueRepositoryCommon(_url) constructor
     
     static __ExecuteFinalCallback = function()
     {
-        if ((__hotglueJSONRequest == undefined) && (__releasesRequest == undefined))
+        if ((__readmeRequest == undefined) && (__releasesRequest == undefined))
         {
             if (is_callable(__finalCallback))
             {

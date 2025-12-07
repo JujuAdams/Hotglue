@@ -51,11 +51,11 @@ function __HotglueChannelGitHub(_name, _url) : __HotglueChannelCommon(_name, _ur
                         __HotglueWarning($"\"{_httpRequest.GetURL()}\" HTTP request was successful but failed to parse JSON");
                         _success = false;
                     }
-                
+                    
                     if (_success)
                     {
                         _success = false;
-                    
+                        
                         var _version = _json[$ "version"];
                         if (is_numeric(_version) && (_version == 0))
                         {

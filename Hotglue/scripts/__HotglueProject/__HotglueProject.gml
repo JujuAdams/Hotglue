@@ -45,12 +45,6 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         
         __yypJson = json_parse(__yypString);
         
-        static __AddAsset = function(_hotglueAsset)
-        {
-            array_push(__quickAssetArray, _hotglueAsset);
-            __quickAssetDict[$ _hotglueAsset.name] = _hotglueAsset;
-        }
-        
         var _yyFoldersArray = __yypJson.Folders;
         var _i = 0;
         repeat(array_length(_yyFoldersArray))
@@ -215,6 +209,12 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         }
         
         return __structure.GetRebuilding()? undefined : __structure;
+    }
+        
+    static __AddAsset = function(_hotglueAsset)
+    {
+        array_push(__quickAssetArray, _hotglueAsset);
+        __quickAssetDict[$ _hotglueAsset.name] = _hotglueAsset;
     }
     
     static GetAssets = function()
