@@ -30,6 +30,7 @@
     {"$GMFolder":"","%Name":"Project View","folderPath":"folders/Interface/Classes/Project View.yy","name":"Project View","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Settings","folderPath":"folders/Interface/Settings.yy","name":"Settings","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Log","folderPath":"folders/Log.yy","name":"Log","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Ngrams","folderPath":"folders/Ngrams.yy","name":"Ngrams","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[
@@ -192,6 +193,8 @@
     {"id":{"name":"LogTrace","path":"scripts/LogTrace/LogTrace.yy",},},
     {"id":{"name":"LogTraceAndStatus","path":"scripts/LogTraceAndStatus/LogTraceAndStatus.yy",},},
     {"id":{"name":"LogWarning","path":"scripts/LogWarning/LogWarning.yy",},},
+    {"id":{"name":"NgramBase","path":"scripts/NgramBase/NgramBase.yy",},},
+    {"id":{"name":"NgramStringFuzzy","path":"scripts/NgramStringFuzzy/NgramStringFuzzy.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",

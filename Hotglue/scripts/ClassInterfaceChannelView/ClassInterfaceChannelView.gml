@@ -6,7 +6,11 @@ function ClassInterfaceChannelView(_channel) constructor
 {
     __channel = _channel;
     
+    __searchString = "";
     __selectedRepository = undefined;
+    
+    __ngram = new NgramStringFuzzy(1, 4, 10, false);
+    __ngram.train(__channel.GetRepositoryNameArray());
     
     
     
@@ -18,19 +22,55 @@ function ClassInterfaceChannelView(_channel) constructor
             
             if (ImGuiBeginCombo($"##combo_{ptr(self)}", (__selectedRepository == undefined)? "None selected" : __selectedRepository.GetName(), ImGuiComboFlags.None))
             {
-                var _repositoryArray = __channel.GetRepositoryArray();
-                var _i = 0;
-                repeat(array_length(_repositoryArray))
+                var _newString = ImGuiInputTextWithHint($"##channelSearch_{ptr(self)}", "Search", __searchString);
+                if (_newString != __searchString)
                 {
-                    var _repository = _repositoryArray[_i];
-                    if (ImGuiSelectable($"{_repository.GetName()}##{ptr(_repository)}", (__selectedRepository == _repository)))
-                    {
-                        __selectedRepository = _repository;
-                    }
-                    
-                    ++_i;
+                    __searchString = _newString;
+                    __ngram.search(_newString);
                 }
                 
+                ImGuiSameLine();
+                
+                if (ImGuiButton("Clear"))
+                {
+                    __searchString = "";
+                }
+                
+                ImGuiSeparator();
+                ImGuiBeginChild($"searchPane_{ptr(self)}", undefined, 100);
+                
+                if (__searchString != "")
+                {
+                    var _searchResultArray = __ngram.get_value_array();
+                    var _i = 0;
+                    repeat(array_length(_searchResultArray))
+                    {
+                        var _repositoryName = _searchResultArray[_i];
+                        if (ImGuiSelectable(_searchResultArray[_i], (__selectedRepository == _repositoryName)))
+                        {
+                            //__selectedRepository = _repository;
+                        }
+                        
+                        ++_i;
+                    }
+                }
+                else
+                {
+                    var _repositoryArray = __channel.GetRepositoryArray();
+                    var _i = 0;
+                    repeat(array_length(_repositoryArray))
+                    {
+                        var _repository = _repositoryArray[_i];
+                        if (ImGuiSelectable($"{_repository.GetName()}##{ptr(_repository)}", (__selectedRepository == _repository)))
+                        {
+                            __selectedRepository = _repository;
+                        }
+                        
+                        ++_i;
+                    }
+                }
+                
+                ImGuiEndChild();
                 ImGuiEndCombo();
             }
             
@@ -70,6 +110,16 @@ function ClassInterfaceChannelView(_channel) constructor
             }
             
             ImGuiBeginChild("leftPaneOuter", 250, undefined, ImGuiChildFlags.Border);
+            
+            __searchString = ImGuiInputTextWithHint($"##channelSearch_{ptr(self)}", "Search", __searchString);
+            ImGuiSameLine();
+            
+            if (ImGuiButton("Clear"))
+            {
+                __searchString = "";
+            }
+            
+            ImGuiSeparator();
             
             if (is_instanceof(__channel, __HotglueChannelFavorites))
             {

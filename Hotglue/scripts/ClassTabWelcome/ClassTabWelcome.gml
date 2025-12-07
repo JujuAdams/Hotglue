@@ -11,6 +11,7 @@ function ClassTabWelcome() : ClassTab() constructor
             ImGuiTextWrapped("Hotglue is a GameMaker 2024.14 import tool. It will help you import and update libraries in your GameMaker games.");
             ImGuiNewLine();
             ImGuiTextWrapped("ImGui is by Omar Cornut. ImGui implementation (ImGM) by knno, based on work by Nommiin.");
+            ImGuiTextWrapped("Ngran fuzzy search by TinkererRed.");
             ImGuiTextWrapped("GitHub authorization flow based on `GitHub.gml` by Alub.");
             
             if (not extension_exists("execute_shell_simple_ext"))

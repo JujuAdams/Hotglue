@@ -140,5 +140,6 @@
     {"name":"LogTrace","order":1,"path":"scripts/LogTrace/LogTrace.yy",},
     {"name":"LogTraceAndStatus","order":2,"path":"scripts/LogTraceAndStatus/LogTraceAndStatus.yy",},
     {"name":"LogWarning","order":3,"path":"scripts/LogWarning/LogWarning.yy",},
+    {"name":"NgramStringFuzzy","order":1,"path":"scripts/NgramStringFuzzy/NgramStringFuzzy.yy",},
   ],
 }

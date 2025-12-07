@@ -74,6 +74,21 @@ function __HotglueChannelCommon(_name, _url) constructor
         return __repositoryArray;
     }
     
+    static GetRepositoryNameArray = function()
+    {
+        var _array = [];
+        
+        var _repositoryArray = __repositoryArray;
+        var _i = 0;
+        repeat(array_length(_repositoryArray))
+        {
+            array_push(_array,_repositoryArray[_i].GetName());
+            ++_i;
+        }
+                
+        return _array;
+    }
+    
     static GetHTTPSuccess = function()
     {
         return true;
