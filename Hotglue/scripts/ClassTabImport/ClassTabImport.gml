@@ -1,6 +1,6 @@
 // Feather disable all
 
-function ClassTabProject() : ClassTab() constructor
+function ClassTabImport() : ClassTab() constructor
 {
     __destinationProject = undefined;
     __destinationView = undefined;
@@ -14,7 +14,7 @@ function ClassTabProject() : ClassTab() constructor
     
     static TabItem = function()
     {
-        if (ImGuiBeginTabItem("Project"))
+        if (ImGuiBeginTabItem("Import"))
         {
             var _importMode = undefined;
             
@@ -248,12 +248,19 @@ function ClassTabProject() : ClassTab() constructor
                     {
                         if (_success)
                         {
-                            __destinationProject.ImportAllFrom(_project);
-                            LogTraceAndStatus("Imported release successfully.");
+                            if (_project.GetLoadedSuccessfully())
+                            {
+                                __destinationProject.ImportAllFrom(_project);
+                                LogTraceAndStatus("Imported release successfully.");
+                            }
+                            else
+                            {
+                                LogWarning("Failed to load project file for release. Please check the log for further information.");
+                            }
                         }
                         else
                         {
-                            LogWarning("Failed to load project file for release.");
+                            LogWarning("Failed to load project file for release. Please check the log for further information.");
                         }
                     });
                 }

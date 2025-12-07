@@ -25,6 +25,9 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     __hotglueMetadata = undefined;
     
     __structure = new __HotglueProjectStructure(self);
+    __loadedSuccessfully = false;
+    
+    __yypVersion = undefined;
     
     Refresh();
     
@@ -35,6 +38,9 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         __quickAssetArray = [];
         __quickAssetDict  = {};
         
+        __yypVersion = undefined;
+        __loadedSuccessfully = false;
+        
         ///////
         // Load project .yyp
         ///////
@@ -44,6 +50,30 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         buffer_delete(_buffer);
         
         __yypJson = json_parse(__yypString);
+        
+        var _yypMetadata = __yypJson[$ "MetaData"];
+        if (_yypMetadata == undefined)
+        {
+            __HotglueWarning($"Could not find \"MetaData\" field in \"{__projectPath}\"");
+            return;
+        }
+        else
+        {
+            __yypVersion = _yypMetadata[$ "IDEVersion"];
+            if (__yypVersion == undefined)
+            {
+                __HotglueWarning($"Could not find \"MetaData.IDEVersion\" field in \"{__projectPath}\"");
+                return;
+            }
+            else
+            {
+                if (not GetVersionSupported())
+                {
+                    __HotglueWarning($"\"MetaData.IDEVersion\" value invalid ({__yypVersion}) for \"{__projectPath}\"");
+                    return;
+                }
+            }
+        }
         
         var _yyFoldersArray = __yypJson.Folders;
         var _i = 0;
@@ -91,6 +121,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
             return (_a.name < _b.name)? -1 : 1;
         });
         
+        __loadedSuccessfully = true;
         __structureDirty = true;
     }
     
@@ -117,6 +148,16 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     static GetEditable = function()
     {
         return __editable;
+    }
+    
+    static GetVersionSupported = function(_version = __yypVersion)
+    {
+        return (is_string(_version) && (string_copy(_version, 1, 7) == "2024.14"));
+    }
+    
+    static GetLoadedSuccessfully = function()
+    {
+        return __loadedSuccessfully;
     }
     
     static GetVersionString = function()

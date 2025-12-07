@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"ClassTabProject",
+  "%Name":"ClassTabImport",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ClassTabProject",
+  "name":"ClassTabImport",
   "parent":{
     "name":"Classes",
     "path":"folders/Interface/Classes.yy",

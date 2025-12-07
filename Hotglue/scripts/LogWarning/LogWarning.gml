@@ -2,7 +2,8 @@
 
 function LogWarning(_string)
 {
-    static _logArray = __LogSystem().__logArray;
+    static _system   = __LogSystem();
+    static _logArray = _system.__logArray;
     
     var _currentDateTime = date_current_datetime();
     show_debug_message($"{date_datetime_string(_currentDateTime)} {_string}");
@@ -13,16 +14,6 @@ function LogWarning(_string)
         warning: true,
     });
     
-    with(oInterface)
-    {
-        status = new (function(_string) constructor
-        {
-            __string = _string;
-            
-            static Build = function()
-            {
-                ImGuiTextColored(__string, INTERFACE_COLOR_RED_TEXT);
-            }
-        })($"Warning! {_string}");
-    }
+    LogSetNewWarnings(true);
+    LogSetStatus(_string);
 }
