@@ -4,7 +4,7 @@ function ClassTabChannels() : ClassTab() constructor
 {
     static TabItem = function()
     {
-        if (ImGuiBeginTabItem($"Channels"))
+        if (ImGuiBeginTabItem($"Explore Channels"))
         {
             ImGuiBeginChild("channelSelector");
             ImGuiBeginTabBar("tabBar");

@@ -7,7 +7,7 @@ function ClassTabInspector() : ClassTab() constructor
     
     static TabItem = function()
     {
-        if (ImGuiBeginTabItem("Inspector"))
+        if (ImGuiBeginTabItem("Project Inspector"))
         {
             if (__project == undefined)
             {

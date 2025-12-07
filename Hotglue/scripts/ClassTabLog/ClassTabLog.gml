@@ -35,6 +35,7 @@ function ClassTabLog() : ClassTab() constructor
                 LogSetStatus("Copied log to clipboard");
             }
             
+            ImGuiBeginChild("logPane");
             ImGuiBeginTable("logTable", 2, ImGuiTableFlags.BordersInner);
             
             ImGuiTableSetupColumn("time", ImGuiTableColumnFlags.WidthFixed, 150);
@@ -66,6 +67,7 @@ function ClassTabLog() : ClassTab() constructor
             }
             
             ImGuiEndTable();
+            ImGuiEndChild();
             
             ImGuiEndTabItem();
         }
