@@ -39,12 +39,5 @@ function __HotglueLoadYYMPS(_yympsPath, _sourceURL = _yympsPath)
         return undefined;
     }
     
-    //FIXME - try..catch this
-    
-    var _buffer = buffer_load(_metadataPath);
-    var _string = buffer_read(_buffer, buffer_text);
-    buffer_delete(_buffer);
-    var _metadataJSON = json_parse(_string);
-    
-    return __HotglueLoadYYMPSUnpacked(_directory + _metadataJSON.display_name + ".yyp", _sourceURL, _metadataJSON);
+    return __HotglueLoadYYMPSUnpacked(_directory, _sourceURL);
 }
