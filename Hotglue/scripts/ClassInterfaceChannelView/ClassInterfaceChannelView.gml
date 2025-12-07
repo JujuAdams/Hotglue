@@ -38,11 +38,17 @@ function ClassInterfaceChannelView(_channel) constructor
             
             if (__selectedRepository != undefined)
             {
-                InterfaceEnsureRepositoryView(__selectedRepository).Build();
+                InterfaceEnsureRepositoryView(__selectedRepository).BuildForProjectTab();
             }
             
             ImGuiEndChild();
             ImGuiEndTabItem();
+            
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
     
@@ -132,7 +138,7 @@ function ClassInterfaceChannelView(_channel) constructor
             {
                 if (__selectedRepository != undefined)
                 {
-                    InterfaceEnsureRepositoryView(__selectedRepository).Build();
+                    InterfaceEnsureRepositoryView(__selectedRepository).BuildForChannelTab();
                 }
             }
             

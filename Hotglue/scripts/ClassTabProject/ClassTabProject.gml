@@ -8,8 +8,7 @@ function ClassTabProject() : ClassTab() constructor
     __directProject = undefined;
     __directView = undefined;
     
-    __installProject = undefined;
-    __installView = undefined;
+    __selectedChannel = undefined;
     
     __looseFileViewArray = [];
     
@@ -92,7 +91,6 @@ function ClassTabProject() : ClassTab() constructor
                 }
                 
                 ImGuiEndChild();
-                
                 ImGuiEndTabItem();
             }
             
@@ -155,13 +153,19 @@ function ClassTabProject() : ClassTab() constructor
             {
                 _importMode = "channels";
                 
+                __selectedChannel = undefined;
+                
                 ImGuiBeginChild("sourceInnerPane");
                 ImGuiBeginTabBar("tabBar");
                 
                 var _i = 0;
                 repeat(HotglueGetChannelCount())
                 {
-                    InterfaceEnsureChannelView(HotglueGetChannelByIndex(_i)).BuildHalfViewTab();
+                    if (InterfaceEnsureChannelView(HotglueGetChannelByIndex(_i)).BuildHalfViewTab())
+                    {
+                        __selectedChannel = _i;
+                    }
+                    
                     ++_i;
                 }
                 
@@ -189,7 +193,27 @@ function ClassTabProject() : ClassTab() constructor
             }
             else if (_importMode == "channels")
             {
-                ImGuiBeginDisabled((__installProject == undefined) || (__destinationProject == undefined));
+                var _disabled = (__selectedChannel == undefined);
+                if (not _disabled)
+                {
+                    var _channel = HotglueGetChannelByIndex(__selectedChannel);
+                    var _channelView = InterfaceEnsureChannelView(_channel);
+                    
+                    var _selectedRepository = _channelView.__selectedRepository;
+                    if (_selectedRepository == undefined)
+                    {
+                        _disabled = true;
+                    }
+                    else
+                    {
+                        var _repositoryView = InterfaceEnsureRepositoryView(_selectedRepository);
+                        
+                        var _selectedRelease = _repositoryView.__selectedRelease;
+                        _disabled = (_selectedRelease == undefined); 
+                    }
+                }
+                
+                ImGuiBeginDisabled(_disabled || (__destinationProject == undefined));
             }
             else
             {
@@ -220,7 +244,18 @@ function ClassTabProject() : ClassTab() constructor
                 }
                 else if (_importMode == "channels")
                 {
-                    __destinationProject.ImportAllFrom(__installProject);
+                    _selectedRelease.LoadProject(function(_project, _success)
+                    {
+                        if (_success)
+                        {
+                            __destinationProject.ImportAllFrom(_project);
+                            LogTraceAndStatus("Imported release successfully.");
+                        }
+                        else
+                        {
+                            LogWarning("Failed to load project file for release.");
+                        }
+                    });
                 }
             }
             
