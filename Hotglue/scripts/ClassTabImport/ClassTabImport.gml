@@ -12,11 +12,74 @@ function ClassTabImport() : ClassTab() constructor
     
     __looseFileViewArray = [];
     
+    
+    
+    static ImportLocalProject = function()
+    {
+        __destinationProject.ImportFrom(__directProject, __directView.GetAssetArray());
+    }
+    
+    static ImportLooseFiles = function()
+    {
+        //Convert the array of loose file views into an array of the loose files themselves
+        var _looseFileViewArray = __looseFileViewArray;
+        var _looseFileArray = array_create(array_length(_looseFileViewArray));
+        var _i = 0;
+        repeat(array_length(_looseFileViewArray))
+        {
+            _looseFileArray[@ _i] = _looseFileViewArray[_i].__file;
+            ++_i;
+        }
+        
+        LogTraceAndStatus($"Starting import of loose files into \"{__destinationProject.GetPath()}\"");
+        __destinationProject.ImportFromLooseFiles(_looseFileArray);
+        LogTraceAndStatus($"Finished importing loose files into \"{__destinationProject.GetPath()}\"");
+    }
+    
+    static ImportChannels = function()
+    {
+        var _channel = HotglueGetChannelByIndex(__selectedChannel);
+        var _channelView = InterfaceEnsureChannelView(_channel);
+        if (_channelView != undefined)
+        {
+            var _selectedRepository = _channelView.__selectedRepository;
+            if (_selectedRepository != undefined)
+            {
+                var _selectedRelease = InterfaceEnsureRepositoryView(_selectedRepository).__selectedRelease;
+                if (_selectedRelease != undefined)
+                {
+                    __destinationProject.EnsureHotglueMetadata();
+                    
+                    _selectedRelease.LoadProject(function(_project, _success)
+                    {
+                        if (_success)
+                        {
+                            if (_project.GetLoadedSuccessfully())
+                            {
+                                __destinationProject.ImportAllFrom(_project);
+                                LogTraceAndStatus("Imported release successfully.");
+                            }
+                            else
+                            {
+                                LogWarning("Failed to load project file for release. Please check the log for further information.");
+                            }
+                        }
+                        else
+                        {
+                            LogWarning("Failed to load project file for release. Please check the log for further information.");
+                        }
+                    });
+                }
+            }
+        }
+    }
+    
     static TabItem = function()
     {
         if (ImGuiBeginTabItem("Import"))
         {
             var _importMode = undefined;
+            var _selectedRelease = undefined;
             
             var _importButtonSize = 70;
             var _bigPaneSize = 0.5*(ImGuiGetWindowWidth() - _importButtonSize) - 16;
@@ -208,7 +271,7 @@ function ClassTabImport() : ClassTab() constructor
                     {
                         var _repositoryView = InterfaceEnsureRepositoryView(_selectedRepository);
                         
-                        var _selectedRelease = _repositoryView.__selectedRelease;
+                        _selectedRelease = _repositoryView.__selectedRelease;
                         _disabled = (_selectedRelease == undefined); 
                     }
                 }
@@ -220,58 +283,23 @@ function ClassTabImport() : ClassTab() constructor
                 ImGuiBeginDisabled(false);
             }
             
+            ///////
+            // The import button!
+            ///////
+            
             if (ImGuiButton("Import ->"))
             {
-                if (_importMode == "local project")
-                {
-                    __destinationProject.ImportFrom(__directProject, __directView.GetAssetArray());
-                }
-                else if (_importMode == "loose files")
-                {
-                    //Convert the array of loose file views into an array of the loose files themselves
-                    var _looseFileViewArray = __looseFileViewArray;
-                    var _looseFileArray = array_create(array_length(_looseFileViewArray));
-                    var _i = 0;
-                    repeat(array_length(_looseFileViewArray))
-                    {
-                        _looseFileArray[@ _i] = _looseFileViewArray[_i].__file;
-                        ++_i;
-                    }
-                    
-                    LogTraceAndStatus($"Starting import of loose files into \"{__destinationProject.GetPath()}\"");
-                    __destinationProject.ImportFromLooseFiles(_looseFileArray);
-                    LogTraceAndStatus($"Finished importing loose files into \"{__destinationProject.GetPath()}\"");
-                }
-                else if (_importMode == "channels")
-                {
-                    __destinationProject.EnsureHotglueMetadata();
-                    
-                    _selectedRelease.LoadProject(function(_project, _success)
-                    {
-                        if (_success)
-                        {
-                            if (_project.GetLoadedSuccessfully())
-                            {
-                                __destinationProject.ImportAllFrom(_project);
-                                LogTraceAndStatus("Imported release successfully.");
-                            }
-                            else
-                            {
-                                LogWarning("Failed to load project file for release. Please check the log for further information.");
-                            }
-                        }
-                        else
-                        {
-                            LogWarning("Failed to load project file for release. Please check the log for further information.");
-                        }
-                    });
-                }
+                oInterface.popUpStruct = new ClassModalConfirmImport(self, _importMode);
             }
             
             ImGuiEndDisabled();
             
             ImGuiEndChild();
             ImGuiSameLine();
+            
+            ///////
+            // Destination project
+            ///////
             
             ImGuiBeginChild("destinationOuterPane", _bigPaneSize);
             

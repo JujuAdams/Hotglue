@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"ClassModalConfirmImport",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ClassModalConfirmImport",
+  "parent":{
+    "name":"Modals",
+    "path":"folders/Interface/Classes/Modals.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

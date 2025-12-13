@@ -36,3 +36,5 @@ githubChannel.Refresh(function(_channel, _success)
 });
 
 statusBarHeight = 32;
+
+popUpStruct = undefined;

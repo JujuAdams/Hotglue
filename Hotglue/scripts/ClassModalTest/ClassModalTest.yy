@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"ClassTab",
+  "%Name":"ClassModalTest",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ClassTab",
+  "name":"ClassModalTest",
   "parent":{
-    "name":"Tabs",
-    "path":"folders/Interface/Classes/Tabs.yy",
+    "name":"Modals",
+    "path":"folders/Interface/Classes/Modals.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

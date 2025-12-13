@@ -34,3 +34,11 @@ if (_return & ImGuiReturnMask.Return)
 }
 
 ImGuiEnd();
+
+if (is_struct(popUpStruct))
+{
+    if (not popUpStruct.Build())
+    {
+        popUpStruct = undefined;
+    }
+}

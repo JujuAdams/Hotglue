@@ -1,6 +1,6 @@
 // Feather disable all
 
-function LogGetStatus(_stringOrFunction)
+function LogGetStatus()
 {
     static _system = __LogSystem();
     

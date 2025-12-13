@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"ClassTabWelcome",
   "parent":{
-    "name":"Classes",
-    "path":"folders/Interface/Classes.yy",
+    "name":"Tabs",
+    "path":"folders/Interface/Classes/Tabs.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
