@@ -15,18 +15,23 @@ function __HotglueIncludedFile(_includedFileStruct) constructor
         _includedFileName = string_delete(_includedFileName, 1, 10);
     }
     
-    name = $"included:{_includedFileName}";
-    data = _includedFileStruct;
+    __pid = $"included:{_includedFileName}";
+    data  = _includedFileStruct;
     
-    static GetName = function()
+    static GetPID = function()
     {
-        return name;
+        return __pid;
     }
     
     static GetPath = function()
     {
         return path;
     }
+    
+    //static GetName = function()
+    //{
+    //    return data.name;
+    //}
     
     static __GetFiles = function(_project, _array = [])
     {

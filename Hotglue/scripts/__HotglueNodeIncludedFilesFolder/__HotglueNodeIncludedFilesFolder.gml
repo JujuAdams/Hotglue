@@ -17,7 +17,7 @@ function __HotglueNodeIncludedFilesFolder(_name, _projectStructure) : __HotglueN
         return __name;
     }
     
-    static GetHotglueName = function()
+    static GetPID = function()
     {
         return undefined;
     }

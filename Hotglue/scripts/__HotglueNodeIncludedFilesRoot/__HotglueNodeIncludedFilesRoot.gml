@@ -13,7 +13,7 @@ function __HotglueNodeIncludedFilesRoot(_projectStructure) : __HotglueNodeCommon
         return "<included files>";
     }
     
-    static GetHotglueName = function()
+    static GetPID = function()
     {
         return undefined;
     }

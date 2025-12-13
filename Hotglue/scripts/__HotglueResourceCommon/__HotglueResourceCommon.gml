@@ -5,18 +5,23 @@ function __HotglueResourceCommon(_resourceStruct) constructor
     static _system = __HotglueSystem();
     static type = "resource";
     
-    name = $"resource:{_resourceStruct.name}";
-    data = _resourceStruct;
+    __pid = $"resource:{_resourceStruct.name}";
+    data  = _resourceStruct;
     
-    static GetName = function()
+    static GetPID = function()
     {
-        return name;
+        return __pid;
     }
     
     static GetPath = function()
     {
         return data.path;
     }
+    
+    //static GetName = function()
+    //{
+    //    return data.name;
+    //}
     
     static __GetYYJSON = function(_project)
     {

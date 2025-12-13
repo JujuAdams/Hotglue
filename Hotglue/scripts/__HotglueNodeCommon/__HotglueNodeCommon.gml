@@ -16,9 +16,9 @@ function __HotglueNodeCommon(_asset, _projectStructure) constructor
         return __asset.data.name;
     }
     
-    static GetHotglueName = function()
+    static GetPID = function()
     {
-        return __asset.GetName();
+        return __asset.GetPID();
     }
     
     static GetChildren = function()

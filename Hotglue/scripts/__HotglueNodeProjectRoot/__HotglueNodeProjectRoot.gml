@@ -13,7 +13,7 @@ function __HotglueNodeProjectRoot(_projectStructure) : __HotglueNodeCommon(undef
         return "<root>";
     }
     
-    static GetHotglueName = function()
+    static GetPID = function()
     {
         return undefined;
     }
@@ -52,13 +52,13 @@ function __HotglueNodeProjectRoot(_projectStructure) : __HotglueNodeCommon(undef
             ++_i;
         }
         
-        var _hotglueName = $"folder:{_name}";
+        var _pid = $"folder:{_name}";
         var _quickAssetDict = __projectStructure.__project.__quickAssetDict;
         
-        var _asset = _quickAssetDict[$ _hotglueName];
+        var _asset = _quickAssetDict[$ _pid];
         if (not is_struct(_asset))
         {
-            __HotglueError($"Failed to find asset for \"{_hotglueName}\"");
+            __HotglueError($"Failed to find asset for \"{_pid}\"");
         }
         
         var _node = new __HotglueNodeProjectFolder(_asset, __projectStructure);

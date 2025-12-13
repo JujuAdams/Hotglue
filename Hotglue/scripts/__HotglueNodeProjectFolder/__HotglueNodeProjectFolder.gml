@@ -33,13 +33,13 @@ function __HotglueNodeProjectFolder(_asset, _projectStructure) : __HotglueNodeCo
             ++_i;
         }
         
-        var _hotglueName = $"folder:{__asset.friendlyPath}/{_name}";
+        var _pid = $"folder:{__asset.__friendlyPath}/{_name}";
         var _quickAssetDict = __projectStructure.__project.__quickAssetDict;
         
-        var _asset = _quickAssetDict[$ _hotglueName];
+        var _asset = _quickAssetDict[$ _pid];
         if (not is_struct(_asset))
         {
-            __HotglueError($"Failed to find asset for \"{_hotglueName}\"");
+            __HotglueError($"Failed to find asset for \"{_pid}\"");
         }
         
         var _node = new __HotglueNodeProjectFolder(_asset, __projectStructure);

@@ -8,19 +8,24 @@ function __HotglueFolder(_folderStruct) constructor
     static type = "folder";
     
     var _path = __HotglueProcessFolderPath(_folderStruct.folderPath);
-    name = $"folder:{_path}"
+    __pid = $"folder:{_path}"
     data = _folderStruct;
-    friendlyPath = _path;
+    __friendlyPath = _path;
     
-    static GetName = function()
+    static GetPID = function()
     {
-        return name;
+        return __pid;
     }
     
     static GetPath = function()
     {
-        return friendlyPath;
+        return __friendlyPath;
     }
+    
+    //static GetName = function()
+    //{
+    //    return filename_name(__friendlyPath);
+    //}
     
     static __GetFiles = function(_project, _array = [])
     {

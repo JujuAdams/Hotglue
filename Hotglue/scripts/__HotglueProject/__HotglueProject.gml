@@ -119,7 +119,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         
         array_sort(__quickAssetArray, function(_a, _b)
         {
-            return (_a.name < _b.name)? -1 : 1;
+            return (_a.GetPID() < _b.GetPID())? -1 : 1;
         });
         
         __loadedSuccessfully = true;
@@ -255,7 +255,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     static __AddAsset = function(_hotglueAsset)
     {
         array_push(__quickAssetArray, _hotglueAsset);
-        __quickAssetDict[$ _hotglueAsset.name] = _hotglueAsset;
+        __quickAssetDict[$ _hotglueAsset.GetPID()] = _hotglueAsset;
     }
     
     static GetAssets = function()
@@ -266,7 +266,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         var _i = 0;
         repeat(array_length(_quickAssetArray))
         {
-            array_push(_array, _quickAssetArray[_i].name);
+            array_push(_array, _quickAssetArray[_i].GetPID());
             ++_i;
         }
         
@@ -288,7 +288,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         var _i = 0;
         repeat(array_length(_quickAssetArray))
         {
-            var _assetName = _quickAssetArray[_i].name;
+            var _assetName = _quickAssetArray[_i].GetPID();
             if (not variable_struct_exists(_otherAssetDict, _assetName))
             {
                 array_push(_nonconflictArray, _assetName);
@@ -310,7 +310,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         var _i = 0;
         repeat(array_length(_quickAssetArray))
         {
-            var _assetName = _quickAssetArray[_i].name;
+            var _assetName = _quickAssetArray[_i].GetPID();
             if (variable_struct_exists(_otherAssetDict, _assetName))
             {
                 array_push(_conflictArray, _assetName);
@@ -417,12 +417,12 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         {
             var _sourceHotglueAsset = _assetArray[_i];
             
-            if ((_sourceHotglueAsset.type != "folder") && GetAssetExists(_sourceHotglueAsset.name))
+            if ((_sourceHotglueAsset.type != "folder") && GetAssetExists(_sourceHotglueAsset.GetPID()))
             {
-                __HotglueError($"Asset \"{_sourceHotglueAsset.name}\" already exists in project \"{GetPath()}\"");
+                __HotglueError($"Asset \"{_sourceHotglueAsset.GetPID()}\" already exists in project \"{GetPath()}\"");
             }
             
-            if (_sourceHotglueAsset.GetName() != "hotglue_metadata")
+            if (_sourceHotglueAsset.GetPID() != "resource:hotglue_metadata")
             {
                 // 3. Copy files on disk
                 _sourceHotglueAsset.__Copy(self, _sourceProject);
@@ -477,9 +477,9 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
             // 2. Generate an asset
             var _asset = _looseFile.__GenerateAsset(self);
             
-            if (GetAssetExists(_asset.name))
+            if (GetAssetExists(_asset.GetPID()))
             {
-                __HotglueError($"Asset \"{_asset.name}\" already exists in project \"{GetPath()}\"");
+                __HotglueError($"Asset \"{_asset.GetPID()}\" already exists in project \"{GetPath()}\"");
             }
             
             // 3. Create files on disk inside the project
@@ -596,7 +596,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
                     ++_filesMissing;
                     
                     array_delete(_quickAssetArray, _i, 1);
-                    variable_struct_remove(_quickAssetDict, _asset.name);
+                    variable_struct_remove(_quickAssetDict, _asset.GetPID());
                 }
             }
             

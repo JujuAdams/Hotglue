@@ -75,7 +75,7 @@ function ClassTabImport() : ClassTab() constructor
                                 }
                                 catch(_error)
                                 {
-                                    LogWarning(_error[$ "message"] ?? string(_error));
+                                    LogWarning(json_stringify(_error, true));
                                     LogWarning($"Failed to load \"{_path}\"");
                                     
                                     __directProject = undefined;
@@ -121,7 +121,7 @@ function ClassTabImport() : ClassTab() constructor
                         }
                         catch(_error)
                         {
-                            LogWarning(_error[$ "message"] ?? string(_error));
+                            LogWarning(json_stringify(_error, true));
                             LogWarning($"Failed to load \"{_path}\"");
                         }
                     }
@@ -329,7 +329,7 @@ function ClassTabImport() : ClassTab() constructor
                             }
                             catch(_error)
                             {
-                                LogWarning(_error[$ "message"] ?? string(_error));
+                                LogWarning(json_stringify(_error, true));
                                 LogWarning($"Failed to load \"{_path}\"");
                                 __destinationProject = undefined;
                                 __destinationView = undefined;

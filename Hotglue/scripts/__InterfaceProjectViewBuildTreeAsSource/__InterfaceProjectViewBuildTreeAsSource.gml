@@ -24,11 +24,11 @@ function __InterfaceProjectViewBuildTreeAsSource()
     {
         static _return = {};
         
-        var _hotglueName = _node.GetHotglueName();
+        var _pid = _node.GetPID();
         var _selected = __GetSelected(_node);
         var _children = _node.GetChildren();
         
-        var _anyCollision = ((_hotglueName != undefined) && struct_exists(_collisionDictionary, _hotglueName));
+        var _anyCollision = ((_pid != undefined) && struct_exists(_collisionDictionary, _pid));
         var _anySelected  = _selected;
         var _allSelected  = _selected || (array_length(_children) > 0);
         
@@ -57,9 +57,9 @@ function __InterfaceProjectViewBuildTreeAsSource()
     
     __BuildTreeAsSourceInner = method(undefined, function(_node, _collisionDictionary)
     {
-        var _hotglueName = _node.GetHotglueName();
+        var _pid = _node.GetPID();
         
-        var _collision = ((_hotglueName != undefined) && struct_exists(_collisionDictionary, _hotglueName));
+        var _collision = ((_pid != undefined) && struct_exists(_collisionDictionary, _pid));
         
         var _anyCollision = __anyCollisionDict[$ ptr(_node)];
         var _anySelected  = __anySelectedDict[$  ptr(_node)];
@@ -102,7 +102,7 @@ function __InterfaceProjectViewBuildTreeAsSource()
             if (_popColor) ImGuiPopStyleColor();
             
             //var _open = ImGuiTreeNodeEx($"{_node.GetName()}##{ptr(_node)}", ImGuiTreeNodeFlags.OpenOnArrow | ImGuiTreeNodeFlags.OpenOnDoubleClick);
-            //if (_node.__selectable && (_hotglueName != undefined) && ImGuiIsItemClicked() && (not ImGuiIsItemToggledOpen()))
+            //if (_node.__selectable && (_pid != undefined) && ImGuiIsItemClicked() && (not ImGuiIsItemToggledOpen()))
             //{
             //    
             //}

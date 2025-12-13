@@ -36,8 +36,8 @@ function __InterfaceProjectViewBuildTreeAsDestination()
     
     __BuildTreeAsDestinationInner = method(undefined, function(_node, _collisionDictionary)
     {
-        var _hotglueName = _node.GetHotglueName();
-        var _collision = ((_hotglueName != undefined) && struct_exists(_collisionDictionary, _hotglueName));
+        var _pid = _node.GetPID();
+        var _collision = ((_pid != undefined) && struct_exists(_collisionDictionary, _pid));
         
         if (_node.__isFolder)
         {

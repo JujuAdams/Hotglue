@@ -30,7 +30,7 @@ function ClassInterfaceProjectView(_project) constructor
             var _asset = _node.__asset;
             if (_asset != undefined)
             {
-                array_push(_pidArray, _asset.GetName());
+                array_push(_pidArray, _asset.GetPID());
             }
             
             ++_i;
