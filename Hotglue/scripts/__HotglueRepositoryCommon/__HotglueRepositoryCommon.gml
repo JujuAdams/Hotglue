@@ -4,6 +4,8 @@
 
 function __HotglueRepositoryCommon(_url) constructor
 {
+    static __isRemote = false;
+    
     __url = _url
     
     __readme          = undefined;

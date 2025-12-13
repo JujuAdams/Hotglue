@@ -5,6 +5,9 @@
 
 function __HotglueChannelLocal(_name, _url) : __HotglueChannelCommon(_name, _url) constructor
 {
+    static __isRemote = false;
+    static _repoConstructor = __HotglueRepositoryLocal;
+    
     __repositoryArray = [];
     
     __refreshCallback = undefined;

@@ -181,26 +181,7 @@ function __InterfaceProjectViewBuildOverview()
             ImGuiTableNextColumn();
             ImGuiText("Origin");
             ImGuiTableNextColumn();
-            
-            ImGuiTextLink(__project.GetURL());
-            var _clicked = ImGuiIsItemClicked();
-            if (ImGuiBeginItemTooltip())
-            {
-                ImGuiText($"Open \"{__project.GetURL()}\"");
-                ImGuiEndTooltip();
-            }
-            
-            if (_clicked)
-            {
-                if (InterfaceGuessURLIsRemote(__project.GetURL()))
-                {
-                    url_open(__project.GetURL());
-                }
-                else
-                {
-                    execute_shell_simple(filename_dir(__project.GetURL()));
-                }
-            }
+            InterfaceLinkText(__project.GetURL());
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
@@ -285,26 +266,7 @@ function __InterfaceProjectViewBuildOverview()
             ImGuiTableNextColumn();
             ImGuiText("Origin");
             ImGuiTableNextColumn();
-            
-            ImGuiTextLink(__project.GetURL());
-            var _clicked = ImGuiIsItemClicked();
-            if (ImGuiBeginItemTooltip())
-            {
-                ImGuiText($"Open \"{__project.GetURL()}\"");
-                ImGuiEndTooltip();
-            }
-            
-            if (_clicked)
-            {
-                if (InterfaceGuessURLIsRemote(__project.GetURL()))
-                {
-                    url_open(__project.GetURL());
-                }
-                else
-                {
-                    execute_shell_simple(filename_dir(__project.GetURL()));
-                }
-            }
+            InterfaceLinkText(__project.GetURL());
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
@@ -344,27 +306,7 @@ function __InterfaceProjectViewBuildOverview()
                 
                 ImGuiTableNextRow();
                 ImGuiTableNextColumn();
-                
-                ImGuiTextLink(_imported.name);
-                var _clicked = ImGuiIsItemClicked();
-                if (ImGuiBeginItemTooltip())
-                {
-                    ImGuiText($"Open \"{_imported.origin}\"");
-                    ImGuiEndTooltip();
-                }
-                
-                if (_clicked)
-                {
-                    if (InterfaceGuessURLIsRemote(_imported.origin))
-                    {
-                        url_open(GetURL());
-                    }
-                    else
-                    {
-                        execute_shell_simple(filename_dir(_imported.origin));
-                    }
-                }
-                
+                InterfaceLinkText(_imported.name, _imported.origin);
                 ImGuiTableNextColumn();
                 ImGuiTextWrapped(_imported.version);
                 

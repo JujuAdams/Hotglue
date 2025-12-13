@@ -4,6 +4,8 @@
 
 function __HotglueRepositoryGitHub(_url) : __HotglueRepositoryCommon(_url) constructor
 {
+    static __isRemote = true;
+    
     if (string_char_at(_url, string_length(_url)) != "/")
     {
         _url += "/";

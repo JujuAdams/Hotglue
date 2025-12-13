@@ -14,7 +14,11 @@ function ClassTabWelcome() : ClassTab() constructor
             ImGuiTextWrapped("Ngran fuzzy search by TinkererRed.");
             ImGuiTextWrapped("GitHub authorization flow based on `GitHub.gml` by Alub.");
             
-            if (not extension_exists("execute_shell_simple_ext"))
+            if (HotglueGetExecuteShellAvailable())
+            {
+                
+            }
+            else
             {
                 ImGuiNewLine();
                 ImGuiTextWrapped("Hotglue has support for `execute_shell_simple` by YellowAfterlife. This is, however, a paid asset. Please visit the link below, toss YellowAfterlife some money, and download the extension.");

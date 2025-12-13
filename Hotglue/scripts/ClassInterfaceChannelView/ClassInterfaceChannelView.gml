@@ -20,7 +20,7 @@ function ClassInterfaceChannelView(_channel) constructor
         {
             ImGuiBeginChild("leftPane", undefined, undefined, ImGuiChildFlags.Border);
             
-            if (ImGuiBeginCombo($"##combo_{ptr(self)}", (__selectedRepository == undefined)? "None selected" : __selectedRepository.GetName(), ImGuiComboFlags.None))
+            if (ImGuiBeginCombo($"##combo_{ptr(self)}", (__selectedRepository == undefined)? "No repository selected" : __selectedRepository.GetName(), ImGuiComboFlags.None))
             {
                 var _newString = ImGuiInputTextWithHint($"##channelSearch_{ptr(self)}", "Search", __searchString);
                 if (_newString != __searchString)
@@ -96,7 +96,7 @@ function ClassInterfaceChannelView(_channel) constructor
     {
         if (ImGuiBeginTabItem(__channel.GetName()))
         {
-            if (is_instanceof(__channel, __HotglueChannelGitHub))
+            if (__channel.__isRemote)
             {
                 if (ImGuiButton("Refresh"))
                 {
@@ -121,11 +121,7 @@ function ClassInterfaceChannelView(_channel) constructor
             
             ImGuiSeparator();
             
-            if (is_instanceof(__channel, __HotglueChannelFavorites))
-            {
-                
-            }
-            else if (is_instanceof(__channel, __HotglueChannelLocal))
+            if ((not __channel.__isRemote) && (not __channel.__isFavorites))
             {
                 if (ImGuiButton("Add content..."))
                 {
@@ -158,6 +154,12 @@ function ClassInterfaceChannelView(_channel) constructor
             if (array_length(_repositoryArray) <= 0)
             {
                 ImGuiTextWrapped("No content has been added.");
+                
+                if (__channel.__isFavorites)
+                {
+                    ImGuiNewLine();
+                    ImGuiTextWrapped("You can add favourites by toggling the \"Favourite\" checkbox for a repository or local project.");
+                }
             }
             else
             {

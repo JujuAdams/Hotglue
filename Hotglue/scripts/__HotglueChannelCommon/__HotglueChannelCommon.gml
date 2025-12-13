@@ -5,7 +5,9 @@
 
 function __HotglueChannelCommon(_name, _url) constructor
 {
-    static _repoConstructor = __HotglueRepositoryLocal;
+    static __isFavorites = false;
+    static __isRemote = true;
+    static _repoConstructor = undefined;
     
     __name = _name;
     __url  = _url;

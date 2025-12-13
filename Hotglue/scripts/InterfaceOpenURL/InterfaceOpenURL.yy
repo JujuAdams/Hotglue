@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"InterfaceOpenURL",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"InterfaceOpenURL",
+  "parent":{
+    "name":"Interface",
+    "path":"folders/Interface.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
