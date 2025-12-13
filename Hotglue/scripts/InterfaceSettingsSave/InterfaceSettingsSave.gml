@@ -2,8 +2,8 @@ function InterfaceSettingsSave()
 {
     with(oInterface)
     {
-        InterfaceSettingSet("favorites", HotglueGetChannelByURL("@favorites").Serialize());
-        InterfaceSettingSet("locals", HotglueGetChannelByURL("@locals").Serialize());
+        InterfaceSettingSet("favorites", HotglueGetChannelByURL(HOTGLUE_FAVORITES_CHANNEL).Serialize());
+        InterfaceSettingSet("locals", HotglueGetChannelByURL(HOTGLUE_LOCALS_CHANNEL).Serialize());
         
         var _string = json_stringify(settings, true);
         var _buffer = buffer_create(string_byte_length(_string), buffer_fixed, 1);

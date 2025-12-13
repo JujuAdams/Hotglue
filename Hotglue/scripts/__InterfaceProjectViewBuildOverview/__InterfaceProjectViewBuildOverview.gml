@@ -86,12 +86,6 @@ function __InterfaceProjectViewBuildOverview()
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
-            ImGuiText("* Favourite *");
-            ImGuiTableNextColumn();
-            ImGuiCheckbox("##favorite", false);
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
             ImGuiText("Name");
             ImGuiTableNextColumn();
             __InputString(new __HotglueClassPointer(__project.__hotglueMetadata[0], "name"), "name");
@@ -206,34 +200,6 @@ function __InterfaceProjectViewBuildOverview()
             
             ImGuiTableSetupColumn("field", ImGuiTableColumnFlags.WidthFixed, 130);
             ImGuiTableSetupColumn("value");
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            ImGuiText("* Favourite *");
-            ImGuiTableNextColumn();
-            
-            ImGuiCheckbox("##favorite", false);
-            
-            //var _favoriteArray = InterfaceSettingGet("favoriteLinks");
-            //var _oldFavorite = (array_get_index(_favoriteArray, GetURL()) >= 0);
-            //var _newFavorite = ImGuiCheckbox("##favorite", _oldFavorite);
-            //if (_newFavorite != _oldFavorite)
-            //{
-            //    if (_newFavorite)
-            //    {
-            //        array_push(InterfaceSettingGet("favoriteLinks"), GetURL());
-            //        LogTraceAndStatus($"Favourited \"{GetURL()}\"");
-            //    }
-            //    else
-            //    {
-            //        var _index = array_get_index(_favoriteArray, GetURL());
-            //        if (_index >= 0) array_delete(_favoriteArray, _index, 1);
-            //        LogTraceAndStatus($"Unfavourited \"{GetURL()}\"");
-            //    }
-            //    
-            //    oInterface.favoritesTab.dirty = true;
-            //    InterfaceSettingsSave();
-            //}
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();

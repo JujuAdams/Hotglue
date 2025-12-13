@@ -9,3 +9,6 @@
 #macro HOTGLUE_TEMP_CACHE_DIRECTORY     (game_save_id + "cache/temp/")
 
 #macro HOTGLUE_GITHUB_AUTH_SCOPE  ""
+
+#macro HOTGLUE_FAVORITES_CHANNEL  "@favorites"
+#macro HOTGLUE_LOCALS_CHANNEL  "@locals"

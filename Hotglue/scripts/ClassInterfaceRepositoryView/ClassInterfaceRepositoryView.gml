@@ -10,6 +10,32 @@ function ClassInterfaceRepositoryView(_repository) constructor
     __selectedProject = undefined;
     __projectView = undefined;
     
+    static BuildRepositoryHeader = function()
+    {
+        var _favoritesChannel = HotglueGetChannelByURL(HOTGLUE_FAVORITES_CHANNEL);
+        var _url = __repository.GetURL();
+        
+        ImGuiText(__repository.GetName());
+        ImGuiSameLine(undefined, 20);
+        InterfaceLinkText(_url);
+        
+        var _oldValue = _favoritesChannel.GetRepositoryExists(_url);
+        var _newValue = ImGuiCheckbox("Favourite", _oldValue);
+        if (_oldValue != _newValue)
+        {
+            if (_newValue)
+            {
+                _favoritesChannel.AddRepository(_url);
+                LogTraceAndStatus($"Favourited \"{_url}\"");
+            }
+            else
+            {
+                _favoritesChannel.DeleteRepository(_url);
+                LogTraceAndStatus($"Unfavourited \"{_url}\"");
+            }
+        }
+    }
+    
     static BuildRepositoryDescription = function(_height)
     {
         ImGuiBeginChild("repoDescription", undefined, _height);
@@ -54,10 +80,8 @@ function ClassInterfaceRepositoryView(_repository) constructor
                 
                 if (ImGuiBeginTabItem("Overview"))
                 {
-                    ImGuiText(__repository.GetName());
-                    ImGuiSameLine(undefined, 20);
-                    InterfaceLinkText(__repository.GetURL());
-                    
+                    BuildRepositoryHeader();
+                    ImGuiNewLine();
                     __projectView.BuildOverview();
                     ImGuiEndTabItem();
                 }
@@ -73,9 +97,7 @@ function ClassInterfaceRepositoryView(_repository) constructor
             }
             else
             {
-                ImGuiText(__repository.GetName());
-                ImGuiSameLine(undefined, 20);
-                InterfaceLinkText(__repository.GetURL());
+                BuildRepositoryHeader();
                 ImGuiNewLine();
                 ImGuiText("Loading project...");
             }
@@ -180,7 +202,7 @@ function ClassInterfaceRepositoryView(_repository) constructor
     {
         if (__repository.__isRemote)
         {
-            BuildRepositoryDescription(0.45*ImGuiGetWindowHeight());
+            BuildRepositoryDescription(0.4*ImGuiGetWindowHeight());
             
             ImGuiBeginChild("releasePane", undefined, undefined, ImGuiChildFlags.Border);
             BuildReleaseDescription(false);
@@ -197,12 +219,10 @@ function ClassInterfaceRepositoryView(_repository) constructor
         if (__repository.__isRemote)
         {
             ImGuiNewLine();
-            ImGuiText(__repository.GetName());
-            ImGuiSameLine(undefined, 20);
-            InterfaceLinkText(__repository.GetURL());
+            BuildRepositoryHeader();
             
             ImGuiNewLine();
-            BuildRepositoryDescription(0.45*ImGuiGetWindowHeight());
+            BuildRepositoryDescription(0.4*ImGuiGetWindowHeight());
             
             ImGuiNewLine();
             ImGuiBeginChild("releasePane", undefined, undefined, ImGuiChildFlags.Border);

@@ -31,8 +31,8 @@ function __HotglueSystem()
         __projectBySourceURLDict = {};
         
         __channelArray = [];
-        array_push(__channelArray, new __HotglueChannelFavorites("* Favourites *", "@favorites"));
-        array_push(__channelArray, new __HotglueChannelLocal("Local", "@locals"));
+        array_push(__channelArray, new __HotglueChannelFavorites("* Favourites *", HOTGLUE_FAVORITES_CHANNEL));
+        array_push(__channelArray, new __HotglueChannelLocal("Local", HOTGLUE_LOCALS_CHANNEL));
         
         var _gmkChannel = new __HotglueChannelGMK("GameMaker Kitchen", "https://www.gamemakerkitchen.com/resource.json");
         array_push(__channelArray, _gmkChannel);

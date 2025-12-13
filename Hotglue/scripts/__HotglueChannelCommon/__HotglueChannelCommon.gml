@@ -60,10 +60,53 @@ function __HotglueChannelCommon(_name, _url) constructor
     
     static AddRepository = function(_url)
     {
-        var _repository = new _repoConstructor(_url);
-        array_push(__repositoryArray, _repository);
-        LogTraceAndStatus($"Added repository \"{_url}\" to channel \"{__name}\"");
+        var _repository = GetRepositoryFromURL(_url);
+        if (_repository == undefined)
+        {
+            _repository = new _repoConstructor(_url);
+            array_push(__repositoryArray, _repository);
+            LogTraceAndStatus($"Added repository \"{_url}\" to channel \"{__name}\"");
+        }
+        
         return _repository;
+    }
+    
+    static DeleteRepository = function(_url)
+    {
+        var _repositoryArray = __repositoryArray;
+        var _i = 0;
+        repeat(array_length(_repositoryArray))
+        {
+            if (_repositoryArray[_i].GetURL() == _url)
+            {
+                array_delete(_repositoryArray, _i, 1);
+                return;
+            }
+            
+            ++_i;
+        }
+    }
+    
+    static GetRepositoryFromURL = function(_url)
+    {
+        var _repositoryArray = __repositoryArray;
+        var _i = 0;
+        repeat(array_length(_repositoryArray))
+        {
+            if (_repositoryArray[_i].GetURL() == _url)
+            {
+                return _repositoryArray[_i];
+            }
+            
+            ++_i;
+        }
+        
+        return undefined;
+    }
+    
+    static GetRepositoryExists = function(_url)
+    {
+        return (GetRepositoryFromURL(_url) != undefined);
     }
     
     static GetRepositoryCount = function()
