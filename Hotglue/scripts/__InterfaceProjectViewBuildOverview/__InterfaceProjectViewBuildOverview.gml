@@ -127,19 +127,6 @@ function __InterfaceProjectViewBuildOverview()
             ImGuiSameLine();
             ImGuiSetNextItemWidth(200);
             __InputString(new __HotglueClassPointer(__project.__hotglueMetadata[0].version, "extension"), "extension");
-            ImGuiTableNextColumn();
-            if (ImGuiSmallButton("Reset##version"))
-            {
-                with(__project.__hotglueMetadata[0].version)
-                {
-                    major = "";
-                    minor = "";
-                    patch = "";
-                    extension = "";
-                }
-                
-                __project.__SaveHotglueMetadata();
-            }
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
@@ -225,8 +212,7 @@ function __InterfaceProjectViewBuildOverview()
             
             ImGuiTableNextColumn();
             
-            ImGuiText("0.0.0-alpha");
-            //ImGuiText(GetVersionString());
+            ImGuiText(__project.GetVersionString());
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();

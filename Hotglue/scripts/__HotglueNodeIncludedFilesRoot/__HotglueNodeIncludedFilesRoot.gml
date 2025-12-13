@@ -44,7 +44,7 @@ function __HotglueNodeIncludedFilesRoot(_projectStructure) : __HotglueNodeCommon
         var _i = 0;
         repeat(array_length(_childrenArray))
         {
-            if (_childrenArray[_i].__name == _name)
+            if (_childrenArray[_i].GetName() == _name)
             {
                 return _childrenArray[_i];
             }

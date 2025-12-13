@@ -133,11 +133,11 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     static GetVersionString = function()
     {
-        if (is_struct(__hotglueMetadata) && (not __hotglueMetadata.yympsOverridesVersion))
+        if (is_array(__hotglueMetadata) && (not __hotglueMetadata[0].yympsOverridesVersion))
         {
             with(__hotglueMetadata[0].version)
             {
-                return $"{(major == "")? "0" : major}.{(minor == "")? "0" : minor}.{(patch == "")? "0" : patch}{extension}";
+                return $"{(major == "")? "0" : major}.{(minor == "")? "0" : minor}.{(patch == "")? "0" : patch}{(extension != "")? "-" : ""}{extension}";
             }
         }
         else if (is_struct(__yympsMetadata))
