@@ -204,10 +204,10 @@ function __InterfaceProjectViewBuildOverview()
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
-            ImGuiText("Dependencies");
+            ImGuiText("Imported");
             ImGuiTableNextColumn();
             
-            BuildDependenciesTable();
+            BuildImportedTable();
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
@@ -333,10 +333,10 @@ function __InterfaceProjectViewBuildOverview()
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
-            ImGuiText("Dependencies");
+            ImGuiText("Imported");
             ImGuiTableNextColumn();
             
-            BuildDependenciesTable();
+            BuildImportedTable();
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
@@ -368,47 +368,47 @@ function __InterfaceProjectViewBuildOverview()
         }
     });
     
-    BuildDependenciesTable = method(undefined, function()
+    BuildImportedTable = method(undefined, function()
     {
         var _cellPadding = 8;
-        var _dependenciesArray = __project.GetDependencies();
+        var _importedArray = __project.GetImported();
         
         ImGuiPopStyleVar();
-        ImGuiBeginTable("dependencyTable", 2);
+        ImGuiBeginTable("importedTable", 2);
         
         ImGuiTableSetupColumn("name", ImGuiTableColumnFlags.WidthFixed, 120);
         ImGuiTableSetupColumn("version");
         
         var _i = 0;
-        repeat(array_length(_dependenciesArray))
+        repeat(array_length(_importedArray))
         {
-            var _dependency = _dependenciesArray[_i];
+            var _imported = _importedArray[_i];
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
             
-            ImGuiTextLink(_dependency.name);
+            ImGuiTextLink(_imported.name);
             var _clicked = ImGuiIsItemClicked();
             if (ImGuiBeginItemTooltip())
             {
-                ImGuiText($"Open \"{_dependency.origin}\"");
+                ImGuiText($"Open \"{_imported.origin}\"");
                 ImGuiEndTooltip();
             }
             
             if (_clicked)
             {
-                if (InterfaceGuessURLIsRemote(_dependency.origin))
+                if (InterfaceGuessURLIsRemote(_imported.origin))
                 {
                     url_open(GetURL());
                 }
                 else
                 {
-                    execute_shell_simple(filename_dir(_dependency.origin));
+                    execute_shell_simple(filename_dir(_imported.origin));
                 }
             }
             
             ImGuiTableNextColumn();
-            ImGuiTextWrapped(_dependency.version);
+            ImGuiTextWrapped(_imported.version);
             
             ++_i;
         }

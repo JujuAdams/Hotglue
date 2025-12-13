@@ -322,7 +322,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         return _conflictArray;
     }
     
-    static GetDependencies = function()
+    static GetImported = function()
     {
         static _emptyArray = [];
         return (__hotglueMetadata == undefined)? _emptyArray : __hotglueMetadata[1];
