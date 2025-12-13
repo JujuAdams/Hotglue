@@ -9,6 +9,7 @@ function ClassInterfaceProjectView(_project) constructor
     __selectedDict     = {};
     __anyCollisionDict = {};
     __anySelectedDict  = {};
+    __allSelectedDict  = {};
     
     static GetSelectedCount = function()
     {
@@ -45,15 +46,6 @@ function ClassInterfaceProjectView(_project) constructor
     
     static __SetSelected = function(_node, _state)
     {
-        if (_state)
-        {
-            __selectedDict[$ ptr(_node)] = _node;
-        }
-        else
-        {
-            struct_remove(__selectedDict, ptr(_node));
-        }
-        
         if (_node.__isFolder)
         {
             var _children = _node.GetChildren();
@@ -62,6 +54,17 @@ function ClassInterfaceProjectView(_project) constructor
             {
                 __SetSelected(_children[_i], _state);
                 ++_i;
+            }
+        }
+        else
+        {
+            if (_state)
+            {
+                __selectedDict[$ ptr(_node)] = _node;
+            }
+            else
+            {
+                struct_remove(__selectedDict, ptr(_node));
             }
         }
     }

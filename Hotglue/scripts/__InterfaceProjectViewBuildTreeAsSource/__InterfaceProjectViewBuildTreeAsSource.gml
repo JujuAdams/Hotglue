@@ -25,11 +25,13 @@ function __InterfaceProjectViewBuildTreeAsSource()
         static _return = {};
         
         var _hotglueName = _node.GetHotglueName();
-        
-        var _anyCollision = false;
-        var _anySelected  = false;
-        
+        var _selected = __GetSelected(_node);
         var _children = _node.GetChildren();
+        
+        var _anyCollision = ((_hotglueName != undefined) && struct_exists(_collisionDictionary, _hotglueName));
+        var _anySelected  = _selected;
+        var _allSelected  = _selected || (array_length(_children) > 0);
+        
         var _i = 0;
         repeat(array_length(_children))
         {
@@ -37,15 +39,18 @@ function __InterfaceProjectViewBuildTreeAsSource()
             
             _anyCollision |= _return.__anyCollision;
             _anySelected  |= _return.__anySelected;
+            _allSelected  &= _return.__allSelected;
         
             ++_i;
         }
         
         __anyCollisionDict[$ ptr(_node)] = _anyCollision;
         __anySelectedDict[$  ptr(_node)] = _anySelected;
+        __allSelectedDict[$  ptr(_node)] = _allSelected;
         
-        _return.__anyCollision = _anyCollision | ((_hotglueName != undefined) && struct_exists(_collisionDictionary, _hotglueName));
-        _return.__anySelected  = _anySelected  | __GetSelected(_node);
+        _return.__anyCollision = _anyCollision;
+        _return.__anySelected  = _anySelected;
+        _return.__allSelected  = _allSelected;
         
         return _return;
     });
@@ -55,21 +60,21 @@ function __InterfaceProjectViewBuildTreeAsSource()
         var _hotglueName = _node.GetHotglueName();
         
         var _collision = ((_hotglueName != undefined) && struct_exists(_collisionDictionary, _hotglueName));
-        var _selected  = __GetSelected(_node);
         
         var _anyCollision = __anyCollisionDict[$ ptr(_node)];
         var _anySelected  = __anySelectedDict[$  ptr(_node)];
+        var _allSelected  = __allSelectedDict[$  ptr(_node)];
         
         if (_node.__isFolder)
         {
             if (_node.__selectable)
             {
-                ImGuiCheckboxFlags($"###{ptr(_node)}_selected", _anySelected + 2*_selected, 3);
+                ImGuiCheckboxFlags($"###{ptr(_node)}_selected", 2*_allSelected + _anySelected, 3);
                 
                 if (ImGuiIsItemClicked())
                 {
-                    _selected = not _selected;
-                    __SetSelected(_node, _selected);
+                    _allSelected = not _allSelected;
+                    __SetSelected(_node, _allSelected);
                 }
             
                 ImGuiSameLine();
@@ -128,11 +133,11 @@ function __InterfaceProjectViewBuildTreeAsSource()
         {
             if (_node.__selectable)
             {
-                ImGuiCheckbox($"###{ptr(_node)}_selected", _selected);
+                ImGuiCheckbox($"###{ptr(_node)}_selected", _allSelected);
                 if (ImGuiIsItemClicked())
                 {
-                    _selected = not _selected;
-                    __SetSelected(_node, _selected);
+                    _allSelected = not _allSelected;
+                    __SetSelected(_node, _allSelected);
                 }
                 
                 ImGuiSameLine();
@@ -144,8 +149,8 @@ function __InterfaceProjectViewBuildTreeAsSource()
             
             if (ImGuiIsItemClicked())
             {
-                _selected = not _selected;
-                __SetSelected(_node, _selected);
+                _allSelected = not _allSelected;
+                __SetSelected(_node, _allSelected);
             }
             
             ImGuiTreePop();
