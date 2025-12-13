@@ -4,8 +4,6 @@
 
 function __HotglueChannelGitHub(_name, _url) : __HotglueChannelCommon(_name, _url) constructor
 {
-    static _repoConstructor = __HotglueRepositoryGitHub;
-    
     __httpRequest = undefined;
     __httpSuccess = false;
     

@@ -7,7 +7,6 @@ function __HotglueChannelCommon(_name, _url) constructor
 {
     static __isFavorites = false;
     static __isRemote = true;
-    static _repoConstructor = undefined;
     
     __name = _name;
     __url  = _url;
@@ -58,12 +57,12 @@ function __HotglueChannelCommon(_name, _url) constructor
         }
     }
     
-    static AddRepository = function(_url)
+    static AddRepository = function(_url, _forceType = undefined)
     {
         var _repository = GetRepositoryFromURL(_url);
         if (_repository == undefined)
         {
-            _repository = new _repoConstructor(_url);
+            _repository = HotglueEnsureRepository(_url, _forceType);
             array_push(__repositoryArray, _repository);
             LogTraceAndStatus($"Added repository \"{_url}\" to channel \"{__name}\"");
         }
@@ -130,7 +129,7 @@ function __HotglueChannelCommon(_name, _url) constructor
             array_push(_array,_repositoryArray[_i].GetName());
             ++_i;
         }
-                
+        
         return _array;
     }
     

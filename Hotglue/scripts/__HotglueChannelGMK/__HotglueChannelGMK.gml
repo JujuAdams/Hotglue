@@ -4,8 +4,6 @@
 
 function __HotglueChannelGMK(_name, _url) : __HotglueChannelCommon(_name, _url) constructor
 {
-    static _repoConstructor = __HotglueRepositoryGitHub;
-    
     __httpRequest = undefined;
     __httpSuccess = false;
     
@@ -70,7 +68,14 @@ function __HotglueChannelGMK(_name, _url) : __HotglueChannelCommon(_name, _url) 
                                 var _link = _json[_i][$ "link"];
                                 if (is_string(_link))
                                 {
-                                    AddRepository(_link);
+                                    if (__HotglueGuessURLIsGitHub(_link))
+                                    {
+                                        AddRepository(_link);
+                                    }
+                                    else
+                                    {
+                                        __HotglueWarning($"Item {_i} does not have a GitHub link ({_link})");
+                                    }
                                 }
                                 else
                                 {
