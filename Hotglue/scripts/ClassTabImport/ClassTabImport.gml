@@ -240,7 +240,7 @@ function ClassTabImport() : ClassTab() constructor
                 var _i = 0;
                 repeat(HotglueGetChannelCount())
                 {
-                    if (InterfaceEnsureChannelView(HotglueGetChannelByIndex(_i)).BuildHalfViewTab())
+                    if (InterfaceEnsureChannelView(HotglueGetChannelByIndex(_i)).BuildForImport())
                     {
                         __selectedChannel = _i;
                     }

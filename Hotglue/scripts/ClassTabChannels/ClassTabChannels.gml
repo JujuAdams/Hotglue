@@ -12,7 +12,7 @@ function ClassTabChannels() : ClassTab() constructor
             var _i = 0;
             repeat(HotglueGetChannelCount())
             {
-                InterfaceEnsureChannelView(HotglueGetChannelByIndex(_i)).BuildFullViewTab();
+                InterfaceEnsureChannelView(HotglueGetChannelByIndex(_i)).BuildForExplore();
                 ++_i;
             }
             

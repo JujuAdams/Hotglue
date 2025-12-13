@@ -14,7 +14,7 @@ function ClassInterfaceChannelView(_channel) constructor
     
     
     
-    static BuildHalfViewTab = function()
+    static BuildForImport = function()
     {
         if (ImGuiBeginTabItem(__channel.GetName()))
         {
@@ -92,7 +92,7 @@ function ClassInterfaceChannelView(_channel) constructor
         }
     }
     
-    static BuildFullViewTab = function()
+    static BuildForExplore = function()
     {
         if (ImGuiBeginTabItem(__channel.GetName()))
         {
