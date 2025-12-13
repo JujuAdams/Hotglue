@@ -28,39 +28,30 @@ function ClassTabImport() : ClassTab() constructor
     
     static ImportChannels = function()
     {
-        var _channel = HotglueGetChannelByIndex(__selectedChannel);
-        var _channelView = InterfaceEnsureChannelView(_channel);
-        if (_channelView != undefined)
+        var _selectedRelease = GetSelectedRelease();
+        if (_selectedRelease != undefined)
         {
-            var _selectedRepository = _channelView.__selectedRepository;
-            if (_selectedRepository != undefined)
+            __destinationProject.EnsureHotglueMetadata();
+            
+            _selectedRelease.LoadProject(function(_project, _success)
             {
-                var _selectedRelease = InterfaceEnsureRepositoryView(_selectedRepository).__selectedRelease;
-                if (_selectedRelease != undefined)
+                if (_success)
                 {
-                    __destinationProject.EnsureHotglueMetadata();
-                    
-                    _selectedRelease.LoadProject(function(_project, _success)
+                    if (_project.GetLoadedSuccessfully())
                     {
-                        if (_success)
-                        {
-                            if (_project.GetLoadedSuccessfully())
-                            {
-                                __destinationProject.ImportAllFrom(_project);
-                                LogTraceAndStatus("Imported release successfully.");
-                            }
-                            else
-                            {
-                                LogWarning("Failed to load project file for release. Please check the log for further information.");
-                            }
-                        }
-                        else
-                        {
-                            LogWarning("Failed to load project file for release. Please check the log for further information.");
-                        }
-                    });
+                        __destinationProject.ImportAllFrom(_project);
+                        LogTraceAndStatus("Imported release successfully.");
+                    }
+                    else
+                    {
+                        LogWarning("Failed to load project file for release. Please check the log for further information.");
+                    }
                 }
-            }
+                else
+                {
+                    LogWarning("Failed to load project file for release. Please check the log for further information.");
+                }
+            });
         }
     }
     
@@ -79,12 +70,32 @@ function ClassTabImport() : ClassTab() constructor
         return _looseFileArray;
     }
     
+    static GetSelectedRelease = function()
+    {
+        var _selectedRelease = undefined;
+        
+        if (__selectedChannel != undefined)
+        {
+            var _channel = HotglueGetChannelByIndex(__selectedChannel);
+            var _channelView = InterfaceEnsureChannelView(_channel);
+            if (_channelView != undefined)
+            {
+                var _selectedRepository = _channelView.__selectedRepository;
+                if (_selectedRepository != undefined)
+                {
+                    _selectedRelease = InterfaceEnsureRepositoryView(_selectedRepository).__selectedRelease;
+                }
+            }
+        }
+        
+        return _selectedRelease;
+    }
+    
     static TabItem = function()
     {
         if (ImGuiBeginTabItem("Import"))
         {
             var _importMode = undefined;
-            var _selectedRelease = undefined;
             
             var _importButtonSize = 70;
             var _bigPaneSize = 0.5*(ImGuiGetWindowWidth() - _importButtonSize) - 16;
@@ -247,6 +258,10 @@ function ClassTabImport() : ClassTab() constructor
             
             ImGuiEndChild();
             
+            ///////
+            // The import button!
+            ///////
+            
             ImGuiSameLine();
             ImGuiBeginChild("middlePane", _importButtonSize);
             ImGuiSetCursorPosY(ImGuiGetContentRegionMaxY()/2 - 10);
@@ -261,36 +276,12 @@ function ClassTabImport() : ClassTab() constructor
             }
             else if (_importMode == "channels")
             {
-                var _disabled = (__selectedChannel == undefined);
-                if (not _disabled)
-                {
-                    var _channel = HotglueGetChannelByIndex(__selectedChannel);
-                    var _channelView = InterfaceEnsureChannelView(_channel);
-                    
-                    var _selectedRepository = _channelView.__selectedRepository;
-                    if (_selectedRepository == undefined)
-                    {
-                        _disabled = true;
-                    }
-                    else
-                    {
-                        var _repositoryView = InterfaceEnsureRepositoryView(_selectedRepository);
-                        
-                        _selectedRelease = _repositoryView.__selectedRelease;
-                        _disabled = (_selectedRelease == undefined); 
-                    }
-                }
-                
-                ImGuiBeginDisabled(_disabled || (__destinationProject == undefined));
+                ImGuiBeginDisabled((GetSelectedRelease() == undefined) || (__destinationProject == undefined));
             }
             else
             {
                 ImGuiBeginDisabled(false);
             }
-            
-            ///////
-            // The import button!
-            ///////
             
             if (ImGuiButton("Import ->"))
             {

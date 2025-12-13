@@ -511,7 +511,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
             // 4. Insert reference into .yyp
             _asset.__InsertIntoYYP(self, ""); //Don't need a subfolder here because we generate a correct folder path already
             
-            if (_asset.GetName() != "hotglue_metadata")
+            if (_asset.GetPID() != "resource:hotglue_metadata")
             {
                 // 5. Formally add the new asset to this project representation
                 __AddAsset(_asset);
