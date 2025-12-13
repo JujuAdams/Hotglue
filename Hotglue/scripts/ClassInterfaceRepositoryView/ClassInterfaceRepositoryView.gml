@@ -33,6 +33,8 @@ function ClassInterfaceRepositoryView(_repository) constructor
                 _favoritesChannel.DeleteRepository(_url);
                 LogTraceAndStatus($"Unfavourited \"{_url}\"");
             }
+            
+            InterfaceSettingsSave();
         }
     }
     

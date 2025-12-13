@@ -139,6 +139,8 @@ function ClassInterfaceChannelView(_channel) constructor
                             {
                                 __selectedRepository = _repository;
                             }
+                            
+                            InterfaceSettingsSave();
                         }
                         else
                         {
