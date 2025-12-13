@@ -94,6 +94,7 @@
     {"name":"ClassInterfaceFileView","order":3,"path":"scripts/ClassInterfaceFileView/ClassInterfaceFileView.yy",},
     {"name":"ClassInterfaceRepositoryView","order":5,"path":"scripts/ClassInterfaceRepositoryView/ClassInterfaceRepositoryView.yy",},
     {"name":"ClassModalConfirmImport","order":1,"path":"scripts/ClassModalConfirmImport/ClassModalConfirmImport.yy",},
+    {"name":"ClassModalMessage","order":2,"path":"scripts/ClassModalMessage/ClassModalMessage.yy",},
     {"name":"ClassTabChannels","order":4,"path":"scripts/ClassTabChannels/ClassTabChannels.yy",},
     {"name":"ClassTabImport","order":2,"path":"scripts/ClassTabImport/ClassTabImport.yy",},
     {"name":"ClassTabInspector","order":5,"path":"scripts/ClassTabInspector/ClassTabInspector.yy",},

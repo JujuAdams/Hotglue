@@ -90,20 +90,62 @@ function ClassModalConfirmImport(_importTab, _importMode) constructor
             ImGuiBeginDisabled(__loadPending || (not __loadSuccessful));
             if (ImGuiButton("Import"))
             {
-                if (__importMode == "local project")
+                var _success = false;
+                try
                 {
-                    __importTab.ImportLocalProject();
+                    if (__importMode == "local project")
+                    {
+                        __importTab.ImportLocalProject();
+                    }
+                    else if (__importMode == "loose files")
+                    {
+                        __importTab.ImportLooseFiles();
+                    }
+                    else if (__importMode == "channels")
+                    {
+                        __importTab.ImportChannels();
+                    }
+                    
+                    _success = true;
                 }
-                else if (__importMode == "loose files")
+                catch(_error)
                 {
-                    __importTab.ImportLooseFiles();
-                }
-                else if (__importMode == "channels")
-                {
-                    __importTab.ImportChannels();
+                    LogWarning(json_stringify(_error, true));
                 }
                 
-                oInterface.popUpStruct = undefined;
+                var _message = "Operation complete.";
+                if (_success)
+                {
+                    if (__importMode == "local project")
+                    {
+                        _message = $"Imported files from \"{__importTab.__destinationProject.GetPath()}\" successfully.";
+                    }
+                    else if (__importMode == "loose files")
+                    {
+                        _message = $"Imported loose files successfully.";
+                    }
+                    else if (__importMode == "channels")
+                    {
+                        _message = $"Imported files from \"{__importTab.GetSelectedRelease().GetWebURL()}\" successfully.";
+                    }
+                }
+                else
+                {
+                    if (__importMode == "local project")
+                    {
+                        _message = $"An error occurred whilst importing files from \"{__importTab.__destinationProject.GetPath()}\".";
+                    }
+                    else if (__importMode == "loose files")
+                    {
+                        _message = $"An error occurred whilst importing loose files.";
+                    }
+                    else if (__importMode == "channels")
+                    {
+                        _message = $"An error occurred whilst importing files from \"{__importTab.GetSelectedRelease().GetWebURL()}\".";
+                    }
+                }
+                
+                oInterface.popUpStruct = new ClassModalMessage(_message);
             }
             ImGuiEndDisabled();
             

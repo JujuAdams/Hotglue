@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"ClassModalTest",
+  "%Name":"ClassModalMessage",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ClassModalTest",
+  "name":"ClassModalMessage",
   "parent":{
     "name":"Modals",
     "path":"folders/Interface/Classes/Modals.yy",
