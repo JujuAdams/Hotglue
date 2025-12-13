@@ -20,6 +20,12 @@ function __HotglueLooseFile(_path) constructor
     {
         return __name ?? GetOriginalName();
     }
+    
+    static GetPID = function()
+    {
+        return (__type == "included file")? $"included:datafiles/{GetName()}" : $"resource:{GetName()}";
+    }
+    
     static SetName = function(_name)
     {
         if (_name != __name)

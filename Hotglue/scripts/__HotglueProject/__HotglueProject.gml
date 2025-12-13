@@ -302,18 +302,41 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     static GetConflicting = function(_otherProject)
     {
+        return GetConflictingExt(_otherProject.__quickAssetArray);
+    }
+    
+    static GetConflictingExt = function(_assetArray)
+    {
         var _conflictArray = [];
-        
-        var _quickAssetArray = __quickAssetArray;
-        var _otherAssetDict  = _otherProject.__quickAssetDict;
+        var _assetDict = __quickAssetDict;
         
         var _i = 0;
-        repeat(array_length(_quickAssetArray))
+        repeat(array_length(_assetArray))
         {
-            var _assetName = _quickAssetArray[_i].GetPID();
-            if (variable_struct_exists(_otherAssetDict, _assetName))
+            var _assetPID = _assetArray[_i];
+            if (variable_struct_exists(_assetDict, _assetPID))
             {
-                array_push(_conflictArray, _assetName);
+                array_push(_conflictArray, _assetPID);
+            }
+            
+            ++_i;
+        }
+        
+        return _conflictArray;
+    }
+    
+    static GetConflictingLooseFiles = function(_looseFileArray)
+    {
+        var _conflictArray = [];
+        var _assetDict = __quickAssetDict;
+        
+        var _i = 0;
+        repeat(array_length(_looseFileArray))
+        {
+            var _assetPID = _looseFileArray[_i].GetPID();
+            if (variable_struct_exists(_assetDict, _assetPID))
+            {
+                array_push(_conflictArray, _assetPID);
             }
             
             ++_i;

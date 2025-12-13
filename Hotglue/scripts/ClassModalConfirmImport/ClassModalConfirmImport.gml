@@ -10,7 +10,17 @@ function ClassModalConfirmImport(_importTab, _importMode) constructor
     
     if (__importMode == "local project")
     {
-        __conflictArray = __importTab.__destinationProject.GetConflicting(__importTab.__directProject);
+        var _assetArray = __importTab.__directProject.GetAssets();
+        __conflictArray = __importTab.__destinationProject.GetConflictingExt(_assetArray);
+    }
+    else if (__importMode == "loose files")
+    {
+        var _looseFileArray = __importTab.GetLooseFileArray();
+        __conflictArray = __importTab.__destinationProject.GetConflictingLooseFiles(_looseFileArray);
+    }
+    else if (__importMode == "channels")
+    {
+        //TODO
     }
     else
     {
@@ -21,7 +31,6 @@ function ClassModalConfirmImport(_importTab, _importMode) constructor
     static Build = function()
     {
         var _name = $"##modal_{string(ptr(self))}";
-        var _importMode = __importMode;
         
         ImGuiOpenPopup(_name);
         ImGuiSetNextWindowSize(oInterface.context.GetRegion().width/3, oInterface.context.GetRegion().height/2);

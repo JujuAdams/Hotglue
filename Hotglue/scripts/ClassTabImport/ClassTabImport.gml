@@ -21,18 +21,8 @@ function ClassTabImport() : ClassTab() constructor
     
     static ImportLooseFiles = function()
     {
-        //Convert the array of loose file views into an array of the loose files themselves
-        var _looseFileViewArray = __looseFileViewArray;
-        var _looseFileArray = array_create(array_length(_looseFileViewArray));
-        var _i = 0;
-        repeat(array_length(_looseFileViewArray))
-        {
-            _looseFileArray[@ _i] = _looseFileViewArray[_i].__file;
-            ++_i;
-        }
-        
         LogTraceAndStatus($"Starting import of loose files into \"{__destinationProject.GetPath()}\"");
-        __destinationProject.ImportFromLooseFiles(_looseFileArray);
+        __destinationProject.ImportFromLooseFiles(GetLooseFileArray());
         LogTraceAndStatus($"Finished importing loose files into \"{__destinationProject.GetPath()}\"");
     }
     
@@ -72,6 +62,21 @@ function ClassTabImport() : ClassTab() constructor
                 }
             }
         }
+    }
+    
+    static GetLooseFileArray = function()
+    {
+        var _looseFileViewArray = __looseFileViewArray;
+        var _looseFileArray = array_create(array_length(_looseFileViewArray));
+        
+        var _i = 0;
+        repeat(array_length(_looseFileViewArray))
+        {
+            _looseFileArray[@ _i] = _looseFileViewArray[_i].__file;
+            ++_i;
+        }
+        
+        return _looseFileArray;
     }
     
     static TabItem = function()
@@ -310,6 +315,16 @@ function ClassTabImport() : ClassTab() constructor
                 if (ImGuiBeginTabItem("Overview"))
                 {
                     ImGuiBeginChild("destinationInnerPane", undefined, undefined, ImGuiChildFlags.Border);
+                    
+                    ImGuiText(__destinationProject.GetPath());
+                    ImGuiSameLine();
+                    if (ImGuiSmallButton("Close"))
+                    {
+                        __destinationProject = undefined;
+                        __destinationView = undefined;
+                    }
+                    
+                    ImGuiNewLine();
                     
                     if (__destinationView != undefined)
                     {
