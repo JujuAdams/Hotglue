@@ -209,31 +209,6 @@ function __InterfaceProjectViewBuildOverview()
             
             BuildImportedTable();
             
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            
-            ImGuiTextLink("Scripting");
-            var _clicked = ImGuiIsItemClicked();
-            if (ImGuiBeginItemTooltip())
-            {
-                ImGuiText($"Edit scripting");
-                ImGuiEndTooltip();
-            }
-            
-            if (_clicked)
-            {
-                
-            }
-            
-            ImGuiTableNextColumn();
-            
-            ImGuiBeginDisabled(true);
-            ImGuiCheckbox("Before import", true);
-            ImGuiSameLine();
-            ImGuiSetCursorPosX(ImGuiGetCursorPosX() + 5)
-            ImGuiCheckbox("After import", true);
-            ImGuiEndDisabled();
-            
             ImGuiEndTable();
             ImGuiPopStyleVar();
         }
@@ -338,31 +313,6 @@ function __InterfaceProjectViewBuildOverview()
             
             BuildImportedTable();
             
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            
-            ImGuiTextLink("Scripting");
-            var _clicked = ImGuiIsItemClicked();
-            if (ImGuiBeginItemTooltip())
-            {
-                ImGuiText($"View scripting");
-                ImGuiEndTooltip();
-            }
-            
-            if (_clicked)
-            {
-                
-            }
-            
-            ImGuiTableNextColumn();
-            
-            ImGuiBeginDisabled(true);
-            ImGuiCheckbox("Before import", true);
-            ImGuiSameLine();
-            ImGuiSetCursorPosX(ImGuiGetCursorPosX() + 5)
-            ImGuiCheckbox("After import", true);
-            ImGuiEndDisabled();
-            
             ImGuiEndTable();
             ImGuiPopStyleVar();
         }
@@ -373,47 +323,56 @@ function __InterfaceProjectViewBuildOverview()
         var _cellPadding = 8;
         var _importedArray = __project.GetImported();
         
-        ImGuiPopStyleVar();
-        ImGuiBeginTable("importedTable", 2);
-        
-        ImGuiTableSetupColumn("name", ImGuiTableColumnFlags.WidthFixed, 120);
-        ImGuiTableSetupColumn("version");
-        
-        var _i = 0;
-        repeat(array_length(_importedArray))
+        if (array_length(_importedArray) <= 0)
         {
-            var _imported = _importedArray[_i];
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            
-            ImGuiTextLink(_imported.name);
-            var _clicked = ImGuiIsItemClicked();
-            if (ImGuiBeginItemTooltip())
-            {
-                ImGuiText($"Open \"{_imported.origin}\"");
-                ImGuiEndTooltip();
-            }
-            
-            if (_clicked)
-            {
-                if (InterfaceGuessURLIsRemote(_imported.origin))
-                {
-                    url_open(GetURL());
-                }
-                else
-                {
-                    execute_shell_simple(filename_dir(_imported.origin));
-                }
-            }
-            
-            ImGuiTableNextColumn();
-            ImGuiTextWrapped(_imported.version);
-            
-            ++_i;
+            ImGuiBeginDisabled(true);
+            ImGuiText("(none)");
+            ImGuiEndDisabled();
         }
-        
-        ImGuiEndTable();
-        ImGuiPushStyleVarY(ImGuiStyleVar.CellPadding, _cellPadding);
+        else
+        {
+            ImGuiPopStyleVar();
+            ImGuiBeginTable("importedTable", 2);
+            
+            ImGuiTableSetupColumn("name", ImGuiTableColumnFlags.WidthFixed, 120);
+            ImGuiTableSetupColumn("version");
+            
+            var _i = 0;
+            repeat(array_length(_importedArray))
+            {
+                var _imported = _importedArray[_i];
+                
+                ImGuiTableNextRow();
+                ImGuiTableNextColumn();
+                
+                ImGuiTextLink(_imported.name);
+                var _clicked = ImGuiIsItemClicked();
+                if (ImGuiBeginItemTooltip())
+                {
+                    ImGuiText($"Open \"{_imported.origin}\"");
+                    ImGuiEndTooltip();
+                }
+                
+                if (_clicked)
+                {
+                    if (InterfaceGuessURLIsRemote(_imported.origin))
+                    {
+                        url_open(GetURL());
+                    }
+                    else
+                    {
+                        execute_shell_simple(filename_dir(_imported.origin));
+                    }
+                }
+                
+                ImGuiTableNextColumn();
+                ImGuiTextWrapped(_imported.version);
+                
+                ++_i;
+            }
+            
+            ImGuiEndTable();
+            ImGuiPushStyleVarY(ImGuiStyleVar.CellPadding, _cellPadding);
+        }
     });
 }
