@@ -31,8 +31,8 @@ function __HotglueSystem()
         __projectBySourceURLDict = {};
         
         __channelArray = [];
-        array_push(__channelArray, new __HotglueChannelFavorites("* Favourites *", HOTGLUE_FAVORITES_CHANNEL));
-        array_push(__channelArray, new __HotglueChannelLocal("Local", HOTGLUE_LOCALS_CHANNEL));
+        array_push(__channelArray, new __HotglueChannelFavorites("* Favourites *", HOTGLUE_FAVORITES_CHANNEL, true));
+        array_push(__channelArray, new __HotglueChannelLocal("Local", HOTGLUE_LOCALS_CHANNEL, true));
         
         __repositoryArray = [];
         

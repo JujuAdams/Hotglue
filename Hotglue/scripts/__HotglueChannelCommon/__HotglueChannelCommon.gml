@@ -2,14 +2,16 @@
 
 /// @param name
 /// @param url
+/// @param protected
 
-function __HotglueChannelCommon(_name, _url) constructor
+function __HotglueChannelCommon(_name, _url, _protected) constructor
 {
     static __isFavorites = false;
     static __isRemote = true;
     
-    __name = _name;
-    __url  = _url;
+    __name      = _name;
+    __url       = _url;
+    __protected = _protected;
     
     __repositoryArray = [];
     

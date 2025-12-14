@@ -2,8 +2,9 @@
 
 /// @param name
 /// @param url
+/// @param protected
 
-function __HotglueChannelFavorites(_name, _url) : __HotglueChannelLocal(_name, _url) constructor
+function __HotglueChannelFavorites(_name, _url, _protected) : __HotglueChannelLocal(_name, _url, _protected) constructor
 {
     static __isFavorites = true;
 }

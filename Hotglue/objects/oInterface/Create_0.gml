@@ -29,17 +29,11 @@ else
     InterfaceSettingsSave();
 }
 
-var _channel = HotglueEnsureRemoteChannel(HOTGLUE_CHANNEL_JSON, "Hotglue-Index", "https://raw.githubusercontent.com/JujuAdams/Hotglue-Index/refs/heads/main/github.json");
-_channel.Refresh(function(_channel, _success)
-{
-    LogTraceAndStatus(_success? "Refreshed Hotglue-Index channel successfully" : "Failed to refresh Hotglue-Index channel");
-});
+var _channel = HotglueEnsureRemoteChannel(HOTGLUE_CHANNEL_JSON, "Hotglue-Index", "https://raw.githubusercontent.com/JujuAdams/Hotglue-Index/refs/heads/main/github.json", true);
+_channel.Refresh();
         
-var _channel = HotglueEnsureRemoteChannel(HOTGLUE_CHANNEL_GMK, "GameMaker Kitchen", "https://www.gamemakerkitchen.com/resource.json");
-_channel.Refresh(function(_channel, _success)
-{
-    LogTraceAndStatus(_success? "Refreshed GameMaker Kitchen channel successfully" : "Failed to refresh GameMaker Kitchen channel");
-});
+var _channel = HotglueEnsureRemoteChannel(HOTGLUE_CHANNEL_GMK, "GameMaker Kitchen", "https://www.gamemakerkitchen.com/resource.json", true);
+_channel.Refresh();
 
 statusBarHeight = 32;
 

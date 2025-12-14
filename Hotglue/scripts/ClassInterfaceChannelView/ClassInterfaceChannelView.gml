@@ -100,7 +100,7 @@ function ClassInterfaceChannelView(_channel) constructor
             {
                 if (ImGuiButton("Refresh"))
                 {
-                    Refresh();
+                    __channel.Refresh();
                 }
                 
                 ImGuiSameLine();

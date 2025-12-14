@@ -2,8 +2,9 @@
 
 /// @param name
 /// @param url
+/// @param protected
 
-function __HotglueChannelLocal(_name, _url) : __HotglueChannelCommon(_name, _url) constructor
+function __HotglueChannelLocal(_name, _url, _protected) : __HotglueChannelCommon(_name, _url, _protected) constructor
 {
     static __isRemote = false;
     
