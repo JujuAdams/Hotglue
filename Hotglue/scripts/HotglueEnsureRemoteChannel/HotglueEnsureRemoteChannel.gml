@@ -9,7 +9,7 @@ function HotglueEnsureRemoteChannel(_type, _name, _url, _protected = false)
 {
     static _channelArray = __HotglueSystem().__channelArray;
     
-    var _channel = undefined;// HotglueGetChannelByURL(_url);
+    var _channel = HotglueGetChannelByURL(_url);
     if (_channel == undefined)
     {
         if (_type == HOTGLUE_CHANNEL_JSON)

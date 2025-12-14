@@ -2,6 +2,12 @@ logTab = new ClassTabLog();
 
 LogTrace("Interface created");
 
+var _channel = HotglueEnsureRemoteChannel(HOTGLUE_CHANNEL_JSON, "Hotglue-Index", "https://raw.githubusercontent.com/JujuAdams/Hotglue-Index/refs/heads/main/github.json", true);
+_channel.Refresh();
+        
+var _channel = HotglueEnsureRemoteChannel(HOTGLUE_CHANNEL_GMK, "GameMaker Kitchen", "https://www.gamemakerkitchen.com/resource.json", true);
+_channel.Refresh();
+
 context = new ImGuiContext(0, 0, window_get_width(), window_get_height(),
                            ImGuiConfigFlags.DockingEnable);
 
@@ -28,12 +34,6 @@ else
 {
     InterfaceSettingsSave();
 }
-
-var _channel = HotglueEnsureRemoteChannel(HOTGLUE_CHANNEL_JSON, "Hotglue-Index", "https://raw.githubusercontent.com/JujuAdams/Hotglue-Index/refs/heads/main/github.json", true);
-_channel.Refresh();
-        
-var _channel = HotglueEnsureRemoteChannel(HOTGLUE_CHANNEL_GMK, "GameMaker Kitchen", "https://www.gamemakerkitchen.com/resource.json", true);
-_channel.Refresh();
 
 statusBarHeight = 32;
 

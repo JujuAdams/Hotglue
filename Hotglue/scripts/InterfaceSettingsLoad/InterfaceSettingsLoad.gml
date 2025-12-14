@@ -15,6 +15,8 @@ function InterfaceSettingsLoad()
         
         HotglueGetChannelByURL(HOTGLUE_FAVORITES_CHANNEL).Deserialize(InterfaceSettingGet("favorites", []));
         HotglueGetChannelByURL(HOTGLUE_LOCALS_CHANNEL).Deserialize(InterfaceSettingGet("locals", []));
+        
+        HotglueChannelsDeserialize(InterfaceSettingGet("channels", []));
     }
     
     LogTraceAndStatus("Settings loaded");

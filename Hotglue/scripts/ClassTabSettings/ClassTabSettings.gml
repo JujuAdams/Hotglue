@@ -63,6 +63,7 @@ function ClassTabSettings() : ClassTab() constructor
             if (_deleteIndex != undefined)
             {
                 HotglueDeleteChannel(_deleteIndex);
+                InterfaceSettingsSave();
             }
             
             ImGuiEndTable();

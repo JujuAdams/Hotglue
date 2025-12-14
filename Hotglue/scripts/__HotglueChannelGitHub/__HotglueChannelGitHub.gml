@@ -6,6 +6,8 @@
 
 function __HotglueChannelGitHub(_name, _url, _protected) : __HotglueChannelCommon(_name, _url, _protected) constructor
 {
+    static __type = HOTGLUE_CHANNEL_JSON;
+    
     __httpRequest = undefined;
     __httpSuccess = false;
     

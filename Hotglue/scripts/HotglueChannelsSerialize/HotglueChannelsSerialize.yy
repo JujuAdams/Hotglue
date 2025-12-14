@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueChannelsSerialize",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueChannelsSerialize",
+  "parent":{
+    "name":"Channels",
+    "path":"folders/Hotglue/Channels.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

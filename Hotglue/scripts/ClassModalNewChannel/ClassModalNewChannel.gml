@@ -60,6 +60,8 @@ function ClassModalNewChannel() constructor
                 var _channel = HotglueEnsureRemoteChannel(__type, __name, __url, false);
                 _channel.Refresh();
                 
+                InterfaceSettingsSave();
+                
                 oInterface.popUpStruct = undefined;
             }
             

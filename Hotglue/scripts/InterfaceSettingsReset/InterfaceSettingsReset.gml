@@ -3,8 +3,9 @@ function InterfaceSettingsReset()
     with(oInterface)
     {
         settings = {
-            localLinks: [],
-            favoriteLinks: [],
+            favorites: [],
+            locals: [],
+            channels: [],
         };
     }
     

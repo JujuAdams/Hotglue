@@ -6,8 +6,9 @@
 
 function __HotglueChannelCommon(_name, _url, _protected) constructor
 {
+    static __type        = undefined;
     static __isFavorites = false;
-    static __isRemote = true;
+    static __isRemote    = true;
     
     __name      = _name;
     __url       = _url;
@@ -152,5 +153,14 @@ function __HotglueChannelCommon(_name, _url, _protected) constructor
         __refreshCallback = _callback;
         
         //TODO
+    }
+    
+    static Serialize = function()
+    {
+        return {
+            name: __name,
+            url:  __url,
+            type: __type,
+        };
     }
 }

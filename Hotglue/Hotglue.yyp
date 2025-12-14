@@ -153,6 +153,8 @@
     {"id":{"name":"ClassTabLog","path":"scripts/ClassTabLog/ClassTabLog.yy",},},
     {"id":{"name":"ClassTabSettings","path":"scripts/ClassTabSettings/ClassTabSettings.yy",},},
     {"id":{"name":"ClassTabWelcome","path":"scripts/ClassTabWelcome/ClassTabWelcome.yy",},},
+    {"id":{"name":"HotglueChannelsDeserialize","path":"scripts/HotglueChannelsDeserialize/HotglueChannelsDeserialize.yy",},},
+    {"id":{"name":"HotglueChannelsSerialize","path":"scripts/HotglueChannelsSerialize/HotglueChannelsSerialize.yy",},},
     {"id":{"name":"HotglueClearReleaseCache","path":"scripts/HotglueClearReleaseCache/HotglueClearReleaseCache.yy",},},
     {"id":{"name":"HotglueClearTempCache","path":"scripts/HotglueClearTempCache/HotglueClearTempCache.yy",},},
     {"id":{"name":"HotglueClearUnzipCache","path":"scripts/HotglueClearUnzipCache/HotglueClearUnzipCache.yy",},},

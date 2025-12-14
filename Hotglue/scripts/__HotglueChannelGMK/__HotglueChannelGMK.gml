@@ -6,6 +6,8 @@
 
 function __HotglueChannelGMK(_name, _url, _protected) : __HotglueChannelCommon(_name, _url, _protected) constructor
 {
+    static __type = HOTGLUE_CHANNEL_GMK;
+    
     __httpRequest = undefined;
     __httpSuccess = false;
     
