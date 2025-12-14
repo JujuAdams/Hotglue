@@ -13,8 +13,8 @@ function InterfaceSettingsLoad()
         settings = json_parse(_string);
         buffer_delete(_buffer);
         
-        HotglueGetChannelByURL(HOTGLUE_FAVORITES_CHANNEL).Deserialize(InterfaceSettingGet("favorites", []));
-        HotglueGetChannelByURL(HOTGLUE_LOCALS_CHANNEL).Deserialize(InterfaceSettingGet("locals", []));
+        HotglueGetChannelByURL(HOTGLUE_FAVORITES_CHANNEL).DeserializeURLArray(InterfaceSettingGet("favorites", []));
+        HotglueGetChannelByURL(HOTGLUE_LOCALS_CHANNEL).DeserializeURLArray(InterfaceSettingGet("locals", []));
         
         HotglueChannelsDeserialize(InterfaceSettingGet("channels", []));
     }

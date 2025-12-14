@@ -13,8 +13,9 @@
 #macro HOTGLUE_FAVORITES_CHANNEL  "@favorites"
 #macro HOTGLUE_LOCALS_CHANNEL  "@locals"
 
-#macro HOTGLUE_CHANNEL_JSON  "JSON"
-#macro HOTGLUE_CHANNEL_GMK   "GameMaker Kitchen"
+#macro HOTGLUE_CHANNEL_JSON       "JSON"
+#macro HOTGLUE_CHANNEL_DIRECTORY  "Directory"
+#macro HOTGLUE_CHANNEL_GMK        "GameMaker Kitchen"
 
 #macro HOTGLUE_REPOSITORY_LOCAL   "local"
 #macro HOTGLUE_REPOSITORY_GITHUB  "github"

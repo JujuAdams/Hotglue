@@ -37,7 +37,7 @@ function ClassTabInspector() : ClassTab() constructor
                 ImGuiSameLine();
                 if (ImGuiSmallButton("Refresh"))
                 {
-                    __project.Refresh();
+                    __project.Raefresh();
                 }
                 
                 ImGuiSameLine();

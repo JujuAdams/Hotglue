@@ -47,7 +47,7 @@ function __HotglueChannelCommon(_name, _url, _protected) constructor
         return _array;
     }
     
-    static Deserialize = function(_urlArray)
+    static DeserializeURLArray = function(_urlArray)
     {
         var _repositoryArray = __repositoryArray;
         array_resize(_repositoryArray, 0);

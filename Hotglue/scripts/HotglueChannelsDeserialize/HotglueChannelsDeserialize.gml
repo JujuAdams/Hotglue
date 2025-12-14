@@ -24,7 +24,10 @@ function HotglueChannelsDeserialize(_array)
     repeat(array_length(_array))
     {
         var _data = _array[_i];
-        HotglueEnsureRemoteChannel(_data.type, _data.name, _data.url, false);
+        
+        var _channel = HotglueEnsureRemoteChannel(_data.type, _data.name, _data.url, false);
+        _channel.Refresh();
+        
         ++_i;
     }
     

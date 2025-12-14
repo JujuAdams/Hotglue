@@ -60,6 +60,7 @@
     {"id":{"name":"__HotglueAsyncHTTPEvent","path":"scripts/__HotglueAsyncHTTPEvent/__HotglueAsyncHTTPEvent.yy",},},
     {"id":{"name":"__HotglueAsyncNetworkingEvent","path":"scripts/__HotglueAsyncNetworkingEvent/__HotglueAsyncNetworkingEvent.yy",},},
     {"id":{"name":"__HotglueChannelCommon","path":"scripts/__HotglueChannelCommon/__HotglueChannelCommon.yy",},},
+    {"id":{"name":"__HotglueChannelDirectory","path":"scripts/__HotglueChannelDirectory/__HotglueChannelDirectory.yy",},},
     {"id":{"name":"__HotglueChannelFavorites","path":"scripts/__HotglueChannelFavorites/__HotglueChannelFavorites.yy",},},
     {"id":{"name":"__HotglueChannelGitHub","path":"scripts/__HotglueChannelGitHub/__HotglueChannelGitHub.yy",},},
     {"id":{"name":"__HotglueChannelGMK","path":"scripts/__HotglueChannelGMK/__HotglueChannelGMK.yy",},},

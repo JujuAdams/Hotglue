@@ -16,6 +16,10 @@ function HotglueEnsureRemoteChannel(_type, _name, _url, _protected = false)
         {
             _channel = new __HotglueChannelGitHub(_name, _url, _protected);
         }
+        else if (_type == HOTGLUE_CHANNEL_DIRECTORY)
+        {
+            _channel = new __HotglueChannelDirectory(_name, _url, _protected);
+        }
         else if (_type == HOTGLUE_CHANNEL_GMK)
         {
             _channel = new __HotglueChannelGMK(_name, _url, _protected);

@@ -23,7 +23,7 @@ function ClassModalNewChannel() constructor
             
             ImGuiNewLine();
             
-            ImGuiText("URL:");
+            ImGuiText("URL / Path:");
             ImGuiSetNextItemWidth(ImGuiGetContentRegionAvailX());
             __url  = ImGuiInputText("##url", __url);
             
@@ -33,12 +33,17 @@ function ClassModalNewChannel() constructor
             ImGuiSetNextItemWidth(ImGuiGetContentRegionAvailX());
             if (ImGuiBeginCombo($"##combo", __type, ImGuiComboFlags.None))
             {
-                if (ImGuiSelectable("JSON", (__type == HOTGLUE_CHANNEL_JSON)))
+                if (ImGuiSelectable(HOTGLUE_CHANNEL_JSON, (__type == HOTGLUE_CHANNEL_JSON)))
                 {
                     __type = HOTGLUE_CHANNEL_JSON;
                 }
                 
-                if (ImGuiSelectable("GameMaker Kitchen", (__type == HOTGLUE_CHANNEL_GMK)))
+                if (ImGuiSelectable(HOTGLUE_CHANNEL_DIRECTORY, (__type == HOTGLUE_CHANNEL_DIRECTORY)))
+                {
+                    __type = HOTGLUE_CHANNEL_DIRECTORY;
+                }
+                
+                if (ImGuiSelectable(HOTGLUE_CHANNEL_GMK, (__type == HOTGLUE_CHANNEL_GMK)))
                 {
                     __type = HOTGLUE_CHANNEL_GMK;
                 }
