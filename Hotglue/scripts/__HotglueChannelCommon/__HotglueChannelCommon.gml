@@ -79,6 +79,7 @@ function __HotglueChannelCommon(_name, _url) constructor
             if (_repositoryArray[_i].GetURL() == _url)
             {
                 array_delete(_repositoryArray, _i, 1);
+                LogTraceAndStatus($"Deleted repository \"{_url}\" from channel \"{__name}\"");
                 return;
             }
             

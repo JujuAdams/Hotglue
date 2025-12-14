@@ -165,16 +165,36 @@ function ClassInterfaceChannelView(_channel) constructor
             }
             else
             {
+                var _channelIsLocal = not __channel.__isRemote;
+                var _deleteIndex = undefined;
+                
                 var _i = 0;
                 repeat(array_length(_repositoryArray))
                 {
                     var _repository = _repositoryArray[_i];
+                    
+                    if (_channelIsLocal)
+                    {
+                        if (ImGuiSmallButton($"X##{string(ptr(_repository))}"))
+                        {
+                            _deleteIndex = _i;
+                        }
+                        
+                        ImGuiSameLine();
+                    }
+                    
                     if (ImGuiSelectable(_repository.GetName(), __selectedRepository == _repository))
                     {
                         __selectedRepository = _repository;
                     }
                     
                     ++_i;
+                }
+                
+                if (_deleteIndex != undefined)
+                {
+                    __channel.DeleteRepository(_repositoryArray[_deleteIndex].GetURL());
+                    InterfaceSettingsSave();
                 }
             }
             
