@@ -175,6 +175,15 @@ function ClassInterfaceRepositoryView(_repository) constructor
                     }
                 }
                 
+                if (oInterface.settingsTab.__advanced)
+                {
+                    ImGuiSameLine();
+                    if (ImGuiButton("Test Load"))
+                    {
+                        __selectedRelease.LoadProject();
+                    }
+                }
+                
                 ImGuiEndDisabled();
                 
                 ImGuiBeginChild("releaseDecriptionPane");
