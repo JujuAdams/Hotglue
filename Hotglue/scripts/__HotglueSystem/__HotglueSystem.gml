@@ -34,9 +34,6 @@ function __HotglueSystem()
         array_push(__channelArray, new __HotglueChannelFavorites("* Favourites *", HOTGLUE_FAVORITES_CHANNEL));
         array_push(__channelArray, new __HotglueChannelLocal("Local", HOTGLUE_LOCALS_CHANNEL));
         
-        var _gmkChannel = new __HotglueChannelGMK("GameMaker Kitchen", "https://www.gamemakerkitchen.com/resource.json");
-        array_push(__channelArray, _gmkChannel);
-        
         __repositoryArray = [];
         
         time_source_start(time_source_create(time_source_global, 1, time_source_units_frames, function()
@@ -47,8 +44,6 @@ function __HotglueSystem()
         
         HotglueClearTempCache();
         __HotglueLoadGitHubAccessToken();
-        
-        _gmkChannel.Refresh();
     }
     
     if (GM_build_type == "run")

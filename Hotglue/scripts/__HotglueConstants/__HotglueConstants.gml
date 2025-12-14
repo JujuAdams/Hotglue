@@ -13,5 +13,8 @@
 #macro HOTGLUE_FAVORITES_CHANNEL  "@favorites"
 #macro HOTGLUE_LOCALS_CHANNEL  "@locals"
 
+#macro HOTGLUE_CHANNEL_JSON  "json"
+#macro HOTGLUE_CHANNEL_GMK   "gmk"
+
 #macro HOTGLUE_REPOSITORY_LOCAL   "local"
 #macro HOTGLUE_REPOSITORY_GITHUB  "github"
