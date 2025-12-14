@@ -109,7 +109,7 @@ function ClassInterfaceChannelView(_channel) constructor
                 ImGuiText(__channel.GetURL());
             }
             
-            ImGuiBeginChild("leftPaneOuter", 250, undefined, ImGuiChildFlags.Border);
+            ImGuiBeginChild("leftPaneOuter", 300, undefined, ImGuiChildFlags.Border);
             
             __searchString = ImGuiInputTextWithHint($"##channelSearch_{ptr(self)}", "Search", __searchString);
             ImGuiSameLine();

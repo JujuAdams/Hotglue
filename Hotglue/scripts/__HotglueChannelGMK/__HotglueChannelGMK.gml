@@ -74,7 +74,7 @@ function __HotglueChannelGMK(_name, _url) : __HotglueChannelCommon(_name, _url) 
                                     }
                                     else
                                     {
-                                        __HotglueWarning($"Item {_i} does not have a GitHub link ({_link})");
+                                        __HotglueWarning($"Item {_i} does not have a GitHub repository link ({_link})");
                                     }
                                 }
                                 else
