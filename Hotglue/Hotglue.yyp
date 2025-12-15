@@ -80,6 +80,7 @@
     {"id":{"name":"__HotglueError","path":"scripts/__HotglueError/__HotglueError.yy",},},
     {"id":{"name":"__HotglueFolder","path":"scripts/__HotglueFolder/__HotglueFolder.yy",},},
     {"id":{"name":"__HotglueGenerateCacheFilename","path":"scripts/__HotglueGenerateCacheFilename/__HotglueGenerateCacheFilename.yy",},},
+    {"id":{"name":"__HotglueGenerateUUID","path":"scripts/__HotglueGenerateUUID/__HotglueGenerateUUID.yy",},},
     {"id":{"name":"__HotglueGuessURLIsGitHub","path":"scripts/__HotglueGuessURLIsGitHub/__HotglueGuessURLIsGitHub.yy",},},
     {"id":{"name":"__HotglueIncludedFile","path":"scripts/__HotglueIncludedFile/__HotglueIncludedFile.yy",},},
     {"id":{"name":"__HotglueLoadGitHubAccessToken","path":"scripts/__HotglueLoadGitHubAccessToken/__HotglueLoadGitHubAccessToken.yy",},},

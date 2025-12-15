@@ -182,10 +182,9 @@ function __HotglueLooseFile(_path) constructor
             {
                 var _directory = $"{_project.__projectDirectory}sprites/{GetName()}/";
                 
-                //FIXME - Generate UUIDs
-                var _frameUUID    = "3a612cab-2a59-4a09-a094-8b3205cfda42";
-                var _layerUUID    = "3a612cbb-2a59-4a09-a094-8b3205cfda42";
-                var _seqFrameUUID = "3a612ccb-2a59-4a09-a094-8b3205cfda42";
+                var _frameUUID    = __HotglueGenerateUUID();
+                var _layerUUID    = __HotglueGenerateUUID();
+                var _seqFrameUUID = __HotglueGenerateUUID();
                 
                 file_copy(__path, $"{_directory}/{_frameUUID}.png");
                 file_copy(__path, $"{_directory}/layers/{_frameUUID}/{_layerUUID}.png");
