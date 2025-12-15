@@ -246,11 +246,13 @@ function __InterfaceProjectViewBuildOverview()
         else
         {
             ImGuiPopStyleVar();
-            ImGuiBeginTable("importedTable", 2);
+            ImGuiBeginTable("importedTable", 3);
             
-            ImGuiTableSetupColumn("name", ImGuiTableColumnFlags.WidthFixed, 120);
-            ImGuiTableSetupColumn("version");
+            ImGuiTableSetupColumn("name");
+            ImGuiTableSetupColumn("verify", ImGuiTableColumnFlags.WidthFixed, 50);
+            ImGuiTableSetupColumn("delete", ImGuiTableColumnFlags.WidthFixed, 50);
             
+            var _deleteIndex = undefined;
             var _i = 0;
             repeat(array_length(_importedArray))
             {
@@ -259,10 +261,36 @@ function __InterfaceProjectViewBuildOverview()
                 ImGuiTableNextRow();
                 ImGuiTableNextColumn();
                 InterfaceLinkText(_imported.name, _imported.origin);
-                ImGuiTableNextColumn();
+                ImGuiSameLine();
                 ImGuiTextWrapped(_imported.version);
                 
+                ImGuiTableNextColumn();
+                if (ImGuiSmallButton("Verify"))
+                {
+                    if (__project.VerifyLibrary(_imported.name))
+                    {
+                        var _message = $"Verified all assets exist for \"{_imported.name}\".";
+                    }
+                    else
+                    {
+                        var _message = $"Failed to verify all assets exist for \"{_imported.name}\". Please check the log for more information.";
+                    }
+                    
+                    oInterface.popUpStruct = new ClassModalMessage(_message);
+                }
+                
+                ImGuiTableNextColumn();
+                if (ImGuiSmallButton("Delete"))
+                {
+                    _deleteIndex = _i;
+                }
+                
                 ++_i;
+            }
+            
+            if (_deleteIndex != undefined)
+            {
+                oInterface.popUpStruct = new ClassModalConfirmLibraryDelete(__project, _imported.name);
             }
             
             ImGuiEndTable();

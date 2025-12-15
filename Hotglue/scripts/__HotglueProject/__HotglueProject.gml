@@ -393,11 +393,59 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     static ImportAsLibrary = function(_sourceProject, _subfolder = "")
     {
-        __RemoveLibrary(_sourceProject.GetName());
+        DeleteLibrary(_sourceProject.GetName(), false);
         __AddLibrary(_sourceProject.GetName(), _sourceProject.GetVersionString(), _sourceProject.GetURL(), _sourceProject.__quickAssetArray);
         __SaveHotglueMetadata();
         
         return ImportAllFrom(_sourceProject, _subfolder);
+    }
+    
+    static __GetLibraryMetadata = function(_libraryName)
+    {
+        if (not GetHotglueMetadataExists()) return undefined;
+        
+        var _installedArray = __hotglueMetadata[1];
+        var _i = 0;
+        repeat(array_length(_installedArray))
+        {
+            if (_installedArray[_i].name == _libraryName)
+            {
+                return _installedArray[_i];
+            }
+            
+            ++_i;
+        }
+        
+        return undefined;
+    }
+    
+    static VerifyLibrary = function(_libraryName)
+    {
+        if (not GetHotglueMetadataExists()) return -1;
+        
+        var _libraryMetadata = __GetLibraryMetadata(_libraryName);
+        if (_libraryMetadata == undefined) return;
+        
+        var _installedPIDArray = _libraryMetadata.assets;
+        var _quickAssetDict    = __quickAssetDict;
+        
+        var _result = 1;
+        var _i = 0;
+        repeat(array_length(_installedPIDArray))
+        {
+            var _pid = _installedPIDArray[_i];
+            
+            var _asset = _quickAssetDict[$ _pid];
+            if (not is_struct(_asset))
+            {
+                _result = 0;
+                __HotglueWarning($"Missing {_pid}");
+            }
+            
+            ++_i;
+        }
+        
+        return _result;
     }
     
     static __AddLibrary = function(_libraryName, _version, _origin, _assetArray)
@@ -420,30 +468,19 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         });
     }
     
-    static __RemoveLibrary = function(_libraryName)
+    static DeleteLibrary = function(_libraryName, _saveMetadata = true)
     {
         if (not GetHotglueMetadataExists()) return;
         
-        var _installedPIDArray = undefined;
+        var _libraryMetadata = __GetLibraryMetadata(_libraryName);
+        if (_libraryMetadata == undefined) return;
         
-        var _installedArray = __hotglueMetadata[1];
-        var _i = 0;
-        repeat(array_length(_installedArray))
-        {
-            if (_installedArray[_i].name == _libraryName)
-            {
-                _installedPIDArray = _installedArray[_i].assets;
-                array_delete(_installedArray, _i, 1);
-                break;
-            }
-            
-            ++_i;
-        }
+        var _index = array_get_index(__hotglueMetadata[1], _libraryMetadata);
+        if (_index >= 0) array_delete(__hotglueMetadata[1], _index, 1);
         
-        if (_installedPIDArray == undefined) return;
-        
-        var _quickAssetArray = __quickAssetArray;
-        var _quickAssetDict  = __quickAssetDict;
+        var _installedPIDArray = _libraryMetadata.assets;
+        var _quickAssetArray   = __quickAssetArray;
+        var _quickAssetDict    = __quickAssetDict;
         
         var _i = 0;
         repeat(array_length(_installedPIDArray))
@@ -461,6 +498,11 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
             }
             
             ++_i;
+        }
+        
+        if (_saveMetadata)
+        {
+            __SaveHotglueMetadata();
         }
     }
     
