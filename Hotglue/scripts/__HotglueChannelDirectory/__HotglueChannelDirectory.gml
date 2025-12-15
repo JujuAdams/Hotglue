@@ -81,5 +81,6 @@ function __HotglueChannelDirectory(_name, _url, _protected) : __HotglueChannelCo
         __HotglueTrace($"Finished refreshing directory \"{__url}\"");
         
         DeserializeURLArray(_array);
+        SortArray();
     }
 }

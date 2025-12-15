@@ -60,6 +60,14 @@ function __HotglueChannelCommon(_name, _url, _protected) constructor
         }
     }
     
+    static SortArray = function()
+    {
+        array_sort(__repositoryArray, function(_a, _b)
+        {
+            return (_a.GetName() < _b.GetName())? -1 : 1;
+        });
+    }
+    
     static AddRepository = function(_url, _forceType = undefined)
     {
         var _repository = GetRepositoryFromURL(_url);

@@ -13,8 +13,13 @@ function InterfaceSettingsLoad()
         settings = json_parse(_string);
         buffer_delete(_buffer);
         
-        HotglueGetChannelByURL(HOTGLUE_FAVORITES_CHANNEL).DeserializeURLArray(InterfaceSettingGet("favorites", []));
-        HotglueGetChannelByURL(HOTGLUE_LOCALS_CHANNEL).DeserializeURLArray(InterfaceSettingGet("locals", []));
+        var _channel = HotglueGetChannelByURL(HOTGLUE_FAVORITES_CHANNEL);
+        _channel.DeserializeURLArray(InterfaceSettingGet("favorites", []));
+        _channel.SortArray();
+        
+        var _channel = HotglueGetChannelByURL(HOTGLUE_LOCALS_CHANNEL);
+        _channel.DeserializeURLArray(InterfaceSettingGet("locals", []));
+        _channel.SortArray();
         
         HotglueChannelsDeserialize(InterfaceSettingGet("channels", []));
     }

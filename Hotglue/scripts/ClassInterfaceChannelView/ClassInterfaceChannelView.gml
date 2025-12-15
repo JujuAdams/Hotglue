@@ -139,6 +139,10 @@ function ClassInterfaceChannelView(_channel) constructor
                             {
                                 __selectedRepository = _repository;
                             }
+                            else
+                            {
+                                __channel.SortArray();
+                            }
                             
                             InterfaceSettingsSave();
                         }

@@ -34,6 +34,7 @@ function ClassInterfaceRepositoryView(_repository) constructor
                 LogTraceAndStatus($"Unfavourited \"{_url}\"");
             }
             
+            _favoritesChannel.SortArray();
             InterfaceSettingsSave();
         }
     }

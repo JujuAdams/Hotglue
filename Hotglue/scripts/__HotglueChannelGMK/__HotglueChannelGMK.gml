@@ -88,7 +88,8 @@ function __HotglueChannelGMK(_name, _url, _protected) : __HotglueChannelCommon(_
                                 
                                 ++_i;
                             }
-                                
+                            
+                            SortArray();
                             _success = true;
                         }
                     }

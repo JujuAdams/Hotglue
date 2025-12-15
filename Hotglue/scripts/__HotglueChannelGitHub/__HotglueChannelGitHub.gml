@@ -71,6 +71,7 @@ function __HotglueChannelGitHub(_name, _url, _protected) : __HotglueChannelCommo
                                 __HotglueTrace($"Refreshed channel \"{__url}\". Found {array_length(_urlArray)} links");
                                 
                                 DeserializeURLArray(_urlArray);
+                                SortArray();
                                 
                                 _success = true;
                             }
