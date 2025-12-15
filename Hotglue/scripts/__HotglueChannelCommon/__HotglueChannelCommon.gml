@@ -32,7 +32,7 @@ function __HotglueChannelCommon(_name, _url, _protected) constructor
         return __url;
     }
     
-    static Serialize = function()
+    static SerializeURLArray = function()
     {
         var _array = [];
         

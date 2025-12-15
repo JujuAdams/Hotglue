@@ -388,20 +388,80 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     static ImportAllFrom = function(_sourceProject, _subfolder = "")
     {
-        if (GetHotglueMetadataExists())
+        return __ImportFromProject(_sourceProject, _sourceProject.__quickAssetArray, _subfolder);
+    }
+    
+    static ImportAsLibrary = function(_sourceProject, _subfolder = "")
+    {
+        __RemoveLibrary(_sourceProject.GetName());
+        __AddLibrary(_sourceProject.GetName(), _sourceProject.GetVersionString(), _sourceProject.GetURL(), _sourceProject.__quickAssetArray);
+        __SaveHotglueMetadata();
+        
+        return ImportAllFrom(_sourceProject, _subfolder);
+    }
+    
+    static __AddLibrary = function(_libraryName, _version, _origin, _assetArray)
+    {
+        if (not GetHotglueMetadataExists()) return;
+        
+        var _assetPIDArray = array_create(array_length(_assetArray));
+        var _i = 0;
+        repeat(array_length(_assetArray))
         {
-            array_push(__hotglueMetadata[1], {
-                name:    _sourceProject.GetName(),
-                version: _sourceProject.GetVersionString(),
-                origin:  _sourceProject.GetURL(),
-            });
-            
-            __SaveHotglueMetadata();
+            _assetPIDArray[@ _i] = _assetArray[_i].GetPID();
+            ++_i;
         }
         
-        var _result = __ImportFromProject(_sourceProject, _sourceProject.__quickAssetArray, _subfolder);
+        array_push(__hotglueMetadata[1], {
+            name:    _libraryName,
+            version: _version,
+            origin:  _origin,
+            assets:  _assetPIDArray,
+        });
+    }
+    
+    static __RemoveLibrary = function(_libraryName)
+    {
+        if (not GetHotglueMetadataExists()) return;
         
-        return _result;
+        var _installedPIDArray = undefined;
+        
+        var _installedArray = __hotglueMetadata[1];
+        var _i = 0;
+        repeat(array_length(_installedArray))
+        {
+            if (_installedArray[_i].name == _libraryName)
+            {
+                _installedPIDArray = _installedArray[_i].assets;
+                array_delete(_installedArray, _i, 1);
+                break;
+            }
+            
+            ++_i;
+        }
+        
+        if (_installedPIDArray == undefined) return;
+        
+        var _quickAssetArray = __quickAssetArray;
+        var _quickAssetDict  = __quickAssetDict;
+        
+        var _i = 0;
+        repeat(array_length(_installedPIDArray))
+        {
+            var _pid = _installedPIDArray[_i];
+            
+            var _asset = _quickAssetDict[$ _pid];
+            if (is_struct(_asset))
+            {
+                _asset.__DeleteFromDisk(self);
+                
+                struct_remove(_quickAssetDict, _pid);
+                var _index = array_get_index(_quickAssetArray, _asset);
+                if (_index >= 0) array_delete(_quickAssetArray, _index, 1);
+            }
+            
+            ++_i;
+        }
     }
     
     static ImportFrom = function(_sourceProject, _assetNameArray, _subfolder = "")

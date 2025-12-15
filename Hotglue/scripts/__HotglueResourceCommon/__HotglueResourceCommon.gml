@@ -18,6 +18,13 @@ function __HotglueResourceCommon(_resourceStruct) constructor
         return data.path;
     }
     
+    static __DeleteFromDisk = function(_project)
+    {
+        var _directory = filename_dir(_project.__projectDirectory + data.path);
+        __HotglueTrace($"Deleting {_directory}");
+        directory_destroy(_directory);
+    }
+    
     //static GetName = function()
     //{
     //    return data.name;

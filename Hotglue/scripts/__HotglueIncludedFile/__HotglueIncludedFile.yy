@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"__HotglueIncludedFile",
   "parent":{
-    "name":"Classes",
-    "path":"folders/Hotglue/(System)/Classes.yy",
+    "name":"Assets",
+    "path":"folders/Hotglue/(System)/Classes/Assets.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

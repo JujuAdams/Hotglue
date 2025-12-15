@@ -28,6 +28,12 @@ function __HotglueIncludedFile(_includedFileStruct) constructor
         return path;
     }
     
+    static __DeleteFromDisk = function(_project)
+    {
+        __HotglueTrace($"Deleting {_project.__projectDirectory + path}");
+        file_delete(_project.__projectDirectory + path);
+    }
+    
     //static GetName = function()
     //{
     //    return data.name;

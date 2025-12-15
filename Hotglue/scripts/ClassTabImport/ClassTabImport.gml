@@ -39,7 +39,7 @@ function ClassTabImport() : ClassTab() constructor
                 {
                     if (_project.GetLoadedSuccessfully())
                     {
-                        __destinationProject.ImportAllFrom(_project);
+                        __destinationProject.ImportAsLibrary(_project);
                         LogTraceAndStatus("Imported release successfully.");
                     }
                     else

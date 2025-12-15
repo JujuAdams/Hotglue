@@ -6,7 +6,7 @@
   "name":"__HotglueResourceFont",
   "parent":{
     "name":"Resource Types",
-    "path":"folders/Hotglue/(System)/Classes/Resource Types.yy",
+    "path":"folders/Hotglue/(System)/Classes/Assets/Resource Types.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

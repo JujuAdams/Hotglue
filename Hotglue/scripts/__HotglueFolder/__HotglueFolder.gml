@@ -22,6 +22,11 @@ function __HotglueFolder(_folderStruct) constructor
         return __friendlyPath;
     }
     
+    static __DeleteFromDisk = function(_project)
+    {
+        //Do nothing!
+    }
+    
     //static GetName = function()
     //{
     //    return filename_name(__friendlyPath);
