@@ -44,8 +44,33 @@ function HotglueProjectToolTest(_projectToolPath = HotglueGetProjectToolPath())
     {
         if (file_exists(_triggerPath))
         {
-            __HotglueTrace($"Test successful");
-            _result = true;
+            __HotglueTrace($"ProjectTool executed, checking output \"{_outputPath}\"");
+            
+            var _string = "";
+            
+            try
+            {
+                var _buffer = buffer_load(_outputPath);
+                var _string = buffer_read(_buffer, buffer_text);
+                buffer_delete(_buffer);
+            }
+            catch(_error)
+            {
+                __HotglueWarning(json_stringify(_error, true));
+                __HotglueWarning($"Failed to open \"{_outputPath}\"");
+            }
+            
+            if (string_pos("ProjectTool Successful", _string) <= 0)
+            {
+                __HotglueTrace($"ProjectTool test completed successfully");
+                _result = true;
+            }
+            else
+            {
+                __HotglueWarning($"ProjectTool did not output as expected");
+                _result = false;
+            }
+            
             break;
         }
         
@@ -56,7 +81,7 @@ function HotglueProjectToolTest(_projectToolPath = HotglueGetProjectToolPath())
             
             if (_checkpointCount >= 12)
             {
-                __HotglueWarning("Test failed");
+                __HotglueWarning("Test failed; timeout");
                 break;
             }
             else
