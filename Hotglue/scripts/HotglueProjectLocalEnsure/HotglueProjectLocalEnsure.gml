@@ -15,7 +15,7 @@ function HotglueProjectLocalEnsure(_path)
     var _extension = filename_ext(_path);
     if (_extension == ".yyp")
     {
-        _project = __HotglueLoadYYP(_path, true, _path);
+        _project = __HotglueLoadYYP(_path, false, _path);
     }
     else if (_extension == ".yyz")
     {

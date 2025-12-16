@@ -1,5 +1,7 @@
 // Feather disable all
 
+/// @param [hyphenate=true]
+
 function __HotglueGenerateUUID(_hyphenate = true)
 {
     //UUIDv4 as per https://www.cryptosys.net/pki/uuid-rfc4122.html

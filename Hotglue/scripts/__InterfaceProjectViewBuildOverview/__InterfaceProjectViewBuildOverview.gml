@@ -49,10 +49,10 @@ function __InterfaceProjectViewBuildOverview()
     
     BuildOverview = method(undefined, function()
     {
-        var _editable = __project.GetEditable();
+        var _readOnly = __project.GetReadOnly();
         if (not __project.GetHotglueMetadataExists())
         {
-            if (_editable)
+            if (not _readOnly)
             {
                 ImGuiTextColored("No Hotglue metadata found in project.", INTERFACE_COLOR_RED_TEXT, 1);
                 ImGuiSameLine();
@@ -61,7 +61,7 @@ function __InterfaceProjectViewBuildOverview()
                     __project.EnsureHotglueMetadata();
                 }
                 
-                _editable = false;
+                _readOnly = true;
             }
             else
             {
@@ -69,10 +69,10 @@ function __InterfaceProjectViewBuildOverview()
             }
         }
         
-        if (_editable)
+        if (not _readOnly)
         {
             ///////
-            // Editable
+            // Read / Write
             ///////
             
             var _cellPadding = 8;
@@ -177,7 +177,7 @@ function __InterfaceProjectViewBuildOverview()
         else
         {
             ///////
-            // View
+            // Read Only
             ///////
             
             var _cellPadding = 8;

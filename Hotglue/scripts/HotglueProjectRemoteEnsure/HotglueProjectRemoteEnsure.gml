@@ -16,7 +16,7 @@ function HotglueProjectRemoteEnsure(_path, _sourceURL)
     var _extension = filename_ext(_path);
     if (_extension == ".yyp")
     {
-        _project = __HotglueLoadYYP(_path, false, _sourceURL);
+        _project = __HotglueLoadYYP(_path, true, _sourceURL);
     }
     else if (_extension == ".yyz")
     {

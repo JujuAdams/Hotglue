@@ -1,10 +1,10 @@
 // Feather disable all
 
 /// @param projectPath
-/// @param editable
+/// @param readOnly
 /// @param sourceURL
 
-function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
+function __HotglueProject(_projectPath, _readOnly, _sourceURL) constructor
 {
     static _projectByPathDict = __HotglueSystem().__projectByPathDict;
     static _projectBySourceURLDict = __HotglueSystem().__projectBySourceURLDict;
@@ -17,7 +17,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     }
     
     __projectPath = _projectPath;
-    __editable    = _editable;
+    __readOnly    = _readOnly;
     __sourceURL   = _sourceURL;
     
     __projectDirectory = filename_dir(__projectPath) + "/";
@@ -26,6 +26,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     __hotglueMetadata = undefined;
     
     __structure = new __HotglueProjectStructure(self);
+    __structureDirty = true;
     __loadedSuccessfully = false;
     
     __yypVersion = undefined;
@@ -71,7 +72,21 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
                 if (not GetYYPVersionSupported())
                 {
                     __HotglueWarning($"\"MetaData.IDEVersion\" value invalid ({__yypVersion}) for \"{__projectPath}\"");
-                    return;
+                    __HotglueTrace($"Running ProjectTool to convert to latest version");
+                    
+                    var _newProjectPath = $"{HOTGLUE_UNZIP_CACHE_DIRECTORY}{__HotglueGenerateUUID(false)}/{__yypJson.name}.yyp";
+                    HotglueProjectToolConvert(__projectPath, _newProjectPath);
+                    
+                    __projectPath = _newProjectPath;
+                    __HotglueTrace($"Changed project path to \"{__projectPath}\"");
+                    
+                    __readOnly = true;
+                    
+                    var _buffer = buffer_load(__projectPath);
+                    __yypString = buffer_read(_buffer, buffer_text);
+                    buffer_delete(_buffer);
+                    
+                    __yypJson = json_parse(__yypString);
                 }
             }
         }
@@ -123,7 +138,6 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         });
         
         __loadedSuccessfully = true;
-        __structureDirty = true;
     }
     
     static GetName = function()
@@ -163,9 +177,9 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         return __sourceURL;
     }
     
-    static GetEditable = function()
+    static GetReadOnly = function()
     {
-        return __editable;
+        return __readOnly;
     }
     
     static GetYYPName = function()
@@ -201,7 +215,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     static EnsureHotglueMetadata = function()
     {
-        if (not __editable) return;
+        if (__readOnly) return;
         if (__hotglueMetadata != undefined) return;
         
         __hotglueMetadata = __HotglueCreateMetadata(__yypJson.name);
@@ -223,7 +237,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     static __SaveHotglueMetadata = function()
     {
-        if (not __editable) return;
+        if (__readOnly) return;
         if (__hotglueMetadata == undefined) return;
         
         var _path = $"{__projectDirectory}notes/hotglue_metadata/hotglue_metadata.txt";
@@ -351,7 +365,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
         return (__hotglueMetadata == undefined)? _emptyArray : __hotglueMetadata[1];
     }
     
-    static GetExpandedAssets = function(_assetArray)
+    static GetExpandedAssets = function(_assetArray) //TODO - Does this need to be wound into the conflict detectors?
     {
         if (not is_array(_assetArray))
         {
@@ -388,11 +402,15 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     static ImportAllFrom = function(_sourceProject, _subfolder = "")
     {
+        if (__readOnly) return;
+        
         return __ImportFromProject(_sourceProject, _sourceProject.__quickAssetArray, _subfolder);
     }
     
     static ImportAsLibrary = function(_sourceProject, _subfolder = "")
     {
+        if (__readOnly) return;
+        
         DeleteLibrary(_sourceProject.GetName(), false);
         __AddLibrary(_sourceProject.GetName(), _sourceProject.GetVersionString(), _sourceProject.GetURL(), _sourceProject.__quickAssetArray);
         __SaveHotglueMetadata();
@@ -450,6 +468,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     static __AddLibrary = function(_libraryName, _version, _origin, _assetArray)
     {
+        if (__readOnly) return;
         if (not GetHotglueMetadataExists()) return;
         
         var _assetPIDArray = array_create(array_length(_assetArray));
@@ -470,6 +489,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     static DeleteLibrary = function(_libraryName, _saveMetadata = true)
     {
+        if (__readOnly) return;
         if (not GetHotglueMetadataExists()) return;
         
         var _libraryMetadata = __GetLibraryMetadata(_libraryName);
@@ -508,6 +528,8 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     static ImportFrom = function(_sourceProject, _assetNameArray, _subfolder = "")
     {
+        if (__readOnly) return;
+        
         if (not is_array(_assetNameArray))
         {
             _assetNameArray = [_assetNameArray];
@@ -529,6 +551,8 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     static __ImportFromProject = function(_sourceProject, _assetArray, _subfolder = "")
     {
+        if (__readOnly) return;
+        
         // 1. Ensure the user has Git set up
         __HotglueAssertGit(__projectDirectory);
         
@@ -579,6 +603,8 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     static ImportFromLooseFiles = function(_looseFileArray, _subfolder = "")
     {
+        if (__readOnly) return;
+        
         if (not is_array(_looseFileArray))
         {
             _looseFileArray = [_looseFileArray];
@@ -633,6 +659,7 @@ function __HotglueProject(_projectPath, _editable, _sourceURL) constructor
     
     static __EnsureFolderPath = function(_inPath)
     {
+        if (__readOnly) return;
         if (_inPath == "")
         {
             //The root always exists

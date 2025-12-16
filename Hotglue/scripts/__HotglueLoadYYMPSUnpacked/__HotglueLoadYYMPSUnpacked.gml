@@ -41,7 +41,7 @@ function __HotglueLoadYYMPSUnpacked(_directory, _sourceURL = undefined)
     buffer_delete(_buffer);
     var _metadataJSON = json_parse(_string);
     
-    var _project = new __HotglueProject(_directory + _projectPath, false, _sourceURL);
+    var _project = new __HotglueProject(_directory + _projectPath, true, _sourceURL);
     _project.__VerifyFilesUnzipped();
     _project.__SetYYMPSMetadata(_metadataJSON);
     

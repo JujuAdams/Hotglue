@@ -35,7 +35,7 @@ function __HotglueLoadYYZUnpacked(_directory, _sourceURL = undefined)
         __HotglueError("No .yyp file found inside directory");
     }
     
-    var _project = new __HotglueProject(_directory + _projectPath, false, _sourceURL);
+    var _project = new __HotglueProject(_directory + _projectPath, true, _sourceURL);
     _project.__VerifyFilesUnzipped();
     
     return _project;
