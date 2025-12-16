@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueProjectToolConvert",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueProjectToolConvert",
+  "parent":{
+    "name":"Projects",
+    "path":"folders/Hotglue/Projects.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

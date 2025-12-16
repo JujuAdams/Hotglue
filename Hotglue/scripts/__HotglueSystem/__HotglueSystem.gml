@@ -19,6 +19,19 @@ function __HotglueSystem()
         __suppressGitAssert = false;
         __destructiveCopy   = true;
         
+        if (os_type == os_windows)
+        {
+            __projectToolPath = "C:/Program Files/GameMaker/packages/project-tool-win-x64/ProjectTool.exe";
+        }
+        else if (os_type == os_macosx)
+        {
+            __projectToolPath = ""; //FIXME - Find the project tool path
+        }
+        else
+        {
+            __projectToolPath = "";
+        }
+        
         __githubUserAccessToken = undefined;
         
         //Port to connect on as part of the `.requestAuthenticationViaWebPage()` flow. This must match the callback URL entered whe creating your GitHub app.

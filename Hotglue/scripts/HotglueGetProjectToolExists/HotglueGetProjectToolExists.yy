@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueGetProjectToolExists",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueGetProjectToolExists",
+  "parent":{
+    "name":"Other",
+    "path":"folders/Hotglue/Other.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
