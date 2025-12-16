@@ -1,9 +1,9 @@
 // Feather disable all
 
-/// @param path
+/// @param sourceURL
 
-function HotglueProjectRemoteGet(_path)
+function HotglueProjectRemoteGet(_sourceURL)
 {
     static _projectBySourceURLDict = __HotglueSystem().__projectBySourceURLDict;
-    return _projectBySourceURLDict[$ _path];
+    return _projectBySourceURLDict[$ _sourceURL];
 }

@@ -32,6 +32,6 @@ function HotglueProjectRemoteEnsure(_path, _sourceURL)
         return undefined;
     }
     
-    _projectBySourceURLDict[$ _path] = _project;
+    _projectBySourceURLDict[$ _sourceURL] = _project;
     return _project;
 }
