@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"HotglueGetProjectToolExists",
   "parent":{
-    "name":"Other",
-    "path":"folders/Hotglue/Other.yy",
+    "name":"ProjectTool",
+    "path":"folders/Hotglue/ProjectTool.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

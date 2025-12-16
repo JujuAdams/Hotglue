@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"HotglueProjectToolConvert",
   "parent":{
-    "name":"Projects",
-    "path":"folders/Hotglue/Projects.yy",
+    "name":"ProjectTool",
+    "path":"folders/Hotglue/ProjectTool.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

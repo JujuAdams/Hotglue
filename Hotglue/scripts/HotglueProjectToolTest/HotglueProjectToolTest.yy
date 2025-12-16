@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"HotglueSetProjectToolPath",
+  "%Name":"HotglueProjectToolTest",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HotglueSetProjectToolPath",
+  "name":"HotglueProjectToolTest",
   "parent":{
     "name":"ProjectTool",
     "path":"folders/Hotglue/ProjectTool.yy",

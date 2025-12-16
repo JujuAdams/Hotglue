@@ -80,12 +80,18 @@ function ClassTabSettings() : ClassTab() constructor
                 LogTraceAndStatus("Cleared release cache");
             }
             
+            ImGuiSameLine(undefined, 20);
+            InterfaceLinkText(HOTGLUE_RELEASE_CACHE_DIRECTORY);
+            
             if (ImGuiButton("Clear unzip cache"))
             {
                 HotglueClearUnzipCache();
                 LogTraceAndStatus("Cleared unzip cache");
             }
             ImGuiUnindent();
+            
+            ImGuiSameLine(undefined, 20);
+            InterfaceLinkText(HOTGLUE_UNZIP_CACHE_DIRECTORY);
             
             ImGuiNewLine();
             
@@ -109,6 +115,30 @@ function ClassTabSettings() : ClassTab() constructor
                     }
                 }
             }
+            ImGuiUnindent();
+            
+            ImGuiNewLine();
+            
+            ImGuiText("Paths:");
+            ImGuiIndent();
+            
+            InterfaceLinkText(HotglueGetProjectToolPath());
+            ImGuiSameLine(undefined, 20);
+            if (ImGuiButton("Browse..."))
+            {
+                var _newPath = get_open_filename("*.*", "");
+                if (_newPath != "")
+                {
+                    HotglueSetProjectToolPath(_newPath);
+                }
+            }
+            
+            ImGuiSameLine(undefined, 20);
+            if (ImGuiButton("Test"))
+            {
+                HotglueProjectToolTest();
+            }
+            
             ImGuiUnindent();
             
             ImGuiNewLine();
