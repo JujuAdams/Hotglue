@@ -78,6 +78,7 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL) constructor
                     HotglueProjectToolConvert(__projectPath, _newProjectPath);
                     
                     __projectPath = _newProjectPath;
+                    __projectDirectory = filename_dir(__projectPath) + "/";
                     __HotglueTrace($"Changed project path to \"{__projectPath}\"");
                     
                     __readOnly = true;
