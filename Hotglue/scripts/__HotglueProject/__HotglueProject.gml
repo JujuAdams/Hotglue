@@ -23,6 +23,7 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     __inCache     = _inCache;
     
     __projectDirectory = filename_dir(__projectPath) + "/";
+    __converted = false;
     
     __yympsMetadata   = undefined;
     __hotglueMetadata = undefined;
@@ -32,6 +33,7 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     __loadedSuccessfully = false;
     
     __yypVersion = undefined;
+    __yypOriginalVersion = undefined;
     
     Refresh();
     
@@ -64,6 +66,8 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         else
         {
             __yypVersion = _yypMetadata[$ "IDEVersion"];
+            __yypOriginalVersion = __yypVersion;
+            
             if (__yypVersion == undefined)
             {
                 __HotglueWarning($"Could not find \"MetaData.IDEVersion\" field in \"{__projectPath}\"");
@@ -98,6 +102,7 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
                         __projectDirectory = filename_dir(__projectPath) + "/";
                         __readOnly         = true;
                         __inCache          = true;
+                        __converted        = true;
                         
                         __HotglueTrace($"Changed project path to \"{__projectPath}\"");
                         
@@ -207,6 +212,11 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         return __inCache;
     }
     
+    static GetConverted = function()
+    {
+        return __converted;
+    }
+    
     static GetYYPName = function()
     {
         return __yypJson.name;
@@ -215,6 +225,11 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     static GetYYPVersion = function()
     {
         return __yypVersion;
+    }
+    
+    static GetYYPOriginalVersion = function()
+    {
+        return __yypOriginalVersion;
     }
     
     static GetYYPVersionSupported = function(_version = __yypVersion)

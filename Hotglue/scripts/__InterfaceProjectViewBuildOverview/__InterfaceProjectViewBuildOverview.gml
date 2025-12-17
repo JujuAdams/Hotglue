@@ -50,9 +50,11 @@ function __InterfaceProjectViewBuildOverview()
     BuildOverview = method(undefined, function()
     {
         var _readOnly = __project.GetReadOnly();
+        var _metadataEditable = not _readOnly;
+        
         if (not __project.GetHotglueMetadataExists())
         {
-            if (not _readOnly)
+            if (_metadataEditable)
             {
                 ImGuiTextColored("No Hotglue metadata found in project.", INTERFACE_COLOR_RED_TEXT, 1);
                 ImGuiSameLine();
@@ -61,7 +63,7 @@ function __InterfaceProjectViewBuildOverview()
                     __project.EnsureHotglueMetadata();
                 }
                 
-                _readOnly = true;
+                _metadataEditable = false;
             }
             else
             {
@@ -69,7 +71,12 @@ function __InterfaceProjectViewBuildOverview()
             }
         }
         
-        if (not _readOnly)
+        if (_readOnly)
+        {
+            ImGuiTextColored("Project is read-only.", INTERFACE_COLOR_RED_TEXT, 1);
+        }
+        
+        if (_metadataEditable)
         {
             ///////
             // Read / Write
@@ -95,6 +102,12 @@ function __InterfaceProjectViewBuildOverview()
                 __project.__hotglueMetadata[0].name = __project.__yypJson.name;
                 __project.__SaveHotglueMetadata();
             }
+            
+            ImGuiTableNextRow();
+            ImGuiTableNextColumn();
+            ImGuiText(".yyp Version");
+            ImGuiTableNextColumn();
+            ImGuiText($"{__project.GetYYPOriginalVersion()}{__project.GetConverted()? " (converted)" : ""}");
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
@@ -196,7 +209,12 @@ function __InterfaceProjectViewBuildOverview()
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
+            ImGuiText(".yyp Version");
+            ImGuiTableNextColumn();
+            ImGuiText($"{__project.GetYYPOriginalVersion()}{__project.GetConverted()? " (converted)" : ""}");
             
+            ImGuiTableNextRow();
+            ImGuiTableNextColumn();
             ImGuiTextLink("Semantic Version");
             var _clicked = ImGuiIsItemClicked();
             if (ImGuiBeginItemTooltip())

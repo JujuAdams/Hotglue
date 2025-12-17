@@ -268,17 +268,19 @@ function ClassTabImport() : ClassTab() constructor
             ImGuiBeginChild("middlePane", _importButtonSize);
             ImGuiSetCursorPosY(ImGuiGetContentRegionMaxY()/2 - 10);
             
+            ImGuiBeginDisabled((__destinationProject == undefined) || __destinationProject.GetReadOnly());
+            
             if (_importMode == "local project")
             {
-                ImGuiBeginDisabled((__directProject == undefined) || (__directView == undefined) || (__directView.GetSelectedCount() <= 0) || (__destinationProject == undefined));
+                ImGuiBeginDisabled((__directProject == undefined) || (__directView == undefined) || (__directView.GetSelectedCount() <= 0));
             }
             else if (_importMode == "loose files")
             {
-                ImGuiBeginDisabled((array_length(__looseFileViewArray) <= 0) || (__destinationProject == undefined));
+                ImGuiBeginDisabled((array_length(__looseFileViewArray) <= 0));
             }
             else if (_importMode == "channels")
             {
-                ImGuiBeginDisabled((GetSelectedRelease() == undefined) || (__destinationProject == undefined));
+                ImGuiBeginDisabled((GetSelectedRelease() == undefined));
             }
             else
             {
@@ -290,6 +292,7 @@ function ClassTabImport() : ClassTab() constructor
                 oInterface.popUpStruct = new ClassModalConfirmImport(self, _importMode);
             }
             
+            ImGuiEndDisabled();
             ImGuiEndDisabled();
             
             ImGuiEndChild();
@@ -309,8 +312,7 @@ function ClassTabImport() : ClassTab() constructor
                 {
                     ImGuiBeginChild("destinationInnerPane", undefined, undefined, ImGuiChildFlags.Border);
                     
-                    ImGuiText(__destinationProject.GetPath());
-                    ImGuiSameLine();
+                    ImGuiText(__destinationProject.GetURL());
                     if (ImGuiSmallButton("Close"))
                     {
                         __destinationProject = undefined;
@@ -403,7 +405,14 @@ function ClassTabImport() : ClassTab() constructor
                         
                         if (__destinationProject != undefined)
                         {
-                            InterfaceRecentPush(_openPath);
+                            if (__destinationProject.GetReadOnly())
+                            {
+                                oInterface.popUpStruct = new ClassModalMessage($"Project is from an old version of GameMaker ({__destinationProject.GetYYPOriginalVersion()}) and has been opened in read-only mode.");
+                            }
+                            else
+                            {
+                                InterfaceRecentPush(_openPath);
+                            }
                         }
                     }
                     else
