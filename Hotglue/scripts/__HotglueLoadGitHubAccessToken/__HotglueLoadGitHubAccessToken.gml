@@ -17,7 +17,15 @@ function __HotglueLoadGitHubAccessToken()
             
             if (is_struct(_json))
             {
-                if (date_compare_time(date_current_datetime(), _json.expires) < 0)
+                var _currentDatetime = date_current_datetime();
+                
+                __HotglueTrace($"Current datetime = {date_datetime_string(_currentDatetime)}");
+                __HotglueTrace($"Access token expires = {date_datetime_string(_json.expires)}");
+                
+                var _delta = date_compare_time(_currentDatetime, _json.expires);
+                __HotglueTrace($"delta = {string_format(_delta, 0, 10)}");
+                
+                if (_delta > 0)
                 {
                     _system.__githubUserAccessToken = _json.accessoken;
                     __HotglueTrace("Extracted access token from cache");
