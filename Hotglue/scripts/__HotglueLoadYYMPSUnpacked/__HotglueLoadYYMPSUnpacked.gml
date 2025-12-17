@@ -2,8 +2,9 @@
 
 /// @param directory
 /// @param [sourceURL=path]
+/// @param [inCache=false]
 
-function __HotglueLoadYYMPSUnpacked(_directory, _sourceURL = undefined)
+function __HotglueLoadYYMPSUnpacked(_directory, _sourceURL = undefined, _inCache = false)
 {
     if (GM_is_sandboxed)
     {
@@ -41,7 +42,7 @@ function __HotglueLoadYYMPSUnpacked(_directory, _sourceURL = undefined)
     buffer_delete(_buffer);
     var _metadataJSON = json_parse(_string);
     
-    var _project = new __HotglueProject(_directory + _projectPath, true, _sourceURL);
+    var _project = new __HotglueProject(_directory + _projectPath, true, _sourceURL, _inCache);
     _project.__VerifyFilesUnzipped();
     _project.__SetYYMPSMetadata(_metadataJSON);
     

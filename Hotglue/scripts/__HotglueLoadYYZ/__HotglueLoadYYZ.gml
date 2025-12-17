@@ -31,6 +31,6 @@ function __HotglueLoadYYZ(_yyzPath, _sourceURL = _yyzPath)
     }
     else
     {
-        return __HotglueLoadYYZUnpacked(_directory, _sourceURL);
+        return __HotglueLoadYYZUnpacked(_directory, _sourceURL, true);
     }
 }

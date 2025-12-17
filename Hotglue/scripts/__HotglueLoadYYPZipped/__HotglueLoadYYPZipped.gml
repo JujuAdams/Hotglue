@@ -28,6 +28,6 @@ function __HotglueLoadYYPZipped(_zipPath, _sourceURL = _zipPath)
     }
     else
     {
-        return __HotglueLoadYYZUnpacked(_directory, _sourceURL);
+        return __HotglueLoadYYZUnpacked(_directory, _sourceURL, true);
     }
 }

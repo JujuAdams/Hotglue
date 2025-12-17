@@ -39,5 +39,5 @@ function __HotglueLoadYYMPS(_yympsPath, _sourceURL = _yympsPath)
         return undefined;
     }
     
-    return __HotglueLoadYYMPSUnpacked(_directory, _sourceURL);
+    return __HotglueLoadYYMPSUnpacked(_directory, _sourceURL, true);
 }

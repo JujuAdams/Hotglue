@@ -2,8 +2,9 @@
 
 /// @param directory
 /// @param [sourceURL]
+/// @param [inCache=false]
 
-function __HotglueLoadYYZUnpacked(_directory, _sourceURL = undefined)
+function __HotglueLoadYYZUnpacked(_directory, _sourceURL = undefined, _inCache = false)
 {
     if (GM_is_sandboxed)
     {
@@ -35,7 +36,7 @@ function __HotglueLoadYYZUnpacked(_directory, _sourceURL = undefined)
         __HotglueError("No .yyp file found inside directory");
     }
     
-    var _project = new __HotglueProject(_directory + _projectPath, true, _sourceURL);
+    var _project = new __HotglueProject(_directory + _projectPath, true, _sourceURL, _inCache);
     _project.__VerifyFilesUnzipped();
     
     return _project;

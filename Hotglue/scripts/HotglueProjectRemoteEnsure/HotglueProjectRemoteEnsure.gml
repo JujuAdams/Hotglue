@@ -1,9 +1,9 @@
 // Feather disable all
 
-/// @param path
 /// @param sourceURL
+/// @param cachePath
 
-function HotglueProjectRemoteEnsure(_path, _sourceURL)
+function HotglueProjectRemoteEnsure(_sourceURL, _cachePath)
 {
     static _projectBySourceURLDict = __HotglueSystem().__projectBySourceURLDict;
     
@@ -13,18 +13,18 @@ function HotglueProjectRemoteEnsure(_path, _sourceURL)
         return _project;
     }
     
-    var _extension = filename_ext(_path);
+    var _extension = filename_ext(_cachePath);
     if (_extension == ".yyp")
     {
-        _project = __HotglueLoadYYP(_path, true, _sourceURL);
+        _project = __HotglueLoadYYP(_cachePath, true, _sourceURL, true);
     }
     else if (_extension == ".yyz")
     {
-        _project = __HotglueLoadYYZ(_path, _sourceURL);
+        _project = __HotglueLoadYYZ(_cachePath, _sourceURL);
     }
     else if (_extension == ".yymps")
     {
-        _project = __HotglueLoadYYMPS(_path, _sourceURL);
+        _project = __HotglueLoadYYMPS(_cachePath, _sourceURL);
     }
     else
     {

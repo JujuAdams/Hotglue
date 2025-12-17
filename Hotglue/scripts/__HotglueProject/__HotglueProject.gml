@@ -3,8 +3,9 @@
 /// @param projectPath
 /// @param readOnly
 /// @param sourceURL
+/// @param inCache
 
-function __HotglueProject(_projectPath, _readOnly, _sourceURL) constructor
+function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constructor
 {
     static _projectByPathDict = __HotglueSystem().__projectByPathDict;
     static _projectBySourceURLDict = __HotglueSystem().__projectBySourceURLDict;
@@ -19,6 +20,7 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL) constructor
     __projectPath = _projectPath;
     __readOnly    = _readOnly;
     __sourceURL   = _sourceURL;
+    __inCache     = _inCache;
     
     __projectDirectory = filename_dir(__projectPath) + "/";
     
@@ -77,11 +79,12 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL) constructor
                     var _newProjectPath = $"{HOTGLUE_UNZIP_CACHE_DIRECTORY}{__HotglueGenerateUUID(false)}/{__yypJson.name}.yyp";
                     HotglueProjectToolConvert(__projectPath, _newProjectPath);
                     
-                    __projectPath = _newProjectPath;
+                    __projectPath      = _newProjectPath;
                     __projectDirectory = filename_dir(__projectPath) + "/";
-                    __HotglueTrace($"Changed project path to \"{__projectPath}\"");
+                    __readOnly         = true;
+                    __inCache          = true;
                     
-                    __readOnly = true;
+                    __HotglueTrace($"Changed project path to \"{__projectPath}\"");
                     
                     var _buffer = buffer_load(__projectPath);
                     __yypString = buffer_read(_buffer, buffer_text);
@@ -181,6 +184,11 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL) constructor
     static GetReadOnly = function()
     {
         return __readOnly;
+    }
+    
+    static GetInCache = function()
+    {
+        return __inCache;
     }
     
     static GetYYPName = function()
