@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"HotglueClearReleaseCache",
+  "%Name":"HotglueSetCachePath",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HotglueClearReleaseCache",
+  "name":"HotglueSetCachePath",
   "parent":{
     "name":"Cache",
     "path":"folders/Hotglue/Cache.yy",

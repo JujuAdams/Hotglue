@@ -60,7 +60,7 @@ function HotglueProjectToolTest(_projectToolPath = HotglueGetProjectToolPath())
                 __HotglueWarning($"Failed to open \"{_outputPath}\"");
             }
             
-            if (string_pos("ProjectTool Successful", _string) <= 0)
+            if (string_pos("ProjectTool Successful", _string) > 0)
             {
                 __HotglueTrace($"ProjectTool test completed successfully");
                 _result = true;

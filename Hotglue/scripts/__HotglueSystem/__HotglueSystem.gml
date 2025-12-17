@@ -19,9 +19,12 @@ function __HotglueSystem()
         __suppressGitAssert = false;
         __destructiveCopy   = true;
         
+        __cachePath = HOTGLUE_DEFAULT_PATH_CACHE;
+        directory_create(__cachePath);
+        
         if (os_type == os_windows)
         {
-            __projectToolPath = "C:/Program Files/GameMaker/packages/project-tool-win-x64/ProjectTool.exe";
+            __projectToolPath = HOTGLUE_DEFAULT_PATH_PROJECTTOOL;
         }
         else if (os_type == os_macosx)
         {

@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"HotglueClearTempCache",
   "parent":{
-    "name":"Hotglue",
-    "path":"folders/Hotglue.yy",
+    "name":"Cache",
+    "path":"folders/Hotglue/Cache.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -74,14 +74,13 @@ function ClassTabSettings() : ClassTab() constructor
             
             ImGuiText("Caches:");
             ImGuiIndent();
+            InterfaceLinkText(HotglueGetCachePath());
+            
             if (ImGuiButton("Clear release cache"))
             {
                 HotglueClearReleaseCache();
                 LogTraceAndStatus("Cleared release cache");
             }
-            
-            ImGuiSameLine(undefined, 20);
-            InterfaceLinkText(HOTGLUE_RELEASE_CACHE_DIRECTORY);
             
             if (ImGuiButton("Clear unzip cache"))
             {
@@ -89,9 +88,6 @@ function ClassTabSettings() : ClassTab() constructor
                 LogTraceAndStatus("Cleared unzip cache");
             }
             ImGuiUnindent();
-            
-            ImGuiSameLine(undefined, 20);
-            InterfaceLinkText(HOTGLUE_UNZIP_CACHE_DIRECTORY);
             
             ImGuiNewLine();
             
@@ -105,13 +101,14 @@ function ClassTabSettings() : ClassTab() constructor
             {
                 if (HotglueGetGitHubAccessTokenAvailable())
                 {
-                    ImGuiText("Access token available.");
+                    ImGuiText("Access token acquired.");
                 }
                 else
                 {
-                    ImGuiTextColored("Access token not available.", INTERFACE_COLOR_ORANGE_TEXT);
-                    if (ImGuiButton("Authorize GitHub"))
+                    ImGuiTextColored("GitHub access token unavailable. Please click the button below to acquire an access token from GitHub.", INTERFACE_COLOR_ORANGE_TEXT);
+                    if (ImGuiButton("Authorize GitHub..."))
                     {
+                        InterfaceGitHubAuthFlow();
                     }
                 }
             }
@@ -119,26 +116,85 @@ function ClassTabSettings() : ClassTab() constructor
             
             ImGuiNewLine();
             
+            ///////
+            // Paths
+            ///////
+            
             ImGuiText("Paths:");
             ImGuiIndent();
             
+            ImGuiBeginTable("pathsTable", 5, ImGuiTableFlags.RowBg);
+            ImGuiTableSetupColumn("name", ImGuiTableColumnFlags.WidthFixed, 130);
+            ImGuiTableSetupColumn("path");
+            ImGuiTableSetupColumn("browse", ImGuiTableColumnFlags.WidthFixed, 70);
+            ImGuiTableSetupColumn("test", ImGuiTableColumnFlags.WidthFixed, 40);
+            ImGuiTableSetupColumn("reset", ImGuiTableColumnFlags.WidthFixed, 50);
+            
+            ImGuiTableNextRow();
+            
+            ImGuiTableNextRow();
+            
+            ImGuiTableNextColumn();
+            ImGuiText("Cache");
+            
+            ImGuiTableNextColumn();
+            var _oldString = HotglueGetCachePath();
+            var _newString = ImGuiInputText("###cachePathInput", _oldString);
+            if (ImGuiIsItemDeactivatedAfterEdit() && (_oldString != _newString))
+            {
+                HotglueSetCachePath(_newString);
+                InterfaceSettingsSave();
+            }
+            
+            ImGuiTableNextColumn();
+            if (HotglueGetExecuteShellAvailable())
+            {
+                if (ImGuiButton("Open..."))
+                {
+                    InterfaceOpenURL(HotglueGetCachePath());
+                }
+            }
+            
+            ImGuiTableNextColumn();
+            
+            ImGuiTableNextColumn();
+            if (ImGuiButton("Reset##cachePath"))
+            {
+                HotglueSetCachePath(HOTGLUE_DEFAULT_PATH_CACHE);
+            }
+            
+            ImGuiTableNextColumn();
+            ImGuiText("ProjectTool.exe");
+            
+            ImGuiTableNextColumn();
             InterfaceLinkText(HotglueGetProjectToolPath());
-            ImGuiSameLine(undefined, 20);
+            
+            ImGuiTableNextColumn();
             if (ImGuiButton("Browse..."))
             {
                 var _newPath = get_open_filename("*.*", "");
                 if (_newPath != "")
                 {
-                    HotglueSetProjectToolPath(_newPath);
+                    if (HotglueSetProjectToolPath(_newPath))
+                    {
+                        InterfaceSettingsSave();
+                    }
                 }
             }
             
-            ImGuiSameLine(undefined, 20);
+            ImGuiTableNextColumn();
             if (ImGuiButton("Test"))
             {
-                HotglueProjectToolTest();
+                oInterface.popUpStruct = new ClassModalMessage(HotglueProjectToolTest()? "Test successful." : "Test failed. Please check the log for more information.");
             }
             
+            ImGuiTableNextColumn();
+            if (ImGuiButton("Reset##projectToolPath"))
+            {
+                HotglueSetProjectToolPath(HOTGLUE_DEFAULT_PATH_PROJECTTOOL, false);
+            }
+            
+            ImGuiEndTable();
             ImGuiUnindent();
             
             ImGuiNewLine();

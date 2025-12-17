@@ -37,7 +37,6 @@ function HotglueProjectToolConvert(_sourcePath, _destinationPath, _destroyDirect
     file_delete(_outputPath);
     file_delete(_triggerPath);
     
-    var _prefabsDirectory  = "C:/ProgramData/GameMakerStudio2/Prefabs";
     var _resourceTypesPath = "C:/Users/conta/AppData/Local/Temp/hotglue.tmp";
     var _convRoot          = "C:/Users/conta/AppData/Local/GameMakerStudio2/GMS2TEMP/ProjectTool";
     
@@ -45,7 +44,7 @@ function HotglueProjectToolConvert(_sourcePath, _destinationPath, _destroyDirect
     var _batchContent = "@echo off\n";
     _batchContent += "echo Running ProjectTool, please wait...\n";
     _batchContent += $"echo (Log can be found at {_outputPath})\n";
-    _batchContent += $"\"{_projectToolPath}\" PROJECT SAVE SOURCE=\"{_sourcePath}\" DESTINATION=\"{_destinationPath}\" RESOURCETYPESPATH=\"{_resourceTypesPath}\" PREFABSFOLDER=\"{_prefabsDirectory}\" CONVROOT=\"{_convRoot}\" > \"{_outputPath}\"\n";
+    _batchContent += $"\"{_projectToolPath}\" PROJECT SAVE SOURCE=\"{_sourcePath}\" DESTINATION=\"{_destinationPath}\" RESOURCETYPESPATH=\"{_resourceTypesPath}\" CONVROOT=\"{_convRoot}\" > \"{_outputPath}\"\n";
     _batchContent += $"echo done > \"{_triggerPath}\"\n";
     
     var _buffer = buffer_create(string_byte_length(_batchContent), buffer_fixed, 1);
