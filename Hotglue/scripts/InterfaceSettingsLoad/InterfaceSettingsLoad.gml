@@ -8,7 +8,7 @@ function InterfaceSettingsLoad()
     
     with(oInterface)
     {
-        var _buffer = buffer_load("settings.json");
+        var _buffer = buffer_load(INTERACE_DEFAULT_PATH_SAVEDATA + "settings.json");
         var _string = buffer_read(_buffer, buffer_text);
         settings = json_parse(_string);
         buffer_delete(_buffer);

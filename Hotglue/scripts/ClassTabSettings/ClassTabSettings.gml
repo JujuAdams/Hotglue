@@ -12,7 +12,7 @@ function ClassTabSettings() : ClassTab() constructor
             
             ImGuiText("Channels:");
             ImGuiIndent();
-            ImGuiBeginChild("channelsPane", undefined, 200, ImGuiChildFlags.Border);
+            ImGuiBeginChild("channelsPane", undefined, 170, ImGuiChildFlags.Border);
             
             ImGuiBeginTable("channelsTable", 3, ImGuiTableFlags.RowBg);
             
@@ -82,6 +82,8 @@ function ClassTabSettings() : ClassTab() constructor
                 LogTraceAndStatus("Cleared release cache");
             }
             
+            ImGuiSameLine(undefined, 20);
+            
             if (ImGuiButton("Clear unzip cache"))
             {
                 HotglueClearUnzipCache();
@@ -124,18 +126,15 @@ function ClassTabSettings() : ClassTab() constructor
             ImGuiIndent();
             
             ImGuiBeginTable("pathsTable", 5, ImGuiTableFlags.RowBg);
-            ImGuiTableSetupColumn("name", ImGuiTableColumnFlags.WidthFixed, 130);
+            ImGuiTableSetupColumn("name", ImGuiTableColumnFlags.WidthFixed, 160);
             ImGuiTableSetupColumn("path");
             ImGuiTableSetupColumn("browse", ImGuiTableColumnFlags.WidthFixed, 70);
             ImGuiTableSetupColumn("test", ImGuiTableColumnFlags.WidthFixed, 40);
             ImGuiTableSetupColumn("reset", ImGuiTableColumnFlags.WidthFixed, 50);
             
             ImGuiTableNextRow();
-            
-            ImGuiTableNextRow();
-            
             ImGuiTableNextColumn();
-            ImGuiText("Cache");
+            ImGuiText("Cache Directory");
             
             ImGuiTableNextColumn();
             var _oldString = HotglueGetCachePath();
@@ -149,7 +148,7 @@ function ClassTabSettings() : ClassTab() constructor
             ImGuiTableNextColumn();
             if (HotglueGetExecuteShellAvailable())
             {
-                if (ImGuiButton("Open..."))
+                if (ImGuiButton("Open...##cachePath"))
                 {
                     InterfaceOpenURL(HotglueGetCachePath());
                 }
@@ -163,6 +162,37 @@ function ClassTabSettings() : ClassTab() constructor
                 HotglueSetCachePath(HOTGLUE_DEFAULT_PATH_CACHE);
             }
             
+            ImGuiTableNextRow();
+            ImGuiTableNextColumn();
+            ImGuiText("Savedata Directory");
+            
+            ImGuiTableNextColumn();
+            var _oldString = InterfaceSettingGet("savedataPath", "");
+            var _newString = ImGuiInputText("###savedataPathInput", _oldString);
+            if (ImGuiIsItemDeactivatedAfterEdit() && (_oldString != _newString))
+            {
+                InterfaceSettingSet("savedataPath", _newString);
+                InterfaceSettingsSave();
+            }
+            
+            ImGuiTableNextColumn();
+            if (HotglueGetExecuteShellAvailable())
+            {
+                if (ImGuiButton("Open...##savedataPath"))
+                {
+                    InterfaceOpenURL(HotglueGetCachePath());
+                }
+            }
+            
+            ImGuiTableNextColumn();
+            
+            ImGuiTableNextColumn();
+            if (ImGuiButton("Reset##savedataPath"))
+            {
+                InterfaceSettingSet("savedataPath", INTERACE_DEFAULT_PATH_SAVEDATA);
+            }
+            
+            ImGuiTableNextRow();
             ImGuiTableNextColumn();
             ImGuiText("ProjectTool.exe");
             
@@ -196,6 +226,10 @@ function ClassTabSettings() : ClassTab() constructor
             
             ImGuiEndTable();
             ImGuiUnindent();
+            
+            ///////
+            // Here be dragons
+            ///////
             
             ImGuiNewLine();
             
