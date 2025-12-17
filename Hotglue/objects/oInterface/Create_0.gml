@@ -37,6 +37,8 @@ else
     InterfaceSettingsSave();
 }
 
+InterfaceRecentLoad();
+
 statusBarHeight = 32;
 
 popUpStruct = undefined;

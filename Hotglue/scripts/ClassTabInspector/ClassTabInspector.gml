@@ -11,22 +11,51 @@ function ClassTabInspector() : ClassTab() constructor
         {
             if (__project == undefined)
             {
-                ImGuiText("No project loaded.");
-                if (ImGuiButton("Load .yyp project..."))
+                var _openPath = "";
+                
+                ImGuiText("No project opened.");
+                if (ImGuiButton("Open .yyp project..."))
                 {
-                    var _path = get_open_filename("GameMaker Project (*.yyp)|*.yyp", "");
-                    if (_path != "")
+                    _openPath = get_open_filename("GameMaker Project (*.yyp)|*.yyp", "");
+                }
+                
+                ImGuiNewLine();
+                ImGuiText("Recently opened:");
+                ImGuiIndent();
+                
+                var _recentArray = InterfaceRecentGetArray();
+                if (array_length(_recentArray) <= 0)
+                {
+                    ImGuiText("(No recently opened projects)");
+                }
+                else
+                {
+                    var _i = 0;
+                    repeat(array_length(_recentArray))
                     {
-                        if (filename_ext(_path) != ".yyp")
+                        if (ImGuiButton(_recentArray[_i]))
                         {
-                            LogWarning($"Unsupported file extension \"{filename_ext(_path)}\" for project inspector");
+                            _openPath = _recentArray[_i];
                         }
-                        else
-                        {
-                            __project = HotglueProjectLocalEnsure(_path);
-                            __view = new ClassInterfaceProjectView(__project);
-                            LogTraceAndStatus($"Loaded \"{__project.GetPath()}\" for inspection");
-                        }
+                        
+                        ++_i;
+                    }
+                }
+                
+                ImGuiUnindent();
+                
+                if (_openPath != "")
+                {
+                    if (filename_ext(_openPath) != ".yyp")
+                    {
+                        LogWarning($"Unsupported file extension \"{filename_ext(_openPath)}\" for project inspector");
+                    }
+                    else
+                    {
+                        __project = HotglueProjectLocalEnsure(_openPath);
+                        __view = new ClassInterfaceProjectView(__project);
+                        LogTraceAndStatus($"Loaded \"{__project.GetPath()}\" for inspection");
+                        InterfaceRecentPush(_openPath);
                     }
                 }
             }

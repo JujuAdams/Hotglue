@@ -344,39 +344,71 @@ function ClassTabImport() : ClassTab() constructor
             }
             else
             {
-                ImGuiBeginChild("destinationInnerPane", undefined, undefined, ImGuiChildFlags.Border);
-                ImGuiText("No destination project loaded.");
+                var _openPath = "";
                 
-                if (ImGuiButton("Load project..."))
+                ImGuiBeginChild("destinationInnerPane", undefined, undefined, ImGuiChildFlags.Border);
+                
+                ImGuiText("No destination project opened.");
+                if (ImGuiButton("Open .yyp project..."))
                 {
-                    var _path = get_open_filename("GameMaker Project (.yyp)|*.yyp", "");
-                    if (_path != "")
+                    _openPath = get_open_filename("GameMaker Project (*.yyp)|*.yyp", "");
+                }
+                
+                ImGuiNewLine();
+                ImGuiText("Recently opened:");
+                ImGuiIndent();
+                
+                var _recentArray = InterfaceRecentGetArray();
+                if (array_length(_recentArray) <= 0)
+                {
+                    ImGuiText("(No recently opened projects)");
+                }
+                else
+                {
+                    var _i = 0;
+                    repeat(array_length(_recentArray))
                     {
-                        if (filename_ext(_path) == ".yyp")
+                        if (ImGuiButton(_recentArray[_i]))
                         {
-                            try
-                            {
-                                __destinationProject = HotglueProjectLocalEnsure(_path);
-                                __destinationView = new ClassInterfaceProjectView(__destinationProject);
-                                
-                                LogTraceAndStatus($"Loaded \"{_path}\"");
-                            }
-                            catch(_error)
-                            {
-                                LogWarning(json_stringify(_error, true));
-                                LogWarning($"Failed to load \"{_path}\"");
-                                __destinationProject = undefined;
-                                __destinationView = undefined;
-                            }
+                            _openPath = _recentArray[_i];
                         }
-                        else
-                        {
-                            LogTraceAndStatus($"File type not supported \"{_path}\"");
-                        }
+                        
+                        ++_i;
                     }
                 }
                 
+                ImGuiUnindent();
                 ImGuiEndChild();
+                
+                if (_openPath != "")
+                {
+                    if (filename_ext(_openPath) == ".yyp")
+                    {
+                        try
+                        {
+                            __destinationProject = HotglueProjectLocalEnsure(_openPath);
+                            __destinationView = new ClassInterfaceProjectView(__destinationProject);
+                                
+                            LogTraceAndStatus($"Loaded \"{_openPath}\"");
+                        }
+                        catch(_error)
+                        {
+                            LogWarning(json_stringify(_error, true));
+                            LogWarning($"Failed to load \"{_openPath}\"");
+                            __destinationProject = undefined;
+                            __destinationView = undefined;
+                        }
+                        
+                        if (__destinationProject != undefined)
+                        {
+                            InterfaceRecentPush(_openPath);
+                        }
+                    }
+                    else
+                    {
+                        LogTraceAndStatus($"File type not supported \"{_openPath}\"");
+                    }
+                }
             }
             
             ImGuiEndChild();
