@@ -66,8 +66,32 @@ function HotglueProjectToolConvert(_sourcePath, _destinationPath, _destroyDirect
         if (file_exists(_triggerPath))
         {
             __HotglueTrace($"Took {current_time - _time}ms");
-            __HotglueTrace($"Converted project and exported to \"{_destinationPath}\"");
-            _result = true;
+            
+            var _string = "";
+            
+            try
+            {
+                var _buffer = buffer_load(_outputPath);
+                var _string = buffer_read(_buffer, buffer_text);
+                buffer_delete(_buffer);
+            }
+            catch(_error)
+            {
+                __HotglueWarning(json_stringify(_error, true));
+                __HotglueWarning($"Failed to open \"{_outputPath}\"");
+            }
+            
+            if (string_pos("ProjectTool Successful", _string) > 0)
+            {
+                __HotglueTrace($"Converted project and exported to \"{_destinationPath}\" successfully");
+                _result = true;
+            }
+            else
+            {
+                __HotglueWarning($"ProjectTool failed to convert \"{_sourcePath}\"");
+                _result = false;
+            }
+            
             break;
         }
         

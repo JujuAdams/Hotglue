@@ -13,6 +13,8 @@ function __HotglueSystem()
     _system = {};
     with(_system)
     {
+        randomize(); //TODO - Swap over to a PRNG
+        
         __traceHandler   = function(_string) { show_debug_message($"Hotglue: {_string}"); };
         __warningHandler = function(_string) { show_debug_message($"Hotglue: Warning! {_string}"); };
         

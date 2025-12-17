@@ -77,20 +77,36 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
                     __HotglueTrace($"Running ProjectTool to convert to latest version");
                     
                     var _newProjectPath = $"{HOTGLUE_UNZIP_CACHE_DIRECTORY}{__HotglueGenerateUUID(false)}/{__yypJson.name}.yyp";
-                    HotglueProjectToolConvert(__projectPath, _newProjectPath);
+                    var _result = HotglueProjectToolConvert(__projectPath, _newProjectPath);
                     
-                    __projectPath      = _newProjectPath;
-                    __projectDirectory = filename_dir(__projectPath) + "/";
-                    __readOnly         = true;
-                    __inCache          = true;
-                    
-                    __HotglueTrace($"Changed project path to \"{__projectPath}\"");
-                    
-                    var _buffer = buffer_load(__projectPath);
-                    __yypString = buffer_read(_buffer, buffer_text);
-                    buffer_delete(_buffer);
-                    
-                    __yypJson = json_parse(__yypString);
+                    if (not _result)
+                    {
+                        __HotglueWarning($"Conversion of \"{__projectPath}\" failed");
+                        return;
+                    }
+                    else
+                    {
+                        __HotglueTrace("Conversion was successful");
+                        
+                        if (__inCache)
+                        {
+                            __HotglueTrace($"Cleaning up old cache at \"{__projectDirectory}\"");
+                            directory_destroy(__projectDirectory);
+                        }
+                        
+                        __projectPath      = _newProjectPath;
+                        __projectDirectory = filename_dir(__projectPath) + "/";
+                        __readOnly         = true;
+                        __inCache          = true;
+                        
+                        __HotglueTrace($"Changed project path to \"{__projectPath}\"");
+                        
+                        var _buffer = buffer_load(__projectPath);
+                        __yypString = buffer_read(_buffer, buffer_text);
+                        buffer_delete(_buffer);
+                        
+                        __yypJson = json_parse(__yypString);
+                    }
                 }
             }
         }
