@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"LogCopyToClipboard",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"LogCopyToClipboard",
+  "parent":{
+    "name":"Log",
+    "path":"folders/Log.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
