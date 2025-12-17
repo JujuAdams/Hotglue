@@ -13,7 +13,7 @@ function ClassTabLog() : ClassTab() constructor
             var _displayName = "Log";
         }
         
-        if (ImGuiBeginTabItem($"{_displayName}###logTab"))
+        if (ImGuiBeginTabItem($"{_displayName}###logTab", undefined, (oInterface.forceSelectedTab == self)? ImGuiTabItemFlags.SetSelected : undefined))
         {
             LogSetNewWarnings(false);
             

@@ -93,7 +93,7 @@ function ClassTabImport() : ClassTab() constructor
     
     static TabItem = function()
     {
-        if (ImGuiBeginTabItem("Import"))
+        if (ImGuiBeginTabItem("Import", undefined, (oInterface.forceSelectedTab == self)? ImGuiTabItemFlags.SetSelected : undefined))
         {
             var _importMode = undefined;
             

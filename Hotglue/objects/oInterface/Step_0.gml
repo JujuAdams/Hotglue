@@ -13,6 +13,7 @@ if (_return & ImGuiReturnMask.Return)
     settingsTab.TabItem();
     logTab.TabItem();
     
+    forceSelectedTab = undefined;
     ImGuiEndTabBar();
 }
 ImGuiEnd();

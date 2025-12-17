@@ -19,6 +19,8 @@ channelsTab  = new ClassTabChannels();
 inspectorTab = new ClassTabInspector();
 settingsTab  = new ClassTabSettings();
 
+forceSelectedTab = projectTab;
+
 LogTrace("Interface tabs created");
 
 channelViewDict = {};

@@ -7,7 +7,7 @@ function ClassTabInspector() : ClassTab() constructor
     
     static TabItem = function()
     {
-        if (ImGuiBeginTabItem("Project Inspector"))
+        if (ImGuiBeginTabItem("Project Inspector", undefined, (oInterface.forceSelectedTab == self)? ImGuiTabItemFlags.SetSelected : undefined))
         {
             if (__project == undefined)
             {

@@ -4,7 +4,7 @@ function ClassTabWelcome() : ClassTab() constructor
 {
     static TabItem = function()
     {
-        if (ImGuiBeginTabItem("Welcome"))
+        if (ImGuiBeginTabItem("Welcome", undefined, (oInterface.forceSelectedTab == self)? ImGuiTabItemFlags.SetSelected : undefined))
         {
             ImGuiSetCursorPosY(ImGuiGetCursorPosY() + 3);
             ImGuiTextWrapped("Welcome to Hotglue by Juju Adams. This is version 0.0.0, 2025-11-09.");

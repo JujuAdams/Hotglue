@@ -6,7 +6,7 @@ function ClassTabSettings() : ClassTab() constructor
     
     static TabItem = function()
     {
-        if (ImGuiBeginTabItem("Settings"))
+        if (ImGuiBeginTabItem("Settings", undefined, (oInterface.forceSelectedTab == self)? ImGuiTabItemFlags.SetSelected : undefined))
         {
             ImGuiNewLine();
             
