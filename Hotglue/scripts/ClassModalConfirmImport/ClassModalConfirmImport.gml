@@ -159,31 +159,49 @@ function ClassModalConfirmImport(_importTab, _importMode) constructor
             {
                 ImGuiNewLine();
                 
-                if (array_length(__conflictArray) <= 0)
+                if (ImGuiCollapsingHeader($"Conflicts ({array_length(__conflictArray)})"))
                 {
-                    ImGuiText("(No conflicts)");
+                    if (array_length(__conflictArray) <= 0)
+                    {
+                        ImGuiText("(No conflicts)");
+                    }
+                    else
+                    {
+                        var _conflictArray = __conflictArray;
+                        ImGuiText($"{array_length(_conflictArray)} conflicts:");
+                        
+                        if (array_length(_conflictArray) > 5)
+                        {
+                            ImGuiSameLine();
+                            ImGuiText(" (Only first 500 conflicts shown)");
+                        }
+                        
+                        ImGuiBeginChild("frame");
+                        
+                        var _i = 0;
+                        repeat(min(500, array_length(_conflictArray)))
+                        {
+                            ImGuiText(_conflictArray[_i]);
+                            ++_i;
+                        }
+                        
+                        ImGuiEndChild();
+                    }
                 }
-                else
-                {
-                    var _conflictArray = __conflictArray;
-                    ImGuiText($"{array_length(_conflictArray)} conflicts:");
                 
-                    if (array_length(_conflictArray) > 5)
-                    {
-                        ImGuiSameLine();
-                        ImGuiText(" (Only first 500 conflicts shown)");
-                    }
+                if (ImGuiCollapsingHeader("Additions (0)"))
+                {
                     
-                    ImGuiBeginChild("frame");
+                }
+                
+                if (ImGuiCollapsingHeader("Deletions (0)"))
+                {
                     
-                    var _i = 0;
-                    repeat(min(500, array_length(_conflictArray)))
-                    {
-                        ImGuiText(_conflictArray[_i]);
-                        ++_i;
-                    }
+                }
+                
+                if (ImGuiCollapsingHeader("Overwrites (0)"))
+                {
                     
-                    ImGuiEndChild();
                 }
             }
             
