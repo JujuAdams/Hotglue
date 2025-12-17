@@ -2,12 +2,14 @@
 
 function ClassTabInspector() : ClassTab() constructor
 {
+    static __name = "Project Inspector";
+    
     __project = undefined;
     __view = undefined;
     
     static TabItem = function()
     {
-        if (ImGuiBeginTabItem("Project Inspector", undefined, (oInterface.forceSelectedTab == self)? ImGuiTabItemFlags.SetSelected : undefined))
+        if (ImGuiBeginTabItem(__name, undefined, (oInterface.forceSelectedTab == __name)? ImGuiTabItemFlags.SetSelected : undefined))
         {
             if (__project == undefined)
             {

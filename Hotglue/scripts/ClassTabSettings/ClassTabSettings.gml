@@ -2,11 +2,13 @@
 
 function ClassTabSettings() : ClassTab() constructor
 {
+    static __name = "Settings";
+    
     __advanced = false;
     
     static TabItem = function()
     {
-        if (ImGuiBeginTabItem("Settings", undefined, (oInterface.forceSelectedTab == self)? ImGuiTabItemFlags.SetSelected : undefined))
+        if (ImGuiBeginTabItem(__name, undefined, (oInterface.forceSelectedTab == __name)? ImGuiTabItemFlags.SetSelected : undefined))
         {
             ImGuiNewLine();
             
@@ -72,6 +74,55 @@ function ClassTabSettings() : ClassTab() constructor
             
             ImGuiNewLine();
             
+            ImGuiText("Boot Behaviour:");
+            ImGuiIndent();
+            
+            ImGuiText("Open on tab");
+            ImGuiSameLine();
+            if (ImGuiBeginCombo("##bootTab", InterfaceSettingGet("openOnTab", "Welcome"), ImGuiComboFlags.None))
+            {
+                if (ImGuiSelectable("Welcome"))
+                {
+                    InterfaceSettingSet("openOnTab", "Welcome");
+                    InterfaceSettingsSave();
+                }
+                
+                if (ImGuiSelectable("Import"))
+                {
+                    InterfaceSettingSet("openOnTab", "Import");
+                    InterfaceSettingsSave();
+                }
+                
+                if (ImGuiSelectable("Explore Channels"))
+                {
+                    InterfaceSettingSet("openOnTab", "Explore Channels");
+                    InterfaceSettingsSave();
+                }
+                
+                if (ImGuiSelectable("Project Inspector"))
+                {
+                    InterfaceSettingSet("openOnTab", "Project Inspector");
+                    InterfaceSettingsSave();
+                }
+                
+                if (ImGuiSelectable("Settings"))
+                {
+                    InterfaceSettingSet("openOnTab", "Settings");
+                    InterfaceSettingsSave();
+                }
+                
+                if (ImGuiSelectable("Log"))
+                {
+                    InterfaceSettingSet("openOnTab", "Log");
+                    InterfaceSettingsSave();
+                }
+                
+                ImGuiEndCombo();
+            }
+            
+            ImGuiUnindent();
+            ImGuiNewLine();
+            
             ImGuiText("Caches:");
             ImGuiIndent();
             InterfaceLinkText(HotglueGetCachePath());
@@ -114,8 +165,8 @@ function ClassTabSettings() : ClassTab() constructor
                     }
                 }
             }
-            ImGuiUnindent();
             
+            ImGuiUnindent();
             ImGuiNewLine();
             
             ///////

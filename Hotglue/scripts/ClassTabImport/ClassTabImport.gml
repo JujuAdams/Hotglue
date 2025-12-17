@@ -2,6 +2,8 @@
 
 function ClassTabImport() : ClassTab() constructor
 {
+    static __name = "Import";
+    
     __destinationProject = undefined;
     __destinationView = undefined;
     
@@ -93,7 +95,7 @@ function ClassTabImport() : ClassTab() constructor
     
     static TabItem = function()
     {
-        if (ImGuiBeginTabItem("Import", undefined, (oInterface.forceSelectedTab == self)? ImGuiTabItemFlags.SetSelected : undefined))
+        if (ImGuiBeginTabItem(__name, undefined, (oInterface.forceSelectedTab == __name)? ImGuiTabItemFlags.SetSelected : undefined))
         {
             var _importMode = undefined;
             

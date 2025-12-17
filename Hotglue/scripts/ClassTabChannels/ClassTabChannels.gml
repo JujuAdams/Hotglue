@@ -2,9 +2,11 @@
 
 function ClassTabChannels() : ClassTab() constructor
 {
+    static __name = "Explore Channels";
+    
     static TabItem = function()
     {
-        if (ImGuiBeginTabItem($"Explore Channels", undefined, (oInterface.forceSelectedTab == self)? ImGuiTabItemFlags.SetSelected : undefined))
+        if (ImGuiBeginTabItem(__name, undefined, (oInterface.forceSelectedTab == __name)? ImGuiTabItemFlags.SetSelected : undefined))
         {
             ImGuiBeginChild("channelSelector");
             ImGuiBeginTabBar("tabBar");

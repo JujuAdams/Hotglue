@@ -2,18 +2,20 @@
 
 function ClassTabLog() : ClassTab() constructor
 {
+    static __name = "Log";
+    
     static TabItem = function()
     {
         if (LogGetNewWarnings())
         {
-            var _displayName = ((current_time mod 300) < 150)? "! Log !" : "  Log  ";
+            var _displayName = ((current_time mod 300) < 150)? $"! {__name} !" : $"  {__name}  ";
         }
         else
         {
-            var _displayName = "Log";
+            var _displayName = __name;
         }
         
-        if (ImGuiBeginTabItem($"{_displayName}###logTab", undefined, (oInterface.forceSelectedTab == self)? ImGuiTabItemFlags.SetSelected : undefined))
+        if (ImGuiBeginTabItem($"{_displayName}###logTab", undefined, (oInterface.forceSelectedTab == __name)? ImGuiTabItemFlags.SetSelected : undefined))
         {
             LogSetNewWarnings(false);
             

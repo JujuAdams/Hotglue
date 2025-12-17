@@ -19,8 +19,6 @@ channelsTab  = new ClassTabChannels();
 inspectorTab = new ClassTabInspector();
 settingsTab  = new ClassTabSettings();
 
-forceSelectedTab = projectTab;
-
 LogTrace("Interface tabs created");
 
 channelViewDict = {};
@@ -38,6 +36,7 @@ else
 }
 
 InterfaceRecentLoad();
+forceSelectedTab = InterfaceSettingGet("openOnTab", "Welcome");
 
 statusBarHeight = 32;
 
