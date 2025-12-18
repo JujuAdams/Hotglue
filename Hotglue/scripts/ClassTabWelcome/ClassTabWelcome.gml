@@ -9,7 +9,7 @@ function ClassTabWelcome() : ClassTab() constructor
         if (ImGuiBeginTabItem(__name, undefined, (oInterface.forceSelectedTab == __name)? ImGuiTabItemFlags.SetSelected : undefined))
         {
             ImGuiSetCursorPosY(ImGuiGetCursorPosY() + 3);
-            ImGuiTextWrapped("Welcome to Hotglue by Juju Adams. This is version 0.0.0, 2025-11-09.");
+            ImGuiTextWrapped("Welcome to Hotglue by Juju Adams. This is version 0.1.0, 2025-12-18.");
             ImGuiNewLine();
             ImGuiTextWrapped("Hotglue is a GameMaker 2024.14 import tool. It will help you import and update libraries in your GameMaker project.");
             ImGuiNewLine();
