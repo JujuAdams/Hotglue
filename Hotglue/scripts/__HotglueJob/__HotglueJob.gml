@@ -5,12 +5,16 @@
 function __HotglueJob(_destinationProject) constructor
 {
     __destinationProject = _destinationProject;
-    __actionArray = [];
     
-    __addPIDArray       = [];
-    __deletePIDArray    = [];
-    __conflictPIDArray  = [];
-    __overwritePIDArray = [];
+    __actionArray = [];
+    __saveHotglueMetadata = false;
+    
+    __addPIDArray    = [];
+    __addPIDDict     = {};
+    __deletePIDArray = [];
+    
+    __derivedConflictPIDArray  = [];
+    __derivedOverwritePIDArray = [];
     
     
     
@@ -26,12 +30,12 @@ function __HotglueJob(_destinationProject) constructor
     
     static GetConflictArray = function()
     {
-        return __conflictPIDArray;
+        return __derivedConflictPIDArray;
     }
     
     static GetOverwriteArray = function()
     {
-        return __overwritePIDArray;
+        return __derivedOverwritePIDArray;
     }
     
     static __QueueImportAllFrom = function(_sourceProject, _subfolder = "")
@@ -41,45 +45,70 @@ function __HotglueJob(_destinationProject) constructor
     
     static __QueueImportFrom = function(_sourceProject, _assetArray, _subfolder = "")
     {
+        __QueueEnsureFolderPath(_subfolder);
+        
         if (not is_array(_assetArray))
         {
             _assetArray = [ _assetArray ];
         }
+        
+        var _expandedPIDArray = [];
+        var _assetPIDDict     = _sourceProject.__quickAssetDict;
+        var _addPIDDict       = __addPIDDict;
         
         var _i = 0;
         repeat(array_length(_assetArray))
         {
             var _asset = _assetArray[_i];
             
-            var _method = method(
+            var _pid = _asset.GetPID();
+            if (not struct_exists(_addPIDDict, _pid))
             {
-                __sourceProject: _sourceProject,
-                __asset          _asset,
-                __subfolder:     _subfolder,
-            },
-            function(_destinationProject)
-            {
-                var _asset = __asset;
+                array_push(_expandedPIDArray, _pid);
+                _asset.__GetExpandedAssets(_sourceProject, _expandedPIDArray, _addPIDDict);
                 
-                if ((_asset.type != "folder") && GetAssetExists(_asset.GetPID()))
+                var _j = 0;
+                repeat(array_length(_expandedPIDArray))
                 {
-                    __HotglueError($"Asset \"{_asset.GetPID()}\" already exists in project \"{GetPath()}\"");
+                    var _pid = _expandedPIDArray[_j];
+                    var _asset = _assetPIDDict[$ _pid];
+                    
+                    var _method = method(
+                    {
+                        __sourceProject: _sourceProject,
+                        __asset:         _asset,
+                        __subfolder:     _subfolder,
+                    },
+                    function(_destinationProject)
+                    {
+                        var _asset = __asset;
+                    
+                        if ((_asset.type != "folder") && _destinationProject.GetAssetExists(_asset.GetPID()))
+                        {
+                            __HotglueError($"Asset \"{_asset.GetPID()}\" already exists in project \"{GetPath()}\"");
+                        }
+                    
+                        if (_asset.GetPID() != "resource:hotglue_metadata")
+                        {
+                            _asset.__Copy(self, __sourceProject);
+                        
+                            var _newHotglueAsset = variable_clone(_asset);
+                            _newHotglueAsset.__FixYYReferences(self, __subfolder);
+                            _newHotglueAsset.__InsertIntoYYP(self, __subfolder);
+                        
+                            _destinationProject.__AddAsset(_newHotglueAsset);
+                        }
+                    });
+                
+                    array_push(__actionArray, _method);
+                    array_push(__addPIDArray, _pid);
+                    _addPIDDict[$ _pid] = true;
+                    
+                    ++_j;
                 }
                 
-                if (_asset.GetPID() != "resource:hotglue_metadata")
-                {
-                    _asset.__Copy(self, __sourceProject);
-                    
-                    var _newHotglueAsset = variable_clone(_asset);
-                    _newHotglueAsset.__FixYYReferences(self, __subfolder);
-                    _newHotglueAsset.__InsertIntoYYP(self, __subfolder);
-                    
-                    _destinationProject.__AddAsset(_newHotglueAsset);
-                }
-            });
-            
-            array_push(__actionArray, _method);
-            array_push(__addPIDArray, _asset.GetPID());
+                array_resize(_expandedPIDArray, 0);
+            }
             
             ++_i;
         }
@@ -87,31 +116,40 @@ function __HotglueJob(_destinationProject) constructor
     
     static __QueueImportLooseFile = function(_looseFileArray, _subfolder = "")
     {
+        __QueueEnsureFolderPath(_subfolder);
+        
         if (not is_array(_looseFileArray))
         {
             _looseFileArray = [ _looseFileArray ];
         }
         
+        var _addPIDDict = __addPIDDict;
+        
         var _i = 0;
         repeat(array_length(_looseFileArray))
         {
+            var _looseFile = _looseFileArray[_i];
+            var _pid = _looseFile.GetPID();
+            
             var _method = method(
             {
-                __looseFile: _looseFileArray[_i],
+                __looseFile: _looseFile,
                 __subfolder: _subfolder,
             },
             function(_destinationProject)
             {
-                __HotglueTrace($"Importing \"{GetPath()}\" as {GetType()} \"{GetName()}\"");
+                var _looseFile = __looseFile;
+                
+                __HotglueTrace($"Importing \"{_looseFile.GetPath()}\" as {_looseFile.GetType()} \"{_looseFile.GetName()}\"");
             
-                var _asset = __GenerateAsset(self);
+                var _asset = _looseFile.__GenerateAsset(self);
             
                 if (_destinationProject.GetAssetExists(_asset.GetPID()))
                 {
-                    __HotglueError($"Asset \"{_asset.GetPID()}\" already exists in project \"{GetPath()}\"");
+                    __HotglueError($"Asset \"{_asset.GetPID()}\" already exists in project \"{_looseFile.GetPath()}\"");
                 }
                 
-                __CreateFilesOnDisk(self, _asset, __subfolder);
+                _looseFile.__CreateFilesOnDisk(self, _asset, __subfolder);
                     
                 _asset.__InsertIntoYYP(self, ""); //Don't need a subfolder here because we generate a correct folder path already
                     
@@ -122,8 +160,53 @@ function __HotglueJob(_destinationProject) constructor
             });
             
             array_push(__actionArray, _method);
+            array_push(__addPIDArray, _pid);
+            _addPIDDict[$ _pid] = true;
             
             ++_i;
+        }
+    }
+    
+    static __QueueEnsureFolderPath = function(_subfolder)
+    {
+        if (_subfolder == "")
+        {
+            //The root always exists
+            return;
+        }
+        
+        var _addPIDDict = __addPIDDict;
+        
+        //Sanitize
+        var _path = string_replace_all(_subfolder, "\\", "/");
+        
+        //Iterate over every stage in the path to ensure we have all the folders set up along the path
+        repeat(string_count("/", _path) + 1)
+        {
+            var _method = method(
+            {
+                __path: _path,
+            },
+            function(_destinationProject)
+            {
+                var _quickAssetDict = _destinationProject.__quickAssetDict;
+                var _path = __path;
+                
+                if (not variable_struct_exists(_quickAssetDict, $"folder:{_path}"))
+                {
+                    var _hotglueAsset = new __HotglueFolder({ folderPath: $"folders/{_path}.yy", name: filename_name(_path), });
+                    _hotglueAsset.__InsertIntoYYP(self, "");
+                    _destinationProject.__AddAsset(_hotglueAsset);
+                }
+            });
+            
+            var _pid = $"folder:{__HotglueProcessFolderPath($"folders/{_path}.yy")}";
+            
+            array_push(__actionArray, _method);
+            array_push(__addPIDArray, _pid);
+            _addPIDDict[$ _pid] = true;
+            
+            _path = filename_dir(_path);
         }
     }
     
@@ -155,44 +238,73 @@ function __HotglueJob(_destinationProject) constructor
         }
     }
     
-    static __QueueEnsureFolderPath = function(_subfolder)
+    static __QueueDeleteLibrary = function(_sourceProject)
     {
-        if (_subfolder == "")
-        {
-            //The root always exists
-            return;
-        }
+        var _libraryMetadata = __destinationProject.__GetLibraryMetadata(_sourceProject.GetName());
+        if (_libraryMetadata == undefined) return;
         
-        //Sanitize
-        var _path = string_replace_all(_subfolder, "\\", "/");
+        __saveHotglueMetadata = true;
         
-        //Iterate over every stage in the path to ensure we have all the folders set up along the path
-        repeat(string_count("/", _path) + 1)
+        __QueueDelete(_libraryMetadata.assets);
+        
+        var _method = method(
         {
-            var _method = method(
+            __sourceProject: _sourceProject,
+        },
+        function(_destinationProject)
+        {
+            var _libraryName = __sourceProject.GetName();
+            
+            var _libraryMetadata = _destinationProject.__GetLibraryMetadata(_libraryName);
+            if (_libraryMetadata == undefined)
             {
-                __path: _path,
-            },
-            function(_destinationProject)
+                __HotglueWarning($"Cannot delete library \"{_libraryName}\", it doesn't exist in destination project");
+            }
+            else
             {
-                var _quickAssetDict = _destinationProject.__quickAssetDict;
-                var _path = __path;
-                
-                if (not variable_struct_exists(_quickAssetDict, $"folder:{_path}"))
-                {
-                    var _hotglueAsset = new __HotglueFolder({ folderPath: $"folders/{_path}.yy", name: filename_name(_path), });
-                    _hotglueAsset.__InsertIntoYYP(self, "");
-                    _destinationProject.__AddAsset(_hotglueAsset);
-                }
-            });
+                var _index = array_get_index(_destinationProject.__hotglueMetadata[1], _libraryMetadata);
+                if (_index >= 0) array_delete(_destinationProject.__hotglueMetadata[1], _index, 1);
+            }
+        });
+        
+        array_push(__actionArray, _method);
+    }
+    
+    static __QueueAddLibrary = function(_sourceProject, _subfolder = "")
+    {
+        __saveHotglueMetadata = true;
+        
+        __QueueImportFrom(_sourceProject, _sourceProject.__quickAssetArray, _subfolder);
+        
+        var _method = method(
+        {
+            __sourceProject: _sourceProject,
+        },
+        function(_destinationProject)
+        {
+            var _sourceProject = __sourceProject;
+            var _libraryName   = _sourceProject.GetName();
+            var _versionString = _sourceProject.GetVersionString();
+            var _originURL     = _sourceProject.GetURL();
+            var _assetPIDArray = variable_clone(_sourceProject.__quickAssetArray);
             
-            var _pid = $"folder:{__HotglueProcessFolderPath($"folders/{_path}.yy")}";
-            
-            array_push(__actionArray, _method);
-            array_push(__addPIDArray, _pid);
-            
-            _path = filename_dir(_path);
-        }
+            var _libraryMetadata = _destinationProject.__GetLibraryMetadata(_libraryName);
+            if (_libraryMetadata != undefined)
+            {
+                __HotglueWarning($"Cannot add library \"{_libraryName}\", it already exists in destination project");
+            }
+            else
+            {
+                array_push(_destinationProject.__hotglueMetadata[1], {
+                    name:    _libraryName,
+                    version: _versionString,
+                    origin:  _originURL,
+                    assets:  _assetPIDArray,
+                });
+            }
+        });
+        
+        array_push(__actionArray, _method);
     }
     
     static BuildReport = function()
@@ -201,8 +313,8 @@ function __HotglueJob(_destinationProject) constructor
         
         var _addPIDArray       = __addPIDArray;
         var _deletePIDArray    = __deletePIDArray;
-        var _conflictPIDArray  = __conflictPIDArray;
-        var _overwritePIDArray = __overwritePIDArray;
+        var _conflictPIDArray  = __derivedConflictPIDArray;
+        var _overwritePIDArray = __derivedOverwritePIDArray;
         
         array_sort(_addPIDArray,    true);
         array_sort(_deletePIDArray, true);
@@ -288,6 +400,11 @@ function __HotglueJob(_destinationProject) constructor
             buffer_write(_buffer, buffer_text, __yypString);
             buffer_save(_buffer, __projectPath);
             buffer_delete(_buffer);
+            
+            if (other.__saveHotglueMetadata)
+            {
+                __SaveHotglueMetadata();
+            }
             
             __structureDirty = true;
         }

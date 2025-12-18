@@ -453,11 +453,43 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         return _visitedArray;
     }
     
-    static ImportAllFrom = function(_sourceProject, _subfolder = "")
+    static JobImportAllFrom = function(_sourceProject, _subfolder = "")
     {
-        if (__readOnly) return;
+        var _job = new __HotglueJob(self);
+        _job.__QueueImportAllFrom(_sourceProject, _subfolder);
+        return _job;
+    }
+    
+    static JobImportAsLibrary = function(_sourceProject, _subfolder = "")
+    {
+        var _job = new __HotglueJob(self);
+        _job.__QueueDeleteLibrary(_sourceProject);
+        _job.__QueueAddLibrary(_sourceProject);
+        return _job;
+    }
+    
+    static JobImportFrom = function(_sourceProject, _assetPIDArray, _subfolder = "")
+    {
+        //Convert PID array to array of actual asset structs
+        var _quickAssetDict = _sourceProject.__quickAssetDict;
+        var _assetArray = array_create(array_length(_assetPIDArray));
+        var _i = 0;
+        repeat(array_length(_assetPIDArray))
+        {
+            _assetArray[@ _i] = _quickAssetDict[$ _assetPIDArray[_i]];
+            ++_i;
+        }
         
-        return __ImportFromProject(_sourceProject, _sourceProject.__quickAssetArray, _subfolder);
+        var _job = new __HotglueJob(self);
+        _job.__QueueImportFrom(_sourceProject, _assetArray, _subfolder);
+        return _job;
+    }
+    
+    static ImportFromLooseFiles = function(_looseFileArray, _subfolder = "")
+    {
+        var _job = new __HotglueJob(self);
+        _job.__QueueImportLooseFile(_looseFileArray, _subfolder = "");
+        return _job;
     }
     
     static ImportAsLibrary = function(_sourceProject, _subfolder = "")
