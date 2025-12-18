@@ -11,20 +11,18 @@ function ClassModalConfirmImport(_importTab, _importMode) constructor
     __loadPending = false;
     __loadSuccessful = true;
     
+    __job = undefined;
+    
     if (__importMode == "local project")
     {
-        var _assetArray = __importTab.__directProject.GetAssets();
-        __conflictArray = __importTab.__destinationProject.GetConflictingExt(_assetArray);
+        __job = __importTab.__destinationProject.JobImportFrom(__importTab.__directProject, __importTab.__directView.GetAssetArray());
     }
     else if (__importMode == "loose files")
     {
-        var _looseFileArray = __importTab.GetLooseFileArray();
-        __conflictArray = __importTab.__destinationProject.GetConflictingLooseFiles(_looseFileArray);
+        __job = __importTab.__destinationProject.JobImportFromLooseFiles(__importTab.GetLooseFileArray());
     }
     else
     {
-        __conflictArray = [];
-        
         if (__importMode == "channels")
         {
             var _selectedRelease = __importTab.GetSelectedRelease();
@@ -41,8 +39,7 @@ function ClassModalConfirmImport(_importTab, _importMode) constructor
                     {
                         if (_project.GetLoadedSuccessfully())
                         {
-                            var _assetArray = _project.GetAssets();
-                            __conflictArray = __importTab.__destinationProject.GetConflictingExt(_assetArray);
+                            __job = __importTab.__destinationProject.JobImportAsLibrary(_project);
                             
                             __loadSuccessful = true;
                             LogTraceAndStatus("Loaded release successfully.");
@@ -59,6 +56,11 @@ function ClassModalConfirmImport(_importTab, _importMode) constructor
                 });
             }
         }
+    }
+    
+    if (__job != undefined)
+    {
+        __job.BuildReport();
     }
     
     
@@ -87,31 +89,21 @@ function ClassModalConfirmImport(_importTab, _importMode) constructor
             }
             
             ImGuiNewLine();
-            ImGuiBeginDisabled(__loadPending || (not __loadSuccessful));
+            ImGuiBeginDisabled(__loadPending || (not __loadSuccessful) || (__job == undefined));
             if (ImGuiButton("Import"))
             {
                 var _success = false;
                 try
                 {
-                    if (__importMode == "local project")
-                    {
-                        __importTab.ImportLocalProject();
-                    }
-                    else if (__importMode == "loose files")
-                    {
-                        __importTab.ImportLooseFiles();
-                    }
-                    else if (__importMode == "channels")
-                    {
-                        __importTab.ImportChannels();
-                    }
-                    
+                    __job.Execute();
                     _success = true;
                 }
                 catch(_error)
                 {
                     LogWarning(json_stringify(_error, true));
                 }
+                
+                __job = undefined;
                 
                 var _message = "Operation complete.";
                 if (_success)
@@ -159,50 +151,32 @@ function ClassModalConfirmImport(_importTab, _importMode) constructor
             {
                 ImGuiNewLine();
                 
-                if (ImGuiCollapsingHeader($"Conflicts ({array_length(__conflictArray)})"))
+                var _func = function(_title, _array)
                 {
-                    if (array_length(__conflictArray) <= 0)
+                    if (ImGuiCollapsingHeader($"{_title} ({array_length(_array)})"))
                     {
-                        ImGuiText("(No conflicts)");
-                    }
-                    else
-                    {
-                        var _conflictArray = __conflictArray;
-                        ImGuiText($"{array_length(_conflictArray)} conflicts:");
-                        
-                        if (array_length(_conflictArray) > 5)
+                        if (array_length(_array) <= 0)
                         {
-                            ImGuiSameLine();
-                            ImGuiText(" (Only first 500 conflicts shown)");
+                            ImGuiText($"(No {string_lower(_title)})");
                         }
-                        
-                        ImGuiBeginChild("frame");
-                        
-                        var _i = 0;
-                        repeat(min(500, array_length(_conflictArray)))
+                        else
                         {
-                            ImGuiText(_conflictArray[_i]);
-                            ++_i;
+                            ImGuiText($"{array_length(_array)} {string_lower(_title)}:");
+                            
+                            var _i = 0;
+                            repeat(array_length(_array))
+                            {
+                                ImGuiText(_array[_i]);
+                                ++_i;
+                            }
                         }
-                        
-                        ImGuiEndChild();
                     }
                 }
                 
-                if (ImGuiCollapsingHeader("Additions (0)"))
-                {
-                    
-                }
-                
-                if (ImGuiCollapsingHeader("Deletions (0)"))
-                {
-                    
-                }
-                
-                if (ImGuiCollapsingHeader("Overwrites (0)"))
-                {
-                    
-                }
+                _func("Conflicts",  __job.GetConflictArray());
+                _func("Additions",  __job.GetAddArray());
+                _func("Overwrites", __job.GetOverwriteArray());
+                _func("Deletions",  __job.GetDeleteArray());
             }
             
             ImGuiEndPopup();

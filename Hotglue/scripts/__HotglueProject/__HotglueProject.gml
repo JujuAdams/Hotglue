@@ -270,7 +270,8 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         var _looseFile = HotglueLoadLooseFile(_tempFilename);
         _looseFile.SetType("note");
         
-        ImportFromLooseFiles(_looseFile);
+        var _job = JobImportFromLooseFiles(_looseFile);
+        _job.Execute();
         
         file_delete(_tempFilename);
     }
@@ -345,112 +346,10 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         return variable_struct_exists(__quickAssetDict, _assetRef);
     }
     
-    static GetNonConflicting = function(_otherProject)
-    {
-        var _nonconflictArray = [];
-        
-        var _quickAssetArray = __quickAssetArray;
-        var _otherAssetDict  = _otherProject.__quickAssetDict;
-        
-        var _i = 0;
-        repeat(array_length(_quickAssetArray))
-        {
-            var _assetName = _quickAssetArray[_i].GetPID();
-            if (not variable_struct_exists(_otherAssetDict, _assetName))
-            {
-                array_push(_nonconflictArray, _assetName);
-            }
-            
-            ++_i;
-        }
-        
-        return _nonconflictArray;
-    }
-    
-    static GetConflicting = function(_otherProject)
-    {
-        return GetConflictingExt(_otherProject.__quickAssetArray);
-    }
-    
-    static GetConflictingExt = function(_assetArray)
-    {
-        var _conflictArray = [];
-        var _assetDict = __quickAssetDict;
-        
-        var _i = 0;
-        repeat(array_length(_assetArray))
-        {
-            var _assetPID = _assetArray[_i];
-            if (variable_struct_exists(_assetDict, _assetPID))
-            {
-                array_push(_conflictArray, _assetPID);
-            }
-            
-            ++_i;
-        }
-        
-        return _conflictArray;
-    }
-    
-    static GetConflictingLooseFiles = function(_looseFileArray)
-    {
-        var _conflictArray = [];
-        var _assetDict = __quickAssetDict;
-        
-        var _i = 0;
-        repeat(array_length(_looseFileArray))
-        {
-            var _assetPID = _looseFileArray[_i].GetPID();
-            if (variable_struct_exists(_assetDict, _assetPID))
-            {
-                array_push(_conflictArray, _assetPID);
-            }
-            
-            ++_i;
-        }
-        
-        return _conflictArray;
-    }
-    
     static GetImported = function()
     {
         static _emptyArray = [];
         return (__hotglueMetadata == undefined)? _emptyArray : __hotglueMetadata[1];
-    }
-    
-    static GetExpandedAssets = function(_assetArray) //TODO - Does this need to be wound into the conflict detectors?
-    {
-        if (not is_array(_assetArray))
-        {
-            _assetArray = [_assetArray];
-        }
-        
-        var _visitedArray = variable_clone(_assetArray);
-        var _visitedDict  = {};
-        
-        var _i = 0;
-        repeat(array_length(_visitedArray))
-        {
-            _visitedDict[$ _visitedArray[_i]] = true;
-            ++_i;
-        }
-        
-        for(var _i = 0; _i < array_length(_visitedArray); ++_i) //Array length can change
-        {
-            var _assetName = _visitedArray[_i];
-            
-            var _asset = __quickAssetDict[$ _assetName];
-            if (_asset == undefined)
-            {
-                __HotglueError($"Asset \"{_assetName}\" not found in project");
-            }
-            
-            _asset.__GetExpandedAssets(self, _visitedArray, _visitedDict);
-            
-            ++_i;
-        }
-        
-        return _visitedArray;
     }
     
     static JobImportAllFrom = function(_sourceProject, _subfolder = "")
@@ -463,8 +362,15 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     static JobImportAsLibrary = function(_sourceProject, _subfolder = "")
     {
         var _job = new __HotglueJob(self);
-        _job.__QueueDeleteLibrary(_sourceProject);
+        _job.__QueueDeleteLibrary(_sourceProject.GetName());
         _job.__QueueAddLibrary(_sourceProject);
+        return _job;
+    }
+    
+    static JobDeleteLibrary = function(_libraryName)
+    {
+        var _job = new __HotglueJob(self);
+        _job.__QueueDeleteLibrary(_libraryName);
         return _job;
     }
     
@@ -485,7 +391,7 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         return _job;
     }
     
-    static ImportFromLooseFiles = function(_looseFileArray, _subfolder = "")
+    static JobImportFromLooseFiles = function(_looseFileArray, _subfolder = "")
     {
         var _job = new __HotglueJob(self);
         _job.__QueueImportLooseFile(_looseFileArray, _subfolder = "");
@@ -494,13 +400,22 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     
     static ImportAsLibrary = function(_sourceProject, _subfolder = "")
     {
-        if (__readOnly) return;
         
-        DeleteLibrary(_sourceProject.GetName(), false);
-        __AddLibrary(_sourceProject.GetName(), _sourceProject.GetVersionString(), _sourceProject.GetURL(), _sourceProject.__quickAssetArray);
-        __SaveHotglueMetadata();
+    }
+    
+    static DeleteLibrary = function(_libraryName, _saveMetadata = true)
+    {
         
-        return ImportAllFrom(_sourceProject, _subfolder);
+    }
+    
+    static ImportFrom = function(_sourceProject, _assetNameArray, _subfolder = "")
+    {
+        
+    }
+    
+    static ImportFromLooseFiles = function(_looseFileArray, _subfolder = "")
+    {
+        
     }
     
     static __GetLibraryMetadata = function(_libraryName)
@@ -549,209 +464,6 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         }
         
         return _result;
-    }
-    
-    static __AddLibrary = function(_libraryName, _version, _origin, _assetArray)
-    {
-        if (__readOnly) return;
-        if (not GetHotglueMetadataExists()) return;
-        
-        var _assetPIDArray = array_create(array_length(_assetArray));
-        var _i = 0;
-        repeat(array_length(_assetArray))
-        {
-            _assetPIDArray[@ _i] = _assetArray[_i].GetPID();
-            ++_i;
-        }
-        
-        array_push(__hotglueMetadata[1], {
-            name:    _libraryName,
-            version: _version,
-            origin:  _origin,
-            assets:  _assetPIDArray,
-        });
-    }
-    
-    static DeleteLibrary = function(_libraryName, _saveMetadata = true)
-    {
-        if (__readOnly) return;
-        if (not GetHotglueMetadataExists()) return;
-        
-        var _libraryMetadata = __GetLibraryMetadata(_libraryName);
-        if (_libraryMetadata == undefined) return;
-        
-        var _index = array_get_index(__hotglueMetadata[1], _libraryMetadata);
-        if (_index >= 0) array_delete(__hotglueMetadata[1], _index, 1);
-        
-        var _installedPIDArray = _libraryMetadata.assets;
-        var _i = 0;
-        repeat(array_length(_installedPIDArray))
-        {
-            __DeleteAsset(_installedPIDArray[_i]);
-            ++_i;
-        }
-        
-        if (_saveMetadata)
-        {
-            __SaveHotglueMetadata();
-        }
-    }
-    
-    static ImportFrom = function(_sourceProject, _assetNameArray, _subfolder = "")
-    {
-        if (__readOnly) return;
-        
-        if (not is_array(_assetNameArray))
-        {
-            _assetNameArray = [_assetNameArray];
-        }
-        
-        var _quickAssetDict = _sourceProject.__quickAssetDict;
-        var _expandedAssetNameArray = _sourceProject.GetExpandedAssets(_assetNameArray);
-        
-        var _assetArray = array_create(array_length(_expandedAssetNameArray));
-        var _i = 0;
-        repeat(array_length(_expandedAssetNameArray))
-        {
-            _assetArray[@ _i] = _quickAssetDict[$ _expandedAssetNameArray[_i]];
-            ++_i;
-        }
-        
-        return __ImportFromProject(_sourceProject, _assetArray, _subfolder);
-    }
-    
-    static __ImportFromProject = function(_sourceProject, _assetArray, _subfolder = "")
-    {
-        if (__readOnly) return;
-        
-        // 1. Ensure the user has Git set up
-        __HotglueAssertGit(__projectDirectory);
-        
-        if (_subfolder != "")
-        {
-            __EnsureFolderPath(_subfolder);
-        }
-        
-        var _i = 0;
-        repeat(array_length(_assetArray))
-        {
-            var _sourceHotglueAsset = _assetArray[_i];
-            
-            if ((_sourceHotglueAsset.type != "folder") && GetAssetExists(_sourceHotglueAsset.GetPID()))
-            {
-                __HotglueError($"Asset \"{_sourceHotglueAsset.GetPID()}\" already exists in project \"{GetPath()}\"");
-            }
-            
-            if (_sourceHotglueAsset.GetPID() != "resource:hotglue_metadata")
-            {
-                // 3. Copy files on disk
-                _sourceHotglueAsset.__Copy(self, _sourceProject);
-                
-                // 4. Duplicate the asset representation
-                var _newHotglueAsset = variable_clone(_sourceHotglueAsset);
-                
-                // 5. Fix folder references in the .yy
-                _newHotglueAsset.__FixYYReferences(self, _subfolder);
-                
-                // 6. Insert reference into .yyp
-                _newHotglueAsset.__InsertIntoYYP(self, _subfolder);
-                
-                // 7. Formally add the new asset to this project representation
-                __AddAsset(_newHotglueAsset);
-            }
-            
-            ++_i;
-        }
-        
-        // 8. Save updated .yyp
-        var _buffer = buffer_create(string_byte_length(__yypString), buffer_fixed, 1);
-        buffer_write(_buffer, buffer_text, __yypString);
-        buffer_save(_buffer, __projectPath);
-        buffer_delete(_buffer);
-        
-        __structureDirty = true;
-    }
-    
-    static ImportFromLooseFiles = function(_looseFileArray, _subfolder = "")
-    {
-        if (__readOnly) return;
-        
-        if (not is_array(_looseFileArray))
-        {
-            _looseFileArray = [_looseFileArray];
-        }
-        
-        // 1. Ensure the user has Git set up
-        __HotglueAssertGit(__projectDirectory);
-        
-        if (_subfolder != "")
-        {
-            __EnsureFolderPath(_subfolder);
-        }
-        
-        var _i = 0;
-        repeat(array_length(_looseFileArray))
-        {
-            var _looseFile = _looseFileArray[_i];
-            
-            __HotglueTrace($"Importing \"{_looseFile.GetPath()}\" as {_looseFile.GetType()} \"{_looseFile.GetName()}\"");
-            
-            // 2. Generate an asset
-            var _asset = _looseFile.__GenerateAsset(self);
-            
-            if (GetAssetExists(_asset.GetPID()))
-            {
-                __HotglueError($"Asset \"{_asset.GetPID()}\" already exists in project \"{GetPath()}\"");
-            }
-            
-            // 3. Create files on disk inside the project
-            _looseFile.__CreateFilesOnDisk(self, _asset, _subfolder);
-            
-            // 4. Insert reference into .yyp
-            _asset.__InsertIntoYYP(self, ""); //Don't need a subfolder here because we generate a correct folder path already
-            
-            if (_asset.GetPID() != "resource:hotglue_metadata")
-            {
-                // 5. Formally add the new asset to this project representation
-                __AddAsset(_asset);
-            }
-            
-            ++_i;
-        }
-        
-        // 6. Save updated .yyp
-        var _buffer = buffer_create(string_byte_length(__yypString), buffer_fixed, 1);
-        buffer_write(_buffer, buffer_text, __yypString);
-        buffer_save(_buffer, __projectPath);
-        buffer_delete(_buffer);
-        
-        __structureDirty = true;
-    }
-    
-    static __EnsureFolderPath = function(_inPath)
-    {
-        if (__readOnly) return;
-        if (_inPath == "")
-        {
-            //The root always exists
-            return;
-        }
-        
-        //Sanitize
-        var _path = string_replace_all(_inPath, "\\", "/");
-        
-        //Iterate over every stage in the path to ensure we have all the folders set up along the path
-        repeat(string_count("/", _path) + 1)
-        {
-            if (not variable_struct_exists(__quickAssetDict, $"folder:{_path}"))
-            {
-                var _hotglueAsset = new __HotglueFolder({ folderPath: $"folders/{_path}.yy", name: filename_name(_path), });
-                _hotglueAsset.__InsertIntoYYP(self, "");
-                __AddAsset(_hotglueAsset);
-            }
-            
-            _path = filename_dir(_path);
-        }
     }
     
     static __VerifyFilesUnzipped = function()

@@ -238,9 +238,9 @@ function __HotglueJob(_destinationProject) constructor
         }
     }
     
-    static __QueueDeleteLibrary = function(_sourceProject)
+    static __QueueDeleteLibrary = function(_libraryName)
     {
-        var _libraryMetadata = __destinationProject.__GetLibraryMetadata(_sourceProject.GetName());
+        var _libraryMetadata = __destinationProject.__GetLibraryMetadata(_libraryName);
         if (_libraryMetadata == undefined) return;
         
         __saveHotglueMetadata = true;
@@ -249,16 +249,14 @@ function __HotglueJob(_destinationProject) constructor
         
         var _method = method(
         {
-            __sourceProject: _sourceProject,
+            __libraryName: _libraryName,
         },
         function(_destinationProject)
         {
-            var _libraryName = __sourceProject.GetName();
-            
-            var _libraryMetadata = _destinationProject.__GetLibraryMetadata(_libraryName);
+            var _libraryMetadata = _destinationProject.__GetLibraryMetadata(__libraryName);
             if (_libraryMetadata == undefined)
             {
-                __HotglueWarning($"Cannot delete library \"{_libraryName}\", it doesn't exist in destination project");
+                __HotglueWarning($"Cannot delete library \"{__libraryName}\", it doesn't exist in destination project");
             }
             else
             {
@@ -286,7 +284,7 @@ function __HotglueJob(_destinationProject) constructor
             var _libraryName   = _sourceProject.GetName();
             var _versionString = _sourceProject.GetVersionString();
             var _originURL     = _sourceProject.GetURL();
-            var _assetPIDArray = variable_clone(_sourceProject.__quickAssetArray);
+            var _assetPIDArray = variable_clone(_sourceProject.__quickAssetArray); //FIXME - Generate PIDs
             
             var _libraryMetadata = _destinationProject.__GetLibraryMetadata(_libraryName);
             if (_libraryMetadata != undefined)
@@ -312,26 +310,15 @@ function __HotglueJob(_destinationProject) constructor
         var _destinationPIDDict = __destinationProject.__quickAssetDict;
         
         var _addPIDArray       = __addPIDArray;
+        var _addPIDDict        = __addPIDDict;
         var _deletePIDArray    = __deletePIDArray;
         var _conflictPIDArray  = __derivedConflictPIDArray;
         var _overwritePIDArray = __derivedOverwritePIDArray;
         
-        array_sort(_addPIDArray,    true);
-        array_sort(_deletePIDArray, true);
-        
         array_resize(_conflictPIDArray,  0);
         array_resize(_overwritePIDArray, 0);
         
-        var _addPIDDict    = {};
         var _deletePIDDict = {};
-        
-        var _i = 0;
-        repeat(array_length(_addPIDArray))
-        {
-            _addPIDDict[$ _addPIDArray[_i]] = true;
-            ++_i;
-        }
-        
         var _i = 0;
         repeat(array_length(_deletePIDArray))
         {
@@ -376,7 +363,7 @@ function __HotglueJob(_destinationProject) constructor
         }
     }
     
-    static __ExecuteArray = function()
+    static Execute = function()
     {
         var _actionArray = __actionArray;
         with(__destinationProject)

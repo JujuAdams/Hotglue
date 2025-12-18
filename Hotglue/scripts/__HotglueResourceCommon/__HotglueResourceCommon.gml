@@ -82,8 +82,9 @@ function __HotglueResourceCommon(_resourceStruct) constructor
             buffer_save(_buffer, _absolutePath);
             buffer_delete(_buffer);
             
+            //TODO - This should no longer be needed
             //Ensure the folder path exists
-            _project.__EnsureFolderPath(_parentPath);
+            //_project.__EnsureFolderPath(_parentPath);
         }
         else
         {
@@ -104,8 +105,9 @@ function __HotglueResourceCommon(_resourceStruct) constructor
             }
             else
             {
+                //TODO - This should no longer be needed
                 //Ensure the folder path exists
-                _project.__EnsureFolderPath(_parentPath);
+                //_project.__EnsureFolderPath(_parentPath);
             }
         }
     }

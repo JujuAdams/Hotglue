@@ -138,35 +138,63 @@ function ClassTabImport() : ClassTab() constructor
                 }
                 else
                 {
-                    ImGuiText("No source project loaded.");
+                    var _openPath = "";
+                    
+                    ImGuiText("No source project opened.");
                     
                     if (ImGuiButton("Load project..."))
                     {
-                        var _path = get_open_filename("GameMaker Project (.yyp)|*.yyp", "");
-                        if (_path != "")
+                        _openPath = get_open_filename("GameMaker Project (.yyp)|*.yyp", "");
+                    }
+                    
+                    ImGuiNewLine();
+                    ImGuiText("Recently opened:");
+                    ImGuiIndent();
+                    
+                    var _recentArray = InterfaceRecentGetArray();
+                    if (array_length(_recentArray) <= 0)
+                    {
+                        ImGuiText("(No recently opened projects)");
+                    }
+                    else
+                    {
+                        var _i = 0;
+                        repeat(array_length(_recentArray))
                         {
-                            if (filename_ext(_path) == ".yyp")
+                            if (ImGuiButton(_recentArray[_i]))
                             {
-                                try
-                                {
-                                    __directProject = HotglueProjectLocalEnsure(_path);
-                                    __directView = new ClassInterfaceProjectView(__directProject);
-                                    
-                                    LogTraceAndStatus($"Loaded \"{_path}\"");
-                                }
-                                catch(_error)
-                                {
-                                    LogWarning(json_stringify(_error, true));
-                                    LogWarning($"Failed to load \"{_path}\"");
-                                    
-                                    __directProject = undefined;
-                                    __directView = undefined;
-                                }
+                                _openPath = _recentArray[_i];
                             }
-                            else
+                            
+                            ++_i;
+                        }
+                    }
+                    
+                    ImGuiUnindent();
+                    
+                    if (_openPath != "")
+                    {
+                        if (filename_ext(_openPath) == ".yyp")
+                        {
+                            try
                             {
-                                LogTraceAndStatus($"File type not supported \"{_path}\"");
+                                __directProject = HotglueProjectLocalEnsure(_openPath);
+                                __directView = new ClassInterfaceProjectView(__directProject);
+                                    
+                                LogTraceAndStatus($"Loaded \"{_openPath}\"");
                             }
+                            catch(_error)
+                            {
+                                LogWarning(json_stringify(_error, true));
+                                LogWarning($"Failed to load \"{_openPath}\"");
+                                    
+                                __directProject = undefined;
+                                __directView = undefined;
+                            }
+                        }
+                        else
+                        {
+                            LogTraceAndStatus($"File type not supported \"{_openPath}\"");
                         }
                     }
                 }
