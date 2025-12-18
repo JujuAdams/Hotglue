@@ -86,6 +86,7 @@
     {"id":{"name":"__HotglueGenerateUUID","path":"scripts/__HotglueGenerateUUID/__HotglueGenerateUUID.yy",},},
     {"id":{"name":"__HotglueGuessURLIsGitHub","path":"scripts/__HotglueGuessURLIsGitHub/__HotglueGuessURLIsGitHub.yy",},},
     {"id":{"name":"__HotglueIncludedFile","path":"scripts/__HotglueIncludedFile/__HotglueIncludedFile.yy",},},
+    {"id":{"name":"__HotglueJob","path":"scripts/__HotglueJob/__HotglueJob.yy",},},
     {"id":{"name":"__HotglueLoadGitHubAccessToken","path":"scripts/__HotglueLoadGitHubAccessToken/__HotglueLoadGitHubAccessToken.yy",},},
     {"id":{"name":"__HotglueLoadYYMPS","path":"scripts/__HotglueLoadYYMPS/__HotglueLoadYYMPS.yy",},},
     {"id":{"name":"__HotglueLoadYYMPSUnpacked","path":"scripts/__HotglueLoadYYMPSUnpacked/__HotglueLoadYYMPSUnpacked.yy",},},

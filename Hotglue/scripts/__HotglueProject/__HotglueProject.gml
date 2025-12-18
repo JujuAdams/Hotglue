@@ -312,6 +312,19 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         __quickAssetDict[$ _hotglueAsset.GetPID()] = _hotglueAsset;
     }
     
+    static __DeleteAsset = function(_assetPID)
+    {
+        var _asset = __quickAssetDict[$ _assetPID];
+        if (is_struct(_asset))
+        {
+            _asset.__DeleteFromDisk(self);
+            
+            struct_remove(__quickAssetDict, _assetPID);
+            var _index = array_get_index(__quickAssetArray, _asset);
+            if (_index >= 0) array_delete(__quickAssetArray, _index, 1);
+        }
+    }
+    
     static GetAssets = function()
     {
         var _array = [];
@@ -539,24 +552,10 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         if (_index >= 0) array_delete(__hotglueMetadata[1], _index, 1);
         
         var _installedPIDArray = _libraryMetadata.assets;
-        var _quickAssetArray   = __quickAssetArray;
-        var _quickAssetDict    = __quickAssetDict;
-        
         var _i = 0;
         repeat(array_length(_installedPIDArray))
         {
-            var _pid = _installedPIDArray[_i];
-            
-            var _asset = _quickAssetDict[$ _pid];
-            if (is_struct(_asset))
-            {
-                _asset.__DeleteFromDisk(self);
-                
-                struct_remove(_quickAssetDict, _pid);
-                var _index = array_get_index(_quickAssetArray, _asset);
-                if (_index >= 0) array_delete(_quickAssetArray, _index, 1);
-            }
-            
+            __DeleteAsset(_installedPIDArray[_i]);
             ++_i;
         }
         

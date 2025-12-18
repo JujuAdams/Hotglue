@@ -54,6 +54,7 @@
     {"name":"__HotglueGenerateUUID","order":21,"path":"scripts/__HotglueGenerateUUID/__HotglueGenerateUUID.yy",},
     {"name":"__HotglueGuessURLIsGitHub","order":18,"path":"scripts/__HotglueGuessURLIsGitHub/__HotglueGuessURLIsGitHub.yy",},
     {"name":"__HotglueIncludedFile","order":2,"path":"scripts/__HotglueIncludedFile/__HotglueIncludedFile.yy",},
+    {"name":"__HotglueJob","order":14,"path":"scripts/__HotglueJob/__HotglueJob.yy",},
     {"name":"__HotglueLoadGitHubAccessToken","order":17,"path":"scripts/__HotglueLoadGitHubAccessToken/__HotglueLoadGitHubAccessToken.yy",},
     {"name":"__HotglueLoadYYMPSUnpacked","order":1,"path":"scripts/__HotglueLoadYYMPSUnpacked/__HotglueLoadYYMPSUnpacked.yy",},
     {"name":"__HotglueLoadYYP","order":5,"path":"scripts/__HotglueLoadYYP/__HotglueLoadYYP.yy",},
