@@ -42,9 +42,4 @@ function __HotglueResourceExtension(_resourceStruct) : __HotglueResourceCommon(_
         
         return _array;
     }
-    
-    static __GetExpandedAssets = function(_project, _visitedArray, _visitedDict)
-    {
-        //Do nothing!
-    }
 }

@@ -66,11 +66,11 @@ function __HotglueResourceObject(_resourceStruct) : __HotglueResourceCommon(_res
         return _array;
     }
     
-    static __GetExpandedAssets = function(_project, _visitedArray, _visitedDict)
+    static __GetExpandedAssetsSpecial = function(_project, _visitedArray, _visitedDict)
     {
         var _json = __GetYYJSON(_project);
-        __HotglueTryExpandingAssetID(_json.spriteId);
-        __HotglueTryExpandingAssetID(_json.spriteMaskId);
-        __HotglueTryExpandingAssetID(_json.parentObjectId);
+        __HotglueTryExpandingAssetID(_json.spriteId, _visitedArray, _visitedDict);
+        __HotglueTryExpandingAssetID(_json.spriteMaskId, _visitedArray, _visitedDict);
+        __HotglueTryExpandingAssetID(_json.parentObjectId, _visitedArray, _visitedDict);
     }
 }

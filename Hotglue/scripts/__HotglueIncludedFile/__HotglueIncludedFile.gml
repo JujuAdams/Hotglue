@@ -87,9 +87,4 @@ function __HotglueIncludedFile(_includedFileStruct) constructor
         var _insertString = $"    \{\"$GMIncludedFile\":\"\",\"%Name\":\"{_includedFileName}\",\"CopyToMask\":-1,\"filePath\":\"{_includedFilePath}\",\"name\":\"{_includedFileName}\",\"resourceType\":\"GMIncludedFile\",\"resourceVersion\":\"2.0\",\},\n"
         _project.__yypString = string_insert(_insertString, _yypString, _pos);
     }
-    
-    static __GetExpandedAssets = function(_project, _visitedArray, _visitedDict)
-    {
-        //Do nothing!
-    }
 }

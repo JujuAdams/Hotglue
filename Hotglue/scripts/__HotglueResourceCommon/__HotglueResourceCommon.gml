@@ -25,6 +25,35 @@ function __HotglueResourceCommon(_resourceStruct) constructor
         directory_destroy(_directory);
     }
     
+    static __GetExpandedAssets = function(_project, _visitedArray, _visitedDict)
+    {
+        var _parentPath = __GetYYJSON(_project).parent.path;
+        _parentPath = __HotglueProcessFolderPath(_parentPath);
+        
+        //Sanitize
+        var _parentPath = string_replace_all(_parentPath, "\\", "/");
+        
+        //Iterate over every stage in the path to ensure we have all the folders set up along the path
+        repeat(string_count("/", _parentPath) + 1)
+        {
+            var _assetPID = $"folder:{_parentPath}";
+            if (not variable_struct_exists(_visitedDict, _assetPID))
+            {
+                array_push(_visitedArray, _assetPID);
+                _visitedDict[$ _assetPID] = true;
+            }
+            
+            _parentPath = filename_dir(_parentPath);
+        }
+        
+        __GetExpandedAssetsSpecial(_project, _visitedArray, _visitedDict);
+    }
+    
+    static __GetExpandedAssetsSpecial = function(_project, _visitedArray, _visitedDict)
+    {
+        //Do nothing!
+    }
+    
     //static GetName = function()
     //{
     //    return data.name;
@@ -53,7 +82,7 @@ function __HotglueResourceCommon(_resourceStruct) constructor
         __HotglueCopyRelativePathArray(_destinationProject.__projectDirectory, _sourceProject.__projectDirectory, __GetFiles(_sourceProject));
     }
     
-    static __FixYYReferences = function(_project, _subfolder)
+    static __GetYYJSON = function(_project)
     {
         var _absolutePath = _project.__projectDirectory + data.path;
         
@@ -61,7 +90,14 @@ function __HotglueResourceCommon(_resourceStruct) constructor
         var _string = buffer_read(_buffer, buffer_text);
         buffer_delete(_buffer);
         
-        var _json = json_parse(_string);
+        return json_parse(_string);
+    }
+    
+    static __FixYYReferences = function(_project, _subfolder)
+    {
+        var _absolutePath = _project.__projectDirectory + data.path;
+        
+        var _json = __GetYYJSON(_project);
         var _jsonParentPath = _json.parent.path;
         var _jsonParentName = _json.parent.name;
         

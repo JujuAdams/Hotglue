@@ -13,7 +13,7 @@ function __HotglueResourceRoom(_resourceStruct) : __HotglueResourceCommon(_resou
         return _array;
     }
     
-    static __GetExpandedAssets = function(_project, _visitedArray, _visitedDict)
+    static __GetExpandedAssetsSpecial = function(_project, _visitedArray, _visitedDict)
     {
         var _json = __GetYYJSON(_project);
         

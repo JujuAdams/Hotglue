@@ -73,6 +73,11 @@ function __HotglueJob(_destinationProject) constructor
                     var _pid = _expandedPIDArray[_j];
                     var _asset = _assetPIDDict[$ _pid];
                     
+                    if (_asset == undefined)
+                    {
+                        __HotglueError($"Failed to find \"{_pid}\" in source project.\nWas this asset PID created from an improper expansion?");
+                    }
+                    
                     var _method = method(
                     {
                         __sourceProject: _sourceProject,
@@ -90,11 +95,11 @@ function __HotglueJob(_destinationProject) constructor
                     
                         if (_asset.GetPID() != "resource:hotglue_metadata")
                         {
-                            _asset.__Copy(self, __sourceProject);
+                            _asset.__Copy(_destinationProject, __sourceProject);
                         
                             var _newHotglueAsset = variable_clone(_asset);
-                            _newHotglueAsset.__FixYYReferences(self, __subfolder);
-                            _newHotglueAsset.__InsertIntoYYP(self, __subfolder);
+                            _newHotglueAsset.__FixYYReferences(_destinationProject, __subfolder);
+                            _newHotglueAsset.__InsertIntoYYP(_destinationProject, __subfolder);
                         
                             _destinationProject.__AddAsset(_newHotglueAsset);
                         }

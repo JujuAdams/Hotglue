@@ -103,8 +103,6 @@ function ClassModalConfirmImport(_importTab, _importMode) constructor
                     LogWarning(json_stringify(_error, true));
                 }
                 
-                __job = undefined;
-                
                 var _message = "Operation complete.";
                 if (_success)
                 {
