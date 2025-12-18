@@ -16,10 +16,12 @@ function ClassModalConfirmImport(_importTab, _importMode) constructor
     if (__importMode == "local project")
     {
         __job = __importTab.__destinationProject.JobImportFrom(__importTab.__directProject, __importTab.__directView.GetAssetArray());
+        __job.BuildReport();
     }
     else if (__importMode == "loose files")
     {
         __job = __importTab.__destinationProject.JobImportFromLooseFiles(__importTab.GetLooseFileArray());
+        __job.BuildReport();
     }
     else
     {
@@ -40,6 +42,7 @@ function ClassModalConfirmImport(_importTab, _importMode) constructor
                         if (_project.GetLoadedSuccessfully())
                         {
                             __job = __importTab.__destinationProject.JobImportAsLibrary(_project);
+                            __job.BuildReport();
                             
                             __loadSuccessful = true;
                             LogTraceAndStatus("Loaded release successfully.");
@@ -56,11 +59,6 @@ function ClassModalConfirmImport(_importTab, _importMode) constructor
                 });
             }
         }
-    }
-    
-    if (__job != undefined)
-    {
-        __job.BuildReport();
     }
     
     

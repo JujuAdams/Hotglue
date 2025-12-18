@@ -13,6 +13,8 @@ function __HotglueJob(_destinationProject) constructor
     __addPIDDict     = {};
     __deletePIDArray = [];
     
+    __derivedAddPIDArray       = [];
+    __derivedDeletePIDArray    = [];
     __derivedConflictPIDArray  = [];
     __derivedOverwritePIDArray = [];
     
@@ -20,12 +22,12 @@ function __HotglueJob(_destinationProject) constructor
     
     static GetAddArray = function()
     {
-        return __addPIDArray;
+        return __derivedAddPIDArray;
     }
     
     static GetDeleteArray = function()
     {
-        return __deletePIDArray;
+        return __derivedDeletePIDArray;
     }
     
     static GetConflictArray = function()
@@ -215,17 +217,18 @@ function __HotglueJob(_destinationProject) constructor
         }
     }
     
-    static __QueueDelete = function(_assetPIDArray)
+    static __QueueDelete = function(_assetArray)
     {
-        if (not is_array(_assetPIDArray))
+        if (not is_array(_assetArray))
         {
-            _assetPIDArray = [ _assetPIDArray ];
+            _assetArray = [ _assetArray ];
         }
         
         var _i = 0;
-        repeat(array_length(_assetPIDArray))
+        repeat(array_length(_assetArray))
         {
-            var _pid = _assetPIDArray[_i];
+            var _asset = _assetArray[_i];
+            var _pid = _asset.__pid;
             
             var _method = method(
             {
@@ -314,9 +317,12 @@ function __HotglueJob(_destinationProject) constructor
     {
         var _destinationPIDDict = __destinationProject.__quickAssetDict;
         
-        var _addPIDArray       = __addPIDArray;
+        __derivedAddPIDArray    = variable_clone(__addPIDArray);
+        __derivedDeletePIDArray = variable_clone(__deletePIDArray);
+        
         var _addPIDDict        = __addPIDDict;
-        var _deletePIDArray    = __deletePIDArray;
+        var _addPIDArray       = __derivedAddPIDArray;
+        var _deletePIDArray    = __derivedDeletePIDArray;
         var _conflictPIDArray  = __derivedConflictPIDArray;
         var _overwritePIDArray = __derivedOverwritePIDArray;
         
