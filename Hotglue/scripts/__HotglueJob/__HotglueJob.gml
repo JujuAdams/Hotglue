@@ -147,16 +147,16 @@ function __HotglueJob(_destinationProject) constructor
                 
                 __HotglueTrace($"Importing \"{_looseFile.GetPath()}\" as {_looseFile.GetType()} \"{_looseFile.GetName()}\"");
             
-                var _asset = _looseFile.__GenerateAsset(self);
+                var _asset = _looseFile.__GenerateAsset(_destinationProject);
             
                 if (_destinationProject.GetAssetExists(_asset.GetPID()))
                 {
                     __HotglueError($"Asset \"{_asset.GetPID()}\" already exists in project \"{_looseFile.GetPath()}\"");
                 }
                 
-                _looseFile.__CreateFilesOnDisk(self, _asset, __subfolder);
+                _looseFile.__CreateFilesOnDisk(_destinationProject, _asset, __subfolder);
                     
-                _asset.__InsertIntoYYP(self, ""); //Don't need a subfolder here because we generate a correct folder path already
+                _asset.__InsertIntoYYP(_destinationProject, ""); //Don't need a subfolder here because we generate a correct folder path already
                     
                 if (_asset.GetPID() != "resource:hotglue_metadata")
                 {
@@ -200,7 +200,7 @@ function __HotglueJob(_destinationProject) constructor
                 if (not variable_struct_exists(_quickAssetDict, $"folder:{_path}"))
                 {
                     var _hotglueAsset = new __HotglueFolder({ folderPath: $"folders/{_path}.yy", name: filename_name(_path), });
-                    _hotglueAsset.__InsertIntoYYP(self, "");
+                    _hotglueAsset.__InsertIntoYYP(_destinationProject, "");
                     _destinationProject.__AddAsset(_hotglueAsset);
                 }
             });
@@ -380,6 +380,11 @@ function __HotglueJob(_destinationProject) constructor
             }
             
             __HotglueAssertGit(__projectDirectory);
+            
+            if (other.__saveHotglueMetadata)
+            {
+                EnsureHotglueMetadata();
+            }
             
             var _i = 0;
             repeat(array_length(_actionArray))

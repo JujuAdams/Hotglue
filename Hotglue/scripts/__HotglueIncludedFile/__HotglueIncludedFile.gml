@@ -28,6 +28,11 @@ function __HotglueIncludedFile(_includedFileStruct) constructor
         return path;
     }
     
+    static __GetExpandedAssets = function(_project, _visitedArray, _visitedDict)
+    {
+        //Do nothing!
+    }
+    
     static __DeleteFromDisk = function(_project)
     {
         __HotglueTrace($"Deleting {_project.__projectDirectory + path}");

@@ -22,6 +22,25 @@ function __HotglueFolder(_folderStruct) constructor
         return __friendlyPath;
     }
     
+    static __GetExpandedAssets = function(_project, _visitedArray, _visitedDict)
+    {
+        //Sanitize
+        var _path = string_replace_all(__friendlyPath, "\\", "/");
+        
+        //Iterate over every stage in the path to ensure we have all the folders set up along the path
+        repeat(string_count("/", _path))
+        {
+            _path = filename_dir(_path);
+            
+            var _assetPID = $"folder:{_path}";
+            if (not variable_struct_exists(_visitedDict, _assetPID))
+            {
+                array_push(_visitedArray, _assetPID);
+                _visitedDict[$ _assetPID] = true;
+            }
+        }
+    }
+    
     static __DeleteFromDisk = function(_project)
     {
         //Do nothing!
@@ -97,10 +116,5 @@ function __HotglueFolder(_folderStruct) constructor
         
         var _insertString = $"    \{\"$GMFolder\":\"\",\"%Name\":\"{_folderName}\",\"folderPath\":\"{_folderPath}\",\"name\":\"{_folderName}\",\"resourceType\":\"GMFolder\",\"resourceVersion\":\"2.0\",\},\n";
         _project.__yypString = string_insert(_insertString, _yypString, _pos);
-    }
-    
-    static __GetExpandedAssets = function(_project, _visitedArray, _visitedDict)
-    {
-        //Do nothing!
     }
 }
