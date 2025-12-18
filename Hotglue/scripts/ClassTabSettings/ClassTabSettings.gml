@@ -12,7 +12,7 @@ function ClassTabSettings() : ClassTab() constructor
         {
             ImGuiNewLine();
             
-            ImGuiText("Channels:");
+            ImGuiText("Library Channels:");
             ImGuiIndent();
             ImGuiBeginChild("channelsPane", undefined, 170, ImGuiChildFlags.Border);
             
@@ -93,9 +93,9 @@ function ClassTabSettings() : ClassTab() constructor
                     InterfaceSettingsSave();
                 }
                 
-                if (ImGuiSelectable("Explore Channels"))
+                if (ImGuiSelectable("Library Channels"))
                 {
-                    InterfaceSettingSet("openOnTab", "Explore Channels");
+                    InterfaceSettingSet("openOnTab", "Library Channels");
                     InterfaceSettingsSave();
                 }
                 

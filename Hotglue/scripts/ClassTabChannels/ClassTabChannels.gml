@@ -2,7 +2,7 @@
 
 function ClassTabChannels() : ClassTab() constructor
 {
-    static __name = "Explore Channels";
+    static __name = "Library Channels";
     
     static TabItem = function()
     {

@@ -13,7 +13,7 @@ function ClassModalConfirmImport(_importTab, _importMode) constructor
     
     __job = undefined;
     
-    if (__importMode == "local project")
+    if (__importMode == "direct from project")
     {
         __job = __importTab.__destinationProject.JobImportFrom(__importTab.__directProject, __importTab.__directView.GetAssetArray());
         __job.BuildReport();
@@ -104,7 +104,7 @@ function ClassModalConfirmImport(_importTab, _importMode) constructor
                 var _message = "Operation complete.";
                 if (_success)
                 {
-                    if (__importMode == "local project")
+                    if (__importMode == "direct from project")
                     {
                         _message = $"Imported files from \"{__importTab.__destinationProject.GetPath()}\" successfully.";
                     }
@@ -119,7 +119,7 @@ function ClassModalConfirmImport(_importTab, _importMode) constructor
                 }
                 else
                 {
-                    if (__importMode == "local project")
+                    if (__importMode == "direct from project")
                     {
                         _message = $"An error occurred whilst importing files from \"{__importTab.__destinationProject.GetPath()}\".";
                     }

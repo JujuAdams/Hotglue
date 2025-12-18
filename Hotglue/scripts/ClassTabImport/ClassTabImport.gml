@@ -106,9 +106,35 @@ function ClassTabImport() : ClassTab() constructor
             
             ImGuiBeginTabBar("sourceTabBar");
             
-            if (ImGuiBeginTabItem("Local Project"))
+            if (ImGuiBeginTabItem("Library Channels"))
             {
-                _importMode = "local project";
+                _importMode = "channels";
+                
+                __selectedChannel = undefined;
+                
+                ImGuiBeginChild("sourceInnerPane");
+                ImGuiBeginTabBar("tabBar");
+                
+                var _i = 0;
+                repeat(HotglueGetChannelCount())
+                {
+                    if (InterfaceEnsureChannelView(HotglueGetChannelByIndex(_i)).BuildForImport())
+                    {
+                        __selectedChannel = _i;
+                    }
+                    
+                    ++_i;
+                }
+                
+                ImGuiEndTabBar();
+                ImGuiEndChild();
+                
+                ImGuiEndTabItem();
+            }
+            
+            if (ImGuiBeginTabItem("Direct From Project"))
+            {
+                _importMode = "direct from project";
                 
                 ImGuiBeginChild("sourceInnerPane", undefined, undefined, ImGuiChildFlags.Border);
                 
@@ -258,32 +284,6 @@ function ClassTabImport() : ClassTab() constructor
                 ImGuiEndTabItem();
             }
             
-            if (ImGuiBeginTabItem("Channels"))
-            {
-                _importMode = "channels";
-                
-                __selectedChannel = undefined;
-                
-                ImGuiBeginChild("sourceInnerPane");
-                ImGuiBeginTabBar("tabBar");
-                
-                var _i = 0;
-                repeat(HotglueGetChannelCount())
-                {
-                    if (InterfaceEnsureChannelView(HotglueGetChannelByIndex(_i)).BuildForImport())
-                    {
-                        __selectedChannel = _i;
-                    }
-                    
-                    ++_i;
-                }
-                
-                ImGuiEndTabBar();
-                ImGuiEndChild();
-                
-                ImGuiEndTabItem();
-            }
-            
             ImGuiEndTabBar();
             
             ImGuiEndChild();
@@ -298,7 +298,7 @@ function ClassTabImport() : ClassTab() constructor
             
             ImGuiBeginDisabled((__destinationProject == undefined) || __destinationProject.GetReadOnly());
             
-            if (_importMode == "local project")
+            if (_importMode == "direct from project")
             {
                 ImGuiBeginDisabled((__directProject == undefined) || (__directView == undefined) || (__directView.GetSelectedCount() <= 0));
             }
