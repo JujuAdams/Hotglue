@@ -48,6 +48,11 @@ function ClassModalNewChannel() constructor
                     __type = HOTGLUE_CHANNEL_GMK;
                 }
                 
+                if (ImGuiSelectable(HOTGLUE_CHANNEL_GITHUB_USER, (__type == HOTGLUE_CHANNEL_GITHUB_USER)))
+                {
+                    __type = HOTGLUE_CHANNEL_GITHUB_USER;
+                }
+                
                 ImGuiEndCombo();
             }
             

@@ -1,8 +1,6 @@
 // Feather disable all
 
-/// @param value
-
-function HotglueGetDestructiveCopy(_value)
+function HotglueGetDestructiveCopy()
 {
     static _system = __HotglueSystem();
     

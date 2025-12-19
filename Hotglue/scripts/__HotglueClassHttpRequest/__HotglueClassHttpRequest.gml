@@ -20,15 +20,6 @@ function __HotglueClassHttpRequest(_url, _method = "GET", _allowBearerToken = tr
     
     __result = undefined;
     
-    //Detect if we need a GitHub bearer token
-    if (__HotglueGuessURLIsGitHub(_url))
-    {
-        if (_system.__githubUserAccessToken != undefined)
-        {
-            __headerStruct[$ "Bearer"] = _system.__githubUserAccessToken;
-        }
-    }
-    
     
     
     static GetURL = function()
@@ -69,10 +60,6 @@ function __HotglueClassHttpRequest(_url, _method = "GET", _allowBearerToken = tr
     {
         if (__requestID == undefined)
         {
-            
-        }
-        else
-        {
             __headerStruct = _struct;
         }
         
@@ -82,10 +69,6 @@ function __HotglueClassHttpRequest(_url, _method = "GET", _allowBearerToken = tr
     static AddHeader = function(_key, _value)
     {
         if (__requestID == undefined)
-        {
-            
-        }
-        else
         {
             __headerStruct[$ _key] = _value;
         }
@@ -115,6 +98,15 @@ function __HotglueClassHttpRequest(_url, _method = "GET", _allowBearerToken = tr
         }
         else
         {
+            //Detect if we need a GitHub bearer token
+            if (__HotglueGuessURLIsGitHub(__url))
+            {
+                if (_system.__githubUserAccessToken != undefined)
+                {
+                    __headerStruct[$ "Bearer"] = _system.__githubUserAccessToken;
+                }
+            }
+            
             var _headerMap = json_decode(json_stringify(__headerStruct));
             
             __requestID = http_request(__url, __method, _headerMap, __body);

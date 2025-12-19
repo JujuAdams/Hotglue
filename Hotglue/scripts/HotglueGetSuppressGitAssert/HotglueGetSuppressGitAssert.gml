@@ -1,8 +1,6 @@
 // Feather disable all
 
-/// @param value
-
-function HotglueGetSuppressGitAssert(_value)
+function HotglueGetSuppressGitAssert()
 {
     static _system = __HotglueSystem();
     
