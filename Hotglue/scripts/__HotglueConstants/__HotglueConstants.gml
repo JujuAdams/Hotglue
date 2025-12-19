@@ -17,6 +17,7 @@
 #macro HOTGLUE_CHANNEL_DIRECTORY         "Directory"
 #macro HOTGLUE_CHANNEL_GMK               "GameMaker Kitchen"
 #macro HOTGLUE_CHANNEL_GITHUB_USER       "GitHub User"
+#macro HOTGLUE_CHANNEL_GITHUB_ORG        "GitHub Organization"
 #macro HOTGLUE_CHANNEL_GITHUB_AUTH_USER  "GitHub Auth User"
 
 #macro HOTGLUE_REPOSITORY_LOCAL   "local"
