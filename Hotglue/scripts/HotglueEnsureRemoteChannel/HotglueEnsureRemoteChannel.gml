@@ -28,6 +28,10 @@ function HotglueEnsureRemoteChannel(_type, _name, _url, _protected = false)
         {
             _channel = new __HotglueChannelGitHubUser(_name, _url, _protected);
         }
+        else if (_type == HOTGLUE_CHANNEL_GITHUB_AUTH_USER)
+        {
+            _channel = new __HotglueChannelGitHubAuthUser();
+        }
         else
         {
             _channel = new __HotglueChannelCommon(_name, _url, _protected);

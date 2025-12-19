@@ -79,8 +79,8 @@ function __HotglueAsyncNetworkingEvent()
                             _system.__githubUserAccessToken = _accessToken;
                             
                             var _json = {
-                                accessoken: _accessToken,
-                                expires:   _expires,
+                                accessToken: _accessToken,
+                                expires:     _expires,
                             };
                             
                             var _string = json_stringify(_json, true);

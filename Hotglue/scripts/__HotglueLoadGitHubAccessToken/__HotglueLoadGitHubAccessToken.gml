@@ -27,7 +27,7 @@ function __HotglueLoadGitHubAccessToken()
                 
                 if (_delta > 0)
                 {
-                    _system.__githubUserAccessToken = _json.accessoken;
+                    _system.__githubUserAccessToken = _json.accessToken;
                     __HotglueTrace("Extracted access token from cache");
                 }
                 else

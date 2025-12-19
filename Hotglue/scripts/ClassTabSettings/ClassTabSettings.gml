@@ -155,6 +155,10 @@ function ClassTabSettings() : ClassTab() constructor
                 if (HotglueGetGitHubAccessTokenAvailable())
                 {
                     ImGuiText("Access token acquired.");
+                    if (ImGuiButton("Re-authorize GitHub..."))
+                    {
+                        InterfaceGitHubAuthFlow();
+                    }
                 }
                 else
                 {

@@ -2,6 +2,9 @@ logTab = new ClassTabLog();
 
 LogTrace("Interface created");
 
+var _channel = HotglueEnsureRemoteChannel(HOTGLUE_CHANNEL_GITHUB_AUTH_USER, undefined, undefined, true);
+_channel.Refresh();
+
 context = new ImGuiContext(0, 0, window_get_width(), window_get_height(),
                            ImGuiConfigFlags.DockingEnable);
 

@@ -103,7 +103,8 @@ function __HotglueClassHttpRequest(_url, _method = "GET", _allowBearerToken = tr
             {
                 if (_system.__githubUserAccessToken != undefined)
                 {
-                    __headerStruct[$ "Bearer"] = _system.__githubUserAccessToken;
+                    __headerStruct[$ "Bearer"       ] = _system.__githubUserAccessToken;
+                    __headerStruct[$ "Authorization"] = $"Bearer {_system.__githubUserAccessToken}"
                 }
             }
             
