@@ -292,6 +292,12 @@ function ClassTabSettings() : ClassTab() constructor
             {
                 HotglueSetSuppressGitAssert(ImGuiCheckbox("Suppress .git directory assert", HotglueGetSuppressGitAssert()));
                 HotglueSetDestructiveCopy(ImGuiCheckbox("Resource copy is destructive", HotglueGetDestructiveCopy()));
+                
+                if (ImGuiButton("Reset Settings"))
+                {
+                    InterfaceSettingsReset();
+                    InterfaceSettingsSave();
+                }
             }
             
             ImGuiUnindent();

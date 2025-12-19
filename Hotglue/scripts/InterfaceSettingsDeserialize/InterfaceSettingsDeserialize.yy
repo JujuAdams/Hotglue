@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"InterfaceSettingsDeserialize",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"InterfaceSettingsDeserialize",
+  "parent":{
+    "name":"Settings",
+    "path":"folders/Interface/Settings.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

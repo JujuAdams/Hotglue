@@ -68,6 +68,11 @@ function __HotglueChannelCommon(_name, _url, _protected) constructor
         });
     }
     
+    static ClearRepositories = function()
+    {
+        array_resize(__repositoryArray, 0);
+    }
+    
     static AddRepository = function(_url, _forceType = undefined)
     {
         var _repository = GetRepositoryFromURL(_url);

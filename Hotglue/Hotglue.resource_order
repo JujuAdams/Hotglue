@@ -158,6 +158,7 @@
     {"name":"InterfaceRecentLoad","order":12,"path":"scripts/InterfaceRecentLoad/InterfaceRecentLoad.yy",},
     {"name":"InterfaceRecentPush","order":10,"path":"scripts/InterfaceRecentPush/InterfaceRecentPush.yy",},
     {"name":"InterfaceSettingGet","order":3,"path":"scripts/InterfaceSettingGet/InterfaceSettingGet.yy",},
+    {"name":"InterfaceSettingsDeserialize","order":5,"path":"scripts/InterfaceSettingsDeserialize/InterfaceSettingsDeserialize.yy",},
     {"name":"InterfaceSettingSet","order":4,"path":"scripts/InterfaceSettingSet/InterfaceSettingSet.yy",},
     {"name":"InterfaceSettingsLoad","order":1,"path":"scripts/InterfaceSettingsLoad/InterfaceSettingsLoad.yy",},
     {"name":"InterfaceSettingsReset","order":2,"path":"scripts/InterfaceSettingsReset/InterfaceSettingsReset.yy",},

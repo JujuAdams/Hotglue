@@ -16,7 +16,7 @@ function __HotglueChannelLocal(_name, _url, _protected) : __HotglueChannelCommon
     
     static Refresh = function(_callback)
     {
-        //Always redefinition of the callback
+        //Allow redefinition of the callback
         __refreshCallback = _callback;
         
         var _repositoryArray = __repositoryArray;

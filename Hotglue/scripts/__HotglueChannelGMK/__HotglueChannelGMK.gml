@@ -64,6 +64,8 @@ function __HotglueChannelGMK(_name, _url, _protected) : __HotglueChannelCommon(_
                         }
                         else
                         {
+                            ClearRepositories();
+                            
                             __HotglueTrace($"Refreshed channel \"{__url}\". Found {array_length(_json)} items");
                             
                             var _i = 0;
