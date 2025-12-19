@@ -12,7 +12,7 @@ function HotglueChannelsDeserialize(_array)
         var _channel = _channelArray[_i];
         if (not _channel.__protected)
         {
-            array_delete(_array, _i, 1);
+            array_delete(_channelArray, _i, 1);
         }
         else
         {

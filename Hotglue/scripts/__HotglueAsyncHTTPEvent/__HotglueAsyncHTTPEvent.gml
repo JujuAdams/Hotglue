@@ -20,7 +20,18 @@ function __HotglueAsyncHTTPEvent()
             
             if (not _success)
             {
-                __HotglueWarning(json_stringify(json_parse(_result), true));
+                var _resultString = _result;
+                
+                try
+                {
+                    _resultString = json_stringify(json_parse(_result), true);
+                }
+                catch(_error)
+                {
+                    
+                }
+                
+                __HotglueWarning(_resultString);
                 __HotglueWarning($"\"{_url}\" HTTP request {_id} failed, status {_httpStatus}");
             }
             

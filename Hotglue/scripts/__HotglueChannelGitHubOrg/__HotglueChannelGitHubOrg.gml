@@ -20,7 +20,7 @@ function __HotglueChannelGitHubOrg(_name, _url, _protected) : __HotglueChannelCo
     
     _orgName = filename_name(_orgName);
     
-    __endpointURL = $"https://api.github.com/orgs/{_orgName}/repos?sort=updated&per_page=100";
+    __endpointURL = $"https://api.github.com/orgs/{_orgName}/repos?per_page=100";
     
     
     
@@ -79,6 +79,8 @@ function __HotglueChannelGitHubOrg(_name, _url, _protected) : __HotglueChannelCo
                             AddRepository(_url);
                             ++_i;
                         }
+                        
+                        SortArray();
                     }
                 }
             
