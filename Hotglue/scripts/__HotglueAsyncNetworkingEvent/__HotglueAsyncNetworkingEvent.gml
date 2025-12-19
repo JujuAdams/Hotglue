@@ -62,6 +62,8 @@ function __HotglueAsyncNetworkingEvent()
                             try
                             {
                                 var _struct = __HotglueSplitHTMLResponse(_result);
+                                __HotglueTrace($"Received access token:\n{json_stringify(_struct, true)}");
+                                
                                 var _accessToken = _struct.access_token;
                                 var _expires     = date_inc_second(date_current_datetime(), real(_struct.expires_in));
                             }

@@ -45,7 +45,7 @@ function __HotglueChannelGitHubUser(_name, _url, _protected) : __HotglueChannelC
             
             __httpRequest = new __HotglueClassHttpRequest(__endpointURL);
             
-            __httpRequest.Callback(function(_httpRequest, _success, _result)
+            __httpRequest.Callback(function(_httpRequest, _success, _result, _responseHeaders)
             {
                 __httpRequest = undefined;
                 

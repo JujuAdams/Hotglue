@@ -59,7 +59,7 @@ function __HotglueRepositoryGitHub(_url) : __HotglueRepositoryCommon(_url) const
             
             __readmeRequest = new __HotglueClassHttpRequest($"{__rawURL}master/README.md");
             
-            __readmeRequest.Callback(function(_httpRequest, _success, _result)
+            __readmeRequest.Callback(function(_httpRequest, _success, _result, _responseHeaders)
             {
                 __readmeCollected = true;
                 __readmeRequest = undefined;
@@ -90,7 +90,7 @@ function __HotglueRepositoryGitHub(_url) : __HotglueRepositoryCommon(_url) const
             __HotglueTrace($"Getting releases from \"{__url}\"");
             __releasesRequest = new __HotglueClassHttpRequest($"{__apiURL}releases?per_page={HOTGLUE_MAX_GITHUB_RELEASES}");
             
-            __releasesRequest.Callback(function(_httpRequest, _success, _result)
+            __releasesRequest.Callback(function(_httpRequest, _success, _result, _responseHeaders)
             {
                 __releasesCollected = true;
                 __releasesRequest = undefined;

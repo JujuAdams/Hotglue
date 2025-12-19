@@ -36,7 +36,7 @@ function __HotglueClassReleaseGitHub(_name, _datetimeString, _webURL, _downloadU
             __HotglueTrace($"Getting assets \"{__assetsEndpoint}\" to check for a .yymps or .yyz file");
             
             __assetsRequest = new __HotglueClassHttpRequest(__assetsEndpoint);
-            __assetsRequest.Callback(function(_httpRequest, _success, _result)
+            __assetsRequest.Callback(function(_httpRequest, _success, _result, _responseHeaders)
             {
                 __assetsCollected = true;
                 __assetsRequest = undefined;

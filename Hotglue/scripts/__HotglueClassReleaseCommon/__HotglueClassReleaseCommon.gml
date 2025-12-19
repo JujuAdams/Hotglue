@@ -126,7 +126,7 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
             __HotglueTrace($"Downloading \"{_url}\" for release \"{__webURL}\"");
             
             __downloadRequest = new __HotglueClassHttpGetFile(_url, __downloadPath);
-            __downloadRequest.Callback(function(_httpRequest, _success, _result)
+            __downloadRequest.Callback(function(_httpRequest, _success, _result, _responseHeaders)
             {
                 if (is_callable(__downloadCallback))
                 {

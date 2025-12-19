@@ -7,10 +7,11 @@ function __HotglueAsyncHTTPEvent()
     var _id = async_load[? "id"];
     with(_httpRequestMap[? _id])
     {
-        var _url        = async_load[? "url"];
-        var _httpStatus = async_load[? "http_status"];
-        var _status     = async_load[? "status"];
-        var _result     = async_load[? "result"];
+        var _url             = async_load[? "url"];
+        var _httpStatus      = async_load[? "http_status"];
+        var _status          = async_load[? "status"];
+        var _result          = async_load[? "result"];
+        var _responseHeaders = async_load[? "response_headers"];
         
         if (_status == 0)
         {
@@ -37,7 +38,7 @@ function __HotglueAsyncHTTPEvent()
             
             if (is_callable(__callback))
             {
-                __callback(self, _success, _result);
+                __callback(self, _success, _result, _responseHeaders);
             }
         }
     }

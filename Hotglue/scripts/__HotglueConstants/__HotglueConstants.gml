@@ -8,7 +8,7 @@
 #macro HOTGLUE_RELEASE_CACHE_DIRECTORY  (HotglueGetCachePath() + "releases/")
 #macro HOTGLUE_TEMP_CACHE_DIRECTORY     (HotglueGetCachePath() + "temp/")
 
-#macro HOTGLUE_GITHUB_AUTH_SCOPE  ""
+#macro HOTGLUE_GITHUB_AUTH_SCOPE  "user%20repo"
 
 #macro HOTGLUE_FAVORITES_CHANNEL  "@favorites"
 #macro HOTGLUE_LOCALS_CHANNEL  "@locals"

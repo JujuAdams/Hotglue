@@ -30,7 +30,7 @@ function __HotglueChannelGitHubAuthUser() : __HotglueChannelCommon("Auth'd GitHu
             
             __httpRequest = new __HotglueClassHttpRequest(__url);
             
-            __httpRequest.Callback(function(_httpRequest, _success, _result)
+            __httpRequest.Callback(function(_httpRequest, _success, _result, _responseHeaders)
             {
                 __httpRequest = undefined;
                 

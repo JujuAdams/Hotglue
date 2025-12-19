@@ -33,7 +33,7 @@ function __HotglueChannelGitHub(_name, _url, _protected) : __HotglueChannelCommo
             __HotglueTrace($"Refreshing channel \"{__url}\"");
             __httpRequest = new __HotglueClassHttpRequest(__url);
             
-            __httpRequest.Callback(function(_httpRequest, _success, _result)
+            __httpRequest.Callback(function(_httpRequest, _success, _result, _responseHeaders)
             {
                 __httpRequest = undefined;
                 

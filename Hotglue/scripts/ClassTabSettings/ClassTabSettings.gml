@@ -157,7 +157,7 @@ function ClassTabSettings() : ClassTab() constructor
                     ImGuiText("Access token acquired.");
                     if (ImGuiButton("Re-authorize GitHub..."))
                     {
-                        InterfaceGitHubAuthFlow();
+                        InterfaceGitHubAuthFlow(true);
                     }
                 }
                 else

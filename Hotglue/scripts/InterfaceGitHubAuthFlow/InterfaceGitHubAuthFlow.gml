@@ -1,6 +1,8 @@
 // Feather disable all
 
-function InterfaceGitHubAuthFlow()
+/// @param [forceWeb=false]
+
+function InterfaceGitHubAuthFlow(_forceWeb = false)
 {
     LogTraceAndStatus("Starting GitHub authorization flow. Please check your web browser.");
     HotglueGitHubWebAuthFlow(function(_success)
@@ -13,5 +15,6 @@ function InterfaceGitHubAuthFlow()
         {
             LogWarning("Failed to acquire GitHub access token.");
         }
-    });
+    },
+    _forceWeb);
 }
