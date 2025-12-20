@@ -1,5 +1,7 @@
 // Feather disable all
 
+#macro HOTGLUE_RUNNING_FROM_IDE  (GM_build_type == "run")
+
 // As per `https://docs.github.com/en/rest/releases/releases`
 #macro HOTGLUE_MAX_GITHUB_RELEASES  100
 

@@ -1,3 +1,6 @@
+window_set_size(1280, 729);
+window_center();
+
 logTab = new ClassTabLog();
 
 LogTrace("Interface created");

@@ -282,6 +282,41 @@ function ClassTabSettings() : ClassTab() constructor
             ImGuiEndTable();
             ImGuiUnindent();
             
+            ImGuiNewLine();
+            
+            ///////
+            // URI
+            ///////
+            
+            ImGuiText("URI (Application Link)");
+            ImGuiIndent();
+            
+            ImGuiBeginDisabled(HOTGLUE_RUNNING_FROM_IDE);
+            if (ImGuiButton("Register URI"))
+            {
+                HotglueURIRegister();
+            }
+            ImGuiEndDisabled();
+            
+            ImGuiSameLine();
+            
+            if (ImGuiButton("Test URI"))
+            {
+                HotglueURITest();
+            }
+            
+            if (HOTGLUE_RUNNING_FROM_IDE)
+            {
+                ImGuiTextLink("How do I register a URI?");
+                if (ImGuiBeginItemTooltip())
+                {
+                    ImGuiText($"Hotglue must be run from a compiled executable for URI registration to be available.");
+                    ImGuiEndTooltip();
+                }
+            }
+            
+            ImGuiUnindent();
+            
             ///////
             // Here be dragons
             ///////
