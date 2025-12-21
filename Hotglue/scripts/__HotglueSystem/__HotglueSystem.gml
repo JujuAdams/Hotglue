@@ -43,6 +43,9 @@ function __HotglueSystem()
         //e.g. Setting `GITHUB_GML_LOCALHOST_PORT` to `52499` means that you should use `http://localhost:52499/` for the callback URL.
         __localhostPort = 52499;
         
+        __udpSocket = network_create_socket_ext(network_socket_udp, 52500);
+        LogTrace($"UDP socket = {__udpSocket}");
+        
         __httpRequestMap = ds_map_create();
         
         __projectByPathDict = {};

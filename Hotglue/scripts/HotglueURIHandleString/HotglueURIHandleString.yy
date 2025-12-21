@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HotglueHandleURIString",
+  "%Name":"HotglueURIHandleString",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HotglueHandleURIString",
+  "name":"HotglueURIHandleString",
   "parent":{
-    "name":"(System)",
-    "path":"folders/Hotglue/(System).yy",
+    "name":"URI",
+    "path":"folders/Hotglue/URI.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

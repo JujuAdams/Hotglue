@@ -2,10 +2,7 @@
 
 function HotglueUDPPortIsOpen()
 {
-    with(__objHotglue)
-    {
-        return (__udpSendSocket >= 0);
-    }
+    static _system = __HotglueSystem();
     
-    return false;
+    return (_system.__udpSocket >= 0);
 }

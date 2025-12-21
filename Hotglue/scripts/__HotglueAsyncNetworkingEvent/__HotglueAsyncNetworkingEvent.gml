@@ -3,6 +3,7 @@
 function __HotglueAsyncNetworkingEvent()
 {
     static _system = __HotglueSystem();
+    var _udpSocket = _system.__udpSocket;
     
     var _id     = async_load[? "id"];
     var _server = async_load[? "server"];
@@ -13,10 +14,10 @@ function __HotglueAsyncNetworkingEvent()
     
     LogTrace(json_encode(async_load, true));
     
-    if (_id == __udpSocket)
+    if (_id == _udpSocket)
     {
         var _string = buffer_read(_buffer, buffer_text);
-        __HotglueHandleURIString(_string);
+        HotglueURIHandleString(_string);
     }
     else
     {

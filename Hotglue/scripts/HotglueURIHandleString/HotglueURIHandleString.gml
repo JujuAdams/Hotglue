@@ -1,6 +1,6 @@
 // Feather disable all
 
-function __HotglueHandleURIString(_inString)
+function HotglueURIHandleString(_inString)
 {
     var _string = _inString;
     
@@ -27,6 +27,13 @@ function __HotglueHandleURIString(_inString)
     if (_string == "test")
     {
         LogTraceAndStatus("URI test successful");
+    }
+    else if (string_copy(_string, 1, string_length("add=")) == "add=")
+    {
+        var _path = string_delete(_string, 1, string_length("add="));
+        __HotglueTrace($"Received URI path \"{_path}\"");
+        
+        HotglueGetChannelByURL(HOTGLUE_LOCALS_CHANNEL).AddRepository(_path);
     }
     else if (string_copy(_string, 1, string_length("auth/?code=")) == "auth/?code=")
     {
@@ -101,5 +108,9 @@ function __HotglueHandleURIString(_inString)
             }
         });
         _request.Send();
+    }
+    else
+    {
+        __HotglueWarning($"Unhandled URI format \"{_inString}\"");
     }
 }

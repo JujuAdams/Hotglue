@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueURICheckString",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueURICheckString",
+  "parent":{
+    "name":"URI",
+    "path":"folders/Hotglue/URI.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
