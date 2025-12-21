@@ -37,6 +37,40 @@ function ClassInterfaceRepositoryView(_repository) constructor
             _favoritesChannel.SortArray();
             InterfaceSettingsSave();
         }
+        
+        if (__repository.__isRemote)
+        {
+            ImGuiSameLine(undefined, 20);
+            if (ImGuiButton("Refresh"))
+            {
+                __repository.Refresh();
+            }
+            
+            ImGuiSameLine(undefined, 20);
+            
+            var _trimmedURL = _url;
+            if (string_copy(_url, 1, string_length("http://")) == "http://")
+            {
+                _trimmedURL = string_delete(_trimmedURL, 1, string_length("http://"));
+            }
+            else if (string_copy(_url, 1, string_length("https://")) == "https://")
+            {
+                _trimmedURL = string_delete(_trimmedURL, 1, string_length("https://"));
+            }
+            
+            var _uri = $"https://jujuadams.github.io/hotglue?url={_trimmedURL}";
+            if (ImGuiButton("Copy URI link"))
+            {
+                clipboard_set_text(_uri);
+                LogTraceAndStatus($"Copied \"{_uri}\" to clipboard");
+            }
+            
+            if (ImGuiBeginItemTooltip())
+            {
+                ImGuiText(_uri);
+                ImGuiEndTooltip();
+            }
+        }
     }
     
     static BuildRepositoryDescription = function(_height)
@@ -245,69 +279,5 @@ function ClassInterfaceRepositoryView(_repository) constructor
         {
             BuildRepositoryDescription(undefined);
         }
-        
-        //ImGuiBeginDisabled(__selectedRelease == undefined);
-        //
-        //ImGuiNewLine();
-        //
-        //if (ImGuiButton("Download into cache"))
-        //{
-        //    __selectedRelease.Download(function(_release, _success, _localURL)
-        //    {
-        //        LogTraceAndStatus($"Downloaded \"{_release.GetWebURL()}\" successfully");
-        //    });
-        //}
-        //
-        //if (__selectedRelease != undefined)
-        //{
-        //    if (__selectedRelease.GetDownloaded())
-        //    {
-        //        ImGuiSameLine();
-        //        ImGuiText($"Download successful");
-        //    }
-        //}
-        //
-        //if (ImGuiButton("Open project"))
-        //{
-        //    __selectedRelease.LoadProject(function(_project, _success)
-        //    {
-        //        if (_success)
-        //        {
-        //            LogTraceAndStatus($"Loaded project successfully for release \"{__selectedRelease.GetWebURL()}\"");
-        //            __selectedProject = _project;
-        //            __projectView = new ClassInterfaceProjectView(_project);
-        //        }
-        //        else
-        //        {
-        //            LogWarning($"Failed to load project for release \"{__selectedRelease.GetWebURL()}\"");
-        //            __selectedProject = undefined;
-        //            __projectView = undefined;
-        //        }
-        //    });
-        //}
-        //
-        //ImGuiEndDisabled();
-        //
-        //if (__projectView != undefined)
-        //{
-        //    ImGuiNewLine();
-        //    ImGuiBeginChild("projectPreview");
-        //    ImGuiBeginTabBar("projectPreviewTabBar");
-        //    
-        //    if (ImGuiBeginTabItem("Overview"))
-        //    {
-        //        __projectView.BuildOverview();
-        //        ImGuiEndTabItem();
-        //    }
-        //    
-        //    if (ImGuiBeginTabItem("Resources"))
-        //    {
-        //        __projectView.BuildTreeAsDestination();
-        //        ImGuiEndTabItem();
-        //    }
-        //    
-        //    ImGuiEndTabBar();
-        //    ImGuiEndChild();
-        //}
     }
 }

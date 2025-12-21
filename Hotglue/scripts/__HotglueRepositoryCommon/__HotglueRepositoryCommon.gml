@@ -50,4 +50,10 @@ function __HotglueRepositoryCommon(_url) constructor
             }
         }
     }
+    
+    static Refresh = function()
+    {
+        __readmeCollected = false;
+        __releasesCollected = false;
+    }
 }
