@@ -7,94 +7,148 @@ function ClassTabInspector() : ClassTab() constructor
     __project = undefined;
     __view = undefined;
     
-    static TabItem = function()
+    static MenuItem = function()
     {
-        if (ImGuiBeginTabItem(__name, undefined, (oInterface.forceSelectedTab == __name)? ImGuiTabItemFlags.SetSelected : undefined))
+        if (ImGuiBeginMenu(__name))
         {
-            if (__project == undefined)
+            var _openPath = "";
+            
+            if (ImGuiMenuItem("Open project..."))
             {
-                var _openPath = "";
-                
-                ImGuiText("No project opened.");
-                if (ImGuiButton("Open .yyp project..."))
-                {
-                    _openPath = get_open_filename("GameMaker Project (*.yyp)|*.yyp", "");
-                }
-                
-                ImGuiNewLine();
-                ImGuiText("Recently opened:");
-                ImGuiIndent();
-                
-                var _recentArray = InterfaceRecentGetArray();
-                if (array_length(_recentArray) <= 0)
-                {
-                    ImGuiText("(No recently opened projects)");
-                }
-                else
-                {
-                    var _i = 0;
-                    repeat(array_length(_recentArray))
-                    {
-                        if (ImGuiButton(_recentArray[_i]))
-                        {
-                            _openPath = _recentArray[_i];
-                        }
-                        
-                        ++_i;
-                    }
-                }
-                
-                ImGuiUnindent();
-                
-                if (_openPath != "")
-                {
-                    if (filename_ext(_openPath) != ".yyp")
-                    {
-                        LogWarning($"Unsupported file extension \"{filename_ext(_openPath)}\" for project inspector");
-                    }
-                    else
-                    {
-                        __project = HotglueProjectLocalEnsure(_openPath);
-                        __view = new ClassInterfaceProjectView(__project);
-                        LogTraceAndStatus($"Loaded \"{__project.GetPath()}\" for inspection");
-                        InterfaceRecentPush(_openPath);
-                    }
-                }
+                _openPath = get_open_filename("GameMaker Project (*.yyp)|*.yyp", "");
+            }
+            
+            ImGuiSeparator();
+            
+            var _recentArray = InterfaceRecentGetArray();
+            if (array_length(_recentArray) <= 0)
+            {
+                ImGuiBeginDisabled(true);
+                ImGuiText("(No recent projects)");
+                ImGuiEndDisabled();
             }
             else
             {
-                ImGuiText(__project.GetPath());
-                    
-                ImGuiSameLine();
-                if (ImGuiSmallButton("Refresh"))
-                {
-                    __project.Raefresh();
-                }
+                ImGuiBeginDisabled(true);
+                ImGuiText("Recent projects:");
+                ImGuiEndDisabled();
                 
-                ImGuiSameLine();
-                if (ImGuiSmallButton("Close"))
+                var _i = 0;
+                repeat(array_length(_recentArray))
                 {
-                    LogTraceAndStatus($"Closed \"{__project.GetPath()}\"");
+                    if (ImGuiMenuItem(_recentArray[_i]))
+                    {
+                        _openPath = _recentArray[_i];
+                    }
                     
-                    __project = undefined;
-                    __view = undefined;
-                }
-                
-                if (__project != undefined)
-                {
-                    ImGuiBeginChild("leftPane", oInterface.context.Display.Width*0.66 - 6, undefined, ImGuiChildFlags.Border);
-                    __view.BuildOverview();
-                    ImGuiEndChild();
-                    
-                    ImGuiSameLine();
-                    
-                    ImGuiBeginChild("rightPane", undefined, undefined, ImGuiChildFlags.Border);
-                    __view.BuildTreeAsDestination();
-                    ImGuiEndChild();
+                    ++_i;
                 }
             }
             
-            ImGuiEndTabItem();
+            if (_openPath != "")
+            {
+                if (filename_ext(_openPath) != ".yyp")
+                {
+                    LogWarning($"Unsupported file extension \"{filename_ext(_openPath)}\" for project inspector");
+                }
+                else
+                {
+                    __project = HotglueProjectLocalEnsure(_openPath);
+                    __view = new ClassInterfaceProjectView(__project);
+                    LogTraceAndStatus($"Loaded \"{__project.GetPath()}\" for inspection");
+                    InterfaceRecentPush(_openPath);
+                    
+                    other.menuFocus = self;
+                }
+            }
+            
+            ImGuiEndMenu();
+        }
+    }
+    
+    static Build = function()
+    {
+        if (__project == undefined)
+        {
+            var _openPath = "";
+            
+            ImGuiText("No project opened.");
+            if (ImGuiButton("Open .yyp project..."))
+            {
+                _openPath = get_open_filename("GameMaker Project (*.yyp)|*.yyp", "");
+            }
+            
+            ImGuiNewLine();
+            ImGuiText("Recently opened:");
+            ImGuiIndent();
+            
+            var _recentArray = InterfaceRecentGetArray();
+            if (array_length(_recentArray) <= 0)
+            {
+                ImGuiText("(No recently opened projects)");
+            }
+            else
+            {
+                var _i = 0;
+                repeat(array_length(_recentArray))
+                {
+                    if (ImGuiButton(_recentArray[_i]))
+                    {
+                        _openPath = _recentArray[_i];
+                    }
+                    
+                    ++_i;
+                }
+            }
+            
+            ImGuiUnindent();
+            
+            if (_openPath != "")
+            {
+                if (filename_ext(_openPath) != ".yyp")
+                {
+                    LogWarning($"Unsupported file extension \"{filename_ext(_openPath)}\" for project inspector");
+                }
+                else
+                {
+                    __project = HotglueProjectLocalEnsure(_openPath);
+                    __view = new ClassInterfaceProjectView(__project);
+                    LogTraceAndStatus($"Loaded \"{__project.GetPath()}\" for inspection");
+                    InterfaceRecentPush(_openPath);
+                }
+            }
+        }
+        else
+        {
+            ImGuiText(__project.GetPath());
+            
+            ImGuiSameLine();
+            if (ImGuiSmallButton("Refresh"))
+            {
+                __project.Raefresh();
+            }
+            
+            ImGuiSameLine();
+            if (ImGuiSmallButton("Close"))
+            {
+                LogTraceAndStatus($"Closed \"{__project.GetPath()}\"");
+                
+                __project = undefined;
+                __view = undefined;
+            }
+            
+            if (__project != undefined)
+            {
+                ImGuiBeginChild("leftPane", oInterface.context.Display.Width*0.66 - 6, undefined, ImGuiChildFlags.Border);
+                __view.BuildOverview();
+                ImGuiEndChild();
+                
+                ImGuiSameLine();
+                
+                ImGuiBeginChild("rightPane", undefined, undefined, ImGuiChildFlags.Border);
+                __view.BuildTreeAsDestination();
+                ImGuiEndChild();
+            }
         }
     }
 }

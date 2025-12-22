@@ -13,6 +13,7 @@ function ClassTabImport() : ClassTab() constructor
     __selectedChannel = undefined;
     
     __looseFileViewArray = [];
+    __importMode = undefined;
     
     
     
@@ -93,297 +94,101 @@ function ClassTabImport() : ClassTab() constructor
         return _selectedRelease;
     }
     
-    static TabItem = function()
+    static MenuItem = function()
     {
-        if (ImGuiBeginTabItem(__name, undefined, (oInterface.forceSelectedTab == __name)? ImGuiTabItemFlags.SetSelected : undefined))
+        if (ImGuiBeginMenu(__name))
         {
-            var _importMode = undefined;
-            
-            var _importButtonSize = 70;
-            var _bigPaneSize = 0.5*(ImGuiGetWindowWidth() - _importButtonSize) - 16;
-            
-            ImGuiBeginChild("sourceOuterPane", _bigPaneSize);
-            
-            ImGuiBeginTabBar("sourceTabBar");
-            
-            if (ImGuiBeginTabItem("Library Channels"))
+            if (ImGuiBeginMenu("Channels"))
             {
-                _importMode = "channels";
-                
-                __selectedChannel = undefined;
-                
-                ImGuiBeginChild("sourceInnerPane");
-                ImGuiBeginTabBar("tabBar");
-                
                 var _i = 0;
                 repeat(HotglueGetChannelCount())
                 {
-                    if (InterfaceEnsureChannelView(HotglueGetChannelByIndex(_i)).BuildForImport())
+                    var _channel = HotglueGetChannelByIndex(_i);
+                    if (ImGuiMenuItem($"{_channel.GetName()}###channel{_i}"))
                     {
                         __selectedChannel = _i;
+                        __importMode = "channels";
+                        other.menuFocus = self;
                     }
                     
                     ++_i;
                 }
                 
-                ImGuiEndTabBar();
-                ImGuiEndChild();
-                
-                ImGuiEndTabItem();
+                ImGuiEndMenu();
             }
             
-            if (ImGuiBeginTabItem("Direct From Project"))
+            if (ImGuiMenuItem("From local project"))
             {
-                _importMode = "direct from project";
-                
-                ImGuiBeginChild("sourceInnerPane", undefined, undefined, ImGuiChildFlags.Border);
-                
-                if (__directProject != undefined)
-                {
-                    ImGuiText(__directProject.GetPath());
-                    
-                    ImGuiSameLine();
-                    if (ImGuiSmallButton("Refresh"))
-                    {
-                        __directProject.Refresh();
-                    }
-                    
-                    ImGuiSameLine();
-                    if (ImGuiSmallButton("Close"))
-                    {
-                        LogTraceAndStatus($"Closed \"{__directProject.GetPath()}\"");
-                        __directProject = undefined;
-                        __directView = undefined;
-                    }
-                    else
-                    {
-                        ImGuiBeginChild("sourceProjectPane");
-                        __directView.BuildTreeAsSource(__destinationProject);
-                        ImGuiEndChild();
-                    }
-                }
-                else
-                {
-                    var _openPath = "";
-                    
-                    ImGuiText("No source project opened.");
-                    
-                    if (ImGuiButton("Load project..."))
-                    {
-                        _openPath = get_open_filename("GameMaker Project (.yyp)|*.yyp", "");
-                    }
-                    
-                    ImGuiNewLine();
-                    ImGuiText("Recently opened:");
-                    ImGuiIndent();
-                    
-                    var _recentArray = InterfaceRecentGetArray();
-                    if (array_length(_recentArray) <= 0)
-                    {
-                        ImGuiText("(No recently opened projects)");
-                    }
-                    else
-                    {
-                        var _i = 0;
-                        repeat(array_length(_recentArray))
-                        {
-                            if (ImGuiButton(_recentArray[_i]))
-                            {
-                                _openPath = _recentArray[_i];
-                            }
-                            
-                            ++_i;
-                        }
-                    }
-                    
-                    ImGuiUnindent();
-                    
-                    if (_openPath != "")
-                    {
-                        if (filename_ext(_openPath) == ".yyp")
-                        {
-                            try
-                            {
-                                __directProject = HotglueProjectLocalEnsure(_openPath);
-                                __directView = new ClassInterfaceProjectView(__directProject);
-                                    
-                                LogTraceAndStatus($"Loaded \"{_openPath}\"");
-                            }
-                            catch(_error)
-                            {
-                                LogWarning(json_stringify(_error, true));
-                                LogWarning($"Failed to load \"{_openPath}\"");
-                                    
-                                __directProject = undefined;
-                                __directView = undefined;
-                            }
-                        }
-                        else
-                        {
-                            LogTraceAndStatus($"File type not supported \"{_openPath}\"");
-                        }
-                    }
-                }
-                
-                ImGuiEndChild();
-                ImGuiEndTabItem();
+                __importMode = "direct from project";
+                other.menuFocus = self;
             }
             
-            if (ImGuiBeginTabItem("Loose Files"))
+            if (ImGuiMenuItem("From loose files"))
             {
-                _importMode = "loose files";
-                
-                ImGuiBeginChild("sourceInnerPane", undefined, undefined, ImGuiChildFlags.Border);
-                
-                if (ImGuiButton("Add File..."))
-                {
-                    var _path = get_open_filename("*.*", "");
-                    if (_path != "")
-                    {
-                        try
-                        {
-                            var _looseFile = HotglueLoadLooseFile(_path);
-                            
-                            if (array_get_index(__looseFileViewArray, _path) < 0)
-                            {
-                                array_push(__looseFileViewArray, new ClassInterfaceFileView(_looseFile));
-                                LogTrace($"Loaded \"{_path}\"");
-                            }
-                            else
-                            {
-                                LogTrace($"\"{_path}\" has already been loaded");
-                            }
-                        }
-                        catch(_error)
-                        {
-                            LogWarning(json_stringify(_error, true));
-                            LogWarning($"Failed to load \"{_path}\"");
-                        }
-                    }
-                }
-                
-                var _i = 0;
-                repeat(array_length(__looseFileViewArray))
-                {
-                    var _looseFile = __looseFileViewArray[_i];
-                    
-                    if (ImGuiButton($"X##{ptr(_looseFile)}"))
-                    {
-                        array_delete(__looseFileViewArray, _i, 1);
-                    }
-                    else
-                    {
-                        ImGuiSameLine();
-                        _looseFile.Build(__destinationProject);
-                        ++_i;
-                    }
-                }
-                
-                ImGuiEndChild();
-                
-                ImGuiEndTabItem();
+                __importMode = "loose files";
+                other.menuFocus = self;
             }
             
-            ImGuiEndTabBar();
-            
-            ImGuiEndChild();
-            
-            ///////
-            // The import button!
-            ///////
-            
-            ImGuiSameLine();
-            ImGuiBeginChild("middlePane", _importButtonSize);
-            ImGuiSetCursorPosY(ImGuiGetContentRegionMaxY()/2 - 10);
-            
-            ImGuiBeginDisabled((__destinationProject == undefined) || __destinationProject.GetReadOnly());
-            
-            if (_importMode == "direct from project")
+            ImGuiEndMenu();
+        }
+    }
+    
+    static Build = function()
+    {
+        var _importButtonSize = 70;
+        var _bigPaneSize = 0.5*(ImGuiGetWindowWidth() - _importButtonSize) - 16;
+        
+        ImGuiBeginChild("sourceOuterPane", _bigPaneSize);
+        
+        if (__importMode == "channels")
+        {
+            if (__selectedChannel != undefined)
             {
-                ImGuiBeginDisabled((__directProject == undefined) || (__directView == undefined) || (__directView.GetSelectedCount() <= 0));
-            }
-            else if (_importMode == "loose files")
-            {
-                ImGuiBeginDisabled((array_length(__looseFileViewArray) <= 0));
-            }
-            else if (_importMode == "channels")
-            {
-                ImGuiBeginDisabled((GetSelectedRelease() == undefined));
+                InterfaceEnsureChannelView(HotglueGetChannelByIndex(__selectedChannel)).BuildForImport();
             }
             else
             {
-                ImGuiBeginDisabled(false);
+                ImGuiText("No channel selected. Please use the menubar above.");
             }
+        }
+        
+        if (__importMode == "direct from project")
+        {
+            ImGuiBeginChild("sourceInnerPane", undefined, undefined, ImGuiChildFlags.Border);
             
-            if (ImGuiButton("Import ->"))
+            if (__directProject != undefined)
             {
-                oInterface.popUpStruct = new ClassModalConfirmImport(self, _importMode);
-            }
-            
-            ImGuiEndDisabled();
-            ImGuiEndDisabled();
-            
-            ImGuiEndChild();
-            ImGuiSameLine();
-            
-            ///////
-            // Destination project
-            ///////
-            
-            ImGuiBeginChild("destinationOuterPane", _bigPaneSize);
-            
-            if (__destinationProject != undefined)
-            {
-                ImGuiBeginTabBar("destinationTabBar");
+                ImGuiText(__directProject.GetPath());
                 
-                if (ImGuiBeginTabItem("Overview"))
+                ImGuiSameLine();
+                if (ImGuiSmallButton("Refresh"))
                 {
-                    ImGuiBeginChild("destinationInnerPane", undefined, undefined, ImGuiChildFlags.Border);
-                    
-                    ImGuiText(__destinationProject.GetURL());
-                    if (ImGuiSmallButton("Close"))
-                    {
-                        __destinationProject = undefined;
-                        __destinationView = undefined;
-                    }
-                    
-                    ImGuiNewLine();
-                    
-                    if (__destinationView != undefined)
-                    {
-                        __destinationView.BuildOverview();
-                    }
-                    
-                    ImGuiEndChild();
-                    ImGuiEndTabItem();
+                    __directProject.Refresh();
                 }
                 
-                if (ImGuiBeginTabItem("Resources"))
+                ImGuiSameLine();
+                if (ImGuiSmallButton("Close"))
                 {
-                    ImGuiBeginChild("destinationInnerPane", undefined, undefined, ImGuiChildFlags.Border);
-                    
-                    if (__destinationView != undefined)
-                    {
-                        __destinationView.BuildTreeAsDestination(is_struct(__directProject)? __directProject : __looseFileViewArray);
-                    }
-                    
-                    ImGuiEndChild();
-                    
-                    ImGuiEndTabItem();
+                    LogTraceAndStatus($"Closed \"{__directProject.GetPath()}\"");
+                    __directProject = undefined;
+                    __directView = undefined;
                 }
-                
-                ImGuiEndTabBar();
+                else
+                {
+                    ImGuiBeginChild("sourceProjectPane");
+                    __directView.BuildTreeAsSource(__destinationProject);
+                    ImGuiEndChild();
+                }
             }
             else
             {
                 var _openPath = "";
                 
-                ImGuiBeginChild("destinationInnerPane", undefined, undefined, ImGuiChildFlags.Border);
+                ImGuiText("No source project opened.");
                 
-                ImGuiText("No destination project opened.");
-                if (ImGuiButton("Open .yyp project..."))
+                if (ImGuiButton("Load project..."))
                 {
-                    _openPath = get_open_filename("GameMaker Project (*.yyp)|*.yyp", "");
+                    _openPath = get_open_filename("GameMaker Project (.yyp)|*.yyp", "");
                 }
                 
                 ImGuiNewLine();
@@ -410,7 +215,6 @@ function ClassTabImport() : ClassTab() constructor
                 }
                 
                 ImGuiUnindent();
-                ImGuiEndChild();
                 
                 if (_openPath != "")
                 {
@@ -418,29 +222,18 @@ function ClassTabImport() : ClassTab() constructor
                     {
                         try
                         {
-                            __destinationProject = HotglueProjectLocalEnsure(_openPath);
-                            __destinationView = new ClassInterfaceProjectView(__destinationProject);
-                                
+                            __directProject = HotglueProjectLocalEnsure(_openPath);
+                            __directView = new ClassInterfaceProjectView(__directProject);
+                            
                             LogTraceAndStatus($"Loaded \"{_openPath}\"");
                         }
                         catch(_error)
                         {
                             LogWarning(json_stringify(_error, true));
                             LogWarning($"Failed to load \"{_openPath}\"");
-                            __destinationProject = undefined;
-                            __destinationView = undefined;
-                        }
-                        
-                        if (__destinationProject != undefined)
-                        {
-                            if (__destinationProject.GetReadOnly())
-                            {
-                                oInterface.popUpStruct = new ClassModalMessage($"Project is from an old version of GameMaker ({__destinationProject.GetYYPOriginalVersion()}) and has been opened in read-only mode.");
-                            }
-                            else
-                            {
-                                InterfaceRecentPush(_openPath);
-                            }
+                             
+                            __directProject = undefined;
+                            __directView = undefined;
                         }
                     }
                     else
@@ -451,8 +244,223 @@ function ClassTabImport() : ClassTab() constructor
             }
             
             ImGuiEndChild();
-            
-            ImGuiEndTabItem();
         }
+        
+        if (__importMode == "loose files")
+        {
+            ImGuiBeginChild("sourceInnerPane", undefined, undefined, ImGuiChildFlags.Border);
+            
+            if (ImGuiButton("Add loose file..."))
+            {
+                var _path = get_open_filename("*.*", "");
+                if (_path != "")
+                {
+                    try
+                    {
+                        var _looseFile = HotglueLoadLooseFile(_path);
+                        
+                        if (array_get_index(__looseFileViewArray, _path) < 0)
+                        {
+                            array_push(__looseFileViewArray, new ClassInterfaceFileView(_looseFile));
+                            LogTrace($"Loaded \"{_path}\"");
+                        }
+                        else
+                        {
+                            LogTrace($"\"{_path}\" has already been loaded");
+                        }
+                    }
+                    catch(_error)
+                    {
+                        LogWarning(json_stringify(_error, true));
+                        LogWarning($"Failed to load \"{_path}\"");
+                    }
+                }
+            }
+            
+            var _i = 0;
+            repeat(array_length(__looseFileViewArray))
+            {
+                var _looseFile = __looseFileViewArray[_i];
+                
+                if (ImGuiButton($"X##{ptr(_looseFile)}"))
+                {
+                    array_delete(__looseFileViewArray, _i, 1);
+                }
+                else
+                {
+                    ImGuiSameLine();
+                    _looseFile.Build(__destinationProject);
+                    ++_i;
+                }
+            }
+            
+            ImGuiEndChild();
+        }
+        
+        ImGuiEndChild();
+        
+        ///////
+        // The import button!
+        ///////
+        
+        ImGuiSameLine();
+        ImGuiBeginChild("middlePane", _importButtonSize);
+        ImGuiSetCursorPosY(ImGuiGetContentRegionMaxY()/2 - 10);
+        
+        ImGuiBeginDisabled((__destinationProject == undefined) || __destinationProject.GetReadOnly());
+        
+        if (__importMode == "direct from project")
+        {
+            ImGuiBeginDisabled((__directProject == undefined) || (__directView == undefined) || (__directView.GetSelectedCount() <= 0));
+        }
+        else if (__importMode == "loose files")
+        {
+            ImGuiBeginDisabled((array_length(__looseFileViewArray) <= 0));
+        }
+        else if (__importMode == "channels")
+        {
+            ImGuiBeginDisabled((GetSelectedRelease() == undefined));
+        }
+        else
+        {
+            ImGuiBeginDisabled(false);
+        }
+        
+        if (ImGuiButton("Import ->"))
+        {
+            oInterface.popUpStruct = new ClassModalConfirmImport(self, __importMode);
+        }
+        
+        ImGuiEndDisabled();
+        ImGuiEndDisabled();
+        
+        ImGuiEndChild();
+        ImGuiSameLine();
+        
+        ///////
+        // Destination project
+        ///////
+        
+        ImGuiBeginChild("destinationOuterPane", _bigPaneSize);
+        
+        if (__destinationProject != undefined)
+        {
+            ImGuiBeginTabBar("destinationTabBar");
+            
+            if (ImGuiBeginTabItem("Overview"))
+            {
+                ImGuiBeginChild("destinationInnerPane", undefined, undefined, ImGuiChildFlags.Border);
+                
+                ImGuiText(__destinationProject.GetURL());
+                if (ImGuiSmallButton("Close"))
+                {
+                    __destinationProject = undefined;
+                    __destinationView = undefined;
+                }
+                
+                ImGuiNewLine();
+                
+                if (__destinationView != undefined)
+                {
+                    __destinationView.BuildOverview();
+                }
+                
+                ImGuiEndChild();
+                ImGuiEndTabItem();
+            }
+            
+            if (ImGuiBeginTabItem("Resources"))
+            {
+                ImGuiBeginChild("destinationInnerPane", undefined, undefined, ImGuiChildFlags.Border);
+                
+                if (__destinationView != undefined)
+                {
+                    __destinationView.BuildTreeAsDestination(is_struct(__directProject)? __directProject : __looseFileViewArray);
+                }
+                
+                ImGuiEndChild();
+                
+                ImGuiEndTabItem();
+            }
+            
+            ImGuiEndTabBar();
+        }
+        else
+        {
+            var _openPath = "";
+            
+            ImGuiBeginChild("destinationInnerPane", undefined, undefined, ImGuiChildFlags.Border);
+            
+            ImGuiText("No destination project opened.");
+            if (ImGuiButton("Open .yyp project..."))
+            {
+                _openPath = get_open_filename("GameMaker Project (*.yyp)|*.yyp", "");
+            }
+            
+            ImGuiNewLine();
+            ImGuiText("Recently opened:");
+            ImGuiIndent();
+            
+            var _recentArray = InterfaceRecentGetArray();
+            if (array_length(_recentArray) <= 0)
+            {
+                ImGuiText("(No recently opened projects)");
+            }
+            else
+            {
+                var _i = 0;
+                repeat(array_length(_recentArray))
+                {
+                    if (ImGuiButton(_recentArray[_i]))
+                    {
+                        _openPath = _recentArray[_i];
+                    }
+                    
+                    ++_i;
+                }
+            }
+            
+            ImGuiUnindent();
+            ImGuiEndChild();
+            
+            if (_openPath != "")
+            {
+                if (filename_ext(_openPath) == ".yyp")
+                {
+                    try
+                    {
+                        __destinationProject = HotglueProjectLocalEnsure(_openPath);
+                        __destinationView = new ClassInterfaceProjectView(__destinationProject);
+                        
+                        LogTraceAndStatus($"Loaded \"{_openPath}\"");
+                    }
+                    catch(_error)
+                    {
+                        LogWarning(json_stringify(_error, true));
+                        LogWarning($"Failed to load \"{_openPath}\"");
+                        __destinationProject = undefined;
+                        __destinationView = undefined;
+                    }
+                    
+                    if (__destinationProject != undefined)
+                    {
+                        if (__destinationProject.GetReadOnly())
+                        {
+                            oInterface.popUpStruct = new ClassModalMessage($"Project is from an old version of GameMaker ({__destinationProject.GetYYPOriginalVersion()}) and has been opened in read-only mode.");
+                        }
+                        else
+                        {
+                            InterfaceRecentPush(_openPath);
+                        }
+                    }
+                }
+                else
+                {
+                    LogTraceAndStatus($"File type not supported \"{_openPath}\"");
+                }
+            }
+        }
+        
+        ImGuiEndChild();
     }
 }

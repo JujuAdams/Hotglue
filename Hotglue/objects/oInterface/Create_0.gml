@@ -21,6 +21,8 @@ settingsTab  = new ClassTabSettings();
 
 LogTrace("Interface tabs created");
 
+menuFocus = welcomeTab;
+
 channelViewDict = {};
 repositoryViewDict = {};
 
@@ -36,7 +38,13 @@ else
 }
 
 InterfaceRecentLoad();
-forceSelectedTab = InterfaceSettingGet("openOnTab", "Welcome");
+
+var _selectedTabName = InterfaceSettingGet("openOnTab", "Welcome");
+if (projectTab.GetName()   == _selectedTabName) menuFocus = projectTab;
+if (channelsTab.GetName()  == _selectedTabName) menuFocus = channelsTab;
+if (inspectorTab.GetName() == _selectedTabName) menuFocus = inspectorTab;
+if (settingsTab.GetName()  == _selectedTabName) menuFocus = settingsTab;
+if (logTab.GetName()       == _selectedTabName) menuFocus = logTab;
 
 statusBarHeight = 32;
 

@@ -4,12 +4,8 @@ function ClassTab() constructor
 {
     static __name = "";
     
-    static TabItem = function()
+    static GetName = function()
     {
-        if (ImGuiBeginTabItem("Tab", undefined, (oInterface.forceSelectedTab == self)? ImGuiTabItemFlags.SetSelected : undefined))
-        {
-            ImGuiText("This tab is unimplemented.");
-            ImGuiEndTabItem();
-        }
+        return __name;
     }
 }

@@ -192,7 +192,7 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     
     static GetVersionString = function()
     {
-        return is_struct(__yympsMetadata)? __yympsMetadata.version : "0.0.0";
+        return is_struct(__yympsMetadata)? __yympsMetadata.version : "-.-.-";
     }
     
     static GetPath = function()

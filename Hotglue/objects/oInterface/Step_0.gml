@@ -1,20 +1,24 @@
 ImGuiSetNextWindowSize(context.GetRegion().width, context.GetRegion().height - statusBarHeight, ImGuiCond.Always);
 ImGuiSetNextWindowPos(0, 0, ImGuiCond.Always);
 
-var _return = ImGuiBegin("mainWindow", true, ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoMove);
+var _return = ImGuiBegin("mainWindow", true, ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.MenuBar);
 if (_return & ImGuiReturnMask.Return)
 {
-    ImGuiBeginTabBar("windowTabBar");
+    if (ImGuiBeginMenuBar())
+    {
+        welcomeTab.MenuItem();
+        projectTab.MenuItem();
+        inspectorTab.MenuItem();
+        channelsTab.MenuItem();
+        settingsTab.MenuItem();
+        logTab.MenuItem();
+        ImGuiEndMenuBar();
+    }
     
-    welcomeTab.TabItem();
-    projectTab.TabItem();
-    channelsTab.TabItem();
-    inspectorTab.TabItem();
-    settingsTab.TabItem();
-    logTab.TabItem();
-    
-    forceSelectedTab = undefined;
-    ImGuiEndTabBar();
+    if (menuFocus != undefined)
+    {
+        menuFocus.Build();
+    }
 }
 ImGuiEnd();
 

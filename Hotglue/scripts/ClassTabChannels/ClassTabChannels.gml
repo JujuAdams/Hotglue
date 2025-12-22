@@ -2,26 +2,51 @@
 
 function ClassTabChannels() : ClassTab() constructor
 {
-    static __name = "Library Channels";
+    static __name = "Explore Channels";
     
-    static TabItem = function()
+    __openChannel = undefined;
+    
+    static MenuItem = function()
     {
-        if (ImGuiBeginTabItem(__name, undefined, (oInterface.forceSelectedTab == __name)? ImGuiTabItemFlags.SetSelected : undefined))
+        if (ImGuiBeginMenu(__name))
         {
-            ImGuiBeginChild("channelSelector");
-            ImGuiBeginTabBar("tabBar");
-            
             var _i = 0;
             repeat(HotglueGetChannelCount())
             {
-                InterfaceEnsureChannelView(HotglueGetChannelByIndex(_i)).BuildForExplore();
+                var _channel = HotglueGetChannelByIndex(_i);
+                if (ImGuiMenuItem($"{_channel.GetName()}###channel{_i}"))
+                {
+                    __openChannel = _channel;
+                    other.menuFocus = self;
+                }
+                
                 ++_i;
             }
             
-            ImGuiEndTabBar();
-            ImGuiEndChild();
-            
-            ImGuiEndTabItem();
+            ImGuiEndMenu();
+        }
+    }
+    
+    static Build = function()
+    {
+        if (__openChannel == undefined)
+        {
+            var _i = 0;
+            repeat(HotglueGetChannelCount())
+            {
+                var _channel = HotglueGetChannelByIndex(_i);
+                
+                if (ImGuiButton($"{_channel.GetName()}###channel{_i}"))
+                {
+                    __openChannel = _channel;
+                }
+                
+                ++_i;
+            }
+        }
+        else
+        {
+            InterfaceEnsureChannelView(__openChannel).BuildForExplore();
         }
     }
 }
