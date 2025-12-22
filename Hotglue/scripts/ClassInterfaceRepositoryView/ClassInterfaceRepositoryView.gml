@@ -47,27 +47,15 @@ function ClassInterfaceRepositoryView(_repository) constructor
             }
             
             ImGuiSameLine(undefined, 20);
-            
-            var _trimmedURL = _url;
-            if (string_copy(_url, 1, string_length("http://")) == "http://")
-            {
-                _trimmedURL = string_delete(_trimmedURL, 1, string_length("http://"));
-            }
-            else if (string_copy(_url, 1, string_length("https://")) == "https://")
-            {
-                _trimmedURL = string_delete(_trimmedURL, 1, string_length("https://"));
-            }
-            
-            var _uri = $"https://jujuadams.github.io/hotglue?url={_trimmedURL}";
             if (ImGuiButton("Copy URI link"))
             {
-                clipboard_set_text(_uri);
-                LogTraceAndStatus($"Copied \"{_uri}\" to clipboard");
+                clipboard_set_text($"https://jujuadams.github.io/hotglue?url={__HotglueEncodeURI(_url)}");
+                LogTraceAndStatus($"Copied \"{_url}\" to clipboard");
             }
             
             if (ImGuiBeginItemTooltip())
             {
-                ImGuiText(_uri);
+                ImGuiText($"https://jujuadams.github.io/hotglue?url={_url}");
                 ImGuiEndTooltip();
             }
         }

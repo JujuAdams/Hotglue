@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__HotglueEncodeURI",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__HotglueEncodeURI",
+  "parent":{
+    "name":"(System)",
+    "path":"folders/Hotglue/(System).yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

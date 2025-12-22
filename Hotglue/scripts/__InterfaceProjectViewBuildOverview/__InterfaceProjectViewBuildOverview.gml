@@ -64,9 +64,9 @@ function __InterfaceProjectViewBuildOverview()
         var _cellPadding = 8;
         
         ImGuiPushStyleVarY(ImGuiStyleVar.CellPadding, _cellPadding);
-        ImGuiBeginTable("overviewTable", 2, ImGuiTableFlags.RowBg);
+        ImGuiBeginTable("overviewTable", 2, ImGuiTableFlags.RowBg | ImGuiTableFlags.Borders);
         
-        ImGuiTableSetupColumn("field", ImGuiTableColumnFlags.WidthFixed, 130);
+        ImGuiTableSetupColumn("field", ImGuiTableColumnFlags.WidthFixed, 70);
         ImGuiTableSetupColumn("value");
         
         ImGuiTableNextRow();

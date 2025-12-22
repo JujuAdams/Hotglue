@@ -277,20 +277,30 @@ function ClassTabImport() : ClassTab() constructor
                 }
             }
             
-            var _i = 0;
-            repeat(array_length(__looseFileViewArray))
+            if (array_length(__looseFileViewArray) <= 0)
             {
-                var _looseFile = __looseFileViewArray[_i];
+                ImGuiNewLine();
+                ImGuiText("No loose files have been added.");
+            }
+            else
+            {
+                ImGuiNewLine();
                 
-                if (ImGuiButton($"X##{ptr(_looseFile)}"))
+                var _i = 0;
+                repeat(array_length(__looseFileViewArray))
                 {
-                    array_delete(__looseFileViewArray, _i, 1);
-                }
-                else
-                {
-                    ImGuiSameLine();
-                    _looseFile.Build(__destinationProject);
-                    ++_i;
+                    var _looseFile = __looseFileViewArray[_i];
+                    
+                    if (ImGuiButton($"X##{ptr(_looseFile)}"))
+                    {
+                        array_delete(__looseFileViewArray, _i, 1);
+                    }
+                    else
+                    {
+                        ImGuiSameLine();
+                        _looseFile.Build(__destinationProject);
+                        ++_i;
+                    }
                 }
             }
             

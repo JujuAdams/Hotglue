@@ -53,6 +53,7 @@
     {"name":"__HotglueCopyRelativePathArray","order":6,"path":"scripts/__HotglueCopyRelativePathArray/__HotglueCopyRelativePathArray.yy",},
     {"name":"__HotglueCreateMetadata","order":19,"path":"scripts/__HotglueCreateMetadata/__HotglueCreateMetadata.yy",},
     {"name":"__HotglueDetermineResourceConstructor","order":5,"path":"scripts/__HotglueDetermineResourceConstructor/__HotglueDetermineResourceConstructor.yy",},
+    {"name":"__HotglueEncodeURI","order":23,"path":"scripts/__HotglueEncodeURI/__HotglueEncodeURI.yy",},
     {"name":"__HotglueEnsureObject","order":14,"path":"scripts/__HotglueEnsureObject/__HotglueEnsureObject.yy",},
     {"name":"__HotglueFolder","order":1,"path":"scripts/__HotglueFolder/__HotglueFolder.yy",},
     {"name":"__HotglueGenerateCacheFilename","order":12,"path":"scripts/__HotglueGenerateCacheFilename/__HotglueGenerateCacheFilename.yy",},
