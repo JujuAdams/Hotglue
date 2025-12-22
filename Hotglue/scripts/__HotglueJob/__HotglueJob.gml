@@ -268,8 +268,8 @@ function __HotglueJob(_destinationProject) constructor
             }
             else
             {
-                var _index = array_get_index(_destinationProject.__hotglueMetadata[1], _libraryMetadata);
-                if (_index >= 0) array_delete(_destinationProject.__hotglueMetadata[1], _index, 1);
+                var _index = array_get_index(_destinationProject.__hotglueMetadata.installed, _libraryMetadata);
+                if (_index >= 0) array_delete(_destinationProject.__hotglueMetadata.installed, _index, 1);
             }
         });
         
@@ -301,7 +301,7 @@ function __HotglueJob(_destinationProject) constructor
             }
             else
             {
-                array_push(_destinationProject.__hotglueMetadata[1], {
+                array_push(_destinationProject.__hotglueMetadata.installed, {
                     name:    _libraryName,
                     version: _versionString,
                     origin:  _originURL,

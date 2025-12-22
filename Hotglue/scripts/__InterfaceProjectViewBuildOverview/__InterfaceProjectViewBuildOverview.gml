@@ -50,25 +50,10 @@ function __InterfaceProjectViewBuildOverview()
     BuildOverview = method(undefined, function()
     {
         var _readOnly = __project.GetReadOnly();
-        var _metadataEditable = not _readOnly;
         
         if (not __project.GetHotglueMetadataExists())
         {
-            if (_metadataEditable)
-            {
-                ImGuiTextColored("No Hotglue metadata found in project.", INTERFACE_COLOR_RED_TEXT, 1);
-                ImGuiSameLine();
-                if (ImGuiButton("Create Hotglue metadata"))
-                {
-                    __project.EnsureHotglueMetadata();
-                }
-                
-                _metadataEditable = false;
-            }
-            else
-            {
-                ImGuiTextColored("No Hotglue metadata found in project.", INTERFACE_COLOR_RED_TEXT, 1);
-            }
+            ImGuiTextColored("No Hotglue metadata found in project.", INTERFACE_COLOR_ORANGE_TEXT, 1);
         }
         
         if (_readOnly)
@@ -76,178 +61,40 @@ function __InterfaceProjectViewBuildOverview()
             ImGuiTextColored("Project is read-only.", INTERFACE_COLOR_RED_TEXT, 1);
         }
         
-        if (_metadataEditable)
-        {
-            ///////
-            // Read / Write
-            ///////
-            
-            var _cellPadding = 8;
-            
-            ImGuiPushStyleVarY(ImGuiStyleVar.CellPadding, _cellPadding);
-            ImGuiBeginTable("overviewTable", 3, ImGuiTableFlags.RowBg);
-            
-            ImGuiTableSetupColumn("field", ImGuiTableColumnFlags.WidthFixed, 180);
-            ImGuiTableSetupColumn("value");
-            ImGuiTableSetupColumn("button", ImGuiTableColumnFlags.WidthFixed, 50);
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            ImGuiText("Name");
-            ImGuiTableNextColumn();
-            __InputString(new __HotglueClassPointer(__project.__hotglueMetadata[0], "name"), "name");
-            ImGuiTableNextColumn();
-            if (ImGuiSmallButton("Reset##name"))
-            {
-                __project.__hotglueMetadata[0].name = __project.__yypJson.name;
-                __project.__SaveHotglueMetadata();
-            }
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            ImGuiText(".yyp Version");
-            ImGuiTableNextColumn();
-            ImGuiText($"{__project.GetYYPOriginalVersion()}{__project.GetConverted()? " (converted)" : ""}");
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            
-            ImGuiTextLink("Semantic Version");
-            var _clicked = ImGuiIsItemClicked();
-            if (ImGuiBeginItemTooltip())
-            {
-                ImGuiText($"Open \"https://semver.org/\"");
-                ImGuiEndTooltip();
-            }
-            
-            if (_clicked)
-            {
-                url_open("https://semver.org/");
-            }
-            
-            ImGuiTableNextColumn();
-            ImGuiText(__project.GetVersionString());
-            
-            __InputVersionString(new __HotglueClassPointer(__project.__hotglueMetadata[0].version, "major"), "MAJOR");
-            ImGuiSameLine();
-            ImGuiText(".");
-            ImGuiSameLine();
-            __InputVersionString(new __HotglueClassPointer(__project.__hotglueMetadata[0].version, "minor"), "Minor");
-            ImGuiSameLine();
-            ImGuiText(".");
-            ImGuiSameLine();
-            __InputVersionString(new __HotglueClassPointer(__project.__hotglueMetadata[0].version, "patch"), "patch");
-            ImGuiSameLine();
-            ImGuiSetNextItemWidth(200);
-            __InputString(new __HotglueClassPointer(__project.__hotglueMetadata[0].version, "extension"), "extension");
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            ImGuiText(".yymps overrides version");
-            
-            ImGuiTableNextColumn();
-            
-            var _oldValue = __project.__hotglueMetadata[0].yympsOverridesVersion;
-            var _newValue = ImGuiCheckbox($"##yympsOverridesVersion", _oldValue);
-            if (_oldValue != _newValue)
-            {
-                __project.__hotglueMetadata[0].yympsOverridesVersion = _newValue;
-                __project.__SaveHotglueMetadata();
-            }
-            
-            ImGuiSameLine();
-            ImGuiDummy(20, 0);
-            ImGuiSameLine();
-            ImGuiTextLink("What is this?");
-            if (ImGuiBeginItemTooltip())
-            {
-                ImGuiText($"Override the Hotglue version with the version specified when exporting a .yymps from the GameMaker IDE.\n\nThis means you don't need to keep updating the Hotglue metadata with every release.");
-                ImGuiEndTooltip();
-            }
-            ImGuiTableNextColumn();
-            if (ImGuiSmallButton("Reset##yympsOverridesVersion"))
-            {
-                __project.__hotglueMetadata[0].yympsOverridesVersion = false;
-                __project.__SaveHotglueMetadata();
-            }
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            ImGuiText("Origin");
-            ImGuiTableNextColumn();
-            InterfaceLinkText(__project.GetURL());
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            ImGuiText("Imported");
-            ImGuiTableNextColumn();
-            
-            BuildImportedTable();
-            
-            ImGuiEndTable();
-            ImGuiPopStyleVar();
-        }
-        else
-        {
-            ///////
-            // Read Only
-            ///////
-            
-            var _cellPadding = 8;
-            
-            ImGuiPushStyleVarY(ImGuiStyleVar.CellPadding, _cellPadding);
-            ImGuiBeginTable("overviewTable", 2, ImGuiTableFlags.RowBg);
-            
-            ImGuiTableSetupColumn("field", ImGuiTableColumnFlags.WidthFixed, 130);
-            ImGuiTableSetupColumn("value");
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            ImGuiText("Name");
-            ImGuiTableNextColumn();
-            ImGuiTextWrapped(__project.GetName());
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            ImGuiText(".yyp Version");
-            ImGuiTableNextColumn();
-            ImGuiText($"{__project.GetYYPOriginalVersion()}{__project.GetConverted()? " (converted)" : ""}");
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            ImGuiTextLink("Semantic Version");
-            var _clicked = ImGuiIsItemClicked();
-            if (ImGuiBeginItemTooltip())
-            {
-                ImGuiText($"Open \"https://semver.org/\"");
-                ImGuiEndTooltip();
-            }
-            
-            if (_clicked)
-            {
-                url_open("https://semver.org/");
-            }
-            
-            ImGuiTableNextColumn();
-            
-            ImGuiText(__project.GetVersionString());
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            ImGuiText("Origin");
-            ImGuiTableNextColumn();
-            InterfaceLinkText(__project.GetURL());
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            ImGuiText("Imported");
-            ImGuiTableNextColumn();
-            
-            BuildImportedTable();
-            
-            ImGuiEndTable();
-            ImGuiPopStyleVar();
-        }
+        var _cellPadding = 8;
+        
+        ImGuiPushStyleVarY(ImGuiStyleVar.CellPadding, _cellPadding);
+        ImGuiBeginTable("overviewTable", 2, ImGuiTableFlags.RowBg);
+        
+        ImGuiTableSetupColumn("field", ImGuiTableColumnFlags.WidthFixed, 130);
+        ImGuiTableSetupColumn("value");
+        
+        ImGuiTableNextRow();
+        ImGuiTableNextColumn();
+        ImGuiText("Origin");
+        ImGuiTableNextColumn();
+        InterfaceLinkText(__project.GetURL());
+        
+        ImGuiTableNextRow();
+        ImGuiTableNextColumn();
+        ImGuiText("Name");
+        ImGuiTableNextColumn();
+        ImGuiText(__project.GetName());
+        
+        ImGuiTableNextRow();
+        ImGuiTableNextColumn();
+        ImGuiText("Version");
+        ImGuiTableNextColumn();
+        ImGuiText(__project.GetVersionString());
+        
+        ImGuiTableNextRow();
+        ImGuiTableNextColumn();
+        ImGuiText("Imported");
+        ImGuiTableNextColumn();
+        BuildImportedTable();
+        
+        ImGuiEndTable();
+        ImGuiPopStyleVar();
     });
     
     BuildImportedTable = method(undefined, function()

@@ -1,20 +1,9 @@
 // Feather disable all
 
-/// @param name
-
-function __HotglueCreateMetadata(_name)
+function __HotglueCreateMetadata()
 {
-    return [
-        {
-            name: _name,
-            version: {
-                major: "",
-                minor: "",
-                patch: "",
-                extension: "",
-            },
-            yympsOverridesVersion: false,
-        },
-        [],
-    ];
+    return {
+        installed: [],
+        version: 1,
+    };
 }

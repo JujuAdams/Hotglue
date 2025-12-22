@@ -132,11 +132,31 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
             
             if (_resource.name == "hotglue_metadata")
             {
-                var _buffer = buffer_load(__projectDirectory + filename_change_ext(_resource.path, ".txt"));
-                var _string = buffer_read(_buffer, buffer_text);
-                buffer_delete(_buffer);
-                
-                __hotglueMetadata = json_parse(_string);
+                try
+                {
+                    var _buffer = buffer_load(__projectDirectory + filename_change_ext(_resource.path, ".txt"));
+                    var _string = buffer_read(_buffer, buffer_text);
+                    buffer_delete(_buffer);
+                    
+                    __hotglueMetadata = json_parse(_string);
+                    
+                    if (__hotglueMetadata.version != 1)
+                    {
+                        throw "Hotglue version check failed";
+                    }
+                    
+                    if (not is_array(__hotglueMetadata.installed))
+                    {
+                        throw "Hotglue metadata installed library record not an array";
+                    }
+                }
+                catch(_error)
+                {
+                    LogWarning(json_stringify(_error, true));
+                    LogWarning($"Could not read Hotglue metadata at \"{_resource.path}\"");
+                    
+                    __hotglueMetadata = undefined;
+                }
             }
             else
             {
@@ -167,24 +187,12 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     
     static GetName = function()
     {
-        return (__hotglueMetadata == undefined)? __yypJson.name : __hotglueMetadata[0].name;
+        return __yypJson.name;
     }
     
     static GetVersionString = function()
     {
-        if (is_array(__hotglueMetadata) && (not __hotglueMetadata[0].yympsOverridesVersion))
-        {
-            with(__hotglueMetadata[0].version)
-            {
-                return $"{(major == "")? "0" : major}.{(minor == "")? "0" : minor}.{(patch == "")? "0" : patch}{(extension != "")? "-" : ""}{extension}";
-            }
-        }
-        else if (is_struct(__yympsMetadata))
-        {
-            return __yympsMetadata.version;
-        }
-        
-        return "0.0.0";
+        return is_struct(__yympsMetadata)? __yympsMetadata.version : "0.0.0";
     }
     
     static GetPath = function()
@@ -258,7 +266,7 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         if (__readOnly) return;
         if (__hotglueMetadata != undefined) return;
         
-        __hotglueMetadata = __HotglueCreateMetadata(__yypJson.name);
+        __hotglueMetadata = __HotglueCreateMetadata();
         
         var _tempFilename = HOTGLUE_TEMP_CACHE_DIRECTORY + "hotglue_metadata.json";
         var _string = json_stringify(__hotglueMetadata, true);
@@ -349,7 +357,7 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     static GetImported = function()
     {
         static _emptyArray = [];
-        return (__hotglueMetadata == undefined)? _emptyArray : __hotglueMetadata[1];
+        return (__hotglueMetadata == undefined)? _emptyArray : __hotglueMetadata.installed;
     }
     
     static JobImportAllFrom = function(_sourceProject, _subfolder = "")
@@ -422,7 +430,7 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     {
         if (not GetHotglueMetadataExists()) return undefined;
         
-        var _installedArray = __hotglueMetadata[1];
+        var _installedArray = __hotglueMetadata.installed;
         var _i = 0;
         repeat(array_length(_installedArray))
         {
