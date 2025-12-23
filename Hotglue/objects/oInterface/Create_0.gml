@@ -1,4 +1,4 @@
-window_set_size(1280, 729);
+window_set_size(1280, 720);
 window_center();
 
 logTab = new ClassTabLog();
@@ -39,6 +39,8 @@ else
 
 InterfaceRecentLoad();
 
+popUpStruct = InterfaceSettingGet("completedFTUX", false)? undefined : new ClassModalFTUX();
+
 var _selectedTabName = InterfaceSettingGet("openOnTab", "Welcome");
 if (projectTab.GetName()   == _selectedTabName) menuFocus = projectTab;
 if (channelsTab.GetName()  == _selectedTabName) menuFocus = channelsTab;
@@ -47,5 +49,3 @@ if (settingsTab.GetName()  == _selectedTabName) menuFocus = settingsTab;
 if (logTab.GetName()       == _selectedTabName) menuFocus = logTab;
 
 statusBarHeight = 32;
-
-popUpStruct = undefined;

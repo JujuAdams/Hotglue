@@ -14,7 +14,7 @@ function ClassModalMessage(_message) constructor
         
         ImGuiOpenPopup(_name);
         ImGuiSetNextWindowSize(oInterface.context.GetRegion().width/3, oInterface.context.GetRegion().height/3);
-        var _result = ImGuiBeginPopupModal(_name, true);
+        var _result = ImGuiBeginPopupModal(_name);
         if (_result & ImGuiReturnMask.Return)
         {
             ImGuiTextWrapped(__message);

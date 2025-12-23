@@ -18,16 +18,8 @@ function ClassTabWelcome() : ClassTab() constructor
         ImGuiNewLine();
         ImGuiTextWrapped("Hotglue is a GameMaker 2024.14 import tool. It will help you import and update libraries in your GameMaker project.");
         ImGuiNewLine();
+        InterfaceBuildCredits();
         
-        ImGuiText("Credits:");
-        ImGuiIndent();
-        ImGuiTextWrapped("- ImGui by Omar Cornut");
-        ImGuiTextWrapped("- ImGM by knno (based on work by Nommiin)");
-        ImGuiTextWrapped("- execute_shell_simple() by YellowAfterlife");
-        ImGuiTextWrapped("- Ngram fuzzy search by TinkererRed");
-        ImGuiTextWrapped("- GitHub authorization flow based on `GitHub.gml` by Alub");
-        ImGuiUnindent();
-            
         if (HotglueGetExecuteShellAvailable())
         {
             

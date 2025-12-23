@@ -83,6 +83,7 @@ function ClassTabSettings() : ClassTab() constructor
         
         ImGuiText("Open on tab");
         ImGuiSameLine();
+        ImGuiSetNextItemWidth(200);
         if (ImGuiBeginCombo("##bootTab", InterfaceSettingGet("openOnTab", "Welcome"), ImGuiComboFlags.None))
         {
             if (ImGuiSelectable("Welcome"))
@@ -122,6 +123,11 @@ function ClassTabSettings() : ClassTab() constructor
             }
             
             ImGuiEndCombo();
+        }
+        
+        if (ImGuiButton("Re-run \"First Time Setup\""))
+        {
+            oInterface.popUpStruct = new ClassModalFTUX();
         }
         
         ImGuiUnindent();

@@ -12,6 +12,12 @@ if (_return & ImGuiReturnMask.Return)
         channelsTab.MenuItem();
         settingsTab.MenuItem();
         logTab.MenuItem();
+        
+        if (ImGuiMenuItem("Report Bug..."))
+        {
+            url_open("https://github.com/JujuAdams/Hotglue/issues/new");
+        }
+        
         ImGuiEndMenuBar();
     }
     
