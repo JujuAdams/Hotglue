@@ -138,7 +138,9 @@ function __InterfaceProjectViewBuildOverview()
             
             if (_deleteIndex != undefined)
             {
-                oInterface.popUpStruct = new ClassModalConfirmLibraryDelete(__project, _imported.name);
+                var _job = __project.JobDeleteLibrary(_importedArray[_deleteIndex].name);
+                _job.BuildReport();
+                oInterface.popUpStruct = new ClassModalConfirmJob(_job);
             }
             
             ImGuiEndTable();
