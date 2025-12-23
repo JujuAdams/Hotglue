@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"ClassTabLog",
+  "%Name":"InterfaceBuildLog",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ClassTabLog",
+  "name":"InterfaceBuildLog",
   "parent":{
-    "name":"Tabs",
-    "path":"folders/Interface/Classes/Tabs.yy",
+    "name":"Interface",
+    "path":"folders/Interface.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

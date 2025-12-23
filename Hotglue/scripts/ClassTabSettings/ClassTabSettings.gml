@@ -116,13 +116,17 @@ function ClassTabSettings() : ClassTab() constructor
                 InterfaceSettingsSave();
             }
             
-            if (ImGuiSelectable("Log"))
-            {
-                InterfaceSettingSet("openOnTab", "Log");
-                InterfaceSettingsSave();
-            }
-            
             ImGuiEndCombo();
+        }
+        
+        ImGuiText("Show log");
+        ImGuiSameLine();
+        var _oldValue = InterfaceSettingGet("showLogOnBoot", false);
+        var _newValue = ImGuiCheckbox("##showLogOnBoot", _oldValue);
+        if (_oldValue != _newValue)
+        {
+            InterfaceSettingSet("showLogOnBoot", not _oldValue)
+            InterfaceSettingsSave();
         }
         
         if (ImGuiButton("Re-run \"First Time Setup\""))

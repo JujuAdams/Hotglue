@@ -11,7 +11,6 @@ if (_return & ImGuiReturnMask.Return)
         inspectorTab.MenuItem();
         channelsTab.MenuItem();
         settingsTab.MenuItem();
-        logTab.MenuItem();
         
         if (ImGuiMenuItem("Report Bug..."))
         {
@@ -21,7 +20,11 @@ if (_return & ImGuiReturnMask.Return)
         ImGuiEndMenuBar();
     }
     
-    if (menuFocus != undefined)
+    if (logOpen)
+    {
+        InterfaceBuildLog();
+    }
+    else if (menuFocus != undefined)
     {
         menuFocus.Build();
     }
@@ -33,6 +36,23 @@ ImGuiSetNextWindowPos(0, context.GetRegion().height, undefined, 0, 1, ImGuiCond.
 var _return = ImGuiBegin("statusBarWindow", true, ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar);
 if (_return & ImGuiReturnMask.Return)
 {
+    if (LogGetNewWarnings())
+    {
+        ImGuiPushStyleColor(ImGuiCol.Button, INTERFACE_COLOR_RED_TEXT, 1);
+    }
+    
+    if (ImGuiButton(logOpen? "Hide log" : "Show log"))
+    {
+        logOpen = not logOpen;
+    }
+    
+    if (LogGetNewWarnings())
+    {
+        ImGuiPopStyleColor();
+    }
+    
+    ImGuiSameLine(undefined, 30);
+    
     var _status = LogGetStatus();
     if (is_callable(_status))
     {
