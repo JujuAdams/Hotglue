@@ -1,6 +1,6 @@
 // Feather disable all
 
-function __HotglueResourceCommon(_resourceStruct) constructor
+function __HotglueResourceCommon(_resourceStruct) : __HotglueClassAssetCommon() constructor
 {
     static _system = __HotglueSystem();
     static type = "resource";
@@ -110,6 +110,7 @@ function __HotglueResourceCommon(_resourceStruct) constructor
             var _newName = filename_name(_parentPath);
             var _newPath = $"folders/{_parentPath}.yy";
             
+            //FIXME - Looks like this broke at some point
             _string = string_replace_all(_string, $"    \"name\":\"{_jsonParentName}\"", $"    \"name\":\"{_newName}\"");
             _string = string_replace_all(_string, $"    \"path\":\"{_jsonParentPath}\"", $"    \"path\":\"{_newPath}\"");
             
@@ -117,10 +118,6 @@ function __HotglueResourceCommon(_resourceStruct) constructor
             buffer_write(_buffer, buffer_text, _string);
             buffer_save(_buffer, _absolutePath);
             buffer_delete(_buffer);
-            
-            //TODO - This should no longer be needed
-            //Ensure the folder path exists
-            //_project.__EnsureFolderPath(_parentPath);
         }
         else
         {
@@ -131,6 +128,7 @@ function __HotglueResourceCommon(_resourceStruct) constructor
                 var _newName = _project.__yypJson.name;
                 var _newPath = $"{_project.__yypJson.name}.yyp";
                 
+                //FIXME - Looks like this broke at some point
                 _string = string_replace_all(_string, $"    \"name\":\"{_jsonParentName}\"", $"    \"name\":\"{_newName}\"");
                 _string = string_replace_all(_string, $"    \"path\":\"{_jsonParentPath}\"", $"    \"path\":\"{_newPath}\"");
                 
@@ -139,13 +137,12 @@ function __HotglueResourceCommon(_resourceStruct) constructor
                 buffer_save(_buffer, _absolutePath);
                 buffer_delete(_buffer);
             }
-            else
-            {
-                //TODO - This should no longer be needed
-                //Ensure the folder path exists
-                //_project.__EnsureFolderPath(_parentPath);
-            }
         }
+    }
+    
+    static __GetYYPInsertString = function()
+    {
+        return $"    \{\"id\":\{\"name\":\"{data.name}\",\"path\":\"{data.path}\",},},\n";
     }
     
     static __InsertIntoYYP = function(_project, _subfolder_UNUSED)
@@ -171,7 +168,6 @@ function __HotglueResourceCommon(_resourceStruct) constructor
             ++_pos;
         }
         
-        var _insertString = $"    \{\"id\":\{\"name\":\"{data.name}\",\"path\":\"{data.path}\",},},\n";
-        _project.__yypString = string_insert(_insertString, _yypString, _pos);
+        _project.__yypString = string_insert(__GetYYPInsertString(), _yypString, _pos);
     }
 }

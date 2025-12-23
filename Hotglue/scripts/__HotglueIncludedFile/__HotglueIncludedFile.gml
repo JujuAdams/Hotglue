@@ -2,7 +2,7 @@
 
 /// @param includedFileStruct
 
-function __HotglueIncludedFile(_includedFileStruct) constructor
+function __HotglueIncludedFile(_includedFileStruct) : __HotglueClassAssetCommon() constructor
 {
     static _system = __HotglueSystem();
     static type = "included file";
@@ -63,6 +63,14 @@ function __HotglueIncludedFile(_includedFileStruct) constructor
         //Do nothing!
     }
     
+    static __GetYYPInsertString = function()
+    {
+        var _includedFileName = data.name;
+        var _includedFilePath = data.filePath;
+        
+        return $"    \{\"$GMIncludedFile\":\"\",\"%Name\":\"{_includedFileName}\",\"CopyToMask\":-1,\"filePath\":\"{_includedFilePath}\",\"name\":\"{_includedFileName}\",\"resourceType\":\"GMIncludedFile\",\"resourceVersion\":\"2.0\",\},\n";
+    }
+    
     static __InsertIntoYYP = function(_project, _subfolder_UNUSED)
     {
         var _yypString = _project.__yypString;
@@ -86,10 +94,6 @@ function __HotglueIncludedFile(_includedFileStruct) constructor
             ++_pos;
         }
         
-        var _includedFileName = data.name;
-        var _includedFilePath = data.filePath;
-        
-        var _insertString = $"    \{\"$GMIncludedFile\":\"\",\"%Name\":\"{_includedFileName}\",\"CopyToMask\":-1,\"filePath\":\"{_includedFilePath}\",\"name\":\"{_includedFileName}\",\"resourceType\":\"GMIncludedFile\",\"resourceVersion\":\"2.0\",\},\n"
-        _project.__yypString = string_insert(_insertString, _yypString, _pos);
+        _project.__yypString = string_insert(__GetYYPInsertString(), _yypString, _pos);
     }
 }

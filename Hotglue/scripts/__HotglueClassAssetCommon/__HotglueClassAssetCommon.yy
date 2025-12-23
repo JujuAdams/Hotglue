@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__HotglueClassAssetCommon",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__HotglueClassAssetCommon",
+  "parent":{
+    "name":"Assets",
+    "path":"folders/Hotglue/(System)/Classes/Assets.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -2,7 +2,7 @@
 
 /// @param folderStruct
 
-function __HotglueFolder(_folderStruct) constructor
+function __HotglueFolder(_folderStruct) : __HotglueClassAssetCommon() constructor
 {
     static _system = __HotglueSystem();
     static type = "folder";
@@ -68,6 +68,14 @@ function __HotglueFolder(_folderStruct) constructor
         //Do nothing!
     }
     
+    static __GetYYPInsertString = function(_subfolder)
+    {
+        var _folderName = data.name;
+        var _folderPath = data.folderPath;
+        
+        return $"    \{\"$GMFolder\":\"\",\"%Name\":\"{_folderName}\",\"folderPath\":\"{_folderPath}\",\"name\":\"{_folderName}\",\"resourceType\":\"GMFolder\",\"resourceVersion\":\"2.0\",\},\n";
+    }
+    
     static __InsertIntoYYP = function(_project, _subfolder)
     {
         var _yypString = _project.__yypString;
@@ -91,12 +99,9 @@ function __HotglueFolder(_folderStruct) constructor
             ++_pos;
         }
         
-        var _folderName = data.name;
-        var _folderPath = data.folderPath;
-        
         if (_subfolder != "")
         {
-            _folderPath = __HotglueProcessFolderPath(_folderPath);
+            var _folderPath = __HotglueProcessFolderPath(data.folderPath);
             if (_folderPath == "")
             {
                 //The root becomes the same as the subfolder itself. No need to add us to the .yyp
@@ -114,7 +119,6 @@ function __HotglueFolder(_folderStruct) constructor
             }
         }
         
-        var _insertString = $"    \{\"$GMFolder\":\"\",\"%Name\":\"{_folderName}\",\"folderPath\":\"{_folderPath}\",\"name\":\"{_folderName}\",\"resourceType\":\"GMFolder\",\"resourceVersion\":\"2.0\",\},\n";
-        _project.__yypString = string_insert(_insertString, _yypString, _pos);
+        _project.__yypString = string_insert(__GetYYPInsertString(), _yypString, _pos);
     }
 }

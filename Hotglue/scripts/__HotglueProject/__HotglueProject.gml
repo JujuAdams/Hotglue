@@ -327,6 +327,7 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         if (is_struct(_asset))
         {
             _asset.__DeleteFromDisk(self);
+            _asset.__RemoveFromYYP(self);
             
             struct_remove(__quickAssetDict, _assetPID);
             var _index = array_get_index(__quickAssetArray, _asset);

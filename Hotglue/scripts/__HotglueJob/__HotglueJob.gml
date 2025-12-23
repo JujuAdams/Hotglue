@@ -217,18 +217,17 @@ function __HotglueJob(_destinationProject) constructor
         }
     }
     
-    static __QueueDelete = function(_assetArray)
+    static __QueueDelete = function(_assetPIDArray)
     {
-        if (not is_array(_assetArray))
+        if (not is_array(_assetPIDArray))
         {
-            _assetArray = [ _assetArray ];
+            _assetPIDArray = [ _assetPIDArray ];
         }
         
         var _i = 0;
-        repeat(array_length(_assetArray))
+        repeat(array_length(_assetPIDArray))
         {
-            var _asset = _assetArray[_i];
-            var _pid = _asset.__pid;
+            var _pid = _assetPIDArray[_i];
             
             var _method = method(
             {
