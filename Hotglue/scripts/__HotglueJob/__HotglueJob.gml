@@ -292,7 +292,16 @@ function __HotglueJob(_destinationProject) constructor
             var _libraryName   = _sourceProject.GetName();
             var _versionString = _sourceProject.GetVersionString();
             var _originURL     = _sourceProject.GetURL();
-            var _assetPIDArray = variable_clone(_sourceProject.__quickAssetArray); //FIXME - Generate PIDs
+            
+            var _sourceAssetArray = _sourceProject.__quickAssetArray;
+            var _assetPIDArray = array_create(array_length(_sourceAssetArray));
+            var _i = 0;
+            repeat(array_length(_sourceAssetArray))
+            {
+                var _asset = _sourceAssetArray[_i];
+                _assetPIDArray[@ _i] = _asset.GetPID();
+                ++_i;
+            }
             
             var _libraryMetadata = _destinationProject.__GetLibraryMetadata(_libraryName);
             if (_libraryMetadata != undefined)

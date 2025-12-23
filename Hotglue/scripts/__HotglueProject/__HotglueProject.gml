@@ -360,6 +360,11 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         return (__hotglueMetadata == undefined)? _emptyArray : __hotglueMetadata.installed;
     }
     
+    static JobEmpty = function()
+    {
+        return new __HotglueJob(self);
+    }
+    
     static JobImportAllFrom = function(_sourceProject, _subfolder = "")
     {
         var _job = new __HotglueJob(self);
@@ -402,7 +407,7 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     static JobImportFromLooseFiles = function(_looseFileArray, _subfolder = "")
     {
         var _job = new __HotglueJob(self);
-        _job.__QueueImportLooseFile(_looseFileArray, _subfolder = "");
+        _job.__QueueImportLooseFile(_looseFileArray, _subfolder);
         return _job;
     }
     
