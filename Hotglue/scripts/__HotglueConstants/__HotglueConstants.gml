@@ -1,5 +1,8 @@
 // Feather disable all
 
+#macro HOTGLUE_VERSION  "0.2.0"
+#macro HOTGLUE_DATE  "2025-12-23"
+
 #macro HOTGLUE_RUNNING_FROM_IDE  (GM_build_type == "run")
 
 // As per `https://docs.github.com/en/rest/releases/releases`

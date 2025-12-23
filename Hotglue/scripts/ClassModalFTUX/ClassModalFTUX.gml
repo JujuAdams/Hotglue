@@ -18,7 +18,7 @@ function ClassModalFTUX() constructor
         {
             if (__page == 0)
             {
-                ImGuiTextWrapped("Welcome to Hotglue!");
+                ImGuiTextWrapped($"Welcome to Hotglue by Juju Adams! This is version {HOTGLUE_VERSION}, {HOTGLUE_DATE}.");
                 ImGuiNewLine();
                 InterfaceBuildCredits();
                 ImGuiNewLine();

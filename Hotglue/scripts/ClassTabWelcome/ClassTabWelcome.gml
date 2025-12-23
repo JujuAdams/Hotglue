@@ -14,9 +14,7 @@ function ClassTabWelcome() : ClassTab() constructor
     
     static Build = function()
     {
-        ImGuiTextWrapped("Welcome to Hotglue by Juju Adams. This is version 0.1.0, 2025-12-18.");
-        ImGuiNewLine();
-        ImGuiTextWrapped("Hotglue is a GameMaker 2024.14 import tool. It will help you import and update libraries in your GameMaker project.");
+        ImGuiTextWrapped($"Welcome to Hotglue by Juju Adams! This is version {HOTGLUE_VERSION}, {HOTGLUE_DATE}.");
         ImGuiNewLine();
         InterfaceBuildCredits();
         
