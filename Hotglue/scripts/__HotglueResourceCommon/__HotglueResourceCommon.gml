@@ -30,20 +30,23 @@ function __HotglueResourceCommon(_resourceStruct) : __HotglueClassAssetCommon() 
         var _parentPath = __GetYYJSON(_project).parent.path;
         _parentPath = __HotglueProcessFolderPath(_parentPath);
         
-        //Sanitize
-        var _parentPath = string_replace_all(_parentPath, "\\", "/");
-        
-        //Iterate over every stage in the path to ensure we have all the folders set up along the path
-        repeat(string_count("/", _parentPath) + 1)
+        if (_parentPath != "")
         {
-            var _assetPID = $"folder:{_parentPath}";
-            if (not variable_struct_exists(_visitedDict, _assetPID))
-            {
-                array_push(_visitedArray, _assetPID);
-                _visitedDict[$ _assetPID] = true;
-            }
+            //Sanitize
+            var _parentPath = string_replace_all(_parentPath, "\\", "/");
             
-            _parentPath = filename_dir(_parentPath);
+            //Iterate over every stage in the path to ensure we have all the folders set up along the path
+            repeat(string_count("/", _parentPath) + 1)
+            {
+                var _assetPID = $"folder:{_parentPath}";
+                if (not variable_struct_exists(_visitedDict, _assetPID))
+                {
+                    array_push(_visitedArray, _assetPID);
+                    _visitedDict[$ _assetPID] = true;
+                }
+                
+                _parentPath = filename_dir(_parentPath);
+            }
         }
         
         __GetExpandedAssetsSpecial(_project, _visitedArray, _visitedDict);
