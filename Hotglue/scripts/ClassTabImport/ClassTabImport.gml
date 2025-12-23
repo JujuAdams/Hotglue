@@ -338,7 +338,63 @@ function ClassTabImport() : ClassTab() constructor
         
         if (ImGuiButton("Import ->"))
         {
-            oInterface.popUpStruct = new ClassModalConfirmImport(self, __importMode);
+            var _job = undefined;
+            
+            if (__importMode == "direct from project")
+            {
+                _job = __destinationProject.JobImportFrom(__directProject, __directView.GetAssetArray());
+                _job.BuildReport();
+                
+                oInterface.popUpStruct = new ClassModalConfirmJob(_job);
+            }
+            else if (__importMode == "loose files")
+            {
+                _job = __destinationProject.JobImportFromLooseFiles(GetLooseFileArray());
+                _job.BuildReport();
+                
+                oInterface.popUpStruct = new ClassModalConfirmJob(_job);
+            }
+            else if (__importMode == "channels")
+            {
+                var _modal = new ClassModalConfirmJob(__destinationProject.JobEmpty());
+                oInterface.popUpStruct = _modal;
+                
+                var _selectedRelease = GetSelectedRelease();
+                if (_selectedRelease != undefined)
+                {
+                    with(_modal)
+                    {
+                        __loadPending = true;
+                        __loadSuccessful = false;
+                        
+                        _selectedRelease.LoadProject(function(_project, _success)
+                        {
+                            __loadPending = false;
+                            
+                            if (_success)
+                            {
+                                if (_project.GetLoadedSuccessfully())
+                                {
+                                    __job.__QueueDeleteLibrary(_project.GetName());
+                                    __job.__QueueAddLibrary(_project);
+                                    __job.BuildReport();
+                                
+                                    __loadSuccessful = true;
+                                    LogTraceAndStatus("Loaded release successfully.");
+                                }
+                                else
+                                {
+                                    LogWarning("Failed to load project file for release. Please check the log for further information.");
+                                }
+                            }
+                            else
+                            {
+                                LogWarning("Failed to load project file for release. Please check the log for further information.");
+                            }
+                        });
+                    }
+                }
+            }
         }
         
         ImGuiEndDisabled();

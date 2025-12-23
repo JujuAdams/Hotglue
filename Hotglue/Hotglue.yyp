@@ -156,7 +156,7 @@
     {"id":{"name":"ClassInterfaceFileView","path":"scripts/ClassInterfaceFileView/ClassInterfaceFileView.yy",},},
     {"id":{"name":"ClassInterfaceProjectView","path":"scripts/ClassInterfaceProjectView/ClassInterfaceProjectView.yy",},},
     {"id":{"name":"ClassInterfaceRepositoryView","path":"scripts/ClassInterfaceRepositoryView/ClassInterfaceRepositoryView.yy",},},
-    {"id":{"name":"ClassModalConfirmImport","path":"scripts/ClassModalConfirmImport/ClassModalConfirmImport.yy",},},
+    {"id":{"name":"ClassModalConfirmJob","path":"scripts/ClassModalConfirmJob/ClassModalConfirmJob.yy",},},
     {"id":{"name":"ClassModalConfirmLibraryDelete","path":"scripts/ClassModalConfirmLibraryDelete/ClassModalConfirmLibraryDelete.yy",},},
     {"id":{"name":"ClassModalMessage","path":"scripts/ClassModalMessage/ClassModalMessage.yy",},},
     {"id":{"name":"ClassModalNewChannel","path":"scripts/ClassModalNewChannel/ClassModalNewChannel.yy",},},

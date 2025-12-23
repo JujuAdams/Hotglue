@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"ClassModalConfirmImport",
+  "%Name":"ClassModalConfirmJob",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ClassModalConfirmImport",
+  "name":"ClassModalConfirmJob",
   "parent":{
     "name":"Modals",
     "path":"folders/Interface/Classes/Modals.yy",
