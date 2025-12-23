@@ -246,6 +246,7 @@
     {"id":{"name":"NgramBase","path":"scripts/NgramBase/NgramBase.yy",},},
     {"id":{"name":"NgramStringFuzzy","path":"scripts/NgramStringFuzzy/NgramStringFuzzy.yy",},},
     {"id":{"name":"sJuju","path":"sprites/sJuju/sJuju.yy",},},
+    {"id":{"name":"sJujuIcon","path":"sprites/sJujuIcon/sJujuIcon.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",

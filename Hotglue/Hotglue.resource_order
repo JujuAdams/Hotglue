@@ -187,5 +187,6 @@
     {"name":"LogWarning","order":3,"path":"scripts/LogWarning/LogWarning.yy",},
     {"name":"NgramStringFuzzy","order":1,"path":"scripts/NgramStringFuzzy/NgramStringFuzzy.yy",},
     {"name":"sJuju","order":9,"path":"sprites/sJuju/sJuju.yy",},
+    {"name":"sJujuIcon","order":11,"path":"sprites/sJujuIcon/sJujuIcon.yy",},
   ],
 }
