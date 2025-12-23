@@ -85,22 +85,15 @@ function __HotglueResourceCommon(_resourceStruct) : __HotglueClassAssetCommon() 
         __HotglueCopyRelativePathArray(_destinationProject.__projectDirectory, _sourceProject.__projectDirectory, __GetFiles(_sourceProject));
     }
     
-    static __GetYYJSON = function(_project)
-    {
-        var _absolutePath = _project.__projectDirectory + data.path;
-        
-        var _buffer = buffer_load(_absolutePath);
-        var _string = buffer_read(_buffer, buffer_text);
-        buffer_delete(_buffer);
-        
-        return json_parse(_string);
-    }
-    
     static __FixYYReferences = function(_project, _subfolder)
     {
         var _absolutePath = _project.__projectDirectory + data.path;
         
-        var _json = __GetYYJSON(_project);
+        var _buffer = buffer_load(_project.__projectDirectory + data.path);
+        var _string = buffer_read(_buffer, buffer_text);
+        buffer_delete(_buffer);
+        
+        var _json =  json_parse(_string);
         var _jsonParentPath = _json.parent.path;
         var _jsonParentName = _json.parent.name;
         
@@ -113,7 +106,6 @@ function __HotglueResourceCommon(_resourceStruct) : __HotglueClassAssetCommon() 
             var _newName = filename_name(_parentPath);
             var _newPath = $"folders/{_parentPath}.yy";
             
-            //FIXME - Looks like this broke at some point
             _string = string_replace_all(_string, $"    \"name\":\"{_jsonParentName}\"", $"    \"name\":\"{_newName}\"");
             _string = string_replace_all(_string, $"    \"path\":\"{_jsonParentPath}\"", $"    \"path\":\"{_newPath}\"");
             
@@ -131,7 +123,6 @@ function __HotglueResourceCommon(_resourceStruct) : __HotglueClassAssetCommon() 
                 var _newName = _project.__yypJson.name;
                 var _newPath = $"{_project.__yypJson.name}.yyp";
                 
-                //FIXME - Looks like this broke at some point
                 _string = string_replace_all(_string, $"    \"name\":\"{_jsonParentName}\"", $"    \"name\":\"{_newName}\"");
                 _string = string_replace_all(_string, $"    \"path\":\"{_jsonParentPath}\"", $"    \"path\":\"{_newPath}\"");
                 
