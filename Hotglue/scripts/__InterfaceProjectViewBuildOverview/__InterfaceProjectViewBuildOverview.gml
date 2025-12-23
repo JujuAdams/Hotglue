@@ -111,10 +111,9 @@ function __InterfaceProjectViewBuildOverview()
         else
         {
             ImGuiPopStyleVar();
-            ImGuiBeginTable("importedTable", 3);
+            ImGuiBeginTable("importedTable", 2);
             
             ImGuiTableSetupColumn("name");
-            ImGuiTableSetupColumn("verify", ImGuiTableColumnFlags.WidthFixed, 50);
             ImGuiTableSetupColumn("delete", ImGuiTableColumnFlags.WidthFixed, 50);
             
             var _deleteIndex = undefined;
@@ -128,22 +127,6 @@ function __InterfaceProjectViewBuildOverview()
                 InterfaceLinkText(_imported.name, _imported.origin);
                 ImGuiSameLine();
                 ImGuiTextWrapped(_imported.version);
-                
-                ImGuiTableNextColumn();
-                if (ImGuiSmallButton("Verify"))
-                {
-                    if (__project.VerifyLibrary(_imported.name))
-                    {
-                        var _message = $"Verified all assets exist for \"{_imported.name}\".";
-                    }
-                    else
-                    {
-                        var _message = $"Failed to verify all assets exist for \"{_imported.name}\". Please check the log for more information.";
-                    }
-                    
-                    oInterface.popUpStruct = new ClassModalMessage(_message);
-                }
-                
                 ImGuiTableNextColumn();
                 if (ImGuiSmallButton("Delete"))
                 {

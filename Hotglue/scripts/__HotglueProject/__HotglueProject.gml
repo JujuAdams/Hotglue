@@ -450,35 +450,6 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         return undefined;
     }
     
-    static VerifyLibrary = function(_libraryName)
-    {
-        if (not GetHotglueMetadataExists()) return -1;
-        
-        var _libraryMetadata = __GetLibraryMetadata(_libraryName);
-        if (_libraryMetadata == undefined) return;
-        
-        var _installedPIDArray = _libraryMetadata.assets;
-        var _quickAssetDict    = __quickAssetDict;
-        
-        var _result = 1;
-        var _i = 0;
-        repeat(array_length(_installedPIDArray))
-        {
-            var _pid = _installedPIDArray[_i];
-            
-            var _asset = _quickAssetDict[$ _pid];
-            if (not is_struct(_asset))
-            {
-                _result = 0;
-                __HotglueWarning($"Missing {_pid}");
-            }
-            
-            ++_i;
-        }
-        
-        return _result;
-    }
-    
     static __VerifyFilesUnzipped = function()
     {
         var _emptyBuffer = buffer_create(0, buffer_fixed, 1);
