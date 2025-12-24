@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"GMLC_Env",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GMLC_Env",
+  "parent":{
+    "name":"GMLCompiler",
+    "path":"folders/GMLCompiler.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

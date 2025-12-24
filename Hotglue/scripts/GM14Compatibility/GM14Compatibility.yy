@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"GM14Compatibility",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GM14Compatibility",
+  "parent":{
+    "name":"GM14",
+    "path":"folders/GMLCompiler/Internal/GM14.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

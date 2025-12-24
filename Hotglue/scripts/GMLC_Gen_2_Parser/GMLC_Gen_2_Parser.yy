@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"GMLC_Gen_2_Parser",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GMLC_Gen_2_Parser",
+  "parent":{
+    "name":"Parsers",
+    "path":"folders/GMLCompiler/Parsers.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

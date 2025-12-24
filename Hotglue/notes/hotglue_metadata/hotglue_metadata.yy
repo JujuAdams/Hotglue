@@ -1,0 +1,11 @@
+{
+  "$GMNotes":"v1",
+  "%Name":"hotglue_metadata",
+  "name":"hotglue_metadata",
+  "parent":{
+    "name":"Hotglue",
+    "path":"Hotglue.yyp",
+  },
+  "resourceType":"GMNotes",
+  "resourceVersion":"2.0",
+}

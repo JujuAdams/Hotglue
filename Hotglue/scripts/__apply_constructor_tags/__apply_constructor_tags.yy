@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__apply_constructor_tags",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__apply_constructor_tags",
+  "parent":{
+    "name":"_Init",
+    "path":"folders/GMLCompiler/Internal/_Init.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

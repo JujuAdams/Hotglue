@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__functionOverrides",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__functionOverrides",
+  "parent":{
+    "name":"Internal",
+    "path":"folders/GMLCompiler/Internal.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

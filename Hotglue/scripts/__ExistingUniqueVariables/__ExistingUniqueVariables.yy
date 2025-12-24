@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__ExistingUniqueVariables",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__ExistingUniqueVariables",
+  "parent":{
+    "name":"LookupTables",
+    "path":"folders/GMLCompiler/Internal/LookupTables.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

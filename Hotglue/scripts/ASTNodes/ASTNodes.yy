@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"ASTNodes",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ASTNodes",
+  "parent":{
+    "name":"_Internal",
+    "path":"folders/GMLCompiler/Parsers/_Internal.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

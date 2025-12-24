@@ -273,6 +273,11 @@ function ClassTabImport() : ClassTab() constructor
                         __directProject = undefined;
                         __directView = undefined;
                     }
+                    
+                    if (__directProject != undefined)
+                    {
+                        InterfaceRecentPush(_openPath);
+                    }
                 }
             }
             

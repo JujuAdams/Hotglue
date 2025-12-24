@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"FlexiParseBase",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"FlexiParseBase",
+  "parent":{
+    "name":"ParserLibrary",
+    "path":"folders/GMLCompiler/Internal/ParserLibrary.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
