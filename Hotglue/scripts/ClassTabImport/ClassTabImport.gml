@@ -190,7 +190,7 @@ function ClassTabImport() : ClassTab() constructor
                         
                         ImGuiTableNextRow();
                         ImGuiTableNextColumn();
-                        ImGuiText("Pacakge Name");
+                        ImGuiText("Package Name");
                         ImGuiTableNextColumn();
                         ImGuiText(__directProject.GetName());
                         
@@ -354,7 +354,7 @@ function ClassTabImport() : ClassTab() constructor
         
         if (__importMode == "direct from project")
         {
-            ImGuiBeginDisabled((__directProject == undefined) || (__directView == undefined) || (__directView.GetSelectedCount() <= 0));
+            ImGuiBeginDisabled((__directProject == undefined) || (__directView == undefined) || ((__directView.GetSelectedCount() <= 0) && (not __directProject.GetIsPackage())));
         }
         else if (__importMode == "loose files")
         {
@@ -375,7 +375,15 @@ function ClassTabImport() : ClassTab() constructor
             
             if (__importMode == "direct from project")
             {
-                _job = __destinationProject.JobImportFrom(__directProject, __directView.GetAssetArray());
+                if (__directProject.GetIsPackage())
+                {
+                    _job = __destinationProject.JobImportAsLibrary(__directProject);
+                }
+                else
+                {
+                    _job = __destinationProject.JobImportFrom(__directProject, __directView.GetAssetArray());
+                }
+                
                 _job.BuildReport();
                 
                 oInterface.popUpStruct = new ClassModalConfirmJob(_job);
@@ -428,6 +436,11 @@ function ClassTabImport() : ClassTab() constructor
                     }
                 }
             }
+        }
+        
+        if ((__importMode == "channels") || ((__importMode == "direct from project") && (__directProject != undefined) && __directProject.GetIsPackage()))
+        {
+            ImGuiText("as package");
         }
         
         ImGuiEndDisabled();
