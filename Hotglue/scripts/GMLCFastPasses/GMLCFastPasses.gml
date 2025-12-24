@@ -25,7 +25,7 @@ function __GMLCexecuteGetPropertySelf() {
 		_static = __gmlc_static_get(_static)
 	}
 	
-	throw_gmlc_error($"Variable <{typeof(_target)}>.{key} not set before reading it."+$"\n(line {self.line}) -\t{self.lineString}\n{json(callstack)}")
+	throw_gmlc_error($"Variable <{typeof(_target)}>.{key} not set before reading it."+$"\n(line {self.line}) -\t{self.lineString}\n{(callstack)}")
 	
 }
 #region //{
