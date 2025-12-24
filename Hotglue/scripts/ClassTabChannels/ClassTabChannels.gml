@@ -18,6 +18,7 @@ function ClassTabChannels() : ClassTab() constructor
                 {
                     __openChannel = _channel;
                     other.menuFocus = self;
+                    other.logOpen = false;
                 }
                 
                 ++_i;

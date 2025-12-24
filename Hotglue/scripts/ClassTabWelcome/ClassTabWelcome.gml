@@ -9,6 +9,7 @@ function ClassTabWelcome() : ClassTab() constructor
         if (ImGuiMenuItem(__name))
         {
             other.menuFocus = self;
+            other.logOpen = false;
         }
     }
     

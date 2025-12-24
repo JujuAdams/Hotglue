@@ -59,6 +59,7 @@ function ClassTabInspector() : ClassTab() constructor
                     InterfaceRecentPush(_openPath);
                     
                     other.menuFocus = self;
+                    other.logOpen = false;
                 }
             }
             

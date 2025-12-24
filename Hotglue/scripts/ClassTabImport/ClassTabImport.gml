@@ -109,6 +109,7 @@ function ClassTabImport() : ClassTab() constructor
                         __selectedChannel = _i;
                         __importMode = "channels";
                         other.menuFocus = self;
+                        other.logOpen = false;
                     }
                     
                     ++_i;
@@ -121,12 +122,14 @@ function ClassTabImport() : ClassTab() constructor
             {
                 __importMode = "direct from project";
                 other.menuFocus = self;
+                other.logOpen = false;
             }
             
             if (ImGuiMenuItem("From loose files"))
             {
                 __importMode = "loose files";
                 other.menuFocus = self;
+                other.logOpen = false;
             }
             
             ImGuiEndMenu();
