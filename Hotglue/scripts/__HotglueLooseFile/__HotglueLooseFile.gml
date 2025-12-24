@@ -44,7 +44,7 @@ function __HotglueLooseFile(_path) constructor
         __name = undefined;
     }
     
-    static GetAssetName = function()
+    static GetAssetName = function() //TODO - Unused?
     {
         return (__type == "included file")? $"included:{GetName()}" : $"resource:{GetName()}"
     }
@@ -77,7 +77,8 @@ function __HotglueLooseFile(_path) constructor
     static GetRecommendedType = function()
     {
         var _extension = filename_ext(__path);
-        if (_extension == ".gml")
+        if ((_extension == ".gml")
+        ||  (_extension == ".txt"))
         {
             return "script";
         }

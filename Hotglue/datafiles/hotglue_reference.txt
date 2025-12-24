@@ -1,15 +1,125 @@
 HotglueProjectLocalEnsure(path)
-	Returns a project struct.
+	Returns a project struct, loading from the given path it if necessary.
 
 HotglueProjectLocalGet(path)
-	Returns a project struct.
+	Returns a project struct if a project with the given path is found. Otherwise, this function returns `undefined`.
 
 HotglueProjectLocalClose(path)
+    Closes a project, freeing memory associated with it.
 
-HotglueProjectRemoteEnsure(sourceURL, cachePath)
-	Returns a project struct.
+HotglueLoadLooseFile(path)
+	Returns a loose file struct for the given path.
 
-HotglueProjectRemoteGet(sourceURL)
-	Returns a project struct.
 
-HotglueProjectRemoteClose(path)
+
+
+
+Project structs contain the following methods:
+.Refresh()
+	Refreshes the project, reloading asset information from disk.
+
+.GetName()
+	Returns the name of the project as defined in the .yyp/.yymps/.yyz file.
+
+.GetIsPackage()
+	Returns if the project was loaded from a .yymps file.
+
+.GetVersionString()
+	Returns the version of the .yymps file as a string. If the project was not loaded from a `.yymps` file then this function returns "-.-.-".
+
+.GetPath()
+	Returns the local path where the project is stored. For files downloaded from the internet automatically by Hotglue, this path will likely in Hotglue's cache.
+
+.GetDirectory()
+	Returns the local directory where the project is stored. For files downloaded from the internet automatically by Hotglue, this directory will likely in Hotglue's cache.
+
+.GetURL()
+	Returns the origin URL for the project. For local projects, this will be the same as the project path.
+
+.GetReadOnly()
+	Returns if the project was opened in read-only mode. This will apply to .yyz and .yymps files as well as .yyp projects made with a version of GameMaker older than 2024.14.
+
+.GetInCache()
+	Returns if the project is stored in Hotglue's cache.
+
+.GetConverted()
+	Returns if the project was converted from a version of GameMaker older than 2024.14.
+
+.GetYYPVersion()
+	Returns the .yyp version for the project. This should version 2024.14.x.x.
+
+.GetYYPOriginalVersion()
+	Return the original .yyp version for the project prior to conversion. If no conversion has been performed, the value returned by this function will be the same as `.GetYYPVersion()`.
+
+.GetLoadedSuccessfully()
+	Returns if the project has been loaded successfully.
+
+.GetHotglueMetadataExists()
+	Returns if Hotglue metadata has been found in the project.
+
+.EnsureHotglueMetadata()
+	Creates Hotglue metadata on disk if the project doesn't have any.
+
+.GetAssets()
+	Returns an array of asset PIDs (Project IDentifies). These are strings, such as "resource:HotglueProjectLocalEnsure", that unique identify folders, resources, and included files in the project.
+
+.GetAssetExists(pid)
+	Returns if an asset with the given PID exists in the project.
+
+.GetImported()
+	Returns an array of installed library definition structs as per the Hotglue metadata. If no Hotglue metadata was found in the project then this function returns an empty array.
+
+.JobEmpty()
+	Returns an empty job struct scoped to the project.
+
+.JobImportAllFrom(sourceProject, [subfolder = ""])
+	Returns a job struct scoped to the project that contains operations needed to import every asset (folder, resource, included file) from the source project.
+
+.JobImportFrom(sourceProject, assetPIDArray, [subfolder = ""])
+	Returns a job struct scoped to the project that contains operations needed to import selected assets from the source project.
+
+.JobImportFromLooseFiles(looseFileArray, [subfolder = ""])
+	Returns a job struct scoped to the project that contains operations needed to import loose files. Loose files should be created using `HotglueLoadLooseFile()`.
+
+.JobImportAsLibrary(sourceProject, [subfolder = ""])
+	Returns a job struct scoped to the project that contains operations needed to import the source project as a library.
+
+.JobDeleteLibrary(libraryName)
+	Return a job struct scoped to the project that contains operations needed to delete the named library from the project. If no such library exists in the project, the job struct will be empty.
+
+
+
+
+
+Loose file structs contain the following methods:
+.GetPath()
+	Returns the path to the loose file on disk.
+
+.GetName()
+	Returns the import name of the loose file. This is the name of the loose file as it will be when imported.
+
+.GetPID()
+	Returns the PID (Project IDentifier) for the loose file as it will be when imported.
+
+.SetName(name)
+	Sets the import name for the loose file.
+
+.GetOriginalName()
+	Returns the original import name for the loose file i.e. the default name before it was set using `.SetName()`.
+
+.ResetName()
+	Returns the import name for the loose file to the default.
+
+.GetType()
+	Returns the asset type for the loose file. This will one of the following:
+	- "included file"
+	- "script"
+	- "sound"
+	- "sprite"
+	- "note"
+
+.SetType(type)
+	Sets the asset type that the loose file will be imported as. This should be one of the types that `.GetType()` can return, see above.
+
+.GetRecommendedType()
+	Returns the recommended (and default) type for the loose file based on its file extension. If a file extension is unrecognised, this function will return "included file".

@@ -230,11 +230,6 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         return __converted;
     }
     
-    static GetYYPName = function()
-    {
-        return __yypJson.name;
-    }
-    
     static GetYYPVersion = function()
     {
         return __yypVersion;
@@ -355,9 +350,9 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         return _array;
     }
     
-    static GetAssetExists = function(_assetRef)
+    static GetAssetExists = function(_pid)
     {
-        return variable_struct_exists(__quickAssetDict, _assetRef);
+        return variable_struct_exists(__quickAssetDict, _pid);
     }
     
     static GetImported = function()
