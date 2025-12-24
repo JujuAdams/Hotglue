@@ -13,7 +13,7 @@ function ClassTabImport() : ClassTab() constructor
     __selectedChannel = undefined;
     
     __looseFileViewArray = [];
-    __importMode = undefined;
+    __importMode = "direct from project";
     
     
     
@@ -161,9 +161,7 @@ function ClassTabImport() : ClassTab() constructor
             
             if (__directProject != undefined)
             {
-                ImGuiText(__directProject.GetPath());
-                
-                ImGuiSameLine();
+                ImGuiText(__directProject.GetURL());
                 if (ImGuiSmallButton("Refresh"))
                 {
                     __directProject.Refresh();
@@ -178,8 +176,47 @@ function ClassTabImport() : ClassTab() constructor
                 }
                 else
                 {
+                    ImGuiNewLine();
+                    
+                    if (__directProject.GetIsPackage())
+                    {
+                        var _cellPadding = 8;
+                        
+                        ImGuiPushStyleVarY(ImGuiStyleVar.CellPadding, _cellPadding);
+                        ImGuiBeginTable("overviewTable", 2, ImGuiTableFlags.RowBg | ImGuiTableFlags.Borders);
+                        
+                        ImGuiTableSetupColumn("field", ImGuiTableColumnFlags.WidthFixed, 100);
+                        ImGuiTableSetupColumn("value");
+                        
+                        ImGuiTableNextRow();
+                        ImGuiTableNextColumn();
+                        ImGuiText("Pacakge Name");
+                        ImGuiTableNextColumn();
+                        ImGuiText(__directProject.GetName());
+                        
+                        ImGuiTableNextRow();
+                        ImGuiTableNextColumn();
+                        ImGuiText("Version");
+                        ImGuiTableNextColumn();
+                        ImGuiText(__directProject.GetVersionString());
+                        
+                        ImGuiEndTable();
+                        ImGuiPopStyleVar();
+                        
+                        ImGuiNewLine();
+                    }
+                    
                     ImGuiBeginChild("sourceProjectPane");
-                    __directView.BuildTreeAsSource(__destinationProject);
+                    
+                    if (__directProject.GetIsPackage())
+                    {
+                        __directView.BuildTreeAsDestination(__destinationProject);
+                    }
+                    else
+                    {
+                        __directView.BuildTreeAsSource(__destinationProject);
+                    }
+                    
                     ImGuiEndChild();
                 }
             }
@@ -191,7 +228,7 @@ function ClassTabImport() : ClassTab() constructor
                 
                 if (ImGuiButton("Load project..."))
                 {
-                    _openPath = get_open_filename("GameMaker Project (.yyp)|*.yyp", "");
+                    _openPath = get_open_filename("*.*", "");
                 }
                 
                 ImGuiNewLine();
@@ -221,27 +258,20 @@ function ClassTabImport() : ClassTab() constructor
                 
                 if (_openPath != "")
                 {
-                    if (filename_ext(_openPath) == ".yyp")
+                    try
                     {
-                        try
-                        {
-                            __directProject = HotglueProjectLocalEnsure(_openPath);
-                            __directView = new ClassInterfaceProjectView(__directProject);
-                            
-                            LogTraceAndStatus($"Loaded \"{_openPath}\"");
-                        }
-                        catch(_error)
-                        {
-                            LogWarning(json_stringify(_error, true));
-                            LogWarning($"Failed to load \"{_openPath}\"");
-                             
-                            __directProject = undefined;
-                            __directView = undefined;
-                        }
+                        __directProject = HotglueProjectLocalEnsure(_openPath);
+                        __directView = new ClassInterfaceProjectView(__directProject);
+                        
+                        LogTraceAndStatus($"Loaded \"{_openPath}\"");
                     }
-                    else
+                    catch(_error)
                     {
-                        LogTraceAndStatus($"File type not supported \"{_openPath}\"");
+                        LogWarning(json_stringify(_error, true));
+                        LogWarning($"Failed to load \"{_openPath}\"");
+                        
+                        __directProject = undefined;
+                        __directView = undefined;
                     }
                 }
             }

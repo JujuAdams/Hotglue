@@ -190,6 +190,11 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         return __yypJson.name;
     }
     
+    static GetIsPackage = function()
+    {
+        return __yympsMetadata;
+    }
+    
     static GetVersionString = function()
     {
         return is_struct(__yympsMetadata)? __yympsMetadata.version : "-.-.-";
