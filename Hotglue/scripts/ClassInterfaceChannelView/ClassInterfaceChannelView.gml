@@ -45,6 +45,8 @@ function ClassInterfaceChannelView(_channel) constructor
             ImGuiSeparator();
             ImGuiBeginChild($"searchPane_{ptr(self)}", undefined, 100);
             
+            var _repositoryArray = __channel.GetRepositoryArray();
+            
             if (__searchString != "")
             {
                 var _searchResultArray = __ngram.get_value_array();
@@ -54,7 +56,19 @@ function ClassInterfaceChannelView(_channel) constructor
                     var _repositoryName = _searchResultArray[_i];
                     if (ImGuiSelectable(_searchResultArray[_i], (__selectedRepository == _repositoryName)))
                     {
-                        //__selectedRepository = _repository;
+                        var _j = 0;
+                        repeat(array_length(_repositoryArray))
+                        {
+                            var _repository = _repositoryArray[_j];
+                            var _searchName = string_lower(_repository.GetName());
+                            if (_searchName == _repositoryName)
+                            {
+                                __selectedRepository = _repository;
+                                break;
+                            }
+                            
+                            ++_j;
+                        }
                     }
                     
                     ++_i;
@@ -62,7 +76,6 @@ function ClassInterfaceChannelView(_channel) constructor
             }
             else
             {
-                var _repositoryArray = __channel.GetRepositoryArray();
                 var _i = 0;
                 repeat(array_length(_repositoryArray))
                 {
