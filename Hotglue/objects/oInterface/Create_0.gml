@@ -11,11 +11,12 @@ context = new ImGuiContext(0, 0, window_get_width(), window_get_height(),
 
 LogTrace("ImGui context created");
 
-welcomeTab   = new ClassTabWelcome();
-projectTab   = new ClassTabImport();
-channelsTab  = new ClassTabChannels();
-inspectorTab = new ClassTabInspector();
-settingsTab  = new ClassTabSettings();
+welcomeTab    = new ClassTabWelcome();
+projectTab    = new ClassTabImport();
+channelsTab   = new ClassTabChannels();
+inspectorTab  = new ClassTabInspector();
+automationTab = new ClassTabAutomation();
+settingsTab   = new ClassTabSettings();
 
 LogTrace("Interface tabs created");
 
@@ -41,10 +42,11 @@ menuFocus = welcomeTab;
 logOpen = InterfaceSettingGet("showLogOnBoot", false);
 
 var _selectedTabName = InterfaceSettingGet("openOnTab", "Welcome");
-if (welcomeTab.GetName()   == _selectedTabName) menuFocus = welcomeTab;
-if (projectTab.GetName()   == _selectedTabName) menuFocus = projectTab;
-if (channelsTab.GetName()  == _selectedTabName) menuFocus = channelsTab;
-if (inspectorTab.GetName() == _selectedTabName) menuFocus = inspectorTab;
-if (settingsTab.GetName()  == _selectedTabName) menuFocus = settingsTab;
+if (welcomeTab.GetName()    == _selectedTabName) menuFocus = welcomeTab;
+if (projectTab.GetName()    == _selectedTabName) menuFocus = projectTab;
+if (channelsTab.GetName()   == _selectedTabName) menuFocus = channelsTab;
+if (inspectorTab.GetName()  == _selectedTabName) menuFocus = inspectorTab;
+if (automationTab.GetName() == _selectedTabName) menuFocus = automationTab;
+if (settingsTab.GetName()   == _selectedTabName) menuFocus = settingsTab;
 
 statusBarHeight = 32;

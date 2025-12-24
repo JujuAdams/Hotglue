@@ -1,0 +1,15 @@
+HotglueProjectLocalEnsure(path)
+	Returns a project struct.
+
+HotglueProjectLocalGet(path)
+	Returns a project struct.
+
+HotglueProjectLocalClose(path)
+
+HotglueProjectRemoteEnsure(sourceURL, cachePath)
+	Returns a project struct.
+
+HotglueProjectRemoteGet(sourceURL)
+	Returns a project struct.
+
+HotglueProjectRemoteClose(path)

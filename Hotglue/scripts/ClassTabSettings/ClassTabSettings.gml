@@ -111,6 +111,12 @@ function ClassTabSettings() : ClassTab() constructor
                 InterfaceSettingsSave();
             }
             
+            if (ImGuiSelectable("Automation"))
+            {
+                InterfaceSettingSet("openOnTab", "Automation");
+                InterfaceSettingsSave();
+            }
+            
             if (ImGuiSelectable("Settings"))
             {
                 InterfaceSettingSet("openOnTab", "Settings");

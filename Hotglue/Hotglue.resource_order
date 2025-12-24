@@ -113,6 +113,7 @@
     {"name":"ClassModalFTUX","order":4,"path":"scripts/ClassModalFTUX/ClassModalFTUX.yy",},
     {"name":"ClassModalMessage","order":2,"path":"scripts/ClassModalMessage/ClassModalMessage.yy",},
     {"name":"ClassModalNewChannel","order":3,"path":"scripts/ClassModalNewChannel/ClassModalNewChannel.yy",},
+    {"name":"ClassTabAutomation","order":6,"path":"scripts/ClassTabAutomation/ClassTabAutomation.yy",},
     {"name":"ClassTabChannels","order":4,"path":"scripts/ClassTabChannels/ClassTabChannels.yy",},
     {"name":"ClassTabImport","order":2,"path":"scripts/ClassTabImport/ClassTabImport.yy",},
     {"name":"ClassTabInspector","order":5,"path":"scripts/ClassTabInspector/ClassTabInspector.yy",},

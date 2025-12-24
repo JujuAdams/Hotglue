@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"ClassTabAutomation",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ClassTabAutomation",
+  "parent":{
+    "name":"Tabs",
+    "path":"folders/Interface/Classes/Tabs.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
