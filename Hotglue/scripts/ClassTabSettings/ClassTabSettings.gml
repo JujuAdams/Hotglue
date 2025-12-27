@@ -367,7 +367,6 @@ function ClassTabSettings() : ClassTab() constructor
         if (__advanced)
         {
             HotglueSetSuppressGitAssert(ImGuiCheckbox("Suppress .git directory assert", HotglueGetSuppressGitAssert()));
-            HotglueSetDestructiveCopy(ImGuiCheckbox("Resource copy is destructive", HotglueGetDestructiveCopy()));
             
             var _oldValue = InterfaceSettingGet("showAutomation", false);
             var _newValue = ImGuiCheckbox("Show \"Automation\" mode##showAutomation", _oldValue);

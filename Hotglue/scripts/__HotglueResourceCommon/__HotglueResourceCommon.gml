@@ -74,14 +74,8 @@ function __HotglueResourceCommon(_resourceStruct) : __HotglueClassAssetCommon() 
     static __Copy = function(_destinationProject, _sourceProject)
     {
         var _destinationDirectory = _destinationProject.__projectDirectory + filename_dir(data.path) + "/";
-        
-        if (_system.__destructiveCopy)
-        {
-            directory_destroy(_destinationDirectory);
-        }
-        
+        directory_destroy(_destinationDirectory);
         directory_create(_destinationDirectory);
-        
         __HotglueCopyRelativePathArray(_destinationProject.__projectDirectory, _sourceProject.__projectDirectory, __GetFiles(_sourceProject));
     }
     
