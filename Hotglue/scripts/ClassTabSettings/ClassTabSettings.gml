@@ -107,7 +107,7 @@ function ClassTabSettings() : ClassTab() constructor
         ImGuiUnindent();
         ImGuiNewLine();
         
-        ImGuiText("Library Channels:");
+        ImGuiText("Explore Channels:");
         ImGuiIndent();
         ImGuiBeginChild("channelsPane", undefined, 170, ImGuiChildFlags.Border);
         
@@ -189,15 +189,15 @@ function ClassTabSettings() : ClassTab() constructor
                 InterfaceSettingsSave();
             }
             
-            if (ImGuiSelectable("Library Channels"))
-            {
-                InterfaceSettingSet("openOnTab", "Library Channels");
-                InterfaceSettingsSave();
-            }
-            
             if (ImGuiSelectable("Project Inspector"))
             {
                 InterfaceSettingSet("openOnTab", "Project Inspector");
+                InterfaceSettingsSave();
+            }
+            
+            if (ImGuiSelectable("Explore Channels"))
+            {
+                InterfaceSettingSet("openOnTab", "Explore Channels");
                 InterfaceSettingsSave();
             }
             
