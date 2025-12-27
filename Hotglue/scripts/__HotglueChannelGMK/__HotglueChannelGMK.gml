@@ -74,13 +74,13 @@ function __HotglueChannelGMK(_name, _url, _protected) : __HotglueChannelCommon(_
                                 var _link = _json[_i][$ "link"];
                                 if (is_string(_link))
                                 {
-                                    if (__HotglueGuessURLIsGitHub(_link))
+                                    if (__HotglueGuessURLIsGitHub(_link) || __HotglueGuessURLIsGist(_link) || __HotglueGuessURLIsItch(_link))
                                     {
                                         AddRepository(_link);
                                     }
                                     else
                                     {
-                                        __HotglueWarning($"Item {_i} does not have a GitHub repository link ({_link})");
+                                        __HotglueWarning($"Item {_i} does not have a GitHub repository or itch.io link ({_link})");
                                     }
                                 }
                                 else

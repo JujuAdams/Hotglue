@@ -27,6 +27,8 @@
 
 #macro HOTGLUE_REPOSITORY_LOCAL   "local"
 #macro HOTGLUE_REPOSITORY_GITHUB  "github"
+#macro HOTGLUE_REPOSITORY_GIST    "gist"
+#macro HOTGLUE_REPOSITORY_ITCH    "itch"
 
 #macro HOTGLUE_DEFAULT_PATH_CACHE        game_save_id + "cache/"
 #macro HOTGLUE_DEFAULT_PATH_PROJECTTOOL  "C:/Program Files/GameMaker/packages/project-tool-win-x64/ProjectTool.exe"

@@ -16,6 +16,8 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
     __description    = _description;
     __stable         = _stable;
     
+    __primaryAssetURL = _downloadURL;
+    
     __downloadPath = $"{HOTGLUE_RELEASE_CACHE_DIRECTORY}{__HotglueGenerateCacheFilename(__datetimeString, __webURL)}.bin";
     __downloadRequest = undefined;
     
@@ -42,6 +44,11 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
     static GetDownloadURL = function()
     {
         return __downloadURL;
+    }
+    
+    static GetPrimaryAssetURL = function()
+    {
+        return __primaryAssetURL;
     }
     
     static GetDownloadPath = function()

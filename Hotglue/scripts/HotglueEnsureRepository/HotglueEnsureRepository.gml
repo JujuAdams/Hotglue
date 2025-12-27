@@ -12,7 +12,22 @@ function HotglueEnsureRepository(_url, _type = undefined)
     {
         if (_type == undefined)
         {
-            _type = __HotglueGuessURLIsGitHub(_url)? HOTGLUE_REPOSITORY_GITHUB : HOTGLUE_REPOSITORY_LOCAL;
+            if (__HotglueGuessURLIsGitHub(_url))
+            {
+                _type = HOTGLUE_REPOSITORY_GITHUB;
+            }
+            else if (__HotglueGuessURLIsGist(_url))
+            {
+                _type = HOTGLUE_REPOSITORY_GIST;
+            }
+            else if (__HotglueGuessURLIsItch(_url))
+            {
+                _type = HOTGLUE_REPOSITORY_ITCH;
+            }
+            else
+            {
+                _type = HOTGLUE_REPOSITORY_LOCAL;
+            }
         }
         
         if (_type == HOTGLUE_REPOSITORY_LOCAL)
@@ -22,6 +37,14 @@ function HotglueEnsureRepository(_url, _type = undefined)
         else if (_type == HOTGLUE_REPOSITORY_GITHUB)
         {
             _repository = new __HotglueRepositoryGitHub(_url);
+        }
+        else if (_type == HOTGLUE_REPOSITORY_GIST)
+        {
+            _repository = new __HotglueRepositoryGist(_url);
+        }
+        else if (_type == HOTGLUE_REPOSITORY_ITCH)
+        {
+            _repository = new __HotglueRepositoryItch(_url);
         }
         else
         {

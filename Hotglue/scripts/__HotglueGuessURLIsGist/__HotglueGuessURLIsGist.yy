@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__HotglueGuessURLIsGist",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__HotglueGuessURLIsGist",
+  "parent":{
+    "name":"(System)",
+    "path":"folders/Hotglue/(System).yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -12,16 +12,10 @@ function __HotglueClassReleaseGitHub(_name, _datetimeString, _webURL, _downloadU
 {
     __assetsEndpoint = _assetsEndpoint;
     
-    __primaryAssetURL = _downloadURL;
     __assetsCollected = false;
     __assetsRequest   = undefined;
     
     
-    
-    static GetPrimaryAssetURL = function()
-    {
-        return __primaryAssetURL;
-    }
     
     static Download = function(_callback)
     {

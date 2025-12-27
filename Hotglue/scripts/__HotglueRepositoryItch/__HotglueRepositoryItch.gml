@@ -2,7 +2,7 @@
 
 /// @param url
 
-function __HotglueRepositoryGitHub(_url) : __HotglueRepositoryCommon(_url) constructor
+function __HotglueRepositoryItch(_url) : __HotglueRepositoryCommon(_url) constructor
 {
     static __isRemote = true;
     
@@ -11,23 +11,7 @@ function __HotglueRepositoryGitHub(_url) : __HotglueRepositoryCommon(_url) const
         _url += "/";
     }
     
-    var _repoLocation = string_delete(_url, 1, string_pos(".com/", _url)-1 + 5);
-    
-    __url = _url;
-    __apiURL = $"https://api.github.com/repos/{_repoLocation}";
-    __rawURL = $"https://raw.githubusercontent.com/{_repoLocation}";
-    
-    //Figure out a friendly name for the repository
-    var _name = _url;
-    if (string_char_at(_name, string_length(_name)) == "/")
-    {
-        _name = string_delete(_name, string_length(_name), 1);
-    }
-    
-    var _substring = "github.com/";
-    var _pos = string_pos(_substring, _name);
-    
-    __name = string_delete(_name, 1, _pos + string_length(_substring)-1);
+    __name = _url;
     
     
     
@@ -53,38 +37,14 @@ function __HotglueRepositoryGitHub(_url) : __HotglueRepositoryCommon(_url) const
     
     static GetReadme = function()
     {
-        if ((not __readmeCollected) && (__readmeRequest == undefined))
-        {
-            __HotglueTrace($"Getting README.md from root of \"{__url}\"");
-            
-            __readmeRequest = new __HotglueClassHttpRequest($"{__rawURL}master/README.md");
-            
-            __readmeRequest.Callback(function(_httpRequest, _success, _result, _responseHeaders)
-            {
-                __readmeCollected = true;
-                __readmeRequest = undefined;
-                
-                if (not _success)
-                {
-                    __HotglueWarning($"\"{_httpRequest.GetURL()}\" request failed");
-                }
-                else
-                {
-                    __readme = _result;
-                    __HotglueTrace($"\"{_httpRequest.GetURL()}\" found README.md");
-                }
-                
-                __ExecuteFinalCallback();
-            });
-            
-            __readmeRequest.Send();
-        }
-        
-        return __readme;
+        //TODO
+        return undefined;
     }
     
     static GetReleases = function()
     {
+        return __releasesArray;
+        
         if ((not __releasesCollected) && (__releasesRequest == undefined))
         {
             __HotglueTrace($"Getting releases from \"{__url}\"");
