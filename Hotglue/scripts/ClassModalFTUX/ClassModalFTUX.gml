@@ -24,6 +24,13 @@ function ClassModalFTUX() constructor
                 ImGuiNewLine();
                 ImGuiTextWrapped("Please follow the instructions on subsequent pages to prepare Hotglue for use.");
                 ImGuiNewLine();
+                
+                if (HOTGLUE_RUNNING_FROM_IDE)
+                {
+                    ImGuiTextColored("URI registration requires Hotglue to be run from an executable.", INTERFACE_COLOR_RED_TEXT, 1);
+                    ImGuiNewLine();
+                }
+                
                 if (ImGuiButton("Next"))
                 {
                     ++__page;
@@ -77,7 +84,7 @@ function ClassModalFTUX() constructor
                     --__page;
                 }
                 ImGuiSameLine(undefined, 20);
-                if (ImGuiButton("Next"))
+                if (ImGuiButton(__registeredURI? "Next" : "Skip"))
                 {
                     ++__page;
                 }
@@ -94,7 +101,7 @@ function ClassModalFTUX() constructor
                     ImGuiNewLine();
                     if (ImGuiButton("Authorize GitHub..."))
                     {
-                        ImGuiTextWrapped("Please click the button below to authorize Hotglue to read information suing your GitHub account. Please follow the instructions in the web browser that pops up. Make sure to allow the browser to open the Hotglue link.");
+                        ImGuiTextWrapped("Please click the button below to authorize Hotglue to read information using your GitHub account. Please follow the instructions in the web browser that pops up. Make sure to allow the browser to open the Hotglue link.");
                         InterfaceGitHubAuthFlow();
                     }
                 }
@@ -111,7 +118,7 @@ function ClassModalFTUX() constructor
                     --__page;
                 }
                 ImGuiSameLine(undefined, 20);
-                if (ImGuiButton("Next"))
+                if (ImGuiButton(HotglueGitHubGetAccessTokenAvailable()? "Next" : "Skip"))
                 {
                     ++__page;
                 }

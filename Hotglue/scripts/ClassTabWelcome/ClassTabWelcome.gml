@@ -18,25 +18,5 @@ function ClassTabWelcome() : ClassTab() constructor
         ImGuiTextWrapped($"Welcome to Hotglue by Juju Adams! This is version {HOTGLUE_VERSION}, {HOTGLUE_DATE}.");
         ImGuiNewLine();
         InterfaceBuildCredits();
-        
-        if ((HOTGLUE_GITHUB_CLIENT_ID == "") || (HOTGLUE_GITHUB_CLIENT_SECRET == ""))
-        {
-            ImGuiNewLine();
-            ImGuiPushStyleColor(ImGuiCol.Text, INTERFACE_COLOR_RED_TEXT, 1);
-            ImGuiTextWrapped("GitHub has relatively tight rate limiting. To get around the rate limits, you should authorize Hotglue as a GitHub app. This build does not contain a client ID and/or client secret and so cannot connect to GitHub for authorization. Please see `__HotglueConfig`.");
-            ImGuiPopStyleColor();
-        }
-        else
-        {
-            if (not HotglueGitHubGetAccessTokenAvailable())
-            {
-                ImGuiNewLine();
-                ImGuiTextWrapped("GitHub has relatively tight rate limiting. To get around the rate limits, you should authorize Hotglue as a GitHub app. Please click this button to start the authorization flow:");
-                if (ImGuiButton("Authorize GitHub"))
-                {
-                    InterfaceGitHubAuthFlow();
-                }
-            }
-        }
     }
 }
