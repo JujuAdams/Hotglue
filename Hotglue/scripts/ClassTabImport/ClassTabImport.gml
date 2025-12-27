@@ -17,47 +17,6 @@ function ClassTabImport() : ClassTab() constructor
     
     
     
-    static ImportLocalProject = function()
-    {
-        __destinationProject.ImportFrom(__directProject, __directView.GetAssetArray());
-    }
-    
-    static ImportLooseFiles = function()
-    {
-        LogTraceAndStatus($"Starting import of loose files into \"{__destinationProject.GetPath()}\"");
-        __destinationProject.ImportFromLooseFiles(GetLooseFileArray());
-        LogTraceAndStatus($"Finished importing loose files into \"{__destinationProject.GetPath()}\"");
-    }
-    
-    static ImportChannels = function()
-    {
-        var _selectedRelease = GetSelectedRelease();
-        if (_selectedRelease != undefined)
-        {
-            __destinationProject.EnsureHotglueMetadata();
-            
-            _selectedRelease.LoadProject(function(_project, _success)
-            {
-                if (_success)
-                {
-                    if (_project.GetLoadedSuccessfully())
-                    {
-                        __destinationProject.ImportAsLibrary(_project);
-                        LogTraceAndStatus("Imported release successfully.");
-                    }
-                    else
-                    {
-                        LogWarning("Failed to load project file for release. Please check the log for further information.");
-                    }
-                }
-                else
-                {
-                    LogWarning("Failed to load project file for release. Please check the log for further information.");
-                }
-            });
-        }
-    }
-    
     static GetLooseFileArray = function()
     {
         var _looseFileViewArray = __looseFileViewArray;
