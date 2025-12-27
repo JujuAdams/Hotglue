@@ -24,6 +24,8 @@ function __HotglueSystem()
         __uriTestSuccess = false;
         __uriTestTimeout = undefined;
         
+        __expectingAuth = false;
+        
         __cachePath = HOTGLUE_DEFAULT_PATH_CACHE;
         directory_create(__cachePath);
         
@@ -42,11 +44,7 @@ function __HotglueSystem()
         
         __githubUserAccessToken = undefined;
         
-        //Port to connect on as part of the `.requestAuthenticationViaWebPage()` flow. This must match the callback URL entered whe creating your GitHub app.
-        //e.g. Setting `GITHUB_GML_LOCALHOST_PORT` to `52499` means that you should use `http://localhost:52499/` for the callback URL.
-        __localhostPort = 52499;
-        
-        __udpSocket = network_create_socket_ext(network_socket_udp, 52500);
+        __udpSocket = network_create_socket_ext(network_socket_udp, HOTGLUE_UDP_RECEIVE_PORT);
         LogTrace($"UDP socket = {__udpSocket}");
         
         __httpRequestMap = ds_map_create();

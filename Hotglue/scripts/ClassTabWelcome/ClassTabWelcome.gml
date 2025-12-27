@@ -28,7 +28,7 @@ function ClassTabWelcome() : ClassTab() constructor
         }
         else
         {
-            if (not HotglueGetGitHubAccessTokenAvailable())
+            if (not HotglueGitHubGetAccessTokenAvailable())
             {
                 ImGuiNewLine();
                 ImGuiTextWrapped("GitHub has relatively tight rate limiting. To get around the rate limits, you should authorize Hotglue as a GitHub app. Please click this button to start the authorization flow:");

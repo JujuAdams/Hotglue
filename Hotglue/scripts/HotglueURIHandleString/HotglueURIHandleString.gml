@@ -50,77 +50,86 @@ function HotglueURIHandleString(_inString)
     }
     else if (string_copy(_string, 1, string_length("auth/?code=")) == "auth/?code=")
     {
-        var _code = string_delete(_string, 1, string_length("auth/?code="));
-        
-        var _params = $"client_id={HOTGLUE_GITHUB_CLIENT_ID}&client_secret={HOTGLUE_GITHUB_CLIENT_SECRET}&code={_code}";
-        
-        var _request = new __HotglueClassHttpRequest($"https://github.com/login/oauth/access_token?{_params}", "POST", false);
-        _request.AddHeader("Accept", "application/json");
-        _request.Callback(function(_request, _success, _result)
+        if (not _system.__expectingAuth)
         {
-            static _system = __HotglueSystem();
+            __HotglueWarning("Received authorization URI but not expecting it");
+        }
+        else
+        {
+            _system.__expectingAuth = true;
             
-            var _accessToken = undefined;
-            var _expires = undefined;
+            var _code = string_delete(_string, 1, string_length("auth/?code="));
             
-            if (not _success)
+            var _params = $"client_id={HOTGLUE_GITHUB_CLIENT_ID}&client_secret={HOTGLUE_GITHUB_CLIENT_SECRET}&code={_code}";
+            
+            var _request = new __HotglueClassHttpRequest($"https://github.com/login/oauth/access_token?{_params}", "POST", false);
+            _request.AddHeader("Accept", "application/json");
+            _request.Callback(function(_request, _success, _result)
             {
-                __HotglueWarning("Failed to collect access token from GitHub");
-                _success = false;
-            }
-            else
-            {
-                try
+                static _system = __HotglueSystem();
+                
+                var _accessToken = undefined;
+                var _expires = undefined;
+            
+                if (not _success)
                 {
-                    var _struct = __HotglueSplitHTMLResponse(_result);
-                    __HotglueTrace($"Received access token:\n{json_stringify(_struct, true)}");
-                    
-                    var _accessToken = _struct.access_token;
-                    
-                    if (struct_exists(_struct, "expires_in"))
-                    {
-                        var _expires = date_inc_second(date_current_datetime(), real(_struct.expires_in));
-                    }
-                    else
-                    {
-                        var _expires = date_inc_day(date_current_datetime(), 1);
-                    }
-                }
-                catch(_error)
-                {
-                    __HotglueTrace(_error);
-                    __HotglueWarning("Failed to parse access token response");
+                    __HotglueWarning("Failed to collect access token from GitHub");
                     _success = false;
                 }
-            }
-            
-            if (_success)
-            {
-                __HotglueTrace($"Parsed access token successfully. Expires at {date_datetime_string(_expires)}");
-                _system.__githubUserAccessToken = _accessToken;
+                else
+                {
+                    try
+                    {
+                        var _struct = __HotglueSplitHTMLResponse(_result);
+                        __HotglueTrace($"Received access token:\n{json_stringify(_struct, true)}");
+                        
+                        var _accessToken = _struct.access_token;
+                        
+                        if (struct_exists(_struct, "expires_in"))
+                        {
+                            var _expires = date_inc_second(date_current_datetime(), real(_struct.expires_in));
+                        }
+                        else
+                        {
+                            var _expires = date_inc_day(date_current_datetime(), 1);
+                        }
+                    }
+                    catch(_error)
+                    {
+                        __HotglueTrace(_error);
+                        __HotglueWarning("Failed to parse access token response");
+                        _success = false;
+                    }
+                }
                 
-                var _json = {
-                    accessToken: _accessToken,
-                    expires:     _expires,
-                };
+                if (_success)
+                {
+                    __HotglueTrace($"Parsed access token successfully. Expires at {date_datetime_string(_expires)}");
+                    _system.__githubUserAccessToken = _accessToken;
+                    
+                    var _json = {
+                        accessToken: _accessToken,
+                        expires:     _expires,
+                    };
+                    
+                    var _string = json_stringify(_json, true);
+                    var _buffer = buffer_create(string_byte_length(_string), buffer_fixed, 1);
+                    buffer_write(_buffer, buffer_text, _string);
+                    buffer_save(_buffer, $"{HOTGLUE_AUTH_CACHE_DIRECTORY}github.json");
+                    buffer_delete(_buffer);
+                }
+                else
+                {
+                    _system.__githubUserAccessToken = undefined;
+                }
                 
-                var _string = json_stringify(_json, true);
-                var _buffer = buffer_create(string_byte_length(_string), buffer_fixed, 1);
-                buffer_write(_buffer, buffer_text, _string);
-                buffer_save(_buffer, $"{HOTGLUE_AUTH_CACHE_DIRECTORY}github.json");
-                buffer_delete(_buffer);
-            }
-            else
-            {
-                _system.__githubUserAccessToken = undefined;
-            }
-            
-            if (is_callable(_system.__gitHubAuthCallback))
-            {
-                _system.__gitHubAuthCallback(_success);
-            }
-        });
-        _request.Send();
+                if (is_callable(_system.__gitHubAuthCallback))
+                {
+                    _system.__gitHubAuthCallback(_success);
+                }
+            });
+            _request.Send();
+        }
     }
     else
     {

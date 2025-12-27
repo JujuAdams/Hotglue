@@ -1,6 +1,6 @@
 // Feather disable all
 
-function HotglueGetGitHubAccessTokenAvailable()
+function HotglueGitHubGetAccessTokenAvailable()
 {
     static _system = __HotglueSystem();
     

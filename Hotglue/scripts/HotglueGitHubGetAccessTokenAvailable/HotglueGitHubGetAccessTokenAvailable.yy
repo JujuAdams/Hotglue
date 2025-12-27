@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"HotglueGitHubWebAuthFlow",
+  "%Name":"HotglueGitHubGetAccessTokenAvailable",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HotglueGitHubWebAuthFlow",
+  "name":"HotglueGitHubGetAccessTokenAvailable",
   "parent":{
     "name":"GitHub",
     "path":"folders/Hotglue/GitHub.yy",

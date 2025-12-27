@@ -80,7 +80,7 @@ function ClassTabSettings() : ClassTab() constructor
         }
         else
         {
-            if (HotglueGetGitHubAccessTokenAvailable())
+            if (HotglueGitHubGetAccessTokenAvailable())
             {
                 ImGuiText("Access token acquired.");
                 
