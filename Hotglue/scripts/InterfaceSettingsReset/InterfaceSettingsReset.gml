@@ -9,7 +9,7 @@ function InterfaceSettingsReset()
             locals: [],
             channels: [
                 {
-                    name: "Hotglue-Index",
+                    name: "Hotglue Index",
                     url:  "https://raw.githubusercontent.com/JujuAdams/Hotglue-Index/refs/heads/main/github.json",
                     type: HOTGLUE_CHANNEL_JSON,
                 },
@@ -17,11 +17,6 @@ function InterfaceSettingsReset()
                     name: "GameMaker Kitchen",
                     url:  "https://www.gamemakerkitchen.com/resource.json",
                     type: HOTGLUE_CHANNEL_GMK,
-                },
-                {
-                    name: "Juju Adams",
-                    url:  "https://www.github.com/jujuadams/",
-                    type: HOTGLUE_CHANNEL_GITHUB_USER,
                 },
             ],
         };

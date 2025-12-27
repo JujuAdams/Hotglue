@@ -55,6 +55,14 @@ function ClassModalFTUX() constructor
                     HotglueURIRegister();
                     __registeredURI = true;
                 }
+                
+                ImGuiSameLine();
+                ImGuiBeginDisabled(not __registeredURI);
+                if (ImGuiButton("Test URI"))
+                {
+                    HotglueURITest();
+                }
+                ImGuiEndDisabled();
                 ImGuiEndDisabled();
                 
                 if (HOTGLUE_RUNNING_FROM_IDE)
