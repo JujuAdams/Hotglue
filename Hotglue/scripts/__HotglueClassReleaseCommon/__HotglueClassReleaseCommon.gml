@@ -71,13 +71,13 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
         return file_exists(__downloadPath);
     }
     
-    static LoadProject = function(_callback)
+    static LoadContent = function(_callback)
     {
         __loadCallback = _callback;
         
         Download(function(_release, _success, _result)
         {
-            var _project = undefined;
+            var _struct = undefined;
             
             if (not _success)
             {
@@ -85,17 +85,27 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
             }
             else
             {
-                var _project = HotglueProjectRemoteEnsure(__webURL, _result);
-                if (_project == undefined)
+                var _extension = filename_ext(_result);
+                if ((_extension == ".yyp") || (_extension == ".yymps") || (_extension = ".yyz"))
                 {
-                    __HotglueWarning($"Release \"{__webURL}\" downloaded a file with an invalid extension \"{_result}\"");
-                    _success = false;
+                    _struct = HotglueProjectRemoteEnsure(__webURL, _result);
+                    if (_struct == undefined)
+                    {
+                        __HotglueWarning($"Release \"{__webURL}\" downloaded a file with an invalid extension \"{_result}\"");
+                        _success = false;
+                    }
+                }
+                else if ((_extension == ".txt") || (_extension == ".gml") || (_extension = ".md"))
+                {
+                    _struct = HotglueLoadLooseFile(_result);
+                    _struct.SetType("script");
+                    _struct.SetName(HotglueSanitizeResourceName(__name));
                 }
             }
             
             if (is_callable(__loadCallback))
             {
-                __loadCallback(_project, _success);
+                __loadCallback(_struct, _success);
             }
         });
     }

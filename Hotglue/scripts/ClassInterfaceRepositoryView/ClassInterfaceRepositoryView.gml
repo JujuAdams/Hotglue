@@ -81,17 +81,35 @@ function ClassInterfaceRepositoryView(_repository) constructor
         {
             if ((__selectedRelease != undefined) && (__projectView == undefined))
             {
-                __selectedRelease.LoadProject(function(_project, _success)
+                __selectedRelease.LoadContent(function(_struct, _success)
                 {
                     if (_success)
                     {
-                        LogTraceAndStatus($"Loaded project successfully for release \"{__selectedRelease.GetWebURL()}\"");
-                        __selectedProject = _project;
-                        __projectView = new ClassInterfaceProjectView(_project);
+                        if (is_instanceof(_struct, __HotglueProject))
+                        {
+                            if (_struct.GetLoadedSuccessfully())
+                            {
+                                LogTraceAndStatus($"Loaded project successfully for release \"{__selectedRelease.GetWebURL()}\"");
+                                __selectedProject = _struct;
+                                __projectView = new ClassInterfaceProjectView(_struct);
+                            }
+                            else
+                            {
+                                LogWarning($"Failed to load content for release \"{__selectedRelease.GetWebURL()}\"");
+                                __selectedProject = undefined;
+                                __projectView = undefined;
+                            }
+                        }
+                        else
+                        {
+                            LogWarning($"\"{__selectedRelease.GetWebURL()}\" loaded successfully but was not a project ({instanceof(_struct)})");
+                            __selectedProject = undefined;
+                            __projectView = undefined;
+                        }
                     }
                     else
                     {
-                        LogWarning($"Failed to load project for release \"{__selectedRelease.GetWebURL()}\"");
+                        LogWarning($"Failed to load content for release \"{__selectedRelease.GetWebURL()}\"");
                         __selectedProject = undefined;
                         __projectView = undefined;
                     }
@@ -203,7 +221,7 @@ function ClassInterfaceRepositoryView(_repository) constructor
                     ImGuiSameLine();
                     if (ImGuiButton("Test Load"))
                     {
-                        __selectedRelease.LoadProject();
+                        __selectedRelease.LoadContent();
                     }
                 }
                 

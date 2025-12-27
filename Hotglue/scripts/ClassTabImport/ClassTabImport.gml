@@ -372,29 +372,41 @@ function ClassTabImport() : ClassTab() constructor
                         __loadPending = true;
                         __loadSuccessful = false;
                         
-                        _selectedRelease.LoadProject(function(_project, _success)
+                        _selectedRelease.LoadContent(function(_struct, _success)
                         {
                             __loadPending = false;
+                            __loadSuccessful = false;
                             
                             if (_success)
                             {
-                                if (_project.GetLoadedSuccessfully())
+                                if (is_instanceof(_struct, __HotglueProject))
                                 {
-                                    __job.__QueueDeleteLibrary(_project.GetName());
-                                    __job.__QueueAddLibrary(_project);
-                                    __job.BuildReport();
-                                
-                                    __loadSuccessful = true;
-                                    LogTraceAndStatus("Loaded release successfully.");
+                                    if (_struct.GetLoadedSuccessfully())
+                                    {
+                                        __job.__QueueDeleteLibrary(_struct.GetName());
+                                        __job.__QueueAddLibrary(_struct);
+                                        __job.BuildReport();
+                                        
+                                        __loadSuccessful = true;
+                                        LogTraceAndStatus("Loaded release successfully as a project.");
+                                    }
+                                    else
+                                    {
+                                        LogWarning("Failed to load project file for release. Please check the log for further information.");
+                                    }
                                 }
-                                else
+                                else if (is_instanceof(_struct, __HotglueLooseFile))
                                 {
-                                    LogWarning("Failed to load project file for release. Please check the log for further information.");
+                                    __job.__QueueImportLooseFile(_struct);
+                                    __job.BuildReport();
+                                    
+                                    __loadSuccessful = true;
+                                    LogTraceAndStatus("Loaded release successfully as a loose file.");
                                 }
                             }
                             else
                             {
-                                LogWarning("Failed to load project file for release. Please check the log for further information.");
+                                LogWarning("Failed to load content for release. Please check the log for further information.");
                             }
                         });
                     }
@@ -402,7 +414,7 @@ function ClassTabImport() : ClassTab() constructor
             }
         }
         
-        if ((__importMode == "channels") || ((__importMode == "direct from project") && (__directProject != undefined) && __directProject.GetIsPackage()))
+        if ((__importMode == "direct from project") && (__directProject != undefined) && __directProject.GetIsPackage())
         {
             ImGuiText("as package");
         }
