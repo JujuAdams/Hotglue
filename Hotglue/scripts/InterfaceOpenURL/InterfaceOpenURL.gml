@@ -8,8 +8,8 @@ function InterfaceOpenURL(_url)
     {
         url_open(_url);
     }
-    else if (HotglueGetExecuteShellAvailable())
+    else
     {
-        execute_shell_simple(filename_dir(_url));
+        HotglueExecuteShell(filename_dir(_url), "");
     }
 }

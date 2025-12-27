@@ -33,5 +33,5 @@ function HotglueURIRegister()
     __HotglueSaveString($"{HOTGLUE_TEMP_CACHE_DIRECTORY}uri-registration.reg", _registryString);
 	__HotglueSaveString($"{HOTGLUE_TEMP_CACHE_DIRECTORY}uri-registration.bat", _batchFileString);
     
-    execute_shell_simple($"{HOTGLUE_TEMP_CACHE_DIRECTORY}uri-registration.bat");
+    HotglueExecuteShell($"{HOTGLUE_TEMP_CACHE_DIRECTORY}uri-registration.bat", "");
 }

@@ -222,12 +222,9 @@ function ClassTabSettings() : ClassTab() constructor
         }
         
         ImGuiTableNextColumn();
-        if (HotglueGetExecuteShellAvailable())
+        if (ImGuiButton("Open...##cachePath"))
         {
-            if (ImGuiButton("Open...##cachePath"))
-            {
-                InterfaceOpenURL(HotglueGetCachePath());
-            }
+            InterfaceOpenURL(HotglueGetCachePath());
         }
         
         ImGuiTableNextColumn();
@@ -252,12 +249,9 @@ function ClassTabSettings() : ClassTab() constructor
         }
         
         ImGuiTableNextColumn();
-        if (HotglueGetExecuteShellAvailable())
+        if (ImGuiButton("Open...##savedataPath"))
         {
-            if (ImGuiButton("Open...##savedataPath"))
-            {
-                InterfaceOpenURL(HotglueGetCachePath());
-            }
+            InterfaceOpenURL(HotglueGetCachePath());
         }
         
         ImGuiTableNextColumn();

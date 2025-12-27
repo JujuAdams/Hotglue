@@ -7,24 +7,17 @@ function InterfaceLinkText(_text, _url = _text)
 {
     var _isRemote = InterfaceGuessURLIsRemote(_url);
     
-    if (HotglueGetExecuteShellAvailable() || _isRemote)
+    ImGuiTextLink(_text);
+    
+    var _clicked = ImGuiIsItemClicked();
+    if (ImGuiBeginItemTooltip())
     {
-        ImGuiTextLink(_text);
-        
-        var _clicked = ImGuiIsItemClicked();
-        if (ImGuiBeginItemTooltip())
-        {
-            ImGuiText($"Open \"{_isRemote? _url : filename_dir(_url)}\"");
-            ImGuiEndTooltip();
-        }
-            
-        if (_clicked)
-        {
-            InterfaceOpenURL(_url);
-        }
+        ImGuiText($"Open \"{_isRemote? _url : filename_dir(_url)}\"");
+        ImGuiEndTooltip();
     }
-    else
+    
+    if (_clicked)
     {
-        ImGuiText(_text);
+        InterfaceOpenURL(_url);
     }
 }

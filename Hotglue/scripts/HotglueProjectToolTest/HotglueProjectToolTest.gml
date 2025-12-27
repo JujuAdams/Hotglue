@@ -8,12 +8,6 @@ function HotglueProjectToolTest(_projectToolPath = HotglueGetProjectToolPath())
         return false;
     }
     
-    if (not HotglueGetExecuteShellAvailable())
-    {
-        __HotglueWarning($"execute_shell_simple() not available, cannot execute ProjectTool test. Presuming success");
-        return true;
-    }
-    
     var _outputPath  = $"{game_save_id}cache/temp/batch-output.txt";
     var _triggerPath = $"{game_save_id}cache/temp/trigger.txt";
     file_delete(_outputPath);
@@ -33,7 +27,7 @@ function HotglueProjectToolTest(_projectToolPath = HotglueGetProjectToolPath())
     buffer_delete(_buffer);
     
     __HotglueTrace($"Starting ProjectTool test at \"{_projectToolPath}\" (log can be found at \"{_outputPath}\")");
-    execute_shell_simple(_batchPath, "");
+    HotglueExecuteShell(_batchPath, "");
     
     var _result = false;
     var _time = current_time;

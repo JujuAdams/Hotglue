@@ -6,7 +6,7 @@
 
 function HotglueProjectToolConvert(_sourcePath, _destinationPath, _destroyDirectory = false)
 {
-    if (not HotglueGetProjectToolAvailable())
+    if (not HotglueGetProjectToolExists())
     {
         __HotglueWarning("Project tool not available, aborting");
         return false;
@@ -54,7 +54,7 @@ function HotglueProjectToolConvert(_sourcePath, _destinationPath, _destroyDirect
     buffer_delete(_buffer);
     
     __HotglueTrace($"Starting conversion of \"{_sourcePath}\" (log can be found at \"{_outputPath}\")");
-    execute_shell_simple(_batchPath, "");
+    HotglueExecuteShell(_batchPath, "");
     
     var _result = false;
     var _time = current_time;

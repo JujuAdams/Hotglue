@@ -19,17 +19,6 @@ function ClassTabWelcome() : ClassTab() constructor
         ImGuiNewLine();
         InterfaceBuildCredits();
         
-        if (HotglueGetExecuteShellAvailable())
-        {
-            
-        }
-        else
-        {
-            ImGuiNewLine();
-            ImGuiTextWrapped("Hotglue has support for `execute_shell_simple` by YellowAfterlife. This is, however, a paid asset. Please visit the link below, toss YellowAfterlife some money, and download the extension.");
-            ImGuiTextLinkOpenURL("execute_shell_simple on itch.io", "https://yellowafterlife.itch.io/gamemaker-execute-shell-simple");
-        }
-        
         if ((HOTGLUE_GITHUB_CLIENT_ID == "") || (HOTGLUE_GITHUB_CLIENT_SECRET == ""))
         {
             ImGuiNewLine();
