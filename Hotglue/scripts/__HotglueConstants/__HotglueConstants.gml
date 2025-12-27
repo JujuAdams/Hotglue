@@ -16,7 +16,7 @@
 #macro HOTGLUE_GITHUB_AUTH_SCOPE  "repo"
 
 #macro HOTGLUE_FAVORITES_CHANNEL  "@favorites"
-#macro HOTGLUE_LOCALS_CHANNEL  "@locals"
+#macro HOTGLUE_CUSTOM_CHANNEL     "@custom"
 
 #macro HOTGLUE_CHANNEL_JSON              "JSON"
 #macro HOTGLUE_CHANNEL_DIRECTORY         "Directory"

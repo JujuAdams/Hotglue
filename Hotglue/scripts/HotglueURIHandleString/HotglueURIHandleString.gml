@@ -46,7 +46,7 @@ function HotglueURIHandleString(_inString)
         
         //TODO - Ask for permission
         
-        HotglueGetChannelByURL(HOTGLUE_LOCALS_CHANNEL).AddRepository(_path);
+        HotglueGetChannelByURL(HOTGLUE_CUSTOM_CHANNEL).AddRepository(_path);
     }
     else if (string_copy(_string, 1, string_length("auth/?code=")) == "auth/?code=")
     {

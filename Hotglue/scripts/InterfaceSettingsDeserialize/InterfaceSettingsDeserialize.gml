@@ -6,8 +6,8 @@ function InterfaceSettingsDeserialize()
     _channel.DeserializeURLArray(InterfaceSettingGet("favorites", []));
     _channel.SortArray();
     
-    var _channel = HotglueGetChannelByURL(HOTGLUE_LOCALS_CHANNEL);
-    _channel.DeserializeURLArray(InterfaceSettingGet("locals", []));
+    var _channel = HotglueGetChannelByURL(HOTGLUE_CUSTOM_CHANNEL);
+    _channel.DeserializeURLArray(InterfaceSettingGet("custom", []));
     _channel.SortArray();
     
     HotglueChannelsDeserialize(InterfaceSettingGet("channels", []));

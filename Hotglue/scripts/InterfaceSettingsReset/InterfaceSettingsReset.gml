@@ -6,7 +6,7 @@ function InterfaceSettingsReset()
             openOnTab: "Welcome",
             savedataPath: INTERACE_DEFAULT_PATH_SAVEDATA,
             favorites: [],
-            locals: [],
+            custom: [],
             channels: [
                 {
                     name: "Hotglue Index",
