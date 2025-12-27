@@ -133,7 +133,7 @@ function ClassInterfaceChannelView(_channel) constructor
         
         if ((not __channel.__isRemote) && (not __channel.__isFavorites))
         {
-            if (ImGuiButton("Add content..."))
+            if (ImGuiButton("Add content from this device..."))
             {
                 var _path = get_open_filename("*.*", "");
                 if (_path != "")
@@ -162,6 +162,13 @@ function ClassInterfaceChannelView(_channel) constructor
                     }
                 }
             }
+            
+            if (ImGuiButton("Add remote content..."))
+            {
+                oInterface.popUpStruct = new ClassModalNewRemoteContent();
+            }
+            
+            ImGuiNewLine();
         }
         
         ImGuiBeginChild("leftPaneInner");

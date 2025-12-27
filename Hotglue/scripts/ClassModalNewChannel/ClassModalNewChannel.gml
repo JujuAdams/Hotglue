@@ -63,7 +63,7 @@ function ClassModalNewChannel() constructor
             
             ImGuiNewLine();
             
-            if (ImGuiButton("Abort"))
+            if (ImGuiButton("Cancel"))
             {
                 oInterface.popUpStruct = undefined;
             }

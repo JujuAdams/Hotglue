@@ -152,7 +152,7 @@ function ClassTabSettings() : ClassTab() constructor
         ImGuiTableNextRow();
         ImGuiTableNextColumn();
         ImGuiTableNextColumn();
-        if (ImGuiButton("+ Add new channel..."))
+        if (ImGuiButton("Add new channel..."))
         {
             oInterface.popUpStruct = new ClassModalNewChannel();
         }

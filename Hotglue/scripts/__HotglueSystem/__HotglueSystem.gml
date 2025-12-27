@@ -19,7 +19,6 @@ function __HotglueSystem()
         __warningHandler = function(_string) { show_debug_message($"Hotglue: Warning! {_string}"); };
         
         __suppressGitAssert = false;
-        __destructiveCopy   = true;
         
         __uriTestSuccess = false;
         __uriTestTimeout = undefined;

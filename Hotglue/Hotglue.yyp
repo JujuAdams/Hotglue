@@ -205,6 +205,7 @@
     {"id":{"name":"ClassModalFTUX","path":"scripts/ClassModalFTUX/ClassModalFTUX.yy",},},
     {"id":{"name":"ClassModalMessage","path":"scripts/ClassModalMessage/ClassModalMessage.yy",},},
     {"id":{"name":"ClassModalNewChannel","path":"scripts/ClassModalNewChannel/ClassModalNewChannel.yy",},},
+    {"id":{"name":"ClassModalNewRemoteContent","path":"scripts/ClassModalNewRemoteContent/ClassModalNewRemoteContent.yy",},},
     {"id":{"name":"ClassTab","path":"scripts/ClassTab/ClassTab.yy",},},
     {"id":{"name":"ClassTabAutomation","path":"scripts/ClassTabAutomation/ClassTabAutomation.yy",},},
     {"id":{"name":"ClassTabChannels","path":"scripts/ClassTabChannels/ClassTabChannels.yy",},},

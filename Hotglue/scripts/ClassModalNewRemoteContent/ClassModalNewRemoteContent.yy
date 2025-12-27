@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"ClassModalNewRemoteContent",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ClassModalNewRemoteContent",
+  "parent":{
+    "name":"Modals",
+    "path":"folders/Interface/Classes/Modals.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
