@@ -41,8 +41,7 @@ function __HotglueRepositoryGist(_url) : __HotglueRepositoryCommon(_url) constru
     
     static GetReadme = function()
     {
-        //TODO
-        return undefined;
+        return __readme;
     }
     
     static GetReleases = function()
@@ -90,6 +89,7 @@ function __HotglueRepositoryGist(_url) : __HotglueRepositoryCommon(_url) constru
                             {
                                 var _fileNamesArray = struct_get_names(_json.files);
                                 __name = _fileNamesArray[0];
+                                __readme = _json.description;
                                 
                                 _release = new __HotglueClassReleaseCommon(__name,
                                                                            _json.updated_at,
