@@ -10,7 +10,12 @@ if (_return & ImGuiReturnMask.Return)
         projectTab.MenuItem();
         inspectorTab.MenuItem();
         channelsTab.MenuItem();
-        automationTab.MenuItem();
+        
+        if (InterfaceSettingGet("showAutomation", false))
+        {
+            automationTab.MenuItem();
+        }
+        
         settingsTab.MenuItem();
         
         if (ImGuiMenuItem("Report Bug..."))

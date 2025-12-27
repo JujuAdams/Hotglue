@@ -2,6 +2,8 @@
 
 function HotglueURIHandleString(_inString)
 {
+    static _system = __HotglueSystem();
+    
     var _string = _inString;
     
     if (string_copy(_string, 1, string_length("hotglue://")) != "hotglue://")
@@ -26,7 +28,16 @@ function HotglueURIHandleString(_inString)
     
     if (_string == "test")
     {
-        LogTraceAndStatus("URI test successful");
+        if (_system.__uriTestTimeout != undefined)
+        {
+            _system.__uriTestSuccess = true;
+            _system.__uriTestTimeout = undefined;
+            __HotglueTrace("URI test successful");
+        }
+        else
+        {
+            __HotglueWarning("Received URI test response but we're not testing URI");
+        }
     }
     else if (string_copy(_string, 1, string_length("add=")) == "add=")
     {

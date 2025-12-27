@@ -17,6 +17,96 @@ function ClassTabSettings() : ClassTab() constructor
     
     static Build = function()
     {
+        ///////
+        // URI
+        ///////
+        
+        ImGuiText("URI (Application Link)");
+        ImGuiIndent();
+        
+        if (HOTGLUE_RUNNING_FROM_IDE)
+        {
+            ImGuiTextLink("How do I register a URI?");
+            if (ImGuiBeginItemTooltip())
+            {
+                ImGuiText($"Hotglue must be run from a compiled executable for URI registration to be available.");
+                ImGuiEndTooltip();
+            }
+        }
+        else
+        {
+            ImGuiTextWrapped("");
+        }
+        
+        ImGuiBeginDisabled(HOTGLUE_RUNNING_FROM_IDE);
+        if (ImGuiButton("Register URI"))
+        {
+            HotglueURIRegister();
+        }
+        ImGuiEndDisabled();
+        
+        ImGuiSameLine();
+        
+        if (ImGuiButton("Test URI"))
+        {
+            HotglueURITest();
+        }
+        
+        ImGuiUnindent();
+        
+        ImGuiNewLine();
+        
+        ///////
+        // GitHub
+        ///////
+        
+        ImGuiText("GitHub:");
+        ImGuiIndent();
+        
+        var _authorizeAvailable = HotglueURITestGetSuccess();
+        if (not _authorizeAvailable)
+        {
+            ImGuiTextLink("How do I authorize GitHub?");
+            if (ImGuiBeginItemTooltip())
+            {
+                ImGuiText($"Hotglue must be URI registered and the URI test must succeed (see above) for GitHub authorization to be available.");
+                ImGuiEndTooltip();
+            }
+        }
+        
+        if ((HOTGLUE_GITHUB_CLIENT_ID == "") || (HOTGLUE_GITHUB_CLIENT_SECRET == ""))
+        {
+            ImGuiTextColored("Client ID and/or client secret not set (please see `__HotglueConfig`).\nAccess token not available.", INTERFACE_COLOR_ORANGE_TEXT);
+        }
+        else
+        {
+            if (HotglueGetGitHubAccessTokenAvailable())
+            {
+                ImGuiText("Access token acquired.");
+                
+                ImGuiBeginDisabled(not _authorizeAvailable);
+                if (ImGuiButton("Re-authorize GitHub..."))
+                {
+                    InterfaceGitHubAuthFlow(true);
+                }
+                ImGuiEndDisabled();
+            }
+            else
+            {
+                ImGuiTextColored("GitHub access token unavailable. Please click the button below to acquire an access token from GitHub.", INTERFACE_COLOR_ORANGE_TEXT);
+                
+                ImGuiBeginDisabled(not _authorizeAvailable);
+                if (ImGuiButton("Authorize GitHub..."))
+                {
+                    InterfaceGitHubAuthFlow();
+                }
+                ImGuiEndDisabled();
+            }
+        }
+        
+        ImGuiUnindent();
+        ImGuiNewLine();
+        
         ImGuiText("Library Channels:");
         ImGuiIndent();
         ImGuiBeginChild("channelsPane", undefined, 170, ImGuiChildFlags.Border);
@@ -82,7 +172,7 @@ function ClassTabSettings() : ClassTab() constructor
         ImGuiText("Boot Behaviour:");
         ImGuiIndent();
         
-        ImGuiText("Open on tab");
+        ImGuiText("Show tab on boot");
         ImGuiSameLine();
         ImGuiSetNextItemWidth(200);
         if (ImGuiBeginCombo("##bootTab", InterfaceSettingGet("openOnTab", "Welcome"), ImGuiComboFlags.None))
@@ -111,12 +201,6 @@ function ClassTabSettings() : ClassTab() constructor
                 InterfaceSettingsSave();
             }
             
-            if (ImGuiSelectable("Automation"))
-            {
-                InterfaceSettingSet("openOnTab", "Automation");
-                InterfaceSettingsSave();
-            }
-            
             if (ImGuiSelectable("Settings"))
             {
                 InterfaceSettingSet("openOnTab", "Settings");
@@ -126,7 +210,7 @@ function ClassTabSettings() : ClassTab() constructor
             ImGuiEndCombo();
         }
         
-        ImGuiText("Show log");
+        ImGuiText("Show log on boot");
         ImGuiSameLine();
         var _oldValue = InterfaceSettingGet("showLogOnBoot", false);
         var _newValue = ImGuiCheckbox("##showLogOnBoot", _oldValue);
@@ -163,35 +247,6 @@ function ClassTabSettings() : ClassTab() constructor
         }
         ImGuiUnindent();
         
-        ImGuiNewLine();
-        
-        ImGuiText("GitHub:");
-        ImGuiIndent();
-        if ((HOTGLUE_GITHUB_CLIENT_ID == "") || (HOTGLUE_GITHUB_CLIENT_SECRET == ""))
-        {
-            ImGuiTextColored("Client ID and/or client secret not set (please see `__HotglueConfig`).\nAccess token not available.", INTERFACE_COLOR_ORANGE_TEXT);
-        }
-        else
-        {
-            if (HotglueGetGitHubAccessTokenAvailable())
-            {
-                ImGuiText("Access token acquired.");
-                if (ImGuiButton("Re-authorize GitHub..."))
-                {
-                    InterfaceGitHubAuthFlow(true);
-                }
-            }
-            else
-            {
-                ImGuiTextColored("GitHub access token unavailable. Please click the button below to acquire an access token from GitHub.", INTERFACE_COLOR_ORANGE_TEXT);
-                if (ImGuiButton("Authorize GitHub..."))
-                {
-                    InterfaceGitHubAuthFlow();
-                }
-            }
-        }
-        
-        ImGuiUnindent();
         ImGuiNewLine();
         
         ///////
@@ -300,39 +355,6 @@ function ClassTabSettings() : ClassTab() constructor
         ImGuiNewLine();
         
         ///////
-        // URI
-        ///////
-        
-        ImGuiText("URI (Application Link)");
-        ImGuiIndent();
-        
-        ImGuiBeginDisabled(HOTGLUE_RUNNING_FROM_IDE);
-        if (ImGuiButton("Register URI"))
-        {
-            HotglueURIRegister();
-        }
-        ImGuiEndDisabled();
-        
-        ImGuiSameLine();
-        
-        if (ImGuiButton("Test URI"))
-        {
-            HotglueURITest();
-        }
-        
-        if (HOTGLUE_RUNNING_FROM_IDE)
-        {
-            ImGuiTextLink("How do I register a URI?");
-            if (ImGuiBeginItemTooltip())
-            {
-                ImGuiText($"Hotglue must be run from a compiled executable for URI registration to be available.");
-                ImGuiEndTooltip();
-            }
-        }
-        
-        ImGuiUnindent();
-        
-        ///////
         // Here be dragons
         ///////
         
@@ -346,6 +368,14 @@ function ClassTabSettings() : ClassTab() constructor
         {
             HotglueSetSuppressGitAssert(ImGuiCheckbox("Suppress .git directory assert", HotglueGetSuppressGitAssert()));
             HotglueSetDestructiveCopy(ImGuiCheckbox("Resource copy is destructive", HotglueGetDestructiveCopy()));
+            
+            var _oldValue = InterfaceSettingGet("showAutomation", false);
+            var _newValue = ImGuiCheckbox("Show \"Automation\" mode##showAutomation", _oldValue);
+            if (_oldValue != _newValue)
+            {
+                InterfaceSettingSet("showAutomation", not _oldValue)
+                InterfaceSettingsSave();
+            }
             
             if (ImGuiButton("Reset Settings"))
             {

@@ -268,6 +268,7 @@
     {"id":{"name":"HotglueURIHandleString","path":"scripts/HotglueURIHandleString/HotglueURIHandleString.yy",},},
     {"id":{"name":"HotglueURIRegister","path":"scripts/HotglueURIRegister/HotglueURIRegister.yy",},},
     {"id":{"name":"HotglueURITest","path":"scripts/HotglueURITest/HotglueURITest.yy",},},
+    {"id":{"name":"HotglueURITestGetSuccess","path":"scripts/HotglueURITestGetSuccess/HotglueURITestGetSuccess.yy",},},
     {"id":{"name":"ImGuiContext","path":"scripts/ImGuiContext/ImGuiContext.yy",},},
     {"id":{"name":"InterfaceBuildCredits","path":"scripts/InterfaceBuildCredits/InterfaceBuildCredits.yy",},},
     {"id":{"name":"InterfaceBuildLog","path":"scripts/InterfaceBuildLog/InterfaceBuildLog.yy",},},

@@ -21,6 +21,9 @@ function __HotglueSystem()
         __suppressGitAssert = false;
         __destructiveCopy   = true;
         
+        __uriTestSuccess = false;
+        __uriTestTimeout = undefined;
+        
         __cachePath = HOTGLUE_DEFAULT_PATH_CACHE;
         directory_create(__cachePath);
         

@@ -15,6 +15,4 @@ function InterfaceSettingsSave()
     }
     
     LogTrace("Settings saved");
-    
-    InterfaceSettingsDeserialize();
 }
