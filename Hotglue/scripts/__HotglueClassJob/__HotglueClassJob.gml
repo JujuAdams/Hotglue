@@ -6,6 +6,8 @@ function __HotglueClassJob(_destinationProject) constructor
 {
     __destinationProject = _destinationProject;
     
+    __subfolder = "";
+    
     __actionArray = [];
     __saveHotglueMetadata = false;
     
@@ -19,6 +21,16 @@ function __HotglueClassJob(_destinationProject) constructor
     __derivedOverwritePIDArray = [];
     
     
+    
+    static GetSubfolder = function()
+    {
+        return __subfolder;
+    }
+    
+    static SetSubfolder = function(_subfolder)
+    {
+        __subfolder = _subfolder;
+    }
     
     static GetAddArray = function()
     {
@@ -40,15 +52,13 @@ function __HotglueClassJob(_destinationProject) constructor
         return __derivedOverwritePIDArray;
     }
     
-    static __QueueImportAllFrom = function(_sourceProject, _subfolder = "")
+    static __QueueImportAllFrom = function(_sourceProject)
     {
-        return __QueueImportFrom(_sourceProject, _sourceProject.__quickAssetArray, _subfolder);
+        return __QueueImportFrom(_sourceProject, _sourceProject.__quickAssetArray);
     }
     
-    static __QueueImportFrom = function(_sourceProject, _assetArray, _subfolder = "")
+    static __QueueImportFrom = function(_sourceProject, _assetArray)
     {
-        __QueueEnsureFolderPath(_subfolder);
-        
         if (not is_array(_assetArray))
         {
             _assetArray = [ _assetArray ];
@@ -82,9 +92,9 @@ function __HotglueClassJob(_destinationProject) constructor
                     
                     var _method = method(
                     {
+                        __job: other,
                         __sourceProject: _sourceProject,
-                        __asset:         _asset,
-                        __subfolder:     _subfolder,
+                        __asset: _asset,
                     },
                     function(_destinationProject)
                     {
@@ -100,8 +110,8 @@ function __HotglueClassJob(_destinationProject) constructor
                             _asset.__Copy(_destinationProject, __sourceProject);
                         
                             var _newHotglueAsset = variable_clone(_asset);
-                            _newHotglueAsset.__FixYYReferences(_destinationProject, __subfolder);
-                            _newHotglueAsset.__InsertIntoYYP(_destinationProject, __subfolder);
+                            _newHotglueAsset.__FixYYReferences(_destinationProject, __job.__subfolder);
+                            _newHotglueAsset.__InsertIntoYYP(_destinationProject, __job.__subfolder);
                         
                             _destinationProject.__AddAsset(_newHotglueAsset);
                         }
@@ -121,10 +131,8 @@ function __HotglueClassJob(_destinationProject) constructor
         }
     }
     
-    static __QueueImportLooseFile = function(_looseFileArray, _subfolder = "")
+    static __QueueImportLooseFile = function(_looseFileArray)
     {
-        __QueueEnsureFolderPath(_subfolder);
-        
         if (not is_array(_looseFileArray))
         {
             _looseFileArray = [ _looseFileArray ];
@@ -140,8 +148,8 @@ function __HotglueClassJob(_destinationProject) constructor
             
             var _method = method(
             {
+                __job: other,
                 __looseFile: _looseFile,
-                __subfolder: _subfolder,
             },
             function(_destinationProject)
             {
@@ -156,7 +164,7 @@ function __HotglueClassJob(_destinationProject) constructor
                     __HotglueError($"Asset \"{_asset.GetPID()}\" already exists in project \"{_looseFile.GetPath()}\"");
                 }
                 
-                _looseFile.__CreateFilesOnDisk(_destinationProject, _asset, __subfolder);
+                _looseFile.__CreateFilesOnDisk(_destinationProject, _asset, __job.__subfolder);
                     
                 _asset.__InsertIntoYYP(_destinationProject, ""); //Don't need a subfolder here because we generate a correct folder path already
                     
@@ -174,48 +182,48 @@ function __HotglueClassJob(_destinationProject) constructor
         }
     }
     
-    static __QueueEnsureFolderPath = function(_subfolder)
-    {
-        if (_subfolder == "")
-        {
-            //The root always exists
-            return;
-        }
-        
-        var _addPIDDict = __addPIDDict;
-        
-        //Sanitize
-        var _path = string_replace_all(_subfolder, "\\", "/");
-        
-        //Iterate over every stage in the path to ensure we have all the folders set up along the path
-        repeat(string_count("/", _path) + 1)
-        {
-            var _method = method(
-            {
-                __path: _path,
-            },
-            function(_destinationProject)
-            {
-                var _quickAssetDict = _destinationProject.__quickAssetDict;
-                var _path = __path;
-                
-                if (not variable_struct_exists(_quickAssetDict, $"folder:{_path}"))
-                {
-                    var _hotglueAsset = new __HotglueFolder({ folderPath: $"folders/{_path}.yy", name: filename_name(_path), });
-                    _hotglueAsset.__InsertIntoYYP(_destinationProject, "");
-                    _destinationProject.__AddAsset(_hotglueAsset);
-                }
-            });
-            
-            var _pid = $"folder:{__HotglueProcessFolderPath($"folders/{_path}.yy")}";
-            
-            array_push(__actionArray, _method);
-            array_push(__addPIDArray, _pid);
-            _addPIDDict[$ _pid] = true;
-            
-            _path = filename_dir(_path);
-        }
-    }
+    //static __QueueEnsureFolderPath = function(_subfolder)
+    //{
+    //    if (_subfolder == "")
+    //    {
+    //        //The root always exists
+    //        return;
+    //    }
+    //    
+    //    var _addPIDDict = __addPIDDict;
+    //    
+    //    //Sanitize
+    //    var _path = string_replace_all(_subfolder, "\\", "/");
+    //    
+    //    //Iterate over every stage in the path to ensure we have all the folders set up along the path
+    //    repeat(string_count("/", _path) + 1)
+    //    {
+    //        var _method = method(
+    //        {
+    //            __path: _path,
+    //        },
+    //        function(_destinationProject)
+    //        {
+    //            var _quickAssetDict = _destinationProject.__quickAssetDict;
+    //            var _path = __path;
+    //            
+    //            if (not variable_struct_exists(_quickAssetDict, $"folder:{_path}"))
+    //            {
+    //                var _hotglueAsset = new __HotglueFolder({ folderPath: $"folders/{_path}.yy", name: filename_name(_path), });
+    //                _hotglueAsset.__InsertIntoYYP(_destinationProject, "");
+    //                _destinationProject.__AddAsset(_hotglueAsset);
+    //            }
+    //        });
+    //        
+    //        var _pid = $"folder:{__HotglueProcessFolderPath($"folders/{_path}.yy")}";
+    //        
+    //        array_push(__actionArray, _method);
+    //        array_push(__addPIDArray, _pid);
+    //        _addPIDDict[$ _pid] = true;
+    //        
+    //        _path = filename_dir(_path);
+    //    }
+    //}
     
     static __QueueDelete = function(_assetPIDArray)
     {
@@ -275,11 +283,11 @@ function __HotglueClassJob(_destinationProject) constructor
         array_push(__actionArray, _method);
     }
     
-    static __QueueAddLibrary = function(_sourceProject, _subfolder = "")
+    static __QueueAddLibrary = function(_sourceProject)
     {
         __saveHotglueMetadata = true;
         
-        __QueueImportFrom(_sourceProject, _sourceProject.__quickAssetArray, _subfolder);
+        __QueueImportFrom(_sourceProject, _sourceProject.__quickAssetArray);
         
         var _method = method(
         {

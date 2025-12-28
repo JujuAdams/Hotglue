@@ -12,8 +12,6 @@ function ClassModalConfirmJob(_job, _forceImportAsPackage = false, _packageName 
     __loadPending = false;
     __loadSuccessful = true;
     
-    __importSubfolder = "";
-    
     __packageImportForce = _forceImportAsPackage;
     __packageImport      = _forceImportAsPackage;
     __packageName        = "";
@@ -48,7 +46,7 @@ function ClassModalConfirmJob(_job, _forceImportAsPackage = false, _packageName 
             ImGuiText("Import subfolder");
             ImGuiTableNextColumn();
             ImGuiSetNextItemWidth(200);
-            __importSubfolder = ImGuiInputTextWithHint("##importSubfolder", "(project root)", __importSubfolder);
+            __job.SetSubfolder(ImGuiInputTextWithHint("##importSubfolder", "(project root)", __job.GetSubfolder()));
             
             ImGuiBeginDisabled(not __loadSuccessful);
             
