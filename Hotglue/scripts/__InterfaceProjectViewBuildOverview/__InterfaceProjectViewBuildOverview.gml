@@ -128,7 +128,7 @@ function __InterfaceProjectViewBuildOverview()
                 ImGuiSameLine();
                 ImGuiTextWrapped(_imported.version);
                 ImGuiTableNextColumn();
-                if (ImGuiSmallButton("Delete"))
+                if (ImGuiSmallButton($"Delete##{_i}"))
                 {
                     _deleteIndex = _i;
                 }
