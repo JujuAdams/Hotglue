@@ -12,10 +12,14 @@ function __HotglueRepositoryGist(_url) : __HotglueRepositoryCommon(_url) constru
         _url = filename_dir(_url);
     }
     
-    __name = _url;
+    __gistID   = filename_name(_url);
+    __username = filename_name(filename_dir(_url));
+    __name     = $"{__username}/{__gistID}";
     
-    __gistID = filename_name(_url);
     __apiURL = $"https://api.github.com/gists/{__gistID}";
+    
+    //Force a fetch of the gist page so we get an accurate name
+    GetReleases();
     
     
     
@@ -88,7 +92,7 @@ function __HotglueRepositoryGist(_url) : __HotglueRepositoryCommon(_url) constru
                             try
                             {
                                 var _fileNamesArray = struct_get_names(_json.files);
-                                __name = _fileNamesArray[0];
+                                __name   = $"{__username}/{_fileNamesArray[0]}";
                                 __readme = _json.description;
                                 
                                 _release = new __HotglueClassReleaseCommon(__name,
