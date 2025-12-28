@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HotglueJob",
+  "%Name":"__HotglueClassJob",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HotglueJob",
+  "name":"__HotglueClassJob",
   "parent":{
     "name":"Classes",
     "path":"folders/Hotglue/(System)/Classes.yy",

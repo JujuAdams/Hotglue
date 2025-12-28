@@ -2,7 +2,7 @@
 
 /// @param destinationProject
 
-function __HotglueJob(_destinationProject) constructor
+function __HotglueClassJob(_destinationProject) constructor
 {
     __destinationProject = _destinationProject;
     
