@@ -1,25 +1,93 @@
 // Feather disable all
 
 /// @param job
+/// @param [forceImportAsPackage=false]
+/// @param [packageName=""]
+/// @param [packageVersion="0.0.0"]
 
-function ClassModalConfirmJob(_job) constructor
+function ClassModalConfirmJob(_job, _forceImportAsPackage = false, _packageName = "", _packageVersion = "0.0.0") constructor
 {
     __job = _job;
     
     __loadPending = false;
     __loadSuccessful = true;
     
+    __importSubfolder = "";
     
+    __packageImportForce = _forceImportAsPackage;
+    __packageImport      = _forceImportAsPackage;
+    __packageName        = "";
+    __packageVersion     = "0.0.0";
+    
+    
+    
+    static __SetState = function(_forceImportAsPackage, _packageName, _packageVersion)
+    {
+        __packageImportForce = _forceImportAsPackage;
+        __packageImport      = _forceImportAsPackage;
+        __packageName        = _packageName;
+        __packageVersion     = _packageVersion;
+    }
     
     static Build = function()
     {
-        var _name = $"##modal_{string(ptr(self))}";
+        var _name = $"Confirm Import##modal_{string(ptr(self))}";
         
         ImGuiOpenPopup(_name);
         ImGuiSetNextWindowSize(0.5*oInterface.context.GetRegion().width, 0.666*oInterface.context.GetRegion().height);
         var _result = ImGuiBeginPopupModal(_name, true);
         if (_result & ImGuiReturnMask.Return)
         {
+            ImGuiBeginTable("overviewTable", 2, ImGuiTableFlags.RowBg | ImGuiTableFlags.Borders);
+            
+            ImGuiTableSetupColumn("field", ImGuiTableColumnFlags.WidthFixed, 120);
+            ImGuiTableSetupColumn("value");
+            
+            ImGuiTableNextRow();
+            ImGuiTableNextColumn();
+            ImGuiText("Import subfolder");
+            ImGuiTableNextColumn();
+            ImGuiSetNextItemWidth(200);
+            __importSubfolder = ImGuiInputTextWithHint("##importSubfolder", "(project root)", __importSubfolder);
+            
+            ImGuiBeginDisabled(not __loadSuccessful);
+            
+            ImGuiTableNextRow();
+            ImGuiTableNextColumn();
+            ImGuiText("Import as package");
+            ImGuiTableNextColumn();
+            ImGuiBeginDisabled(__packageImportForce);
+            __packageImport = ImGuiCheckbox("##importAsPackage", __packageImport);
+            ImGuiEndDisabled();
+            
+            ImGuiBeginDisabled(not __packageImport);
+            
+            ImGuiTableNextRow();
+            ImGuiTableNextColumn();
+            ImGuiText("Package name");
+            ImGuiTableNextColumn();
+            ImGuiSetNextItemWidth(200);
+            __packageName = ImGuiInputTextWithHint("##packageName", "(no package name)", __packageName);
+            
+            if (__packageImport && (__packageName == ""))
+            {
+                ImGuiSameLine();
+                ImGuiTextColored("Please enter a package name", INTERFACE_COLOR_RED_TEXT, 1);
+            }
+            
+            ImGuiTableNextRow();
+            ImGuiTableNextColumn();
+            ImGuiText("Package version");
+            ImGuiTableNextColumn();
+            ImGuiSetNextItemWidth(200);
+            __packageVersion = ImGuiInputTextWithHint("##packageversion", "0.0.0", __packageVersion);
+            
+            ImGuiEndTable();
+            ImGuiEndDisabled();
+            ImGuiEndDisabled();
+            
+            ImGuiNewLine();
+            
             if ((not __loadPending) && (not __loadSuccessful))
             {
                 ImGuiTextColored("Failed to load release project.", INTERFACE_COLOR_RED_TEXT);
@@ -35,9 +103,14 @@ function ClassModalConfirmJob(_job) constructor
             }
             
             ImGuiNewLine();
-            ImGuiBeginDisabled(__loadPending || (not __loadSuccessful) || (__job == undefined));
+            ImGuiBeginDisabled(__loadPending || (not __loadSuccessful) || (__job == undefined) || (__packageImport && (__packageName == "")));
             if (ImGuiButton("Confirm"))
             {
+                if (__packageVersion == "")
+                {
+                    __packageVersion = "0.0.0";
+                }
+                
                 var _success = false;
                 try
                 {

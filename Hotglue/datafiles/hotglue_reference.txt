@@ -25,7 +25,7 @@ Project structs contain the following methods:
 	Returns if the project was loaded from a .yymps file.
 
 .GetVersionString()
-	Returns the version of the .yymps file as a string. If the project was not loaded from a `.yymps` file then this function returns "-.-.-".
+	Returns the version of the .yymps file as a string. If the project was not loaded from a `.yymps` file then this function returns "0.0.0".
 
 .GetPath()
 	Returns the local path where the project is stored. For files downloaded from the internet automatically by Hotglue, this path will likely in Hotglue's cache.

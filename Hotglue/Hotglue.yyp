@@ -156,6 +156,7 @@
     {"id":{"name":"__HotglueRepositoryCommon","path":"scripts/__HotglueRepositoryCommon/__HotglueRepositoryCommon.yy",},},
     {"id":{"name":"__HotglueRepositoryGist","path":"scripts/__HotglueRepositoryGist/__HotglueRepositoryGist.yy",},},
     {"id":{"name":"__HotglueRepositoryGitHub","path":"scripts/__HotglueRepositoryGitHub/__HotglueRepositoryGitHub.yy",},},
+    {"id":{"name":"__HotglueRepositoryItch","path":"scripts/__HotglueRepositoryItch/__HotglueRepositoryItch.yy",},},
     {"id":{"name":"__HotglueRepositoryLocal","path":"scripts/__HotglueRepositoryLocal/__HotglueRepositoryLocal.yy",},},
     {"id":{"name":"__HotglueResourceAnimCurve","path":"scripts/__HotglueResourceAnimCurve/__HotglueResourceAnimCurve.yy",},},
     {"id":{"name":"__HotglueResourceCommon","path":"scripts/__HotglueResourceCommon/__HotglueResourceCommon.yy",},},

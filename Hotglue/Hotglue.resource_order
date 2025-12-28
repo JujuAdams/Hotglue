@@ -82,6 +82,7 @@
     {"name":"__HotglueProject","order":5,"path":"scripts/__HotglueProject/__HotglueProject.yy",},
     {"name":"__HotglueRepositoryCommon","order":4,"path":"scripts/__HotglueRepositoryCommon/__HotglueRepositoryCommon.yy",},
     {"name":"__HotglueRepositoryGist","order":2,"path":"scripts/__HotglueRepositoryGist/__HotglueRepositoryGist.yy",},
+    {"name":"__HotglueRepositoryItch","order":3,"path":"scripts/__HotglueRepositoryItch/__HotglueRepositoryItch.yy",},
     {"name":"__HotglueRepositoryLocal","order":1,"path":"scripts/__HotglueRepositoryLocal/__HotglueRepositoryLocal.yy",},
     {"name":"__HotglueResourceAnimCurve","order":2,"path":"scripts/__HotglueResourceAnimCurve/__HotglueResourceAnimCurve.yy",},
     {"name":"__HotglueResourceExtension","order":4,"path":"scripts/__HotglueResourceExtension/__HotglueResourceExtension.yy",},

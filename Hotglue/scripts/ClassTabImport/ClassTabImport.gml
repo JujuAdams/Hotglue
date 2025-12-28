@@ -361,7 +361,7 @@ function ClassTabImport() : ClassTab() constructor
             }
             else if (__importMode == "channels")
             {
-                var _modal = new ClassModalConfirmJob(__destinationProject.JobEmpty());
+                var _modal = new ClassModalConfirmJob(__destinationProject.JobEmpty(), true);
                 oInterface.popUpStruct = _modal;
                 
                 var _selectedRelease = GetSelectedRelease();
@@ -383,6 +383,11 @@ function ClassTabImport() : ClassTab() constructor
                                 {
                                     if (_struct.GetLoadedSuccessfully())
                                     {
+                                        if (_struct.GetIsPackage())
+                                        {
+                                            oInterface.popUpStruct.__SetState(true, _struct.GetName(), _struct.GetVersionString());
+                                        }
+                                        
                                         __job.__QueueDeleteLibrary(_struct.GetName());
                                         __job.__QueueAddLibrary(_struct);
                                         __job.BuildReport();
@@ -412,11 +417,6 @@ function ClassTabImport() : ClassTab() constructor
                     }
                 }
             }
-        }
-        
-        if ((__importMode == "direct from project") && (__directProject != undefined) && __directProject.GetIsPackage())
-        {
-            ImGuiText("as package");
         }
         
         ImGuiEndDisabled();
