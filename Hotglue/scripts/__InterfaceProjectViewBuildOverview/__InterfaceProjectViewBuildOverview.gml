@@ -2,51 +2,6 @@
 
 function __InterfaceProjectViewBuildOverview()
 {
-    __InputString = method(undefined, function(_pointer, _hint)
-    {
-        var _oldString = _pointer.__Get();
-        var _newString = ImGuiInputTextWithHint($"##{_hint}", _hint, _oldString);
-        if (_oldString != _newString)
-        {
-            _pointer.__Set(_newString);
-            __project.__SaveHotglueMetadata();
-        }
-    });
-    
-    __InputVersionString = method(undefined, function(_pointer, _hint)
-    {
-        var _oldString = string(_pointer.__Get());
-        
-        ImGuiSetNextItemWidth(40);
-        var _newString = ImGuiInputTextWithHint($"##{_hint}", _hint, _oldString);
-        if (_oldString != _newString)
-        {
-            var _value = undefined;
-            
-            if (_newString == "")
-            {
-                _value = _newString;
-            }
-            else
-            {
-                try
-                {
-                    _value = string_format(floor(abs(real(_newString))), 0, 0);
-                }
-                catch(_error)
-                {
-                    
-                }
-            }
-            
-            if (_value != undefined)
-            {
-                _pointer.__Set(_value);
-                __project.__SaveHotglueMetadata();
-            }
-        }
-    });
-    
     BuildOverview = method(undefined, function()
     {
         var _readOnly = __project.GetReadOnly();
