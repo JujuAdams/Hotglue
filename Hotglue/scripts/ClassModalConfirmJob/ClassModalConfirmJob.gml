@@ -64,21 +64,37 @@ function ClassModalConfirmJob(_job, _forceImportAsPackage = false, _packageName 
             ImGuiTableNextColumn();
             ImGuiText("Package name");
             ImGuiTableNextColumn();
-            ImGuiSetNextItemWidth(200);
-            __packageName = ImGuiInputTextWithHint("##packageName", "(no package name)", __packageName);
             
-            if (__packageImport && (__packageName == ""))
+            if (__packageImportForce)
             {
-                ImGuiSameLine();
-                ImGuiTextColored("Please enter a package name", INTERFACE_COLOR_RED_TEXT, 1);
+                ImGuiText(__packageName);
+            }
+            else
+            {
+                ImGuiSetNextItemWidth(200);
+                __packageName = ImGuiInputTextWithHint("##packageName", "(no package name)", __packageName);
+                
+                if (__packageImport && (__packageName == ""))
+                {
+                    ImGuiSameLine();
+                    ImGuiTextColored("Please enter a package name", INTERFACE_COLOR_RED_TEXT, 1);
+                }
             }
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
             ImGuiText("Package version");
             ImGuiTableNextColumn();
-            ImGuiSetNextItemWidth(200);
-            __packageVersion = ImGuiInputTextWithHint("##packageversion", "0.0.0", __packageVersion);
+            
+            if (__packageImportForce)
+            {
+                ImGuiText(__packageVersion);
+            }
+            else
+            {
+                ImGuiSetNextItemWidth(200);
+                __packageVersion = ImGuiInputTextWithHint("##packageversion", "0.0.0", __packageVersion);
+            }
             
             ImGuiEndTable();
             ImGuiEndDisabled();
