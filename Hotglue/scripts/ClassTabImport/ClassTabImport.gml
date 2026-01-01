@@ -389,7 +389,8 @@ function ClassTabImport() : ClassTab() constructor
                                         }
                                         
                                         __job.__QueueDeleteLibrary(_struct.GetName());
-                                        __job.__QueueAddLibrary(_struct);
+                                        __job.__QueueImportFrom(_struct, _struct.__quickAssetArray);
+                                        __job.__QueueAddLibraryRefs(_struct.GetName(), _struct.GetVersionString(), _struct.GetURL(), _struct.__quickAssetArray);
                                         __job.BuildReport();
                                         
                                         __loadSuccessful = true;

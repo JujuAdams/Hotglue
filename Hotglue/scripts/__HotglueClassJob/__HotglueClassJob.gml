@@ -283,24 +283,24 @@ function __HotglueClassJob(_destinationProject) constructor
         array_push(__actionArray, _method);
     }
     
-    static __QueueAddLibrary = function(_sourceProject)
+    static __QueueAddLibraryRefs = function(_libraryName, _libraryVersion, _libraryURL, _assetArray)
     {
         __saveHotglueMetadata = true;
         
-        __QueueImportFrom(_sourceProject, _sourceProject.__quickAssetArray);
-        
         var _method = method(
         {
-            __sourceProject: _sourceProject,
+            __libraryName:    _libraryName,
+            __libraryVersion: _libraryVersion,
+            __libraryURL:     _libraryURL,
+            __assetArray:     _assetArray,
         },
         function(_destinationProject)
         {
-            var _sourceProject = __sourceProject;
-            var _libraryName   = _sourceProject.GetName();
-            var _versionString = _sourceProject.GetVersionString();
-            var _originURL     = _sourceProject.GetURL();
+            var _libraryName    = __libraryName;
+            var _libraryVersion = __libraryVersion;
+            var _libraryURL     = __libraryURL;
             
-            var _sourceAssetArray = _sourceProject.__quickAssetArray;
+            var _sourceAssetArray = __assetArray;
             var _assetPIDArray = array_create(array_length(_sourceAssetArray));
             var _i = 0;
             repeat(array_length(_sourceAssetArray))
@@ -319,8 +319,8 @@ function __HotglueClassJob(_destinationProject) constructor
             {
                 array_push(_destinationProject.__hotglueMetadata.installed, {
                     name:    _libraryName,
-                    version: _versionString,
-                    origin:  _originURL,
+                    version: _libraryVersion,
+                    origin:  _libraryURL,
                     assets:  _assetPIDArray,
                 });
             }
