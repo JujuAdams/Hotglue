@@ -39,7 +39,7 @@ function HTTPCacheRequest(_url, _method, _headerMap, _body, _callback, _callback
     {
         if (not is_callable(_callback))
         {
-            return;
+            return -1;
         }
         else
         {
@@ -88,7 +88,7 @@ function HTTPCacheRequest(_url, _method, _headerMap, _body, _callback, _callback
                     ds_map_destroy(__asyncLoad);
                 }), false);
                 
-                return;
+                return -1;
             }
         }
     }
@@ -124,4 +124,6 @@ function HTTPCacheRequest(_url, _method, _headerMap, _body, _callback, _callback
         
         _requestDictionary[? _requestID] = new __HTTPClassCacheRequest(_hash, _callback, _callbackData, _system.__globalDurationMins);
     }
+    
+    return _requestID;
 }

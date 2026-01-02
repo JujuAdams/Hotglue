@@ -33,7 +33,7 @@ function HTTPCacheGet(_url, _callback, _callbackData = undefined, _forceRedownlo
     {
         if (not is_callable(_callback))
         {
-            return;
+            return -1;
         }
         else
         {
@@ -82,7 +82,7 @@ function HTTPCacheGet(_url, _callback, _callbackData = undefined, _forceRedownlo
                     ds_map_destroy(__asyncLoad);
                 }), false);
                 
-                return;
+                return -1;
             }
         }
     }
@@ -118,4 +118,6 @@ function HTTPCacheGet(_url, _callback, _callbackData = undefined, _forceRedownlo
         
         _httpRequestMap[? _requestID] = new __HTTPClassCacheRequest(_hash, _callback, _callbackData, _system.__globalDurationMins);
     }
+    
+    return _requestID;
 }

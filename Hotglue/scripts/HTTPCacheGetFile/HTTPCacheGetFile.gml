@@ -37,9 +37,11 @@ function HTTPCacheGetFile(_url, _destinationPath, _callback, _callbackData = und
     var _cachePath = __HTTPCacheGetPath(_hash);
     _destinationPath ??= _cachePath;
     
+    var _requestID = -1;
+    
     if (not HTTP_CACHE_DISK_AVAILABLE)
     {
-        var _requestID = http_get_file(_url, _destinationPath);
+        _requestID = http_get_file(_url, _destinationPath);
         if (_requestID < 0)
         {
             if (HTTP_CACHE_VERBOSE)
@@ -98,7 +100,7 @@ function HTTPCacheGetFile(_url, _destinationPath, _callback, _callbackData = und
         }
         else
         {
-            var _requestID = http_get_file(_url, __HTTPCacheGetPath(_hash));
+            _requestID = http_get_file(_url, __HTTPCacheGetPath(_hash));
             if (_requestID < 0)
             {
                 if (HTTP_CACHE_VERBOSE)
@@ -131,4 +133,6 @@ function HTTPCacheGetFile(_url, _destinationPath, _callback, _callbackData = und
             }
         }
     }
+    
+    return _requestID;
 }
