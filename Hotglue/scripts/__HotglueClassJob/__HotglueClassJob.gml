@@ -428,9 +428,12 @@ function __HotglueClassJob(_destinationProject) constructor
                             ++_i;
                         }
                         
+                        var _version = __libraryVersion;
+                        if (_version == "") _version = "0.0.0";
+                        
                         array_push(_libraryMetadata.installed, {
                             name:    __libraryName,
-                            version: __libraryVersion,
+                            version: _version,
                             origin:  __libraryURL,
                             assets:  _assetPIDArray,
                         });

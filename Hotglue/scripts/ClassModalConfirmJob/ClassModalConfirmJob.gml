@@ -80,11 +80,8 @@ function ClassModalConfirmJob(_job, _packageEditForce = false) constructor
             else
             {
                 ImGuiSetNextItemWidth(200);
-                __job.SetPackageVersion(ImGuiInputText("##packageversion", __job.GetPackageVersion()));
+                __job.SetPackageVersion(ImGuiInputTextWithHint("##packageversion", "0.0.0", __job.GetPackageVersion()));
             }
-            
-            ImGuiEndDisabled();
-            ImGuiEndDisabled();
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
@@ -93,6 +90,9 @@ function ClassModalConfirmJob(_job, _packageEditForce = false) constructor
             var _url = __job.GetPackageURL();
             if (_url == "") _url = "(no origin URL)";
             ImGuiText(_url);
+            
+            ImGuiEndDisabled();
+            ImGuiEndDisabled();
             
             ImGuiEndTable();
             

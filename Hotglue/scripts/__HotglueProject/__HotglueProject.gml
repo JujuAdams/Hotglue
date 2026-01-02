@@ -383,11 +383,13 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         return _job;
     }
     
-    static JobDeleteLibrary = function(_libraryName)
+    static JobDeleteLibrary = function(_libraryName, _libraryVersion, _libraryURL)
     {
         var _job = new __HotglueClassJob(self);
         _job.SetPackageEdit(true);
         _job.SetPackageName(_libraryName);
+        _job.SetPackageVersion(_libraryVersion);
+        _job.SetPackageURL(_libraryURL);
         return _job;
     }
     
