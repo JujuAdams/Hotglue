@@ -75,9 +75,13 @@ function __HTTPCacheAsyncEvent()
                 
                 if (HTTP_CACHE_DISK_AVAILABLE)
                 {
-                    if (__cachePath != __destinationPath)
+                    var _cachePath = __HTTPCacheGetPath(__hash);
+                    
+                    if ((_cachePath != __destination)
+                    &&  (_cachePath != string_replace(__destination, game_save_id, ""))
+                    &&  (string_replace(_cachePath, game_save_id, "") != __destination))
                     {
-                        file_copy(__cachePath, __destinationPath);
+                        file_copy(_cachePath, __destination);
                     }
                     
                     __HTTPCacheAdd(__hash, __durationMins);
@@ -90,7 +94,7 @@ function __HTTPCacheAsyncEvent()
             
             if (is_callable(__callback))
             {
-                __callback(_success, __destinationPath, __callbackData);
+                __callback(_success, __destination, __callbackData);
             }
         }
     }

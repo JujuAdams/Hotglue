@@ -24,9 +24,10 @@
 /// @param destinationPath
 /// @param callback
 /// @param [callbackData]
+/// @param [cacheFileExtension]
 /// @param [forceRedownload=false]
 
-function HTTPCacheGetFile(_url, _destinationPath, _callback, _callbackData = undefined, _forceRedownload = false)
+function HTTPCacheGetFile(_url, _destinationPath, _callback, _callbackData = undefined, _cacheFileExtension = undefined, _forceRedownload = false)
 {
     static _system = __HTTPCacheSystem();
     static _httpFileMap = _system.__httpFileMap;
@@ -34,6 +35,12 @@ function HTTPCacheGetFile(_url, _destinationPath, _callback, _callbackData = und
     __HTTPEnsureObject();
     
     var _hash = md5_string_utf8(_url);
+    
+    if (_cacheFileExtension != undefined)
+    {
+        _hash += _cacheFileExtension;
+    }
+    
     var _cachePath = __HTTPCacheGetPath(_hash);
     _destinationPath ??= _cachePath;
     
