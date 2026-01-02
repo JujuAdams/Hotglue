@@ -421,15 +421,12 @@ function __HotglueClassJob(_destinationProject) constructor
                         if (_index >= 0) array_delete(_hotglueMetadata.installed, _index, 1);
                     }
                     
-                    if (array_length(_addPIDArray) <= 0)
+                    if (array_length(_addPIDArray) > 0)
                     {
                         //Add the new package information to metadata
-                        var _derivedVersion = __libraryVersion;
-                        if (_derivedVersion == "") _derivedVersion = "0.0.0";
-                        
-                        array_push(_libraryMetadata.installed, {
+                        array_push(_hotglueMetadata.installed, {
                             name:    _packageName,
-                            version: _derivedVersion,
+                            version: (_packageVersion == "")? "0.0.0" : _packageVersion,
                             origin:  _packageURL,
                             assets:  variable_clone(_addPIDArray),
                         });
