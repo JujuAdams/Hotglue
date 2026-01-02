@@ -46,7 +46,6 @@
     {"name":"__HotglueChannelLocal","order":2,"path":"scripts/__HotglueChannelLocal/__HotglueChannelLocal.yy",},
     {"name":"__HotglueClassAssetCommon","order":3,"path":"scripts/__HotglueClassAssetCommon/__HotglueClassAssetCommon.yy",},
     {"name":"__HotglueClassHttpGetFile","order":8,"path":"scripts/__HotglueClassHttpGetFile/__HotglueClassHttpGetFile.yy",},
-    {"name":"__HotglueClassHttpRequest","order":7,"path":"scripts/__HotglueClassHttpRequest/__HotglueClassHttpRequest.yy",},
     {"name":"__HotglueClassJob","order":14,"path":"scripts/__HotglueClassJob/__HotglueClassJob.yy",},
     {"name":"__HotglueClassPointer","order":13,"path":"scripts/__HotglueClassPointer/__HotglueClassPointer.yy",},
     {"name":"__HotglueClassReleaseGitHub","order":2,"path":"scripts/__HotglueClassReleaseGitHub/__HotglueClassReleaseGitHub.yy",},

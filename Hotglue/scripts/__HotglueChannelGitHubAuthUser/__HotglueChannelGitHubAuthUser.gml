@@ -28,54 +28,53 @@ function __HotglueChannelGitHubAuthUser() : __HotglueChannelCommon("Auth'd GitHu
         {
             __HotglueTrace($"Refreshing channel \"{__url}\"");
             
-            __httpRequest = new __HotglueClassHttpRequest(__url);
-            
-            __httpRequest.Callback(function(_httpRequest, _success, _result, _responseHeaders)
+            __httpRequest = __HotglueHTTPRequest(__url, self, function(_success, _result, _responseHeaders, _callbackMetadata)
             {
-                __httpRequest = undefined;
-                
-                if (not _success)
+                with(_callbackMetadata)
                 {
-                    __HotglueWarning($"\"{_httpRequest.GetURL()}\" HTTP request failed");
-                }
-                else
-                {
-                    try
-                    {
-                        var _json = json_parse(_result);
-                    }
-                    catch(_error)
-                    {
-                        show_debug_message(_error);
-                        __HotglueWarning($"\"{_httpRequest.GetURL()}\" HTTP request was successful but failed to parse JSON");
-                        _success = false;
-                    }
+                    __httpRequest = undefined;
                     
-                    if (_success)
+                    if (not _success)
                     {
-                        ClearRepositories();
-                        
-                        __HotglueTrace($"Recevied {array_length(_json)} repositories");
-                        
-                        var _i = 0;
-                        repeat(array_length(_json))
+                        __HotglueWarning($"\"{__url}\" HTTP request failed");
+                    }
+                    else
+                    {
+                        try
                         {
-                            var _url = $"https://www.github.com/{_json[_i].full_name}";
-                            AddRepository(_url);
-                            ++_i;
+                            var _json = json_parse(_result);
+                        }
+                        catch(_error)
+                        {
+                            show_debug_message(_error);
+                            __HotglueWarning($"\"{__url}\" HTTP request was successful but failed to parse JSON");
+                            _success = false;
+                        }
+                        
+                        if (_success)
+                        {
+                            ClearRepositories();
+                            
+                            __HotglueTrace($"Recevied {array_length(_json)} repositories from \"{__url}\"");
+                            
+                            var _i = 0;
+                            repeat(array_length(_json))
+                            {
+                                var _url = $"https://www.github.com/{_json[_i].full_name}";
+                                AddRepository(_url);
+                                ++_i;
+                            }
                         }
                     }
-                }
-            
-                __httpSuccess = _success;
-                
-                if (is_callable(__refreshCallback))
-                {
-                    __refreshCallback(self, _success);
+                    
+                    __httpSuccess = _success;
+                    
+                    if (is_callable(__refreshCallback))
+                    {
+                        __refreshCallback(self, _success);
+                    }
                 }
             });
-            
-            __httpRequest.Send();
         }
     }
 }

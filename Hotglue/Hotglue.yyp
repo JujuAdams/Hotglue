@@ -121,7 +121,6 @@
     {"id":{"name":"__HotglueChannelLocal","path":"scripts/__HotglueChannelLocal/__HotglueChannelLocal.yy",},},
     {"id":{"name":"__HotglueClassAssetCommon","path":"scripts/__HotglueClassAssetCommon/__HotglueClassAssetCommon.yy",},},
     {"id":{"name":"__HotglueClassHttpGetFile","path":"scripts/__HotglueClassHttpGetFile/__HotglueClassHttpGetFile.yy",},},
-    {"id":{"name":"__HotglueClassHttpRequest","path":"scripts/__HotglueClassHttpRequest/__HotglueClassHttpRequest.yy",},},
     {"id":{"name":"__HotglueClassJob","path":"scripts/__HotglueClassJob/__HotglueClassJob.yy",},},
     {"id":{"name":"__HotglueClassPointer","path":"scripts/__HotglueClassPointer/__HotglueClassPointer.yy",},},
     {"id":{"name":"__HotglueClassReleaseCommon","path":"scripts/__HotglueClassReleaseCommon/__HotglueClassReleaseCommon.yy",},},

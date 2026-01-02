@@ -31,81 +31,81 @@ function __HotglueChannelGMK(_name, _url, _protected) : __HotglueChannelCommon(_
         if (__httpRequest == undefined)
         {
             __HotglueTrace($"Refreshing channel \"{__url}\"");
-            __httpRequest = new __HotglueClassHttpRequest(__url);
             
-            __httpRequest.Callback(function(_httpRequest, _success, _result, _responseHeaders)
+            __httpRequest = __HotglueHTTPRequest(__url, self, function(_success, _result, _responseHeaders, _callbackMetadata)
             {
-                __httpRequest = undefined;
-                
-                if (not _success)
+                with(_callbackMetadata)
                 {
-                    __HotglueWarning($"\"{_httpRequest.GetURL()}\" HTTP request failed");
-                }
-                else
-                {
-                    try
+                    __httpRequest = undefined;
+                    
+                    if (not _success)
                     {
-                        var _json = json_parse(_result);
+                        __HotglueWarning($"\"{__url}\" HTTP request failed");
                     }
-                    catch(_error)
+                    else
                     {
-                        show_debug_message(_error);
-                        __HotglueWarning($"\"{_httpRequest.GetURL()}\" HTTP request was successful but failed to parse JSON");
-                        _success = false;
-                    }
-                
-                    if (_success)
-                    {
-                        _success = false;
-                        
-                        if (not is_array(_json))
+                        try
                         {
-                            __HotglueWarning($"\"{_httpRequest.GetURL()}\" item array invalid");
+                            var _json = json_parse(_result);
                         }
-                        else
+                        catch(_error)
                         {
-                            ClearRepositories();
+                            show_debug_message(_error);
+                            __HotglueWarning($"\"{__url}\" HTTP request was successful but failed to parse JSON");
+                            _success = false;
+                        }
+                        
+                        if (_success)
+                        {
+                            _success = false;
                             
-                            __HotglueTrace($"Refreshed channel \"{__url}\". Found {array_length(_json)} items");
-                            
-                            var _i = 0;
-                            repeat(array_length(_json))
+                            if (not is_array(_json))
                             {
-                                var _link = _json[_i][$ "link"];
-                                if (is_string(_link))
+                                __HotglueWarning($"\"{__url}\" item array invalid");
+                            }
+                            else
+                            {
+                                ClearRepositories();
+                                
+                                __HotglueTrace($"Refreshed channel \"{__url}\". Found {array_length(_json)} items");
+                                
+                                var _i = 0;
+                                repeat(array_length(_json))
                                 {
-                                    if (__HotglueGuessURLIsGitHub(_link) || __HotglueGuessURLIsGist(_link) || __HotglueGuessURLIsItch(_link))
+                                    var _link = _json[_i][$ "link"];
+                                    if (is_string(_link))
                                     {
-                                        AddRepository(_link);
+                                        if (__HotglueGuessURLIsGitHub(_link) || __HotglueGuessURLIsGist(_link) || __HotglueGuessURLIsItch(_link))
+                                        {
+                                            AddRepository(_link);
+                                        }
+                                        else
+                                        {
+                                            __HotglueWarning($"Item {_i} does not have a GitHub repository or itch.io link ({_link})");
+                                        }
                                     }
                                     else
                                     {
-                                        __HotglueWarning($"Item {_i} does not have a GitHub repository or itch.io link ({_link})");
+                                        __HotglueWarning($"Item {_i} has no .link value");
                                     }
-                                }
-                                else
-                                {
-                                    __HotglueWarning($"Item {_i} has no .link value");
+                                    
+                                    ++_i;
                                 }
                                 
-                                ++_i;
+                                SortArray();
+                                _success = true;
                             }
-                            
-                            SortArray();
-                            _success = true;
                         }
                     }
-                }
-            
-                __httpSuccess = _success;
-                
-                if (is_callable(__refreshCallback))
-                {
-                    __refreshCallback(self, _success);
+                    
+                    __httpSuccess = _success;
+                    
+                    if (is_callable(__refreshCallback))
+                    {
+                        __refreshCallback(self, _success);
+                    }
                 }
             });
-            
-            __httpRequest.Send();
         }
     }
 }

@@ -54,7 +54,7 @@ function __HotglueRepositoryGist(_url) : __HotglueRepositoryCommon(_url) constru
         {
             __HotglueTrace($"Getting gist data from \"{__url}\"");
             
-            __HotglueHTTPRequest(__apiURL, self, function(_success, _result, _responseHeaders, _callbackMetadata)
+            __releasesRequest = __HotglueHTTPRequest(__apiURL, self, function(_success, _result, _responseHeaders, _callbackMetadata)
             {
                 with(_callbackMetadata)
                 {
