@@ -115,11 +115,11 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
         __DownloadInternal(__downloadURL, _callback);
     }
     
-    static __DownloadInternal = function(_url, _callback)
+    static __DownloadInternal = function(_url, _callback, _downloadPath = undefined)
     {
         __downloadCallback = _callback;
         
-        __downloadPath = filename_change_ext(__downloadPath, filename_ext(_url));
+        __downloadPath = (_downloadPath != undefined)? _downloadPath : filename_change_ext(__downloadPath, filename_ext(_url));
         
         if (file_exists(__downloadPath))
         {

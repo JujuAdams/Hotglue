@@ -107,7 +107,7 @@ function __HotglueRepositoryGitHub(_url) : __HotglueRepositoryCommon(_url) const
                         }
                         catch(_error)
                         {
-                            show_debug_message(_error);
+                            __HotglueTrace(_error);
                             __HotglueWarning($"\"{__url}\" releases request was successful but failed to parse");
                             _success = false;
                         }
@@ -153,7 +153,7 @@ function __HotglueRepositoryGitHub(_url) : __HotglueRepositoryCommon(_url) const
                                     }
                                     catch(_error)
                                     {
-                                        show_debug_message(_error);
+                                        __HotglueTrace(_error);
                                         __HotglueWarning($"Failed to parse release index {_i}");
                                     }
                                     

@@ -131,7 +131,7 @@ function __HotglueRepositoryItch(_url) : __HotglueRepositoryCommon(_url) constru
                                             }
                                             catch(_error)
                                             {
-                                                show_debug_message(_error);
+                                                __HotglueTrace(_error);
                                                 __HotglueWarning($"Failed to parse release index {_i}");
                                             }
                                             
