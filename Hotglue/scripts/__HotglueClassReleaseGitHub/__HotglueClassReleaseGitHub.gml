@@ -21,7 +21,7 @@ function __HotglueClassReleaseGitHub(_name, _datetimeString, _webURL, _downloadU
     {
         if (__assetsCollected)
         {
-            __DownloadInternal(__primaryAssetURL, _callback);
+            __DownloadInternal(__primaryAssetURL, _callback, filename_ext(__primaryAssetURL));
         }
         else
         {
@@ -118,7 +118,7 @@ function __HotglueClassReleaseGitHub(_name, _datetimeString, _webURL, _downloadU
                                     __HotglueWarning($"Did not find a .yymps or .yyz in releases for \"{__assetsEndpoint}\". Falling back on .zip repository download");
                                 }
                                 
-                                __DownloadInternal(__primaryAssetURL, __downloadCallback);
+                                __DownloadInternal(__primaryAssetURL, __downloadCallback, filename_ext(__primaryAssetURL));
                             }
                         }
                     }

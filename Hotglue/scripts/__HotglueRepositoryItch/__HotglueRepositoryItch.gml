@@ -124,7 +124,8 @@ function __HotglueRepositoryItch(_url) : __HotglueRepositoryCommon(_url) constru
                                                                                              _itchRelease.updated_at,
                                                                                              _downloadURL,
                                                                                              _description,
-                                                                                             (not _itchRelease.demo));
+                                                                                             (not _itchRelease.demo),
+                                                                                             filename_ext(_itchRelease.filename));
                                         
                                                 array_push(_releasesArray, _release);
                                                 //__HotglueTrace($"Found release \"{_itchRelease.filename}\"");

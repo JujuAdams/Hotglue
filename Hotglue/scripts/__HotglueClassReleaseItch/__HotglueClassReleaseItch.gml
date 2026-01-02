@@ -5,24 +5,22 @@
 /// @param downloadURL
 /// @param description
 /// @param stable
+/// @param fileExtension
 
-function __HotglueClassReleaseItch(_name, _datetimeString, _downloadURL, _description, _stable) : __HotglueClassReleaseCommon(_name, _datetimeString, _downloadURL, _downloadURL, _description, _stable) constructor
+function __HotglueClassReleaseItch(_name, _datetimeString, _downloadURL, _description, _stable, _fileExtension) : __HotglueClassReleaseCommon(_name, _datetimeString, _downloadURL, _downloadURL, _description, _stable) constructor
 {
+    __fileExtension = _fileExtension;
+    
     __assetsCollected = false;
     __assetsRequest   = undefined;
     
     
     
-    static __MakeDownloadPath = function()
-    {
-        return $"{HOTGLUE_RELEASE_CACHE_DIRECTORY}{md5_string_utf8(__primaryAssetURL)}.bin";
-    }
-    
     static Download = function(_callback)
     {
         if (__assetsCollected)
         {
-            __DownloadInternal(__primaryAssetURL, _callback, __MakeDownloadPath());
+            __DownloadInternal(__primaryAssetURL, _callback, __fileExtension);
         }
         else 
         {
@@ -60,7 +58,7 @@ function __HotglueClassReleaseItch(_name, _datetimeString, _downloadURL, _descri
                             if (_success)
                             {
                                 __primaryAssetURL = _primaryAssetURL;
-                                __DownloadInternal(__primaryAssetURL, __downloadCallback, __MakeDownloadPath());
+                                __DownloadInternal(__primaryAssetURL, __downloadCallback, __fileExtension);
                             }
                         }
                     }

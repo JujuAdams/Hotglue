@@ -18,9 +18,6 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
     
     __primaryAssetURL = _downloadURL;
     
-    __downloadPath = $"{HOTGLUE_RELEASE_CACHE_DIRECTORY}{__HotglueGenerateCacheFilename(__datetimeString, __webURL)}.bin";
-    __downloadRequest = undefined;
-    
     __downloadCallback = undefined;
     __loadCallback = undefined;
     
@@ -51,11 +48,6 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
         return __primaryAssetURL;
     }
     
-    static GetDownloadPath = function()
-    {
-        return __downloadPath;
-    }
-    
     static GetDescription = function()
     {
         return __description;
@@ -64,11 +56,6 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
     static GetStable = function()
     {
         return __stable;
-    }
-    
-    static GetDownloaded = function()
-    {
-        return file_exists(__downloadPath);
     }
     
     static LoadContent = function(_callback)
@@ -112,44 +99,23 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
     
     static Download = function(_callback)
     {
-        __DownloadInternal(__downloadURL, _callback);
+        __DownloadInternal(__downloadURL, _callback, filename_ext(__downloadURL));
     }
     
-    static __DownloadInternal = function(_url, _callback, _downloadPath = undefined)
+    static __DownloadInternal = function(_url, _callback, _fileExtension)
     {
         __downloadCallback = _callback;
         
-        __downloadPath = (_downloadPath != undefined)? _downloadPath : filename_change_ext(__downloadPath, filename_ext(_url));
-        
-        if (file_exists(__downloadPath))
+        HTTPCacheGetFile(_url, undefined, function(_success, _destinationPath, _callbackMetadata)
         {
-            __HotglueTrace($"\"{_url}\" has been cached, returning local path");
-            
-            if (is_callable(_callback))
-            {
-                call_later(1, time_source_units_frames, method({
-                    __release: other,
-                    __callback: _callback,
-                    __result: __downloadPath,
-                },
-                function()
-                {
-                    __callback(__release, true, __result);
-                }));
-            }
-        }
-        else
-        {
-            __HotglueTrace($"Downloading \"{_url}\" for release \"{__webURL}\"");
-            
-            __downloadRequest = new __HotglueClassHttpGetFile(_url, __downloadPath);
-            __downloadRequest.Callback(function(_httpRequest, _success, _result, _responseHeaders)
+            with(_callbackMetadata)
             {
                 if (is_callable(__downloadCallback))
                 {
-                    __downloadCallback(self, _success, _result);
+                    __downloadCallback(self, _success, _destinationPath);
                 }
-            });
-        }
+            }
+        },
+        self, _fileExtension);
     }
 }
