@@ -263,8 +263,8 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     
     static EnsureHotglueMetadata = function()
     {
-        if (__readOnly) return;
-        if (__hotglueMetadata != undefined) return;
+        if (__readOnly) return undefined;
+        if (__hotglueMetadata != undefined) return __hotglueMetadata;
         
         __hotglueMetadata = __HotglueCreateMetadata();
         
@@ -282,6 +282,8 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         _job.Execute();
         
         file_delete(_tempFilename);
+        
+        return __hotglueMetadata;
     }
     
     static __SaveHotglueMetadata = function()
@@ -369,22 +371,23 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     static JobImportAllFrom = function(_sourceProject, _subfolder = "")
     {
         var _job = new __HotglueClassJob(self);
-        _job.__QueueImportAllFrom(_sourceProject, _subfolder);
+        _job.SetImportAllFrom(_sourceProject, _subfolder);
         return _job;
     }
     
     static JobImportAsLibrary = function(_sourceProject, _subfolder = "")
     {
         var _job = new __HotglueClassJob(self);
-        _job.__QueueDeleteLibrary(_sourceProject.GetName());
-        _job.__QueueAddLibrary(_sourceProject);
+        _job.SetPackageFromProject(_sourceProject);
+        _job.SetImportAllFrom(_sourceProject);
         return _job;
     }
     
     static JobDeleteLibrary = function(_libraryName)
     {
         var _job = new __HotglueClassJob(self);
-        _job.__QueueDeleteLibrary(_libraryName);
+        _job.SetPackageEdit(true);
+        _job.SetPackageName(_libraryName);
         return _job;
     }
     
@@ -401,14 +404,14 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         }
         
         var _job = new __HotglueClassJob(self);
-        _job.__QueueImportFrom(_sourceProject, _assetArray, _subfolder);
+        _job.SetImportFrom(_sourceProject, _assetArray, _subfolder);
         return _job;
     }
     
     static JobImportFromLooseFiles = function(_looseFileArray, _subfolder = "")
     {
         var _job = new __HotglueClassJob(self);
-        _job.__QueueImportLooseFile(_looseFileArray, _subfolder);
+        _job.SetImportLooseFile(_looseFileArray, _subfolder);
         return _job;
     }
     

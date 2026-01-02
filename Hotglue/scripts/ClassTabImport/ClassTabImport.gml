@@ -385,12 +385,11 @@ function ClassTabImport() : ClassTab() constructor
                                     {
                                         if (_struct.GetIsPackage())
                                         {
-                                            oInterface.popUpStruct.__SetState(true, _struct.GetName(), _struct.GetVersionString());
+                                            oInterface.popUpStruct.__packageEditForce = true;
+                                            __job.SetPackageFromProject(_struct);
                                         }
                                         
-                                        __job.__QueueDeleteLibrary(_struct.GetName());
-                                        __job.__QueueImportFrom(_struct, _struct.__quickAssetArray);
-                                        __job.__QueueAddLibraryRefs(_struct.GetName(), _struct.GetVersionString(), _struct.GetURL(), _struct.__quickAssetArray);
+                                        __job.SetImportFrom(_struct, _struct.__quickAssetArray);
                                         __job.BuildReport();
                                         
                                         __loadSuccessful = true;
@@ -403,7 +402,7 @@ function ClassTabImport() : ClassTab() constructor
                                 }
                                 else if (is_instanceof(_struct, __HotglueLooseFile))
                                 {
-                                    __job.__QueueImportLooseFile(_struct);
+                                    __job.SetImportLooseFile(_struct);
                                     __job.BuildReport();
                                     
                                     __loadSuccessful = true;

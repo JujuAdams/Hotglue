@@ -1,31 +1,18 @@
 // Feather disable all
 
 /// @param job
-/// @param [forceImportAsPackage=false]
-/// @param [packageName=""]
-/// @param [packageVersion="0.0.0"]
+/// @param [packageEditForce=false]
 
-function ClassModalConfirmJob(_job, _forceImportAsPackage = false, _packageName = "", _packageVersion = "0.0.0") constructor
+function ClassModalConfirmJob(_job, _packageEditForce = false) constructor
 {
     __job = _job;
     
     __loadPending = false;
     __loadSuccessful = true;
     
-    __packageImportForce = _forceImportAsPackage;
-    __packageImport      = _forceImportAsPackage;
-    __packageName        = "";
-    __packageVersion     = "0.0.0";
+    __packageEditForce = _packageEditForce;
     
     
-    
-    static __SetState = function(_forceImportAsPackage, _packageName, _packageVersion)
-    {
-        __packageImportForce = _forceImportAsPackage;
-        __packageImport      = _forceImportAsPackage;
-        __packageName        = _packageName;
-        __packageVersion     = _packageVersion;
-    }
     
     static Build = function()
     {
@@ -52,29 +39,29 @@ function ClassModalConfirmJob(_job, _forceImportAsPackage = false, _packageName 
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
-            ImGuiText("Import as package");
+            ImGuiText((array_length(__job.GetAddArray()) > 0)? "Import as package" : "Package edit");
             ImGuiTableNextColumn();
-            ImGuiBeginDisabled(__packageImportForce);
-            __packageImport = ImGuiCheckbox("##importAsPackage", __packageImport);
+            ImGuiBeginDisabled(__packageEditForce);
+            __job.SetPackageEdit(ImGuiCheckbox("##packageEdit", __job.GetPackageEdit()));
             ImGuiEndDisabled();
             
-            ImGuiBeginDisabled(not __packageImport);
+            ImGuiBeginDisabled(not __job.GetPackageEdit());
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
             ImGuiText("Package name");
             ImGuiTableNextColumn();
             
-            if (__packageImportForce)
+            if (__packageEditForce)
             {
-                ImGuiText(__packageName);
+                ImGuiText(__job.GetPackageName());
             }
             else
             {
                 ImGuiSetNextItemWidth(200);
-                __packageName = ImGuiInputTextWithHint("##packageName", "(no package name)", __packageName);
+                __job.SetPackageName(ImGuiInputTextWithHint("##packageName", "(no package name)", __job.GetPackageName()));
                 
-                if (__packageImport && (__packageName == ""))
+                if (__job.GetPackageEdit() && (__job.GetPackageName() == ""))
                 {
                     ImGuiSameLine();
                     ImGuiTextColored("Please enter a package name", INTERFACE_COLOR_RED_TEXT, 1);
@@ -86,19 +73,28 @@ function ClassModalConfirmJob(_job, _forceImportAsPackage = false, _packageName 
             ImGuiText("Package version");
             ImGuiTableNextColumn();
             
-            if (__packageImportForce)
+            if (__packageEditForce)
             {
-                ImGuiText(__packageVersion);
+                ImGuiText(__job.GetPackageVersion());
             }
             else
             {
                 ImGuiSetNextItemWidth(200);
-                __packageVersion = ImGuiInputTextWithHint("##packageversion", "0.0.0", __packageVersion);
+                __job.SetPackageVersion(ImGuiInputText("##packageversion", __job.GetPackageVersion()));
             }
             
+            ImGuiEndDisabled();
+            ImGuiEndDisabled();
+            
+            ImGuiTableNextRow();
+            ImGuiTableNextColumn();
+            ImGuiText("Package origin");
+            ImGuiTableNextColumn();
+            var _url = __job.GetPackageURL();
+            if (_url == "") _url = "(no origin URL)";
+            ImGuiText(_url);
+            
             ImGuiEndTable();
-            ImGuiEndDisabled();
-            ImGuiEndDisabled();
             
             ImGuiNewLine();
             
@@ -117,14 +113,9 @@ function ClassModalConfirmJob(_job, _forceImportAsPackage = false, _packageName 
             }
             
             ImGuiNewLine();
-            ImGuiBeginDisabled(__loadPending || (not __loadSuccessful) || (__job == undefined) || (__packageImport && (__packageName == "")));
+            ImGuiBeginDisabled(__loadPending || (not __loadSuccessful) || (__job == undefined) || (__job.GetPackageEdit() && (__job.GetPackageName() == "")));
             if (ImGuiButton("Confirm"))
             {
-                if (__packageVersion == "")
-                {
-                    __packageVersion = "0.0.0";
-                }
-                
                 var _success = false;
                 try
                 {
