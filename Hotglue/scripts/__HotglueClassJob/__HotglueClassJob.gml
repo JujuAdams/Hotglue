@@ -371,6 +371,12 @@ function __HotglueClassJob(_destinationProject) constructor
     
     static Execute = function()
     {
+        var _packageEdit    = __packageEdit;
+        var _packageName    = __packageName;
+        var _packageVersion = __packageVersion;
+        var _packageURL     = __packageURL;
+        var _addPIDArray    = __addPIDArray;
+        
         with(__destinationProject)
         {
             if (__readOnly)
@@ -384,22 +390,22 @@ function __HotglueClassJob(_destinationProject) constructor
             
             __HotglueAssertGit(__projectDirectory);
             
-            if (__packageEdit)
+            if (_packageEdit)
             {
                 var _hotglueMetadata = EnsureHotglueMetadata();
                 if (_hotglueMetadata != undefined)
                 {
-                    var _libraryMetadata = __GetLibraryMetadata(__packageName);
+                    var _libraryMetadata = __GetLibraryMetadata(_packageName);
                     if (_libraryMetadata == undefined)
                     {
-                        if (array_length(__addPIDArray) <= 0)
+                        if (array_length(_addPIDArray) <= 0)
                         {
-                            __HotglueWarning($"Cannot delete library \"{__libraryName}\", it doesn't exist in destination project");
+                            __HotglueWarning($"Cannot delete library \"{_packageName}\", it doesn't exist in destination project");
                         }
                     }
                     else
                     {
-                        __HotglueTrace($"\"{__libraryName}\" not found, not deleting anything");
+                        __HotglueTrace($"\"{_packageName}\" not found, not deleting anything");
                         
                         //Delete assets from the package
                         var _assetPIDArray = _libraryMetadata.assets;
@@ -415,27 +421,17 @@ function __HotglueClassJob(_destinationProject) constructor
                         if (_index >= 0) array_delete(_hotglueMetadata.installed, _index, 1);
                     }
                     
-                    if (array_length(__addPIDArray) <= 0)
+                    if (array_length(_addPIDArray) <= 0)
                     {
                         //Add the new package information to metadata
-                        var _sourceAssetArray = __assetArray;
-                        var _assetPIDArray = array_create(array_length(_sourceAssetArray));
-                        var _i = 0;
-                        repeat(array_length(_sourceAssetArray))
-                        {
-                            var _asset = _sourceAssetArray[_i];
-                            _assetPIDArray[@ _i] = _asset.GetPID();
-                            ++_i;
-                        }
-                        
-                        var _version = __libraryVersion;
-                        if (_version == "") _version = "0.0.0";
+                        var _derivedVersion = __libraryVersion;
+                        if (_derivedVersion == "") _derivedVersion = "0.0.0";
                         
                         array_push(_libraryMetadata.installed, {
-                            name:    __libraryName,
-                            version: _version,
-                            origin:  __libraryURL,
-                            assets:  _assetPIDArray,
+                            name:    _packageName,
+                            version: _derivedVersion,
+                            origin:  _packageURL,
+                            assets:  variable_clone(_addPIDArray),
                         });
                     }
                     
