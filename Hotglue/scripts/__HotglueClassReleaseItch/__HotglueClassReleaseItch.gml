@@ -2,12 +2,13 @@
 
 /// @param name
 /// @param datetimeString
+/// @param webURL
 /// @param downloadURL
 /// @param description
 /// @param stable
 /// @param fileExtension
 
-function __HotglueClassReleaseItch(_name, _datetimeString, _downloadURL, _description, _stable, _fileExtension) : __HotglueClassReleaseCommon(_name, _datetimeString, _downloadURL, _downloadURL, _description, _stable) constructor
+function __HotglueClassReleaseItch(_name, _datetimeString, _webURL, _downloadURL, _description, _stable, _fileExtension) : __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadURL, _description, _stable) constructor
 {
     __fileExtension = _fileExtension;
     

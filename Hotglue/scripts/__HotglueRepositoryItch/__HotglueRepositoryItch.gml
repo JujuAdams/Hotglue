@@ -122,6 +122,7 @@ function __HotglueRepositoryItch(_url) : __HotglueRepositoryCommon(_url) constru
                                                 
                                                 var _release = new __HotglueClassReleaseItch(_itchRelease.filename,
                                                                                              _itchRelease.updated_at,
+                                                                                             __url,
                                                                                              _downloadURL,
                                                                                              _description,
                                                                                              (not _itchRelease.demo),

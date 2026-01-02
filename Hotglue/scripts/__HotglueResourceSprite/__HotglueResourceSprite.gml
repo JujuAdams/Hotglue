@@ -29,7 +29,7 @@ function __HotglueResourceSprite(_resourceStruct) : __HotglueResourceCommon(_res
             var _j = 0;
             repeat(array_length(_layerArray))
             {
-                array_push(_array, $"{_localDirectory}layers/{_frameName}/{_layerArray[_i].name}.png");
+                array_push(_array, $"{_localDirectory}layers/{_frameName}/{_layerArray[_j].name}.png");
                 ++_j;
             }
             
