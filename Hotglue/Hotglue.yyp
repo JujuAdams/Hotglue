@@ -140,6 +140,7 @@
     {"id":{"name":"__HotglueGenerateUUID","path":"scripts/__HotglueGenerateUUID/__HotglueGenerateUUID.yy",},},
     {"id":{"name":"__HotglueGuessURLIsGist","path":"scripts/__HotglueGuessURLIsGist/__HotglueGuessURLIsGist.yy",},},
     {"id":{"name":"__HotglueGuessURLIsGitHub","path":"scripts/__HotglueGuessURLIsGitHub/__HotglueGuessURLIsGitHub.yy",},},
+    {"id":{"name":"__HotglueHTTPRequest","path":"scripts/__HotglueHTTPRequest/__HotglueHTTPRequest.yy",},},
     {"id":{"name":"__HotglueIncludedFile","path":"scripts/__HotglueIncludedFile/__HotglueIncludedFile.yy",},},
     {"id":{"name":"__HotglueLoadGitHubAccessToken","path":"scripts/__HotglueLoadGitHubAccessToken/__HotglueLoadGitHubAccessToken.yy",},},
     {"id":{"name":"__HotglueLoadYYMPS","path":"scripts/__HotglueLoadYYMPS/__HotglueLoadYYMPS.yy",},},

@@ -63,6 +63,7 @@
     {"name":"__HotglueGenerateUUID","order":23,"path":"scripts/__HotglueGenerateUUID/__HotglueGenerateUUID.yy",},
     {"name":"__HotglueGuessURLIsGist","order":19,"path":"scripts/__HotglueGuessURLIsGist/__HotglueGuessURLIsGist.yy",},
     {"name":"__HotglueGuessURLIsGitHub","order":18,"path":"scripts/__HotglueGuessURLIsGitHub/__HotglueGuessURLIsGitHub.yy",},
+    {"name":"__HotglueHTTPRequest","order":27,"path":"scripts/__HotglueHTTPRequest/__HotglueHTTPRequest.yy",},
     {"name":"__HotglueIncludedFile","order":2,"path":"scripts/__HotglueIncludedFile/__HotglueIncludedFile.yy",},
     {"name":"__HotglueLoadGitHubAccessToken","order":17,"path":"scripts/__HotglueLoadGitHubAccessToken/__HotglueLoadGitHubAccessToken.yy",},
     {"name":"__HotglueLoadYYMPSUnpacked","order":1,"path":"scripts/__HotglueLoadYYMPSUnpacked/__HotglueLoadYYMPSUnpacked.yy",},

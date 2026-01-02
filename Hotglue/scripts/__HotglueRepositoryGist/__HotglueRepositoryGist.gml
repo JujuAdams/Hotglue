@@ -53,75 +53,75 @@ function __HotglueRepositoryGist(_url) : __HotglueRepositoryCommon(_url) constru
         if ((not __releasesCollected) && (__releasesRequest == undefined))
         {
             __HotglueTrace($"Getting gist data from \"{__url}\"");
-            __releasesRequest = new __HotglueClassHttpRequest(__apiURL);
             
-            __releasesRequest.Callback(function(_httpRequest, _success, _result, _responseHeaders)
+            __HotglueHTTPRequest(__apiURL, self, function(_success, _result, _responseHeaders, _callbackMetadata)
             {
-                __releasesCollected = true;
-                __releasesRequest = undefined;
-                
-                if (not _success)
+                with(_callbackMetadata)
                 {
-                    __HotglueWarning($"\"{_httpRequest.GetURL()}\" request failed");
-                }
-                else
-                {
-                    try
+                    __releasesCollected = true;
+                    __releasesRequest = undefined;
+                    
+                    if (not _success)
                     {
-                        var _json = json_parse(_result);
+                        __HotglueWarning($"\"{__apiURL}\" request failed");
                     }
-                    catch(_error)
+                    else
                     {
-                        show_debug_message(_error);
-                        __HotglueWarning($"\"{_httpRequest.GetURL()}\" was successful but failed to parse");
-                        _success = false;
-                    }
-                
-                    if (_success)
-                    {
-                        if (not is_struct(_json))
+                        try
                         {
-                            __HotglueWarning($"\"{_httpRequest.GetURL()}\" was successful but JSON format was unrecognized");
+                            var _json = json_parse(_result);
+                        }
+                        catch(_error)
+                        {
+                            show_debug_message(_error);
+                            __HotglueWarning($"\"{__apiURL}\" was successful but failed to parse");
                             _success = false;
                         }
-                        else
+                        
+                        if (_success)
                         {
-                            __HotglueTrace($"\"{_httpRequest.GetURL()}\" retrieved, creating a release");
-                            
-                            var _release = undefined;
-                            try
+                            if (not is_struct(_json))
                             {
-                                var _fileNamesArray = struct_get_names(_json.files);
-                                __name   = $"{__username}/{_fileNamesArray[0]}";
-                                __readme = _json.description;
+                                __HotglueWarning($"\"{__apiURL}\" was successful but JSON format was unrecognized");
+                                _success = false;
+                            }
+                            else
+                            {
+                                __HotglueTrace($"\"{__apiURL}\" retrieved, creating a release");
                                 
-                                _release = new __HotglueClassReleaseCommon(__name,
-                                                                           _json.updated_at,
-                                                                           _json.html_url,
-                                                                           _json.files[$ _fileNamesArray[0]].raw_url,
-                                                                           _json.description,
-                                                                           true);
-                            }
-                            catch(_error)
-                            {
-                                __HotglueWarning(json_stringify(_error, true));
-                                __HotglueWarning($"Failed to create release");
-                            }
-                            
-                            if (_release != undefined)
-                            {
-                                __releasesArray[@ 0] = _release;
-                                __latestStable       = _release;
-                                __latestRelease      = _release;
+                                var _release = undefined;
+                                try
+                                {
+                                    var _fileNamesArray = struct_get_names(_json.files);
+                                    __name   = $"{__username}/{_fileNamesArray[0]}";
+                                    __readme = _json.description;
+                                    
+                                    _release = new __HotglueClassReleaseCommon(__name,
+                                                                               _json.updated_at,
+                                                                               _json.html_url,
+                                                                               _json.files[$ _fileNamesArray[0]].raw_url,
+                                                                               _json.description,
+                                                                               true);
+                                }
+                                catch(_error)
+                                {
+                                    __HotglueWarning(json_stringify(_error, true));
+                                    __HotglueWarning($"Failed to create release");
+                                }
+                                
+                                if (_release != undefined)
+                                {
+                                    __releasesArray[@ 0] = _release;
+                                    __latestStable       = _release;
+                                    __latestRelease      = _release;
+                                }
                             }
                         }
                     }
+                    
+                    __ExecuteFinalCallback();
                 }
-                
-                __ExecuteFinalCallback();
             });
-            
-            __releasesRequest.Send();
         }
         
         return __releasesArray;
