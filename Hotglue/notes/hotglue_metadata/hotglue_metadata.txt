@@ -1,8 +1,6 @@
 {
-  "version":1.0,
   "installed":[
     {
-      "origin":"https:\/\/github.com\/JujuAdams\/SNAP\/releases\/tag\/8.1.1",
       "name":"SNAP",
       "assets":[
         "folder:SNAP",
@@ -89,10 +87,10 @@
         "resource:SnapVisualize",
         "resource:__SnapSystem"
       ],
+      "origin":"https:\/\/github.com\/JujuAdams\/SNAP\/releases\/tag\/8.1.1",
       "version":"8.1.1"
     },
     {
-      "origin":"C:\\Users\\conta\\Downloads\\GMLC_1_1_0.yymps",
       "name":"GMLC",
       "assets":[
         "folder:GMLCompiler",
@@ -134,7 +132,49 @@
         "resource:gmlc_file_management",
         "resource:sprGMLCLogo"
       ],
+      "origin":"C:\\Users\\conta\\Downloads\\GMLC_1_1_0.yymps",
       "version":"1.1.0"
+    },
+    {
+      "name":"HTTP Cache",
+      "assets":[
+        "resource:__HTTPCacheAdd",
+        "folder:HTTP Cache\/(System)",
+        "folder:HTTP Cache",
+        "resource:__HTTPCacheAsyncEvent",
+        "resource:__HTTPCacheExists",
+        "resource:__HTTPCacheGetElapsedTime",
+        "resource:__HTTPCacheGetPath",
+        "resource:__HTTPCacheSaveString",
+        "resource:__HTTPCacheSystem",
+        "resource:__HTTPCacheTrace",
+        "resource:__HTTPClassCacheFileGet",
+        "resource:__HTTPClassCacheRequest",
+        "resource:__HTTPEnsureObject",
+        "resource:__HTTPGetUTCTime",
+        "resource:__HTTPResponseIsSuccess",
+        "resource:__objHTTPCache",
+        "resource:HTTPCacheCustomExists",
+        "folder:HTTP Cache\/Custom",
+        "resource:HTTPCacheCustomGet",
+        "resource:HTTPCacheCustomSet",
+        "resource:HTTPCacheGet",
+        "folder:HTTP Cache\/HTTP",
+        "resource:HTTPCacheGetFile",
+        "resource:HTTPCacheRequest",
+        "resource:HTTPCacheClear",
+        "folder:HTTP Cache\/Miscellaneous",
+        "resource:HTTPCacheGetDirectory",
+        "resource:HTTPCacheGetDurationMins",
+        "resource:HTTPCachePrune",
+        "resource:HTTPCacheSetDirectory",
+        "resource:HTTPCacheSetDurationMins",
+        "resource:__HTTPCacheConfig",
+        "resource:__HTTPCacheConstants"
+      ],
+      "version":"1.0.0",
+      "origin":""
     }
-  ]
+  ],
+  "version":1.0
 }
