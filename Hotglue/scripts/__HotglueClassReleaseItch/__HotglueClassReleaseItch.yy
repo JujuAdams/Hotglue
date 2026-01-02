@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__HotglueClassReleaseItch",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__HotglueClassReleaseItch",
+  "parent":{
+    "name":"Releases",
+    "path":"folders/Hotglue/(System)/Classes/Releases.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

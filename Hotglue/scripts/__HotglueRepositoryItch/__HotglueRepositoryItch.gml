@@ -11,7 +11,12 @@ function __HotglueRepositoryItch(_url) : __HotglueRepositoryCommon(_url) constru
         _url += "/";
     }
     
-    __name = _url;
+    var _posA = string_pos("://", _url) + 3;
+    var _posB = string_pos(".itch.io/", _url);
+    __username = string_copy(_url, _posA, _posB - _posA);
+    __name = $"{__username}/{filename_name(filename_dir(_url))}";
+    
+    __filename = undefined;
     
     
     
@@ -43,110 +48,142 @@ function __HotglueRepositoryItch(_url) : __HotglueRepositoryCommon(_url) constru
     
     static GetReleases = function()
     {
-        return __releasesArray;
-        
         if ((not __releasesCollected) && (__releasesRequest == undefined))
         {
-            __HotglueTrace($"Getting releases from \"{__url}\"");
-            __releasesRequest = new __HotglueClassHttpRequest($"{__apiURL}releases?per_page={HOTGLUE_MAX_GITHUB_RELEASES}");
+            __HotglueTrace($"Getting data.json from \"{__url}\"");
             
-            __releasesRequest.Callback(function(_httpRequest, _success, _result, _responseHeaders)
+            __releasesRequest = __HotglueHTTPRequest($"{__url}/data.json", self, function(_success, _result, _responseHeaders, _callbackMetadata)
             {
-                __releasesCollected = true;
-                __releasesRequest = undefined;
-                
-                if (not _success)
+                with(_callbackMetadata)
                 {
-                    __HotglueWarning($"\"{_httpRequest.GetURL()}\" request failed");
-                }
-                else
-                {
-                    try
+                    __releasesCollected = true;
+                    __releasesRequest = undefined;
+                    
+                    if (not _success)
                     {
-                        var _json = json_parse(_result);
+                        __HotglueWarning($"\"{__url}\" request failed");
                     }
-                    catch(_error)
+                    else
                     {
-                        show_debug_message(_error);
-                        __HotglueWarning($"\"{_httpRequest.GetURL()}\" was successful but failed to parse");
-                        _success = false;
-                    }
-                
-                    if (_success)
-                    {
-                        if (not is_array(_json))
+                        var _id = undefined;
+                        
+                        try
                         {
-                            __HotglueWarning($"\"{_httpRequest.GetURL()}\" was successful but JSON format was unrecognized");
-                            _success = false;
+                            var _json = json_parse(_result);
+                            _id = _json.id;
+                        }
+                        catch(_error)
+                        {
+                            __HotglueWarning(json_stringify(_error, true));
+                        }
+                        
+                        if (_id == undefined)
+                        {
+                            __HotglueWarning($"\"{__url}\" was successful but failed to parse");
                         }
                         else
                         {
-                            var _releasesArray = __releasesArray;
-                            
-                            array_resize(_releasesArray, 0);
-                            __latestStable = undefined;
-                            
-                            __HotglueTrace($"\"{_httpRequest.GetURL()}\" retrieved {array_length(_json)} releases (maximum is {HOTGLUE_MAX_GITHUB_RELEASES})");
-                            
-                            var _i = 0;
-                            repeat(array_length(_json))
+                            __HotglueHTTPRequest($"https://itch.io/api/1/{HOTGLUE_ITCH_API_KEY}/game/{_id}/uploads", self, function(_success, _result, _responseHeaders, _callbackMetadata)
                             {
-                                var _githubRelease = _json[_i];
-                                
-                                try
+                                with(_callbackMetadata)
                                 {
-                                    var _release = new __HotglueClassReleaseGitHub(_githubRelease.name,
-                                                                                   _githubRelease.published_at,
-                                                                                   _githubRelease.html_url,
-                                                                                   _githubRelease.zipball_url,
-                                                                                   _githubRelease.body,
-                                                                                   (not _githubRelease.prerelease),
-                                                                                   _githubRelease.assets_url);
-                                    
-                                    array_push(_releasesArray, _release);
-                                    //__HotglueTrace($"Found release \"{_githubRelease.name}\"");
-                                    
-                                    if ((__latestStable == undefined) && (not _githubRelease.prerelease))
+                                    try
                                     {
-                                        __latestStable = _release;
+                                        var _json = json_parse(_result);
+                                        var _uploadsArray = _json.uploads;
+                                    }
+                                    catch(_error)
+                                    {
+                                        __HotglueWarning(json_stringify(_error, true));
+                                        __HotglueWarning($"\"{__url}\" was successful but failed to parse");
+                                        _success = false;
+                                    }
+                                    
+                                    if (_success)
+                                    {
+                                        var _releasesArray = __releasesArray;
+                                        
+                                        array_resize(_releasesArray, 0);
+                                        __latestStable = undefined;
+                                        
+                                        __HotglueTrace($"\"{__url}\" request retrieved {array_length(_uploadsArray)} releases");
+                                        
+                                        var _i = 0;
+                                        repeat(array_length(_uploadsArray))
+                                        {
+                                            var _itchRelease = _uploadsArray[_i];
+                                            
+                                            try
+                                            {
+                                                var _uploadID = _itchRelease.id;
+                                                var _downloadURL = $"https://itch.io/api/1/{HOTGLUE_ITCH_API_KEY}/upload/{_uploadID}/download";
+                                                
+                                                var _description = $"Updated at {_itchRelease.updated_at}\nType = \"{_itchRelease.type}\"\nDemo = {_itchRelease.demo? "true" : "false"}";
+                                                
+                                                var _release = new __HotglueClassReleaseItch(_itchRelease.filename,
+                                                                                             _itchRelease.updated_at,
+                                                                                             _downloadURL,
+                                                                                             _description,
+                                                                                             (not _itchRelease.demo));
+                                        
+                                                array_push(_releasesArray, _release);
+                                                //__HotglueTrace($"Found release \"{_itchRelease.filename}\"");
+                                            }
+                                            catch(_error)
+                                            {
+                                                show_debug_message(_error);
+                                                __HotglueWarning($"Failed to parse release index {_i}");
+                                            }
+                                            
+                                            ++_i;
+                                        }
+                                        
+                                        //itch.io uploads aren't necessarily sorted
+                                        array_sort(_releasesArray, function(_a, _b)
+                                        {
+                                            return (_a < _b)? -1 : 1;
+                                        });
+                                        
+                                        //Find the first non-demo upload
+                                        var _i = 0;
+                                        repeat(array_length(_releasesArray))
+                                        {
+                                            var _release = _releasesArray[_i];
+                                            if (_release.__stable)
+                                            {
+                                                __latestStable = _release;
+                                                break;
+                                            }
+                                            
+                                            ++_i;
+                                        }
+                                        
+                                        __latestRelease = array_first(_releasesArray);
+                                        
+                                        if (is_struct(__latestStable))
+                                        {
+                                            __HotglueTrace($"Latest stable is \"{__latestStable.GetWebURL()}\"");
+                                        }
+                                        else
+                                        {
+                                            __HotglueTrace($"No latest stable found for \"{__url}\"");
+                                        }
+                                        
+                                        if (is_struct(__latestRelease))
+                                        {
+                                            __HotglueTrace($"Latest release is \"{__latestRelease.GetWebURL()}\"");
+                                        }
+                                        else
+                                        {
+                                            __HotglueWarning($"No latest release found for \"{__url}\"");
+                                        }
                                     }
                                 }
-                                catch(_error)
-                                {
-                                    show_debug_message(_error);
-                                    __HotglueWarning($"Failed to parse release index {_i}");
-                                }
-                                
-                                ++_i;
-                            }
-                            
-                            __latestRelease = array_first(_releasesArray);
-                            
-                            if (is_struct(__latestStable))
-                            {
-                                __HotglueTrace($"Latest stable is \"{__latestStable.GetWebURL()}\"");
-                            }
-                            else
-                            {
-                                __HotglueTrace($"No latest stable found for \"{_httpRequest.GetURL()}\"");
-                            }
-                            
-                            if (is_struct(__latestRelease))
-                            {
-                                __HotglueTrace($"Latest release is \"{__latestRelease.GetWebURL()}\"");
-                            }
-                            else
-                            {
-                                __HotglueWarning($"No latest release found for \"{_httpRequest.GetURL()}\"");
-                            }
+                            });
                         }
                     }
                 }
-                
-                __ExecuteFinalCallback();
             });
-            
-            __releasesRequest.Send();
         }
         
         return __releasesArray;

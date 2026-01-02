@@ -11,7 +11,7 @@ function ClassModalNewRemoteContent() constructor
         var _name = $"##modal_{string(ptr(self))}";
         
         ImGuiOpenPopup(_name);
-        ImGuiSetNextWindowSize(oInterface.context.GetRegion().width/2, oInterface.context.GetRegion().height/4);
+        ImGuiSetNextWindowSize(oInterface.context.GetRegion().width/2, oInterface.context.GetRegion().height/3);
         var _result = ImGuiBeginPopupModal(_name, true);
         if (_result & ImGuiReturnMask.Return)
         {
@@ -21,7 +21,10 @@ function ClassModalNewRemoteContent() constructor
             
             ImGuiNewLine();
             
-            ImGuiTextColored("Only GitHub URLs are supported at this time.", INTERFACE_COLOR_ORANGE_TEXT, 1);
+            ImGuiText("Only the following types of URL are currently supported:");
+            ImGuiText("- GitHub repositories");
+            ImGuiText("- GitHub gists");
+            ImGuiText("- Free & public itch.io pages");
             
             ImGuiNewLine();
             
