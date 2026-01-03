@@ -13,13 +13,53 @@ function HttpCacheSetDirectory(_path, _clearOnChange = true)
 {
     static _system = __HttpCacheSystem();
     
-    if (_path != _system.__cacheDirectory)
+    with(_system)
     {
-        if (_clearOnChange)
+        if (_path != __cacheDirectory)
         {
-            HttpCacheClear();
-        }
+            if (_clearOnChange)
+            {
+                HttpCacheClear();
+            }
         
-        _system.__cacheDirectory = _path;
+            __HttpCacheTrace($"Set cache directory to \"{_path}\"");
+            __cacheDirectory = _path;
+        
+            var _manifestPath = __HttpCacheGetPath("manifest.json");
+            if (not file_exists(_manifestPath))
+            {
+                __HttpCacheTrace($"Could not find cache manifest \"{_manifestPath}\", clearing cache directory");
+                
+                __cacheTimeMap = ds_map_create();
+                HttpCacheClear();
+            }
+            else
+            {
+                ds_map_destroy(__cacheTimeMap);
+                __cacheTimeMap = undefined;
+                
+                try
+                {
+                    var _buffer = buffer_load(_manifestPath);
+                    var _jsonString = buffer_read(_buffer, buffer_text);
+                    buffer_delete(_buffer);
+                    
+                    __cacheTimeMap = json_decode(_jsonString);
+                    __HttpCacheTrace($"Loaded cache manifest successfully, {ds_map_size(__cacheTimeMap)} entries in cache");
+                }
+                catch(_error)
+                {
+                    show_debug_message(json_stringify(_error, true));
+                    __HttpCacheTrace("Warning! Failed to load cache manifest");
+                }
+                
+                if ((__cacheTimeMap == undefined) || (not ds_exists(__cacheTimeMap, ds_type_map)))
+                {
+                    __cacheTimeMap = ds_map_create();
+                }
+                
+                HttpCachePrune();
+            }
+        }
     }
 }
