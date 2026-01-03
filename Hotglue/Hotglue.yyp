@@ -253,7 +253,6 @@
     {"id":{"name":"GMLCFastPasses","path":"scripts/GMLCFastPasses/GMLCFastPasses.yy",},},
     {"id":{"name":"HotglueChannelsDeserialize","path":"scripts/HotglueChannelsDeserialize/HotglueChannelsDeserialize.yy",},},
     {"id":{"name":"HotglueChannelsSerialize","path":"scripts/HotglueChannelsSerialize/HotglueChannelsSerialize.yy",},},
-    {"id":{"name":"HotglueClearReleaseCache","path":"scripts/HotglueClearReleaseCache/HotglueClearReleaseCache.yy",},},
     {"id":{"name":"HotglueClearTempCache","path":"scripts/HotglueClearTempCache/HotglueClearTempCache.yy",},},
     {"id":{"name":"HotglueClearUnzipCache","path":"scripts/HotglueClearUnzipCache/HotglueClearUnzipCache.yy",},},
     {"id":{"name":"HotglueDeleteChannel","path":"scripts/HotglueDeleteChannel/HotglueDeleteChannel.yy",},},

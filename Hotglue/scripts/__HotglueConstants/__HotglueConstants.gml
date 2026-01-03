@@ -8,10 +8,10 @@
 // As per `https://docs.github.com/en/rest/releases/releases`
 #macro HOTGLUE_MAX_GITHUB_RELEASES  100
 
-#macro HOTGLUE_AUTH_CACHE_DIRECTORY     (game_save_id + "auth/")
-#macro HOTGLUE_UNZIP_CACHE_DIRECTORY    (HotglueGetCachePath() + "unzip/")
-#macro HOTGLUE_RELEASE_CACHE_DIRECTORY  (HotglueGetCachePath() + "releases/")
-#macro HOTGLUE_TEMP_CACHE_DIRECTORY     (HotglueGetCachePath() + "temp/")
+#macro HOTGLUE_AUTH_CACHE_DIRECTORY   (game_save_id + "auth/")
+#macro HOTGLUE_UNZIP_CACHE_DIRECTORY  (HotglueGetCachePath() + "unzip/")
+#macro HOTGLUE_HTTP_CACHE_DIRECTORY   (HotglueGetCachePath() + "http/")
+#macro HOTGLUE_TEMP_CACHE_DIRECTORY   (HotglueGetCachePath() + "temp/")
 
 #macro HOTGLUE_GITHUB_AUTH_SCOPE  "repo"
 

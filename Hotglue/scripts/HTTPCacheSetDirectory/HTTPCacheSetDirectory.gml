@@ -7,14 +7,19 @@
 ///      available.
 /// 
 /// @param path
+/// @param [clearOnChange=true]
 
-function HttpCacheSetDirectory(_path)
+function HttpCacheSetDirectory(_path, _clearOnChange = true)
 {
     static _system = __HttpCacheSystem();
     
     if (_path != _system.__cacheDirectory)
     {
-        HttpCacheClear();
+        if (_clearOnChange)
+        {
+            HttpCacheClear();
+        }
+        
         _system.__cacheDirectory = _path;
     }
 }

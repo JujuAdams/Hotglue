@@ -224,10 +224,10 @@ function ClassTabSettings() : ClassTab() constructor
         ImGuiIndent();
         InterfaceLinkText(HotglueGetCachePath());
         
-        if (ImGuiButton("Clear release cache"))
+        if (ImGuiButton("Clear HTTP cache"))
         {
-            HotglueClearReleaseCache();
-            LogTraceAndStatus("Cleared release cache");
+            HttpCacheClear();
+            LogTraceAndStatus("Cleared HTTP cache");
         }
         
         ImGuiSameLine(undefined, 20);
@@ -265,6 +265,7 @@ function ClassTabSettings() : ClassTab() constructor
         if (ImGuiIsItemDeactivatedAfterEdit() && (_oldString != _newString))
         {
             HotglueSetCachePath(_newString);
+            HttpCacheSetDirectory($"{_newString}httpCache/");
             InterfaceSettingsSave();
         }
         
@@ -280,6 +281,7 @@ function ClassTabSettings() : ClassTab() constructor
         if (ImGuiButton("Reset##cachePath"))
         {
             HotglueSetCachePath(HOTGLUE_DEFAULT_PATH_CACHE);
+            HttpCacheSetDirectory($"{HOTGLUE_DEFAULT_PATH_CACHE}httpCache/");
         }
         
         ImGuiTableNextRow();
