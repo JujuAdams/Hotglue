@@ -1,8 +1,8 @@
 // Feather disable all
 
-function __HTTPCacheAsyncEvent()
+function __HttpCacheAsyncEvent()
 {
-    static _system         = __HTTPCacheSystem();
+    static _system         = __HttpCacheSystem();
     static _httpRequestMap = _system.__httpRequestMap;
     static _httpFileMap    = _system.__httpFileMap;
     static _cachedValueMap = _system.__cachedValueMap;
@@ -26,7 +26,7 @@ function __HTTPCacheAsyncEvent()
             {
                 if (HTTP_CACHE_VERBOSE)
                 {
-                    __HTTPCacheTrace($"HTTP request successful (status={_status}, httpStatus={_httpStatus})");
+                    __HttpCacheTrace($"HTTP request successful (status={_status}, httpStatus={_httpStatus})");
                 }
                 
                 var _struct = json_parse(json_encode(async_load));
@@ -34,21 +34,21 @@ function __HTTPCacheAsyncEvent()
                 
                 if (HTTP_CACHE_DISK_AVAILABLE)
                 {
-                    __HTTPCacheSaveString(__HTTPCacheGetPath(__hash), json_stringify(_struct));
+                    __HttpCacheSaveString(__HttpCacheGetPath(__hash), json_stringify(_struct));
                 }
                 else
                 {
                     _cachedValueMap[? __hash] = _struct;
                 }
                 
-                __HTTPCacheAdd(__hash, __durationMins);
+                __HttpCacheAdd(__hash, __durationMins);
             }
             else
             {
                 if (HTTP_CACHE_VERBOSE)
                 {
-                    __HTTPCacheTrace($"HTTP request failed (status={_status}, httpStatus={_httpStatus})");
-                    __HTTPCacheTrace(_result);
+                    __HttpCacheTrace($"HTTP request failed (status={_status}, httpStatus={_httpStatus})");
+                    __HttpCacheTrace(_result);
                 }
             }
             
@@ -71,11 +71,11 @@ function __HTTPCacheAsyncEvent()
             var _success = __HTTPResponseIsSuccess(_httpStatus);
             if (_success)
             {
-                __HTTPCacheTrace($"HTTP file get successful (status={_status}, httpStatus={_httpStatus})");
+                __HttpCacheTrace($"HTTP file get successful (status={_status}, httpStatus={_httpStatus})");
                 
                 if (HTTP_CACHE_DISK_AVAILABLE)
                 {
-                    var _cachePath = __HTTPCacheGetPath(__hash);
+                    var _cachePath = __HttpCacheGetPath(__hash);
                     
                     if ((_cachePath != __destination)
                     &&  (_cachePath != string_replace(__destination, game_save_id, ""))
@@ -84,12 +84,12 @@ function __HTTPCacheAsyncEvent()
                         file_copy(_cachePath, __destination);
                     }
                     
-                    __HTTPCacheAdd(__hash, __durationMins);
+                    __HttpCacheAdd(__hash, __durationMins);
                 }
             }
             else
             {
-                __HTTPCacheTrace($"HTTP file get failed (status={_status}, httpStatus={_httpStatus})");
+                __HttpCacheTrace($"HTTP file get failed (status={_status}, httpStatus={_httpStatus})");
             }
             
             if (is_callable(__callback))

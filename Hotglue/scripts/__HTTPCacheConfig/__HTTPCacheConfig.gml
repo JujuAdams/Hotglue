@@ -10,12 +10,12 @@
 // intended for use in production builds.
 #macro HTTP_CACHE_VERBOSE  true
 
-// Whether to execute `HTTPCacheClear()` when the game boots up. This is helpful for testing or for
+// Whether to execute `HttpCacheClear()` when the game boots up. This is helpful for testing or for
 // aggressive disk space management. This macro is of no use if the disk cache is disabled or
 // unavailable on the target platform.
 #macro HTTP_CACHE_CLEAR_ON_BOOT  false
 
-// Whether to execute `HTTPCacheClear()` when the game exits. This is not guaranteed to always
-// execute and something like a crash will not allow HTTPCache to delete files on disk. This macro
+// Whether to execute `HttpCacheClear()` when the game exits. This is not guaranteed to always
+// execute and something like a crash will not allow HttpCache to delete files on disk. This macro
 // is of no use if the disk cache is disabled or unavailable on the target platform.
 #macro HTTP_CACHE_CLEAR_ON_EXIT  false

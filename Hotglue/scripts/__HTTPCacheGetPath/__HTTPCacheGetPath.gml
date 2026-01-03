@@ -2,8 +2,8 @@
 
 /// @param localPath
 
-function __HTTPCacheGetPath(_localPath)
+function __HttpCacheGetPath(_localPath)
 {
-    static _system = __HTTPCacheSystem();
+    static _system = __HttpCacheSystem();
     return $"{_system.__cacheDirectory}{_localPath}";
 }

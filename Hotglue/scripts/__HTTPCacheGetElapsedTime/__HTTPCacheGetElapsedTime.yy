@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HTTPCacheGetElapsedTime",
+  "%Name":"__HttpCacheGetElapsedTime",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HTTPCacheGetElapsedTime",
+  "name":"__HttpCacheGetElapsedTime",
   "parent":{
     "name":"(System)",
     "path":"folders/HTTP Cache/(System).yy",

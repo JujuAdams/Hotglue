@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HTTPClassCacheFileGet",
+  "%Name":"__HttpClassCacheFileGet",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HTTPClassCacheFileGet",
+  "name":"__HttpClassCacheFileGet",
   "parent":{
     "name":"(System)",
     "path":"folders/HTTP Cache/(System).yy",

@@ -6,7 +6,7 @@
 /// to this function will use the cached file on disk as the source rather than redownloading a
 /// file from the HTTP endpoint.
 /// 
-/// You should specify a callback to execute when HTTPCache receives a response. Your callback
+/// You should specify a callback to execute when HttpCache receives a response. Your callback
 /// should take three parameters:
 /// - success
 /// - destinationPath
@@ -17,31 +17,32 @@
 /// pass `undefined` for the destination path.
 /// 
 /// Cached data will be considered valid for a limited time span, as determined by the duration set
-/// by `HTTPCacheSetDurationMins()` (the default timeout is 5 minutes). Cached data is stored on
+/// by `HttpCacheSetDurationMins()` (the default timeout is 5 minutes). Cached data is stored on
 /// disk and can persist for hours or days if you so choose.
 /// 
 /// @param url
 /// @param destinationPath
 /// @param callback
 /// @param [callbackData]
-/// @param [cacheFileExtension]
 /// @param [forceRedownload=false]
+/// @param [cacheFileExtension]
+/// @param [hashKey]
 
-function HTTPCacheGetFile(_url, _destinationPath, _callback, _callbackData = undefined, _cacheFileExtension = undefined, _forceRedownload = false)
+function HttpCacheGetFile(_url, _destinationPath, _callback, _callbackData = undefined, _forceRedownload = false, _cacheFileExtension = undefined, _hashKey = _url)
 {
-    static _system = __HTTPCacheSystem();
+    static _system = __HttpCacheSystem();
     static _httpFileMap = _system.__httpFileMap;
     
     __HTTPEnsureObject();
     
-    var _hash = md5_string_utf8(_url);
+    var _hash = md5_string_utf8(_hashKey);
     
     if (_cacheFileExtension != undefined)
     {
         _hash += _cacheFileExtension;
     }
     
-    var _cachePath = __HTTPCacheGetPath(_hash);
+    var _cachePath = __HttpCacheGetPath(_hash);
     _destinationPath ??= _cachePath;
     
     var _requestID = -1;
@@ -53,7 +54,7 @@ function HTTPCacheGetFile(_url, _destinationPath, _callback, _callbackData = und
         {
             if (HTTP_CACHE_VERBOSE)
             {
-                __HTTPCacheTrace($"`http_get_file()` failed for \"{_url}\"");
+                __HttpCacheTrace($"`http_get_file()` failed for \"{_url}\"");
             }
             
             if (is_callable(__callback))
@@ -74,7 +75,7 @@ function HTTPCacheGetFile(_url, _destinationPath, _callback, _callbackData = und
         {
             if (HTTP_CACHE_VERBOSE)
             {
-                __HTTPCacheTrace($"Executed `http_get_file()` for \"{_url}\"");
+                __HttpCacheTrace($"Executed `http_get_file()` for \"{_url}\"");
             }
             
             _httpFileMap[? _requestID] = new __HTTPClassCacheFileGet(undefined, _destinationPath, _callback, _callbackData, _system.__globalDurationMins);
@@ -82,11 +83,11 @@ function HTTPCacheGetFile(_url, _destinationPath, _callback, _callbackData = und
     }
     else
     {
-        if ((not _forceRedownload) && __HTTPCacheExists(_hash))
+        if ((not _forceRedownload) && __HttpCacheExists(_hash))
         {
             if (HTTP_CACHE_VERBOSE)
             {
-                __HTTPCacheTrace($"File has been cached for \"{_url}\" ({_hash})");
+                __HttpCacheTrace($"File has been cached for \"{_url}\" ({_hash})");
             }
             
             file_copy(_cachePath, _destinationPath);
@@ -107,12 +108,12 @@ function HTTPCacheGetFile(_url, _destinationPath, _callback, _callbackData = und
         }
         else
         {
-            _requestID = http_get_file(_url, __HTTPCacheGetPath(_hash));
+            _requestID = http_get_file(_url, __HttpCacheGetPath(_hash));
             if (_requestID < 0)
             {
                 if (HTTP_CACHE_VERBOSE)
                 {
-                    __HTTPCacheTrace($"`http_get_file()` failed for \"{_url}\" ({_hash})");
+                    __HttpCacheTrace($"`http_get_file()` failed for \"{_url}\" ({_hash})");
                 }
                 
                 if (is_callable(__callback))
@@ -133,7 +134,7 @@ function HTTPCacheGetFile(_url, _destinationPath, _callback, _callbackData = und
             {
                 if (HTTP_CACHE_VERBOSE)
                 {
-                    __HTTPCacheTrace($"Executed `http_get_file()` for \"{_url}\" ({_hash})");
+                    __HttpCacheTrace($"Executed `http_get_file()` for \"{_url}\" ({_hash})");
                 }
                 
                 _httpFileMap[? _requestID] = new __HTTPClassCacheFileGet(_hash, _destinationPath, _callback, _callbackData, _system.__globalDurationMins);

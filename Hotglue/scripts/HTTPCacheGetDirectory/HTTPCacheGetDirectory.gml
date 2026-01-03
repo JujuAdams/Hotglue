@@ -7,9 +7,9 @@
 /// N.B. This function will still return a path even if local disk caching is unavailable. The
 ///      returned path is not guaranteed to be valid in that situation.
 
-function HTTPCacheGetDirectory()
+function HttpCacheGetDirectory()
 {
-    static _system = __HTTPCacheSystem();
+    static _system = __HttpCacheSystem();
     
     return _system.__cacheDirectory;
 }

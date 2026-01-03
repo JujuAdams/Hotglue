@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"HTTPCacheGetDirectory",
+  "%Name":"HttpCacheGetDirectory",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HTTPCacheGetDirectory",
+  "name":"HttpCacheGetDirectory",
   "parent":{
     "name":"Miscellaneous",
     "path":"folders/HTTP Cache/Miscellaneous.yy",

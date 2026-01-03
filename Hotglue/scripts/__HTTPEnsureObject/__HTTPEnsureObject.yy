@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HTTPEnsureObject",
+  "%Name":"__HttpEnsureObject",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HTTPEnsureObject",
+  "name":"__HttpEnsureObject",
   "parent":{
     "name":"(System)",
     "path":"folders/HTTP Cache/(System).yy",

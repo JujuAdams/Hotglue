@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HTTPResponseIsSuccess",
+  "%Name":"__HttpResponseIsSuccess",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HTTPResponseIsSuccess",
+  "name":"__HttpResponseIsSuccess",
   "parent":{
     "name":"(System)",
     "path":"folders/HTTP Cache/(System).yy",

@@ -1,6 +1,6 @@
 // Feather disable all
 
-function __HTTPCacheSystem()
+function __HttpCacheSystem()
 {
     static _system = undefined;
     if (_system != undefined) return _system;
@@ -8,7 +8,7 @@ function __HTTPCacheSystem()
     _system = {};
     with(_system)
     {
-        __HTTPCacheTrace($"Welcome to HTTP Cache by Juju Adams! This is version {HTTP_CACHE_VERSION}, {HTTP_CACHE_DATE}");
+        __HttpCacheTrace($"Welcome to HTTP Cache by Juju Adams! This is version {HTTP_CACHE_VERSION}, {HTTP_CACHE_DATE}");
         
         __cacheDirectory = game_save_id + "httpCache/";
         
@@ -22,25 +22,25 @@ function __HTTPCacheSystem()
         
         if (HTTP_CACHE_VERBOSE)
         {
-            __HTTPCacheTrace($"Cache duration defaults to {__globalDurationMins} minutes");
+            __HttpCacheTrace($"Cache duration defaults to {__globalDurationMins} minutes");
         }
         
-        __HTTPCacheTrace($"HTTP_CACHE_DISK_AVAILABLE = {HTTP_CACHE_DISK_AVAILABLE? "true" : "false"}");
+        __HttpCacheTrace($"HTTP_CACHE_DISK_AVAILABLE = {HTTP_CACHE_DISK_AVAILABLE? "true" : "false"}");
         
         if ((not HTTP_CACHE_DISK_AVAILABLE) || HTTP_CACHE_CLEAR_ON_BOOT)
         {
             __cacheTimeMap = ds_map_create();
-            HTTPCacheClear();
+            HttpCacheClear();
         }
         else
         {
-            var _manifestPath = __HTTPCacheGetPath("manifest.json");
+            var _manifestPath = __HttpCacheGetPath("manifest.json");
             if (not file_exists(_manifestPath))
             {
-                __HTTPCacheTrace($"Could not find cache manifest \"{_manifestPath}\", clearing cache directory");
+                __HttpCacheTrace($"Could not find cache manifest \"{_manifestPath}\", clearing cache directory");
                 
                 __cacheTimeMap = ds_map_create();
-                HTTPCacheClear();
+                HttpCacheClear();
             }
             else
             {
@@ -53,12 +53,12 @@ function __HTTPCacheSystem()
                     buffer_delete(_buffer);
                     
                     __cacheTimeMap = json_decode(_jsonString);
-                    __HTTPCacheTrace($"Loaded cache manifest successfully, {ds_map_size(__cacheTimeMap)} entries in cache");
+                    __HttpCacheTrace($"Loaded cache manifest successfully, {ds_map_size(__cacheTimeMap)} entries in cache");
                 }
                 catch(_error)
                 {
                     show_debug_message(json_stringify(_error, true));
-                    __HTTPCacheTrace("Warning! Failed to load cache manifest");
+                    __HttpCacheTrace("Warning! Failed to load cache manifest");
                 }
                 
                 if ((__cacheTimeMap == undefined) || (not ds_exists(__cacheTimeMap, ds_type_map)))
@@ -66,7 +66,7 @@ function __HTTPCacheSystem()
                     __cacheTimeMap = ds_map_create();
                 }
                 
-                HTTPCachePrune();
+                HttpCachePrune();
             }
         }
     }

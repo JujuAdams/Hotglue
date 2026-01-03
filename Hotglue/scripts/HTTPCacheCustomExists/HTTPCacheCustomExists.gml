@@ -4,15 +4,15 @@
 /// 
 /// @param key
 
-function HTTPCacheCustomExists(_key)
+function HttpCacheCustomExists(_key)
 {
-    static _cachedValueMap = __HTTPCacheSystem().__cachedValueMap;
+    static _cachedValueMap = __HttpCacheSystem().__cachedValueMap;
     
     var _hash = md5_string_utf8(_key);
     
     if (HTTP_CACHE_DISK_AVAILABLE)
     {
-        return __HTTPCacheExists(_hash);
+        return __HttpCacheExists(_hash);
     }
     else
     {

@@ -1,11 +1,11 @@
 // Feather disable all
 
-/// Clears the cache on disk, freeing up disk space and forcing subsequent HTTPCache functions to
+/// Clears the cache on disk, freeing up disk space and forcing subsequent HttpCache functions to
 /// redownload data.
 
-function HTTPCacheClear()
+function HttpCacheClear()
 {
-    static _system = __HTTPCacheSystem();
+    static _system = __HttpCacheSystem();
     static _httpRequestMap = _system.__httpRequestMap;
     static _cachedValueMap = _system.__cachedValueMap;
     
@@ -18,14 +18,14 @@ function HTTPCacheClear()
         
         if (HTTP_CACHE_VERBOSE)
         {
-            __HTTPCacheTrace($"Cleared cache (deleted directory \"{_system.__cacheDirectory}\")");
+            __HttpCacheTrace($"Cleared cache (deleted directory \"{_system.__cacheDirectory}\")");
         }
     }
     else
     {
         if (HTTP_CACHE_VERBOSE)
         {
-            __HTTPCacheTrace($"Cleared cache");
+            __HttpCacheTrace($"Cleared cache");
         }
     }
 }

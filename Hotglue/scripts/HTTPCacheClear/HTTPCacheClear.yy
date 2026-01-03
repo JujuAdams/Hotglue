@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"HTTPCacheClear",
+  "%Name":"HttpCacheClear",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HTTPCacheClear",
+  "name":"HttpCacheClear",
   "parent":{
     "name":"Miscellaneous",
     "path":"folders/HTTP Cache/Miscellaneous.yy",

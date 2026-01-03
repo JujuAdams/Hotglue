@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HTTPGetUTCTime",
+  "%Name":"__HttpGetUTCTime",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HTTPGetUTCTime",
+  "name":"__HttpGetUTCTime",
   "parent":{
     "name":"(System)",
     "path":"folders/HTTP Cache/(System).yy",

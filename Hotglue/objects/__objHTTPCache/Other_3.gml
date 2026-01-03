@@ -2,9 +2,9 @@
 
 if (HTTP_CACHE_CLEAR_ON_EXIT)
 {
-    HTTPCacheClear();
+    HttpCacheClear();
 }
 else
 {
-    HTTPCachePrune();
+    HttpCachePrune();
 }

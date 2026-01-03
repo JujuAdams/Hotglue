@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HTTPCacheAdd",
+  "%Name":"__HttpCacheAdd",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HTTPCacheAdd",
+  "name":"__HttpCacheAdd",
   "parent":{
     "name":"(System)",
     "path":"folders/HTTP Cache/(System).yy",

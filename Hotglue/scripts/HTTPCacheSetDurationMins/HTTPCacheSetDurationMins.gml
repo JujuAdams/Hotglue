@@ -4,9 +4,9 @@
 /// 
 /// @param minutes
 
-function HTTPCacheSetDurationMins(_minutes)
+function HttpCacheSetDurationMins(_minutes)
 {
-    static _system = __HTTPCacheSystem();
+    static _system = __HttpCacheSystem();
     
     _minutes = max(0, _minutes);
     
@@ -16,7 +16,7 @@ function HTTPCacheSetDurationMins(_minutes)
         
         if (HTTP_CACHE_VERBOSE)
         {
-            __HTTPCacheTrace($"Set cache duration to {_minutes} minues");
+            __HttpCacheTrace($"Set cache duration to {_minutes} minues");
         }
     }
 }

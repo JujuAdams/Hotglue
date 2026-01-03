@@ -4,7 +4,7 @@
 /// returned data (including response headers) are cached on disk. Subsequent calls to this
 /// function for the same endpoint will attempt to use the cached value on disk if available.
 /// 
-/// You should specify a callback to execute when HTTPCache receives a response. Your callback
+/// You should specify a callback to execute when HttpCache receives a response. Your callback
 /// should take four parameters:
 /// - success
 /// - result
@@ -12,24 +12,26 @@
 /// - callbackData
 /// 
 /// Cached data will be considered valid for a limited time span, as determined by the duration set
-/// by `HTTPCacheSetDurationMins()` (the default timeout is 5 minutes). Cached data is stored on
+/// by `HttpCacheSetDurationMins()` (the default timeout is 5 minutes). Cached data is stored on
 /// disk and can persist for hours or days if you so choose.
 /// 
 /// @param url
 /// @param callback
 /// @param [callbackData]
 /// @param [forceRedownload=false]
+/// @param [hashKey]
 
-function HTTPCacheGet(_url, _callback, _callbackData = undefined, _forceRedownload = false)
+function HttpCacheGet(_url, _callback, _callbackData = undefined, _forceRedownload = false, _hashKey = _url)
 {
-    static _system = __HTTPCacheSystem();
+    static _system = __HttpCacheSystem();
     static _httpRequestMap = _system.__httpRequestMap;
     static _cachedValueMap = _system.__cachedValueMap;
     
     __HTTPEnsureObject();
     
-    var _hash = md5_string_utf8(_url);
-    if ((not _forceRedownload) && __HTTPCacheExists(_hash))
+    var _hash = md5_string_utf8(_hashKey);
+    
+    if ((not _forceRedownload) && __HttpCacheExists(_hash))
     {
         if (not is_callable(_callback))
         {
@@ -42,7 +44,7 @@ function HTTPCacheGet(_url, _callback, _callbackData = undefined, _forceRedownlo
                 var _asyncLoad = undefined;
                 try
                 {
-                    var _buffer = buffer_load(__HTTPCacheGetPath(_hash));
+                    var _buffer = buffer_load(__HttpCacheGetPath(_hash));
                     var _jsonString = buffer_read(_buffer, buffer_text);
                     buffer_delete(_buffer);
                     
@@ -51,7 +53,7 @@ function HTTPCacheGet(_url, _callback, _callbackData = undefined, _forceRedownlo
                 catch(_error)
                 {
                     show_debug_message(json_stringify(_error, true));
-                    __HTTPCacheTrace($"Warning! Failed to parse cached data for \"{_url}\" ({_hash})");
+                    __HttpCacheTrace($"Warning! Failed to parse cached data for \"{_url}\" ({_hash})");
                 }
             }
             else
@@ -63,7 +65,7 @@ function HTTPCacheGet(_url, _callback, _callbackData = undefined, _forceRedownlo
             {
                 if (HTTP_CACHE_VERBOSE)
                 {
-                    __HTTPCacheTrace($"Returning cached data for \"{_url}\" ({_hash})");
+                    __HttpCacheTrace($"Returning cached data for \"{_url}\" ({_hash})");
                 }
                 
                 call_later(1, time_source_units_frames, method({
@@ -92,7 +94,7 @@ function HTTPCacheGet(_url, _callback, _callbackData = undefined, _forceRedownlo
     {
         if (HTTP_CACHE_VERBOSE)
         {
-            __HTTPCacheTrace($"`http_get()` failed for \"{_url}\" ({_hash})");
+            __HttpCacheTrace($"`http_get()` failed for \"{_url}\" ({_hash})");
         }
         
         if (is_callable(__callback))
@@ -113,7 +115,7 @@ function HTTPCacheGet(_url, _callback, _callbackData = undefined, _forceRedownlo
     {
         if (HTTP_CACHE_VERBOSE)
         {
-            __HTTPCacheTrace($"Executed `http_get()` for \"{_url}\" ({_hash})");
+            __HttpCacheTrace($"Executed `http_get()` for \"{_url}\" ({_hash})");
         }
         
         _httpRequestMap[? _requestID] = new __HTTPClassCacheRequest(_hash, _callback, _callbackData, _system.__globalDurationMins);

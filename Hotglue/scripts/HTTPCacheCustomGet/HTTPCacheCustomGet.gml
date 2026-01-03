@@ -3,7 +3,7 @@
 /// Returns the cached value associated with the key. If no valid cache value is found, this
 /// function will return the specified `default` value.
 /// 
-/// N.B. As per restrictions described in `HTTPCacheCustomSet()`, a cached value will be one of the
+/// N.B. As per restrictions described in `HttpCacheCustomSet()`, a cached value will be one of the
 ///      following datatypes:
 ///      - boolean (`true` / `false`)
 ///      - `undefined`
@@ -15,9 +15,9 @@
 /// @param key
 /// @param [default=undefined]
 
-function HTTPCacheCustomGet(_key, _default = undefined)
+function HttpCacheCustomGet(_key, _default = undefined)
 {
-    static _system = __HTTPCacheSystem();
+    static _system = __HttpCacheSystem();
     static _cachedValueMap = _system.__cachedValueMap;
     
     var _value = _default;
@@ -28,11 +28,11 @@ function HTTPCacheCustomGet(_key, _default = undefined)
     {
         return _cachedValueMap[? _hash] ?? _default;
     }
-    else if (__HTTPCacheExists(_hash))
+    else if (__HttpCacheExists(_hash))
     {
         try
         {
-            var _buffer = buffer_load(__HTTPCacheGetPath(_hash));
+            var _buffer = buffer_load(__HttpCacheGetPath(_hash));
             var _jsonString = buffer_read(_buffer, buffer_text);
             buffer_delete(_buffer);
             
@@ -41,14 +41,14 @@ function HTTPCacheCustomGet(_key, _default = undefined)
         catch(_error)
         {
             show_debug_message(json_stringify(_error, true));
-            __HTTPCacheTrace($"Warning! Failed to parse cached data for \"{_key}\" ({_hash})");
+            __HttpCacheTrace($"Warning! Failed to parse cached data for \"{_key}\" ({_hash})");
         }
             
         if (_value != undefined)
         {
             if (HTTP_CACHE_VERBOSE)
             {
-                __HTTPCacheTrace($"Returning cached data for \"{_key}\" ({_hash})");
+                __HttpCacheTrace($"Returning cached data for \"{_key}\" ({_hash})");
             }
             
             return _value;

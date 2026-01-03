@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"HTTPCachePrune",
+  "%Name":"HttpCachePrune",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HTTPCachePrune",
+  "name":"HttpCachePrune",
   "parent":{
     "name":"Miscellaneous",
     "path":"folders/HTTP Cache/Miscellaneous.yy",

@@ -2,18 +2,18 @@
 
 /// @param hash
 
-function __HTTPCacheExists(_hash)
+function __HttpCacheExists(_hash)
 {
-    static _cachedValueMap = __HTTPCacheSystem().__cachedValueMap;
+    static _cachedValueMap = __HttpCacheSystem().__cachedValueMap;
     
-    if (__HTTPGetUTCTime() > __HTTPCacheGetElapsedTime(_hash))
+    if (__HTTPGetUTCTime() > __HttpCacheGetElapsedTime(_hash))
     {
         return false;
     }
     
     if (HTTP_CACHE_DISK_AVAILABLE)
     {
-        return file_exists(__HTTPCacheGetPath(_hash));
+        return file_exists(__HttpCacheGetPath(_hash));
     }
     else
     {

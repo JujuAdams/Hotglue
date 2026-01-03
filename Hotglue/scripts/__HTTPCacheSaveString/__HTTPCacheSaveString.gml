@@ -3,7 +3,7 @@
 /// @param path
 /// @param string
 
-function __HTTPCacheSaveString(_path, _string)
+function __HttpCacheSaveString(_path, _string)
 {
     static _buffer = buffer_create(1024, buffer_grow, 1);
     

@@ -2,9 +2,9 @@
 
 /// @param hash
 
-function __HTTPCacheGetElapsedTime(_hash)
+function __HttpCacheGetElapsedTime(_hash)
 {
-    static _cacheTimeMap = __HTTPCacheSystem().__cacheTimeMap;
+    static _cacheTimeMap = __HttpCacheSystem().__cacheTimeMap;
     
     var _time = undefined;
     try

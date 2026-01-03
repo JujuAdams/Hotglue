@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HTTPCacheAsyncEvent",
+  "%Name":"__HttpCacheAsyncEvent",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HTTPCacheAsyncEvent",
+  "name":"__HttpCacheAsyncEvent",
   "parent":{
     "name":"(System)",
     "path":"folders/HTTP Cache/(System).yy",

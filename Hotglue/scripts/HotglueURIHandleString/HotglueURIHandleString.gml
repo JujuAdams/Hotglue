@@ -64,7 +64,7 @@ function HotglueURIHandleString(_inString)
             var _headerMap = ds_map_create();
             _headerMap[? "Accept"] = "application/json";
             
-            HTTPCacheRequest($"https://github.com/login/oauth/access_token?{_params}", "POST", _headerMap, "", function(_success, _result, _responseHeader, _callbackMetadata)
+            HttpCacheRequest($"https://github.com/login/oauth/access_token?{_params}", "POST", _headerMap, "", function(_success, _result, _responseHeader, _callbackMetadata)
             {
                 with(_callbackMetadata)
                 {

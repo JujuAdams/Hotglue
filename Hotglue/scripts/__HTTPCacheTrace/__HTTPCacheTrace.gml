@@ -2,7 +2,7 @@
 
 /// @param string
 
-function __HTTPCacheTrace(_string)
+function __HttpCacheTrace(_string)
 {
-    show_debug_message($"HTTPCache: {_string}");
+    show_debug_message($"HttpCache: {_string}");
 }
