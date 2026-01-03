@@ -20,6 +20,8 @@ function ClassModalFTUX() constructor
             {
                 ImGuiTextWrapped($"Welcome to Hotglue by Juju Adams! This is version {HOTGLUE_VERSION}, {HOTGLUE_DATE}.");
                 ImGuiNewLine();
+                ImGuiTextWrapped("This is a pre-release build and things may break. Please proceed carefully and always use source control.");
+                ImGuiNewLine();
                 InterfaceBuildCredits();
                 ImGuiNewLine();
                 ImGuiTextWrapped("Please follow the instructions on subsequent pages to prepare Hotglue for use.");
@@ -126,6 +128,8 @@ function ClassModalFTUX() constructor
             else if (__page == 3)
             {
                 ImGuiTextWrapped("Setup complete. You may adjust how Hotglue is configured by click the \"Settings\" button in the menu bar. If you run into any problems, please open a GitHub issue by clicking the \"Report Bug\" button in the menu bar.");
+                ImGuiNewLine();
+                ImGuiTextWrapped("This is a pre-release build and things may break. Please proceed carefully and always use source control.");
                 ImGuiNewLine();
                 ImGuiTextWrapped("Thank you for using Hotglue.\n - Juju");
                 ImGuiNewLine();

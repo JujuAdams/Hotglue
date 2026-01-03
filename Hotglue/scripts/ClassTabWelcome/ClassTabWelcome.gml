@@ -17,6 +17,8 @@ function ClassTabWelcome() : ClassTab() constructor
     {
         ImGuiTextWrapped($"Welcome to Hotglue by Juju Adams! This is version {HOTGLUE_VERSION}, {HOTGLUE_DATE}.");
         ImGuiNewLine();
+        ImGuiTextWrapped("This is a pre-release build and things may break. Please proceed carefully and always use source control.");
+        ImGuiNewLine();
         InterfaceBuildCredits();
     }
 }
