@@ -63,15 +63,11 @@ function ClassTabSettings() : ClassTab() constructor
         ImGuiText("GitHub:");
         ImGuiIndent();
         
-        var _authorizeAvailable = HotglueURITestGetSuccess();
-        if (not _authorizeAvailable)
+        ImGuiTextLink("How do I authorize GitHub?");
+        if (ImGuiBeginItemTooltip())
         {
-            ImGuiTextLink("How do I authorize GitHub?");
-            if (ImGuiBeginItemTooltip())
-            {
-                ImGuiText($"Hotglue must be URI registered and the URI test must succeed (see above) for GitHub authorization to be available.");
-                ImGuiEndTooltip();
-            }
+            ImGuiText($"Hotglue must be URI registered for GitHub authorization to be available. You may test URI registration by clicking the button above.");
+            ImGuiEndTooltip();
         }
         
         if ((HOTGLUE_GITHUB_CLIENT_ID == "") || (HOTGLUE_GITHUB_CLIENT_SECRET == ""))
@@ -84,23 +80,19 @@ function ClassTabSettings() : ClassTab() constructor
             {
                 ImGuiText("Access token acquired.");
                 
-                ImGuiBeginDisabled(not _authorizeAvailable);
-                if (ImGuiButton("Re-authorize GitHub..."))
+                if (ImGuiButton("Re-authorize GitHub via URI..."))
                 {
                     InterfaceGitHubAuthFlow(true);
                 }
-                ImGuiEndDisabled();
             }
             else
             {
                 ImGuiTextColored("GitHub access token unavailable. Please click the button below to acquire an access token from GitHub.", INTERFACE_COLOR_ORANGE_TEXT);
                 
-                ImGuiBeginDisabled(not _authorizeAvailable);
-                if (ImGuiButton("Authorize GitHub..."))
+                if (ImGuiButton("Authorize GitHub via URI..."))
                 {
                     InterfaceGitHubAuthFlow();
                 }
-                ImGuiEndDisabled();
             }
         }
         
