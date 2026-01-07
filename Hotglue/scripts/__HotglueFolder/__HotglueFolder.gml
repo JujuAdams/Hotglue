@@ -112,7 +112,9 @@ function __HotglueFolder(_folderStruct) : __HotglueClassAssetCommon() constructo
                 var _comparison = string_copy(_subfolder + "/", 1, string_length(_folderPath) + 1);
                 if (_comparison != _folderPath + "/")
                 {
-                    name = $"folder:{_subfolder}/{_folderPath}";
+                    __pid = $"folder:{_subfolder}/{_folderPath}";
+                    __friendlyPath = $"{_subfolder}/{_folderPath}";
+                    
                     _folderPath = $"folders/{_subfolder}/{_folderPath}.yy";
                     data.folderPath = _folderPath;
                 }
