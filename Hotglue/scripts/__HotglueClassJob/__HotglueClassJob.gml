@@ -22,6 +22,8 @@ function __HotglueClassJob(_destinationProject) constructor
     __derivedConflictPIDArray  = [];
     __derivedOverwritePIDArray = [];
     
+    __HotglueTrace($"Created job {ptr(self)}");
+    
     
     
     static GetSubfolder = function()
@@ -63,6 +65,8 @@ function __HotglueClassJob(_destinationProject) constructor
         if (__packageEdit != _state)
         {
             __packageEdit = _state;
+            __HotglueTrace($"Set job {ptr(self)} package edit = {_state? "true" : "false"}");
+            
             BuildReport();
         }
     }
@@ -77,6 +81,8 @@ function __HotglueClassJob(_destinationProject) constructor
         if (__packageName != _packageName)
         {
             __packageName = _packageName;
+            __HotglueTrace($"Set job {ptr(self)} package name = \"{_packageName}\"");
+            
             BuildReport();
         }
     }
@@ -88,7 +94,11 @@ function __HotglueClassJob(_destinationProject) constructor
     
     static SetPackageVersion = function(_packageVersion)
     {
-        __packageVersion = _packageVersion;
+        if (__packageVersion != _packageVersion)
+        {
+            __packageVersion = _packageVersion;
+            __HotglueTrace($"Set job {ptr(self)} package version = \"{_packageVersion}\"");
+        }
     }
     
     static GetPackageVersion = function()
@@ -98,7 +108,11 @@ function __HotglueClassJob(_destinationProject) constructor
     
     static SetPackageURL = function(_packageURL)
     {
-        __packageURL = _packageURL;
+        if (__packageURL != _packageURL)
+        {
+            __packageURL = _packageURL;
+            __HotglueTrace($"Set job {ptr(self)} package origin = \"{_packageURL}\"");
+        }
     }
     
     static GetPackageURL = function()
@@ -108,8 +122,7 @@ function __HotglueClassJob(_destinationProject) constructor
     
     static SetPackageFromProject = function(_project)
     {
-        __packageEdit = true;
-            
+        SetPackageEdit(true);
         SetPackageName(_project.GetName() ?? "");
         SetPackageVersion(_project.GetVersionString() ?? "");
         SetPackageURL(_project.GetURL() ?? "");
@@ -174,10 +187,9 @@ function __HotglueClassJob(_destinationProject) constructor
                     
                         if ((_asset.type != "folder") && _destinationProject.GetAssetExists(_asset.GetPID()))
                         {
-                            __HotglueError($"Asset \"{_asset.GetPID()}\" already exists in project \"{GetPath()}\"");
+                            __HotglueWarning($"Asset \"{_asset.GetPID()}\" already exists in project \"{__sourceProject.GetPath()}\"");
                         }
-                    
-                        if (_asset.GetPID() != "resource:hotglue_metadata")
+                        else if (_asset.GetPID() != "resource:hotglue_metadata")
                         {
                             _asset.__Copy(_destinationProject, __sourceProject);
                         
@@ -352,6 +364,8 @@ function __HotglueClassJob(_destinationProject) constructor
     
     static Execute = function()
     {
+        __HotglueTrace($"Starting job {ptr(self)}...");
+        
         var _subfolder      = __subfolder;
         var _packageEdit    = __packageEdit;
         var _packageName    = __packageName;
@@ -367,7 +381,6 @@ function __HotglueClassJob(_destinationProject) constructor
                 return;
             }
             
-            __HotglueTrace("Starting job...");
             __structureDirty = true;
             
             __HotglueAssertGit(__projectDirectory);
@@ -451,8 +464,8 @@ function __HotglueClassJob(_destinationProject) constructor
             buffer_write(_buffer, buffer_text, __yypString);
             buffer_save(_buffer, __projectPath);
             buffer_delete(_buffer);
-            
-            __HotglueTrace("...Job complete");
         }
+        
+        __HotglueTrace($"...Job {ptr(self)} complete");
     }
 }

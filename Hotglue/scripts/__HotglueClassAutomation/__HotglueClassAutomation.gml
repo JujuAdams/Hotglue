@@ -93,6 +93,24 @@ function __HotglueClassAutomation(_json) constructor
                 HotglueSetSuppressGitAssert(_value);
                 ++__rootIndex;
             }
+            else if (struct_exists(_input, "deleteLibrary"))
+            {
+                __HotglueTrace($"Automation step {__rootIndex}\n{json_stringify(_input, true)}");
+                if (not __CheckClean(_input, ["deleteLibrary"])) return;
+                
+                var _value = _input.deleteLibrary
+                if (not is_string(_value))
+                {
+                    __Error($".deleteLibrary must be a string (typeof={typeof(_value)})");
+                    return;
+                }
+                
+                var _job = __project.JobDeleteLibrary(_value);
+                _job.BuildReport();
+                _job.Execute();
+                
+                ++__rootIndex;
+            }
             else if (struct_exists(_input, "itchApiKey"))
             {
                 __HotglueTrace($"Automation step {__rootIndex}\n(itch.io API key hidden for security)");
@@ -113,7 +131,8 @@ function __HotglueClassAutomation(_json) constructor
                 __HotglueTrace($"Automation step {__rootIndex}\n{json_stringify(_input, true)}");
                 if (not __CheckClean(_input, ["import", "assets", "subfolder", "packageName", "packageVersion"])) return;
                 
-                var _import = _input.import
+                //Load a project
+                var _import = _input.import;
                 if (not is_string(_import))
                 {
                     __Error($".import must be a string (typeof={typeof(_import)})");
@@ -133,7 +152,80 @@ function __HotglueClassAutomation(_json) constructor
                     return;
                 }
                 
-                var _job = __project.JobImportAllFrom(_project);
+                //Figure out what assets we want
+                var _assets = _input[$ "assets"];
+                if (_assets != undefined)
+                {
+                    if (_project.GetIsPackage())
+                    {
+                        __HotglueWarning("Cannot import parts of a .yymps package, ignoring .assets");
+                    }
+                    else
+                    {
+                        if (is_string(_assets))
+                        {
+                            _assets = [_assets];
+                        }
+                        else if (not is_array(_assets))
+                        {
+                            __Error($".assets must be an array (typeof={typeof(_assets)})");
+                            return;
+                        }
+                    }
+                }
+                
+                //Find the subfolder
+                var _subfolder = _input[$ "subfolder"];
+                if ((_subfolder != undefined) && (not is_string(_subfolder)))
+                {
+                    __Error($".subfolder must be a string (typeof={typeof(_subfolder)})");
+                    return;
+                }
+                
+                //Create a job
+                if (_project.GetIsPackage())
+                {
+                    var _job = __project.JobImportAsLibrary(_project, _subfolder);
+                }
+                else if (_assets == undefined)
+                {
+                    var _job = __project.JobImportAllFrom(_project, _subfolder);
+                }
+                else
+                {
+                    var _job = __project.JobImportFrom(_project, _assets, _subfolder);
+                }
+                
+                //Set up package name and version
+                var _packageName = _input[$ "packageName"];
+                if ((_packageName != undefined) && (not is_string(_packageName)))
+                {
+                    __Error($".packageName must be a string (typeof={typeof(_packageName)})");
+                    return;
+                }
+                
+                var _packageVersion = _input[$ "packageVersion"];
+                if ((_packageVersion != undefined) && (not is_string(_packageVersion)))
+                {
+                    __Error($".packageVersion must be a string (typeof={typeof(_packageVersion)})");
+                    return;
+                }
+                
+                if ((_packageName == undefined) && (_packageVersion != undefined))
+                {
+                    __Error($".packageVersion cannot be set without .packageName");
+                    return;
+                }
+                
+                if (is_string(_packageName))
+                {
+                    _job.SetPackageEdit(true);
+                    _job.SetPackageName(_packageName ?? "");
+                    _job.SetPackageVersion(_packageVersion ?? "");
+                    _job.SetPackageURL(_project.GetURL() ?? "");
+                }
+                
+                //Execute the job
                 _job.BuildReport();
                 _job.Execute();
                 

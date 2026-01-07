@@ -371,13 +371,15 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     static JobImportAllFrom = function(_sourceProject, _subfolder = "")
     {
         var _job = new __HotglueClassJob(self);
-        _job.SetImportAllFrom(_sourceProject, _subfolder);
+        _job.SetSubfolder(_subfolder);
+        _job.SetImportAllFrom(_sourceProject);
         return _job;
     }
     
     static JobImportAsLibrary = function(_sourceProject, _subfolder = "")
     {
         var _job = new __HotglueClassJob(self);
+        _job.SetSubfolder(_subfolder);
         _job.SetPackageFromProject(_sourceProject);
         _job.SetImportAllFrom(_sourceProject);
         return _job;
@@ -406,14 +408,16 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         }
         
         var _job = new __HotglueClassJob(self);
-        _job.SetImportFrom(_sourceProject, _assetArray, _subfolder);
+        _job.SetSubfolder(_subfolder);
+        _job.SetImportFrom(_sourceProject, _assetArray);
         return _job;
     }
     
     static JobImportFromLooseFiles = function(_looseFileArray, _subfolder = "")
     {
         var _job = new __HotglueClassJob(self);
-        _job.SetImportLooseFile(_looseFileArray, _subfolder);
+        _job.SetSubfolder(_subfolder);
+        _job.SetImportLooseFile(_looseFileArray);
         return _job;
     }
     

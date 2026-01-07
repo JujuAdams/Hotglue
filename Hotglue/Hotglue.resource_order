@@ -29,7 +29,6 @@
   ],
   "ResourceOrderSettings":[
     {"name":"__HotglueExecuteShell","order":26,"path":"extensions/__HotglueExecuteShell/__HotglueExecuteShell.yy",},
-    {"name":"TODO","order":12,"path":"notes/TODO/TODO.yy",},
     {"name":"__objHotglue","order":10,"path":"objects/__objHotglue/__objHotglue.yy",},
     {"name":"oInterface","order":6,"path":"objects/oInterface/oInterface.yy",},
     {"name":"oLanding","order":5,"path":"objects/oLanding/oLanding.yy",},
