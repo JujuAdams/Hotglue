@@ -99,7 +99,37 @@ function ClassTabSettings() : ClassTab() constructor
         ImGuiUnindent();
         ImGuiNewLine();
         
-        ImGuiText("Explore Channels:");
+        ///////
+        // itch.io
+        ///////
+        
+        ImGuiText("itch.io:");
+        ImGuiIndent();
+        
+        ImGuiTextLink("How do I authorize itch.io?");
+        if (ImGuiBeginItemTooltip())
+        {
+            ImGuiText($"1. Visit the link below\n2. Create an API key\n3. Copy-paste the API key into the text field\n4. Clear the HTTP cache");
+            ImGuiEndTooltip();
+        }
+        
+        InterfaceLinkText("https://itch.io/user/settings/api-keys");
+        
+        var _value = ImGuiInputText("##itchAPIKey", HotglueGetItchAPIKey());
+        if (InterfaceSettingSet("itch", _value))
+        {
+            HotglueSetItchAPIKey(_value);
+            InterfaceSettingsSave();
+        }
+        
+        ImGuiUnindent();
+        ImGuiNewLine();
+        
+        ///////
+        // Channels
+        ///////
+        
+        ImGuiText("Channels:");
         ImGuiIndent();
         ImGuiBeginChild("channelsPane", undefined, 170, ImGuiChildFlags.Border);
         
@@ -219,6 +249,10 @@ function ClassTabSettings() : ClassTab() constructor
         
         ImGuiUnindent();
         ImGuiNewLine();
+        
+        ///////
+        // Caches
+        ///////
         
         ImGuiText("Caches:");
         ImGuiIndent();

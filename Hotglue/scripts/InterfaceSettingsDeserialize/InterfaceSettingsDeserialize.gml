@@ -12,5 +12,7 @@ function InterfaceSettingsDeserialize()
     
     HotglueChannelsDeserialize(InterfaceSettingGet("channels", []));
     
+    HotglueSetItchAPIKey(InterfaceSettingGet("itch", ""));
+    
     LogTrace("Settings deserialized");
 }

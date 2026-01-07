@@ -6,8 +6,16 @@ function InterfaceSettingSet(_key, _value)
     if (not instance_exists(oInterface))
     {
         LogWarning("`oInterface` has not been created yet");
-        return;
+        return false;
     }
     
-    oInterface.settings[$ _key] = _value;
+    if (oInterface.settings[$ _key] != _value)
+    {
+        oInterface.settings[$ _key] = _value;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }

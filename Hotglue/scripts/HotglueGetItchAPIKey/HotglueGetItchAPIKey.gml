@@ -1,6 +1,6 @@
 // Feather disable all
 
-function HotglueGetSuppressGitAssert()
+function HotglueGetItchAPIKey()
 {
     static _system = __HotglueSystem();
     
