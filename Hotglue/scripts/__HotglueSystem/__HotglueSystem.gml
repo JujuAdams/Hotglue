@@ -20,6 +20,9 @@ function __HotglueSystem()
         
         __suppressGitAssert = false;
         
+        // https://itch.io/user/settings/api-keys
+        __itchAPIKey = "";
+        
         __uriTestSuccess = false;
         __uriTestTimeout = undefined;
         

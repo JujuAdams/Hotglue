@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueGetItchAPIKey",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueGetItchAPIKey",
+  "parent":{
+    "name":"Settings",
+    "path":"folders/Hotglue/Settings.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

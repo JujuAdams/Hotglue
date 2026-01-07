@@ -83,7 +83,7 @@ function __HotglueRepositoryItch(_url) : __HotglueRepositoryCommon(_url) constru
                         }
                         else
                         {
-                            __HotglueHTTPRequest($"https://itch.io/api/1/{HOTGLUE_ITCH_API_KEY}/game/{_id}/uploads", self, function(_success, _result, _responseHeaders, _callbackMetadata)
+                            __HotglueHTTPRequest($"https://itch.io/api/1/{HotglueGetItchAPIKey()}/game/{_id}/uploads", self, function(_success, _result, _responseHeaders, _callbackMetadata)
                             {
                                 with(_callbackMetadata)
                                 {
@@ -116,7 +116,7 @@ function __HotglueRepositoryItch(_url) : __HotglueRepositoryCommon(_url) constru
                                             try
                                             {
                                                 var _uploadID = _itchRelease.id;
-                                                var _downloadURL = $"https://itch.io/api/1/{HOTGLUE_ITCH_API_KEY}/upload/{_uploadID}/download";
+                                                var _downloadURL = $"https://itch.io/api/1/{HotglueGetItchAPIKey()}/upload/{_uploadID}/download";
                                                 
                                                 var _description = $"Updated at {_itchRelease.updated_at}\nType = \"{_itchRelease.type}\"\nDemo = {_itchRelease.demo? "true" : "false"}";
                                                 
