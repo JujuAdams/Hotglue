@@ -77,12 +77,25 @@ function __HotglueProjectStructure(_project) constructor
             
             if (_assetType == "resource")
             {
-                var _buffer = buffer_load($"{_projectDirectory}{_assetPath}");
-                var _yyString = buffer_read(_buffer, buffer_text);
-                buffer_delete(_buffer);
-                var _yyJSON = json_parse(_yyString);
+                var _yyPath = $"{_projectDirectory}{_assetPath}";
+                var _yyJSON = undefined;
                 
-                __EnsureFolderPath(__rootNode, $"{__HotglueProcessFolderPath(_yyJSON.parent.path)}/").__Add(new __HotglueNodeResource(_asset, self));
+                try
+                {
+                    var _buffer = buffer_load(_yyPath);
+                    var _yyString = buffer_read(_buffer, buffer_text);
+                    buffer_delete(_buffer);
+                    _yyJSON = json_parse(_yyString);
+                }
+                catch(_error)
+                {
+                    __HotglueWarning($"Failed to load and parse \"{_yyPath}\"");
+                }
+                
+                if (_yyJSON != undefined)
+                {
+                    __EnsureFolderPath(__rootNode, $"{__HotglueProcessFolderPath(_yyJSON.parent.path)}/").__Add(new __HotglueNodeResource(_asset, self));
+                }
             }
             else if (_assetType == "folder")
             {

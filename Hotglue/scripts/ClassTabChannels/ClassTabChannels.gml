@@ -32,6 +32,8 @@ function ClassTabChannels() : ClassTab() constructor
     {
         if (__openChannel == undefined)
         {
+            ImGuiText("Please choose a channel to view:");
+            
             var _i = 0;
             repeat(HotglueGetChannelCount())
             {
