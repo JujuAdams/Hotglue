@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HandleExeParams",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HandleExeParams",
+  "parent":{
+    "name":"Hotglue",
+    "path":"Hotglue.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,6 +1,13 @@
 // Feather disable all
 
-if (current_time >= __selfDestructTimer)
+if (is_struct(__automation))
 {
-    game_end();
+    if (__automation.GetFinished())
+    {
+        game_end(__automation.GetError()? -1 : 0);
+    }
+}
+else if (current_time >= __selfDestructTimer)
+{
+    game_end(__exitValue);
 }

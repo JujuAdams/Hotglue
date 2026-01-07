@@ -12,6 +12,8 @@ function HotglueProjectLocalEnsure(_path)
         return _project;
     }
     
+    __HotglueTrace($"Path \"{_path}\" has not been loaded before");
+    
     var _extension = filename_ext(_path);
     if (_extension == ".yyp")
     {

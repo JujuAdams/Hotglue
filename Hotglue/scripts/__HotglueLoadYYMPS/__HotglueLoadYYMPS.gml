@@ -19,6 +19,8 @@ function __HotglueLoadYYMPS(_yympsPath, _sourceURL = _yympsPath)
         return undefined;
     }
     
+    __HotglueTrace($"Loading \"{_yympsPath}\" as a .yymps (extract then load)");
+    
     var _directory = $"{HOTGLUE_UNZIP_CACHE_DIRECTORY}{md5_string_unicode(_yympsPath)}/";
     directory_destroy(_directory);
     

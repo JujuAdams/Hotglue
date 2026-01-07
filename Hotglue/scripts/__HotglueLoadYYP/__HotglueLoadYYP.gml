@@ -17,6 +17,8 @@ function __HotglueLoadYYP(_yypPath, _readOnly = false, _sourceURL = _yypPath, _i
         __HotglueError($"\"{_yypPath}\" doesn't exist");
     }
     
+    __HotglueTrace($"Loading \"{_yypPath}\" as a .yyp");
+    
     var _project = new __HotglueProject(_yypPath, _readOnly, _sourceURL, _inCache);
     _project.__VerifyIncludedFilesExist();
     

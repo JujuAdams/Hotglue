@@ -19,6 +19,8 @@ function __HotglueLoadYYZ(_yyzPath, _sourceURL = _yyzPath)
         return undefined;
     }
     
+    __HotglueTrace($"Loading \"{_yyzPath}\" as a .yyz (unzip then load)");
+    
     var _directory = $"{HOTGLUE_UNZIP_CACHE_DIRECTORY}{md5_string_unicode(_yyzPath)}/";
     directory_destroy(_directory);
     
