@@ -1,8 +1,11 @@
 // Feather disable all
 
-#macro HOTGLUE_GITHUB_CLIENT_ID  "Ov23liIXW8jhytQcU7np"
-#macro HOTGLUE_GITHUB_CLIENT_SECRET  "7ec0ac303ca9777bf67def627e86e672ff6ab535"
+// https://github.com/settings/developers
+// Make sure you make an OAuth app!
+#macro HOTGLUE_GITHUB_CLIENT_ID  ""
+#macro HOTGLUE_GITHUB_CLIENT_SECRET  ""
 
-#macro HOTGLUE_ITCH_API_KEY  "32NJ2Ed5XSZTZf3PEQ4v2evucTBGBp8JA7UxRzun"
+// https://itch.io/user/settings/api-keys
+#macro HOTGLUE_ITCH_API_KEY  ""
 
 #macro HOTGLUE_UDP_RECEIVE_PORT  52500
