@@ -31,7 +31,11 @@ function __HotglueClassJob(_destinationProject) constructor
     
     static SetSubfolder = function(_subfolder)
     {
-        __subfolder = _subfolder;
+        if (_subfolder != __subfolder)
+        {
+            __subfolder = _subfolder;
+            BuildReport();
+        }
     }
     
     static GetAddArray = function()
@@ -252,49 +256,6 @@ function __HotglueClassJob(_destinationProject) constructor
         }
     }
     
-    //static SetEnsureFolderPath = function(_subfolder)
-    //{
-    //    if (_subfolder == "")
-    //    {
-    //        //The root always exists
-    //        return;
-    //    }
-    //    
-    //    var _addPIDDict = __addPIDDict;
-    //    
-    //    //Sanitize
-    //    var _path = string_replace_all(_subfolder, "\\", "/");
-    //    
-    //    //Iterate over every stage in the path to ensure we have all the folders set up along the path
-    //    repeat(string_count("/", _path) + 1)
-    //    {
-    //        var _method = method(
-    //        {
-    //            __path: _path,
-    //        },
-    //        function(_destinationProject)
-    //        {
-    //            var _quickAssetDict = _destinationProject.__quickAssetDict;
-    //            var _path = __path;
-    //            
-    //            if (not variable_struct_exists(_quickAssetDict, $"folder:{_path}"))
-    //            {
-    //                var _hotglueAsset = new __HotglueFolder({ folderPath: $"folders/{_path}.yy", name: filename_name(_path), });
-    //                _hotglueAsset.__InsertIntoYYP(_destinationProject, "");
-    //                _destinationProject.__AddAsset(_hotglueAsset);
-    //            }
-    //        });
-    //        
-    //        var _pid = $"folder:{__HotglueProcessFolderPath($"folders/{_path}.yy")}";
-    //        
-    //        array_push(__addActionArray, _method);
-    //        array_push(__addPIDArray, _pid);
-    //        _addPIDDict[$ _pid] = true;
-    //        
-    //        _path = filename_dir(_path);
-    //    }
-    //}
-    
     static BuildReport = function()
     {
         var _destinationPIDDict = __destinationProject.__quickAssetDict;
@@ -317,12 +278,32 @@ function __HotglueClassJob(_destinationProject) constructor
         
         var _addPIDDict        = __addPIDDict;
         var _addPIDArray       = __derivedAddPIDArray;
+        
         var _deletePIDArray    = __derivedDeletePIDArray;
         var _conflictPIDArray  = __derivedConflictPIDArray;
         var _overwritePIDArray = __derivedOverwritePIDArray;
         
         array_resize(_conflictPIDArray,  0);
         array_resize(_overwritePIDArray, 0);
+        
+        if (__subfolder != "")
+        {
+            //Sanitize
+            var _path = string_replace_all(__subfolder, "\\", "/");
+            
+            //Iterate over every stage in the path to ensure we have all the folders set up along the path
+            repeat(string_count("/", _path) + 1)
+            {
+                var _pid = $"folder:{__HotglueProcessFolderPath($"folders/{_path}.yy")}";
+                
+                if (not struct_exists(_addPIDDict, _pid))
+                {
+                    array_push(_addPIDArray, _pid);
+                }
+                
+                _path = filename_dir(_path);
+            }
+        }
         
         var _deletePIDDict = {};
         var _i = 0;
@@ -371,6 +352,7 @@ function __HotglueClassJob(_destinationProject) constructor
     
     static Execute = function()
     {
+        var _subfolder      = __subfolder;
         var _packageEdit    = __packageEdit;
         var _packageName    = __packageName;
         var _packageVersion = __packageVersion;
@@ -433,6 +415,25 @@ function __HotglueClassJob(_destinationProject) constructor
                     }
                     
                     __SaveHotglueMetadata();
+                }
+            }
+            
+            if (_subfolder != "")
+            {
+                //Sanitize
+                var _path = string_replace_all(_subfolder, "\\", "/");
+                
+                //Iterate over every stage in the path to ensure we have all the folders set up along the path
+                repeat(string_count("/", _path) + 1)
+                {
+                    if (not variable_struct_exists(__quickAssetDict, $"folder:{_path}"))
+                    {
+                        var _hotglueAsset = new __HotglueFolder({ folderPath: $"folders/{_path}.yy", name: filename_name(_path), });
+                        _hotglueAsset.__InsertIntoYYP(self, "");
+                        __AddAsset(_hotglueAsset);
+                    }
+                    
+                    _path = filename_dir(_path);
                 }
             }
             
