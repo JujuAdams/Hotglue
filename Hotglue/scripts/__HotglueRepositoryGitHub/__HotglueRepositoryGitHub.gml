@@ -168,7 +168,7 @@ function __HotglueRepositoryGitHub(_url) : __HotglueRepositoryCommon(_url) const
                                 }
                                 else
                                 {
-                                    __HotglueTrace($"No latest stable found for \"{_httpRequest.GetURL()}\"");
+                                    __HotglueTrace($"No latest stable found for \"{__url}\"");
                                 }
                                 
                                 if (is_struct(__latestRelease))
