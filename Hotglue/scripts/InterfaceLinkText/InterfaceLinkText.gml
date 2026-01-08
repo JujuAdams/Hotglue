@@ -5,7 +5,7 @@
 
 function InterfaceLinkText(_text, _url = _text)
 {
-    var _isRemote = InterfaceGuessURLIsRemote(_url);
+    var _isRemote = HotglueGuessURLIsRemote(_url);
     
     ImGuiTextLink(_text);
     

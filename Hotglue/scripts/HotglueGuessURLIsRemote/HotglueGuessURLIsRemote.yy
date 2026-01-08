@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"InterfaceGuessURLIsRemote",
+  "%Name":"HotglueGuessURLIsRemote",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"InterfaceGuessURLIsRemote",
+  "name":"HotglueGuessURLIsRemote",
   "parent":{
-    "name":"Interface",
-    "path":"folders/Interface.yy",
+    "name":"Other",
+    "path":"folders/Hotglue/Other.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

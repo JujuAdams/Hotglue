@@ -4,7 +4,7 @@
 
 function InterfaceOpenURL(_url)
 {
-    if (InterfaceGuessURLIsRemote(_url))
+    if (HotglueGuessURLIsRemote(_url))
     {
         url_open(_url);
     }

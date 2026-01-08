@@ -21,6 +21,7 @@ function __HotglueClassAutomation(_json) constructor
     }
     
     __json = _json;
+    __sourceProject = undefined;
     
     __project = undefined;
     __timeSource = time_source_create(time_source_global, 1, time_source_units_frames, function()
@@ -40,10 +41,7 @@ function __HotglueClassAutomation(_json) constructor
         
         if (__operation != undefined)
         {
-            if (__operation())
-            {
-                ++__rootIndex;
-            }
+            __operation();
         }
         else
         {
@@ -139,97 +137,33 @@ function __HotglueClassAutomation(_json) constructor
                     return;
                 }
                 
-                if (InterfaceGuessURLIsRemote(_import))
+                if (HotglueGuessURLIsRemote(_import))
                 {
-                    __Error($"Cannot directly import a remote file");
-                    return;
-                }
-                
-                var _project = HotglueProjectLocalEnsure(_import);
-                if (_project == undefined)
-                {
-                    __Error($"Failed to load \"{_import}\"");
-                    return;
-                }
-                
-                //Figure out what assets we want
-                var _assets = _input[$ "assets"];
-                if (_assets != undefined)
-                {
-                    if (_project.GetIsPackage())
+                    HttpCacheGetFile(_import, undefined, function(_success, _destinationPath, _callbackData)
                     {
-                        __HotglueWarning("Cannot import parts of a .yymps package, ignoring .assets");
-                    }
-                    else
-                    {
-                        if (is_string(_assets))
+                        with(_callbackData)
                         {
-                            _assets = [_assets];
+                            if (_success)
+                            {
+                                __sourceProject = HotglueProjectRemoteEnsure(_destinationPath, _destinationPath);
+                                __LoadProject();
+                            }
+                            else
+                            {
+                                __Error($"Failed to download remote file");
+                            }
                         }
-                        else if (not is_array(_assets))
-                        {
-                            __Error($".assets must be an array (typeof={typeof(_assets)})");
-                            return;
-                        }
-                    }
-                }
-                
-                //Find the subfolder
-                var _subfolder = _input[$ "subfolder"];
-                if ((_subfolder != undefined) && (not is_string(_subfolder)))
-                {
-                    __Error($".subfolder must be a string (typeof={typeof(_subfolder)})");
+                    },
+                    self, undefined, filename_ext(_import));
+                    
+                    __operation = function() {}
                     return;
-                }
-                
-                //Create a job
-                if (_project.GetIsPackage())
-                {
-                    var _job = __project.JobImportAsLibrary(_project, _subfolder);
-                }
-                else if (_assets == undefined)
-                {
-                    var _job = __project.JobImportAllFrom(_project, _subfolder);
                 }
                 else
                 {
-                    var _job = __project.JobImportFrom(_project, _assets, _subfolder);
+                    __sourceProject = HotglueProjectLocalEnsure(_import);
+                    __LoadProject();
                 }
-                
-                //Set up package name and version
-                var _packageName = _input[$ "packageName"];
-                if ((_packageName != undefined) && (not is_string(_packageName)))
-                {
-                    __Error($".packageName must be a string (typeof={typeof(_packageName)})");
-                    return;
-                }
-                
-                var _packageVersion = _input[$ "packageVersion"];
-                if ((_packageVersion != undefined) && (not is_string(_packageVersion)))
-                {
-                    __Error($".packageVersion must be a string (typeof={typeof(_packageVersion)})");
-                    return;
-                }
-                
-                if ((_packageName == undefined) && (_packageVersion != undefined))
-                {
-                    __Error($".packageVersion cannot be set without .packageName");
-                    return;
-                }
-                
-                if (is_string(_packageName))
-                {
-                    _job.SetPackageEdit(true);
-                    _job.SetPackageName(_packageName ?? "");
-                    _job.SetPackageVersion(_packageVersion ?? "");
-                    _job.SetPackageURL(_project.GetURL() ?? "");
-                }
-                
-                //Execute the job
-                _job.BuildReport();
-                _job.Execute();
-                
-                ++__rootIndex;
             }
             else
             {
@@ -253,6 +187,97 @@ function __HotglueClassAutomation(_json) constructor
     static GetError = function()
     {
         return __error;
+    }
+    
+    static __LoadProject = function()
+    {
+        var _input = __json[__rootIndex];
+        
+        if (__sourceProject == undefined)
+        {
+            __Error($"Failed to load \"{_import}\"");
+            return;
+        }
+        
+        //Figure out what assets we want
+        var _assets = _input[$ "assets"];
+        if (_assets != undefined)
+        {
+            if (__sourceProject.GetIsPackage())
+            {
+                __HotglueWarning("Cannot import parts of a .yymps package, ignoring .assets");
+            }
+            else
+            {
+                if (is_string(_assets))
+                {
+                    _assets = [_assets];
+                }
+                else if (not is_array(_assets))
+                {
+                    __Error($".assets must be an array (typeof={typeof(_assets)})");
+                    return;
+                }
+            }
+        }
+        
+        //Find the subfolder
+        var _subfolder = _input[$ "subfolder"];
+        if ((_subfolder != undefined) && (not is_string(_subfolder)))
+        {
+            __Error($".subfolder must be a string (typeof={typeof(_subfolder)})");
+            return;
+        }
+        
+        //Create a job
+        if (__sourceProject.GetIsPackage())
+        {
+            var _job = __project.JobImportAsLibrary(__sourceProject, _subfolder);
+        }
+        else if (_assets == undefined)
+        {
+            var _job = __project.JobImportAllFrom(__sourceProject, _subfolder);
+        }
+        else
+        {
+            var _job = __project.JobImportFrom(__sourceProject, _assets, _subfolder);
+        }
+        
+        //Set up package name and version
+        var _packageName = _input[$ "packageName"];
+        if ((_packageName != undefined) && (not is_string(_packageName)))
+        {
+            __Error($".packageName must be a string (typeof={typeof(_packageName)})");
+            return;
+        }
+        
+        var _packageVersion = _input[$ "packageVersion"];
+        if ((_packageVersion != undefined) && (not is_string(_packageVersion)))
+        {
+            __Error($".packageVersion must be a string (typeof={typeof(_packageVersion)})");
+            return;
+        }
+        
+        if ((_packageName == undefined) && (_packageVersion != undefined))
+        {
+            __Error($".packageVersion cannot be set without .packageName");
+            return;
+        }
+        
+        if (is_string(_packageName))
+        {
+            _job.SetPackageEdit(true);
+            _job.SetPackageName(_packageName ?? "");
+            _job.SetPackageVersion(_packageVersion ?? "");
+            _job.SetPackageURL(__sourceProject.GetURL() ?? "");
+        }
+        
+        //Execute the job
+        _job.BuildReport();
+        _job.Execute();
+        
+        __operation = undefined;
+        ++__rootIndex;
     }
     
     static __Error = function(_message)

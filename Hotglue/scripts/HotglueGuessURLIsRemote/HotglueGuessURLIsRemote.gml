@@ -2,7 +2,7 @@
 
 /// @param url
 
-function InterfaceGuessURLIsRemote(_url)
+function HotglueGuessURLIsRemote(_url)
 {
     _url = string_replace_all(_url, "\\", "/");
     

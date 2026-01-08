@@ -10,7 +10,7 @@ function InterfaceGuessNameFromURL(_url)
         _url = string_delete(_url, 1, _urlLength);
     }
     
-    if (InterfaceGuessURLIsRemote(_url))
+    if (HotglueGuessURLIsRemote(_url))
     {
         var _pos = string_last_pos("/", _url);
         if (_pos <= 0) return _url;
