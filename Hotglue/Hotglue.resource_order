@@ -155,6 +155,7 @@
     {"name":"HotglueProjectRemoteGet","order":4,"path":"scripts/HotglueProjectRemoteGet/HotglueProjectRemoteGet.yy",},
     {"name":"HotglueProjectToolConvert","order":2,"path":"scripts/HotglueProjectToolConvert/HotglueProjectToolConvert.yy",},
     {"name":"HotglueProjectToolTest","order":3,"path":"scripts/HotglueProjectToolTest/HotglueProjectToolTest.yy",},
+    {"name":"HotglueRunAutomation","order":6,"path":"scripts/HotglueRunAutomation/HotglueRunAutomation.yy",},
     {"name":"HotglueSanitizeResourceName","order":2,"path":"scripts/HotglueSanitizeResourceName/HotglueSanitizeResourceName.yy",},
     {"name":"HotglueSetCachePath","order":3,"path":"scripts/HotglueSetCachePath/HotglueSetCachePath.yy",},
     {"name":"HotglueSetItchAPIKey","order":2,"path":"scripts/HotglueSetItchAPIKey/HotglueSetItchAPIKey.yy",},

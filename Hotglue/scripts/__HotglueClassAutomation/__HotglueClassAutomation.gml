@@ -28,6 +28,7 @@ function __HotglueClassAutomation(_json) constructor
     {
         if (__finished)
         {
+            __HotglueTrace("Automation complete");
             time_source_stop(__timeSource);
             time_source_destroy(__timeSource);
             return;
@@ -89,6 +90,19 @@ function __HotglueClassAutomation(_json) constructor
                 }
                 
                 HotglueSetSuppressGitAssert(_value);
+                ++__rootIndex;
+            }
+            else if (struct_exists(_input, "clearCache"))
+            {
+                __HotglueTrace($"Automation step {__rootIndex}\n{json_stringify(_input, true)}");
+                if (not __CheckClean(_input, ["clearCache"])) return;
+                
+                if (_input.clearCache == true)
+                {
+                    HotglueClearUnzipCache();
+                    HttpCacheClear();
+                }
+                
                 ++__rootIndex;
             }
             else if (struct_exists(_input, "deleteLibrary"))
@@ -177,6 +191,11 @@ function __HotglueClassAutomation(_json) constructor
     
     time_source_start(__timeSource);
     
+    if (not __error)
+    {
+        __HotglueTrace("Running automation");
+    }
+    
     
     
     static GetFinished = function()
@@ -195,7 +214,7 @@ function __HotglueClassAutomation(_json) constructor
         
         if (__sourceProject == undefined)
         {
-            __Error($"Failed to load \"{_import}\"");
+            __Error("Failed to load project");
             return;
         }
         

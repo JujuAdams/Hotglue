@@ -1,125 +1,80 @@
-HotglueProjectLocalEnsure(path)
-	Returns a project struct, loading from the given path it if necessary.
-
-HotglueProjectLocalGet(path)
-	Returns a project struct if a project with the given path is found. Otherwise, this function returns `undefined`.
-
-HotglueProjectLocalClose(path)
-    Closes a project, freeing memory associated with it.
-
-HotglueLoadLooseFile(path)
-	Returns a loose file struct for the given path.
+The automation JSON is a way of describing steps to modify a GameMaker project. The root of the JSON is an array and each element of that array must be a struct. Each struct is an instruction. Instructions are executed in the order that they appear in the JSON.
 
 
 
+## Simple import example ##
 
+[
+    { "destination": ""C:/Users/Juju/Documents/GameMakerStudio2/exampleDest/exampleDest.yyp" }
+    { "import": "https://github.com/JujuAdams/Scribble/releases/download/9.7.1/scribble_9_7_1.yymps" }
+]
 
-Project structs contain the following methods:
-.Refresh()
-	Refreshes the project, reloading asset information from disk.
-
-.GetName()
-	Returns the name of the project as defined in the .yyp/.yymps/.yyz file.
-
-.GetIsPackage()
-	Returns if the project was loaded from a .yymps file.
-
-.GetVersionString()
-	Returns the version of the .yymps file as a string. If the project was not loaded from a `.yymps` file then this function returns "0.0.0".
-
-.GetPath()
-	Returns the local path where the project is stored. For files downloaded from the internet automatically by Hotglue, this path will likely in Hotglue's cache.
-
-.GetDirectory()
-	Returns the local directory where the project is stored. For files downloaded from the internet automatically by Hotglue, this directory will likely in Hotglue's cache.
-
-.GetURL()
-	Returns the origin URL for the project. For local projects, this will be the same as the project path.
-
-.GetReadOnly()
-	Returns if the project was opened in read-only mode. This will apply to .yyz and .yymps files as well as .yyp projects made with a version of GameMaker older than 2024.14.
-
-.GetInCache()
-	Returns if the project is stored in Hotglue's cache.
-
-.GetConverted()
-	Returns if the project was converted from a version of GameMaker older than 2024.14.
-
-.GetYYPVersion()
-	Returns the .yyp version for the project. This should version 2024.14.x.x.
-
-.GetYYPOriginalVersion()
-	Return the original .yyp version for the project prior to conversion. If no conversion has been performed, the value returned by this function will be the same as `.GetYYPVersion()`.
-
-.GetLoadedSuccessfully()
-	Returns if the project has been loaded successfully.
-
-.GetHotglueMetadataExists()
-	Returns if Hotglue metadata has been found in the project.
-
-.EnsureHotglueMetadata()
-	Creates Hotglue metadata on disk if the project doesn't have any.
-
-.GetAssets()
-	Returns an array of asset PIDs (Project IDentifies). These are strings, such as "resource:HotglueProjectLocalEnsure", that unique identify folders, resources, and included files in the project.
-
-.GetAssetExists(pid)
-	Returns if an asset with the given PID exists in the project.
-
-.GetImported()
-	Returns an array of installed library definition structs as per the Hotglue metadata. If no Hotglue metadata was found in the project then this function returns an empty array.
-
-.JobEmpty()
-	Returns an empty job struct scoped to the project.
-
-.JobImportAllFrom(sourceProject, [subfolder = ""])
-	Returns a job struct scoped to the project that contains operations needed to import every asset (folder, resource, included file) from the source project.
-
-.JobImportFrom(sourceProject, assetPIDArray, [subfolder = ""])
-	Returns a job struct scoped to the project that contains operations needed to import selected assets from the source project.
-
-.JobImportFromLooseFiles(looseFileArray, [subfolder = ""])
-	Returns a job struct scoped to the project that contains operations needed to import loose files. Loose files should be created using `HotglueLoadLooseFile()`.
-
-.JobImportAsLibrary(sourceProject, [subfolder = ""])
-	Returns a job struct scoped to the project that contains operations needed to import the source project as a library.
-
-.JobDeleteLibrary(libraryName)
-	Return a job struct scoped to the project that contains operations needed to delete the named library from the project. If no such library exists in the project, the job struct will be empty.
+This automation JSON will open a project, download version 9.7.1 of Scribble from GitHub, and then import it into the targeted project.
 
 
 
+## destination ##
+
+{ "destination": "C:/Users/Juju/Documents/GameMakerStudio2/exampleDest/exampleDest.yyp" }
+
+This instruction sets the current destination project. Subsequent operations will affect this project.
 
 
-Loose file structs contain the following methods:
-.GetPath()
-	Returns the path to the loose file on disk.
 
-.GetName()
-	Returns the import name of the loose file. This is the name of the loose file as it will be when imported.
+## clearCache ##
 
-.GetPID()
-	Returns the PID (Project IDentifier) for the loose file as it will be when imported.
+{ "clearCache": true }
 
-.SetName(name)
-	Sets the import name for the loose file.
+Clears all caches. This is helpful if you want guarantee a fresh download.
 
-.GetOriginalName()
-	Returns the original import name for the loose file i.e. the default name before it was set using `.SetName()`.
 
-.ResetName()
-	Returns the import name for the loose file to the default.
 
-.GetType()
-	Returns the asset type for the loose file. This will one of the following:
-	- "included file"
-	- "script"
-	- "sound"
-	- "sprite"
-	- "note"
+## itchApiKey ##
 
-.SetType(type)
-	Sets the asset type that the loose file will be imported as. This should be one of the types that `.GetType()` can return, see above.
+{ "itchApiKey": "abcd1234" }
 
-.GetRecommendedType()
-	Returns the recommended (and default) type for the loose file based on its file extension. If a file extension is unrecognised, this function will return "included file".
+Sets your personal itch.io personal API key which is required for downloading itch.io files.
+
+
+
+## suppressGitAssert ##
+
+{ "suppressGitAssert": true }
+
+Toggles Hotglue's Git safety check. This is helpful if you're using source control other than Git (or the safety check throws a false positive).
+
+
+
+## deleteLibrary ##
+
+{ "deleteLibrary": "Scribble" }
+
+Deletes the so-named library from the project. This library must have been added by Hotglue in the past.
+
+
+
+## import ##
+
+{ "import": "C:/Users/Juju/Documents/GameMakerStudio2/exampleSrc/exampleSrc.yyp" }
+
+
+This is the main import instruction. It will import content from the target project file. You may specify a .yyp, a .yyz, or a .yymps to import from. You may also specify a file hosted on the internet (e.g. from GitHub) but it must be a direct link to a file.
+
+This instruction has some optional parameters:
+
+{
+	"import": "...",
+	"subfolder": "Libraries",
+	"assets": [
+		"resource:objExample",
+		"included:external_file.txt",
+	],
+	"packageName": "Custom Package Name",
+	"packageVersion": "1.0.0",
+}
+
+The `.subfolder` is a folder that the assets will be imported to in the destination project. This is helpful to keep libraries organized in your project.
+
+The `.assets` variable must be an array of PIDs (Project IDentifiers) found in the source that you'd like to import. If `.assets` is used, all assets that are not named will be ignored. You may not specify assets to import with `.assets` if the source is a .yymps (if the source is a .yymps then all assets will be imported).
+
+`.packageName` can be set to treat the imported files as being part of a package even if the source wasn't a .yymps file. `.packageVersion` can be set to record what version the imported files are from.

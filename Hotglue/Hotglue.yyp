@@ -284,6 +284,7 @@
     {"id":{"name":"HotglueProjectRemoteGet","path":"scripts/HotglueProjectRemoteGet/HotglueProjectRemoteGet.yy",},},
     {"id":{"name":"HotglueProjectToolConvert","path":"scripts/HotglueProjectToolConvert/HotglueProjectToolConvert.yy",},},
     {"id":{"name":"HotglueProjectToolTest","path":"scripts/HotglueProjectToolTest/HotglueProjectToolTest.yy",},},
+    {"id":{"name":"HotglueRunAutomation","path":"scripts/HotglueRunAutomation/HotglueRunAutomation.yy",},},
     {"id":{"name":"HotglueSanitizeResourceName","path":"scripts/HotglueSanitizeResourceName/HotglueSanitizeResourceName.yy",},},
     {"id":{"name":"HotglueSetCachePath","path":"scripts/HotglueSetCachePath/HotglueSetCachePath.yy",},},
     {"id":{"name":"HotglueSetItchAPIKey","path":"scripts/HotglueSetItchAPIKey/HotglueSetItchAPIKey.yy",},},

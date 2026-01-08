@@ -67,28 +67,33 @@ function HandleExeParams(_paramArray = undefined)
                 return false;
             }
             
-            var _json = undefined;
+            var _jsonString = undefined;
             try
             {
                 var _jsonBuffer = buffer_load(_path);
-                var _jsonString = buffer_read(_jsonBuffer, buffer_text);
+                _jsonString = buffer_read(_jsonBuffer, buffer_text);
                 buffer_delete(_jsonBuffer);
-                var _json = json_parse(_jsonString);
             }
             catch(_error)
             {
-                __HotglueWarning($"Failed load and parse \"{_path}\" as JSON");
+                __HotglueWarning($"Failed load \"{_path}\"");
             }
             
-            if (_json == undefined)
+            if (_jsonString == undefined)
+            {
+                state = -1;
+                return false;
+            }
+            
+            automation = HotglueRunAutomation(_jsonString);
+            
+            if (automation == undefined)
             {
                 state = -1;
                 return false;
             }
             
             state = 1;
-            automation = new __HotglueClassAutomation(_json);
-            
             return true;
         }
         

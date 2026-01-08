@@ -20,11 +20,16 @@ function ClassTabAutomation() : ClassTab() constructor
         __referenceString = "Hotglue reference failed to load.";
     }
     
-    __content = "//Type GML here!";
-    __showReference = true;
+    __content = @'
+[
+    { "destination": "A:/GitHub repos/Mine/Importer/C/C.yyp" },
+    {
+        "import": "https://github.com/JujuAdams/Scribble/releases/download/9.7.1/scribble_9_7_1.yymps",
+        "subfolder": "Libraries",
+    },
+]';
     
-    __gmlcEnvironment = new GMLC_Env();
-    __gmlcEnvironment.expose_user_functions();
+    __showReference = true;
     
     static MenuItem = function()
     {
@@ -39,18 +44,8 @@ function ClassTabAutomation() : ClassTab() constructor
     {
         if (ImGuiButton("Execute") || keyboard_check_pressed(vk_f5))
         {
-            try
-            {
-                var _program = __gmlcEnvironment.compile(__content);
-                _program();
-                
-                LogTraceAndStatus("Program executed successfully");
-            }
-            catch(_error)
-            {
-                LogWarning(_error);
-                LogWarning("Program encountered an error");
-            }
+            oInterface.logOpen = true;
+            HotglueRunAutomation(__content);
         }
         
         ImGuiSameLine(undefined, 20);
@@ -92,7 +87,9 @@ function ClassTabAutomation() : ClassTab() constructor
             ImGuiColumns(2);
             BuildInput();
             ImGuiNextColumn();
-            ImGuiText(__referenceString);
+            ImGuiBeginChild("##referencePane");
+            ImGuiTextWrapped(__referenceString);
+            ImGuiEndChild();
         }
         else
         {

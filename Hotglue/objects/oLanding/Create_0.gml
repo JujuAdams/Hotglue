@@ -39,7 +39,7 @@ if (not _runningFromURI)
     else
     {
         //Test code
-        _exeParamStruct = HandleExeParams(["", "-run", "A:/test.txt"]);
+        //_exeParamStruct = HandleExeParams(["", "-run", "A:/test.txt"]);
     }
     
     if (_exeParamStruct != undefined)
