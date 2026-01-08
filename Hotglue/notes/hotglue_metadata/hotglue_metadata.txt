@@ -1,7 +1,10 @@
 {
+  "version":1.0,
   "installed":[
     {
+      "origin":"https:\/\/github.com\/JujuAdams\/SNAP\/releases\/tag\/8.1.1",
       "name":"SNAP",
+      "version":"8.1.1",
       "assets":[
         "folder:SNAP",
         "folder:SNAP\/CSV",
@@ -86,57 +89,12 @@
         "resource:SnapToYAML",
         "resource:SnapVisualize",
         "resource:__SnapSystem"
-      ],
-      "origin":"https:\/\/github.com\/JujuAdams\/SNAP\/releases\/tag\/8.1.1",
-      "version":"8.1.1"
+      ]
     },
     {
-      "name":"GMLC",
-      "assets":[
-        "folder:GMLCompiler",
-        "folder:GMLCompiler\/Internal",
-        "folder:GMLCompiler\/Internal\/GM14",
-        "folder:GMLCompiler\/Internal\/GMLC Util",
-        "folder:GMLCompiler\/Internal\/LookupTables",
-        "folder:GMLCompiler\/Internal\/LookupTables\/__Deprocated",
-        "folder:GMLCompiler\/Internal\/LookupTables\/__Shouldnt be needed",
-        "folder:GMLCompiler\/Internal\/ParserLibrary",
-        "folder:GMLCompiler\/Internal\/_Init",
-        "folder:GMLCompiler\/Parsers",
-        "folder:GMLCompiler\/Parsers\/_Internal",
-        "resource:ASTNodes",
-        "resource:FlexiParseBase",
-        "resource:GM14Compatibility",
-        "resource:GMLCFastPasses",
-        "resource:GMLC_Env",
-        "resource:GMLC_GM14_Converter",
-        "resource:GMLC_Gen_0_Tokenizer",
-        "resource:GMLC_Gen_1_PreProcessor",
-        "resource:GMLC_Gen_2_Parser",
-        "resource:GMLC_Gen_3_PostProcessor",
-        "resource:GMLC_Gen_4_Optimizer",
-        "resource:GMLC_Gen_5_Compiler",
-        "resource:TypeEnums",
-        "resource:Util",
-        "resource:__DeprocatedVariables",
-        "resource:__EnvironmentClass",
-        "resource:__ExistingConstants",
-        "resource:__ExistingEnums",
-        "resource:__ExistingFunctions",
-        "resource:__ExistingUniqueVariables",
-        "resource:__ExistingVariables",
-        "resource:__apply_constructor_tags",
-        "resource:__functionOverrides",
-        "resource:__gmlc_trie_string_matching",
-        "resource:__load_gml_spec",
-        "resource:gmlc_file_management",
-        "resource:sprGMLCLogo"
-      ],
-      "origin":"C:\\Users\\conta\\Downloads\\GMLC_1_1_0.yymps",
-      "version":"1.1.0"
-    },
-    {
+      "origin":"",
       "name":"HttpCache",
+      "version":"1.0.3",
       "assets":[
         "resource:__HttpCacheAsyncEvent",
         "folder:HTTP Cache\/(System)",
@@ -171,10 +129,7 @@
         "resource:__HttpCacheConfig",
         "resource:__HttpCacheConstants",
         "resource:__HttpCacheAdd"
-      ],
-      "origin":"",
-      "version":"1.0.3"
+      ]
     }
-  ],
-  "version":1.0
+  ]
 }
