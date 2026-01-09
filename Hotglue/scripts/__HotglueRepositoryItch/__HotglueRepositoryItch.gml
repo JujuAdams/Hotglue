@@ -59,7 +59,15 @@ function __HotglueRepositoryItch(_url) : __HotglueRepositoryCommon(_url) constru
                     }
                     else
                     {
-                        __readme = _result;
+                        var _stringA = "<div class=\"formatted_description user_formatted\">";
+                        var _lengthA = string_length(_stringA);
+                        var _posA = string_pos(_stringA, _result);
+                        var _posB = string_pos("</div><div class=\"more_information_toggle\">", _result);
+                        
+                        _posA += _lengthA;
+                        __readme = string_copy(_result, _posA, _posB - _posA);
+                        
+                        __HotglueTrace(__readme);
                         __HotglueTrace($"\"{__url}\" succeeded");
                     }
                     
