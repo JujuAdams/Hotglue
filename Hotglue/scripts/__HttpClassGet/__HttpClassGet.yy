@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"__HttpClassCacheFileGet",
+  "%Name":"__HttpClassGet",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__HttpClassCacheFileGet",
+  "name":"__HttpClassGet",
   "parent":{
-    "name":"(System)",
-    "path":"folders/HTTP Cache/(System).yy",
+    "name":"Class",
+    "path":"folders/HTTP Cache/(System)/Class.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

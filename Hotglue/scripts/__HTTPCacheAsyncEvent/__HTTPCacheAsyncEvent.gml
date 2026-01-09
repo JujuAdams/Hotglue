@@ -41,7 +41,7 @@ function __HttpCacheAsyncEvent()
                     _cachedValueMap[? __hash] = _struct;
                 }
                 
-                __HttpCacheAdd(__hash, __durationMins);
+                __HttpCacheAdd(__hash, __cacheLifetime);
             }
             else
             {
@@ -56,6 +56,8 @@ function __HttpCacheAsyncEvent()
             {
                 __callback(_success, _result, _responseHeaders, __callbackData);
             }
+            
+            __finished = true;
         }
     }
     
@@ -77,14 +79,14 @@ function __HttpCacheAsyncEvent()
                 {
                     var _cachePath = __HttpCacheGetPath(__hash);
                     
-                    if ((_cachePath != __destination)
-                    &&  (_cachePath != string_replace(__destination, game_save_id, ""))
-                    &&  (string_replace(_cachePath, game_save_id, "") != __destination))
+                    if ((_cachePath != __destinationPath)
+                    &&  (_cachePath != string_replace(__destinationPath, game_save_id, ""))
+                    &&  (string_replace(_cachePath, game_save_id, "") != __destinationPath))
                     {
-                        file_copy(_cachePath, __destination);
+                        file_copy(_cachePath, __destinationPath);
                     }
                     
-                    __HttpCacheAdd(__hash, __durationMins);
+                    __HttpCacheAdd(__hash, __cacheLifetime);
                 }
             }
             else
@@ -94,8 +96,10 @@ function __HttpCacheAsyncEvent()
             
             if (is_callable(__callback))
             {
-                __callback(_success, __destination, __callbackData);
+                __callback(_success, __destinationPath, __callbackData);
             }
+            
+            __finished = true;
         }
     }
 }

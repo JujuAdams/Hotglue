@@ -1,9 +1,8 @@
 {
-  "version":1.0,
   "installed":[
     {
-      "origin":"https:\/\/github.com\/JujuAdams\/SNAP\/releases\/tag\/8.1.1",
       "name":"SNAP",
+      "origin":"https:\/\/github.com\/JujuAdams\/SNAP\/releases\/tag\/8.1.1",
       "version":"8.1.1",
       "assets":[
         "folder:SNAP",
@@ -92,44 +91,47 @@
       ]
     },
     {
-      "origin":"",
       "name":"HttpCache",
-      "version":"1.0.3",
+      "origin":"",
+      "version":"1.1.0",
       "assets":[
-        "resource:__HttpCacheAsyncEvent",
-        "folder:HTTP Cache\/(System)",
-        "folder:HTTP Cache",
-        "resource:__HttpCacheExists",
-        "resource:__HttpCacheGetElapsedTime",
-        "resource:__HttpCacheGetPath",
-        "resource:__HttpCacheSaveString",
-        "resource:__HttpCacheSystem",
-        "resource:__HttpCacheTrace",
-        "resource:__HttpClassCacheFileGet",
-        "resource:__HttpEnsureObject",
-        "resource:__HttpGetUTCTime",
-        "resource:__HttpPClassCacheRequest",
-        "resource:__HttpResponseIsSuccess",
-        "resource:__objHttpCache",
         "resource:HttpCacheCustomExists",
         "folder:HTTP Cache\/Custom",
+        "folder:HTTP Cache",
         "resource:HttpCacheCustomGet",
         "resource:HttpCacheCustomSet",
-        "resource:HttpCacheGet",
-        "folder:HTTP Cache\/HTTP",
-        "resource:HttpCacheGetFile",
-        "resource:HttpCacheRequest",
         "resource:HttpCacheClear",
         "folder:HTTP Cache\/Miscellaneous",
         "resource:HttpCacheGetDirectory",
-        "resource:HttpCacheGetDurationMins",
+        "resource:HttpCacheGetLifetimeMins",
         "resource:HttpCachePrune",
         "resource:HttpCacheSetDirectory",
-        "resource:HttpCacheSetDurationMins",
+        "resource:HttpCacheSetLifetimeMins",
+        "resource:HttpCacheGet",
+        "resource:HttpCacheGetFile",
+        "resource:HttpCacheRequest",
         "resource:__HttpCacheConfig",
         "resource:__HttpCacheConstants",
-        "resource:__HttpCacheAdd"
+        "resource:__HttpClassGet",
+        "folder:HTTP Cache\/(System)\/Class",
+        "folder:HTTP Cache\/(System)",
+        "resource:__HttpClassGetFile",
+        "resource:__HttpClassRequest",
+        "resource:__HttpCacheAdd",
+        "resource:__HttpCacheAsyncEvent",
+        "resource:__HttpCacheExists",
+        "resource:__HttpCacheGetElapsedTime",
+        "resource:__HttpCacheGetPath",
+        "resource:__HttpCacheQueue",
+        "resource:__HttpCacheSaveString",
+        "resource:__HttpCacheSystem",
+        "resource:__HttpCacheTrace",
+        "resource:__HttpEnsureObject",
+        "resource:__HttpGetUTCTime",
+        "resource:__HttpResponseIsSuccess",
+        "resource:__objHttpCache"
       ]
     }
-  ]
+  ],
+  "version":1.0
 }

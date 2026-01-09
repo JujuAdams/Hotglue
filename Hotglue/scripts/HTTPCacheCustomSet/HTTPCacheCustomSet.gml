@@ -12,7 +12,7 @@
 ///      - struct
 /// 
 /// Cached data will be considered valid for a limited time span, as determined by the duration set
-/// by `HttpCacheSetDurationMins()` (the default timeout is 5 minutes). Cached data is stored on
+/// by `HttpCacheSetLifetimeMins()` (the default timeout is 5 minutes). Cached data is stored on
 /// disk and can persist for hours or days if you so choose.
 /// 
 /// @param key
@@ -28,11 +28,11 @@ function HttpCacheCustomSet(_key, _value)
     if (HTTP_CACHE_DISK_AVAILABLE)
     {
         __HttpCacheSaveString(__HttpCacheGetPath(_hash), json_stringify(_value));
-        __HttpCacheAdd(_hash, _system.__globalDurationMins);
+        __HttpCacheAdd(_hash, _system.__globalLifetimeMins);
     }
     else
     {
         _cachedValueMap[? _hash] = _value;
-        __HttpCacheAdd(_hash, _system.__globalDurationMins);
+        __HttpCacheAdd(_hash, _system.__globalLifetimeMins);
     }
 }

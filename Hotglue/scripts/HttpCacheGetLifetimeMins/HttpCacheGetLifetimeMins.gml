@@ -2,9 +2,9 @@
 
 /// Returns the duration for which *future* cached files will be considered valid.
 
-function HttpCacheGetDurationMins()
+function HttpCacheGetLifetimeMins()
 {
     static _system = __HttpCacheSystem();
     
-    return _system.__globalDurationMins;
+    return _system.__globalLifetimeMins;
 }

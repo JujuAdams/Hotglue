@@ -12,114 +12,34 @@
 /// - callbackData
 /// 
 /// Cached data will be considered valid for a limited time span, as determined by the duration set
-/// by `HttpCacheSetDurationMins()` (the default timeout is 5 minutes). Cached data is stored on
+/// by `HttpCacheSetLifetimeMins()` (the default timeout is 5 minutes). Cached data is stored on
 /// disk and can persist for hours or days if you so choose.
 /// 
 /// @param url
 /// @param callback
 /// @param [callbackData]
+/// @param [delay=0]
 /// @param [forceRedownload=false]
 /// @param [hashKey]
 
-function HttpCacheGet(_url, _callback, _callbackData = undefined, _forceRedownload = false, _hashKey = _url)
+function HttpCacheGet(_url, _callback, _callbackData = undefined, _delay = 0, _forceRedownload = false, _hashKey = _url)
 {
-    static _system = __HttpCacheSystem();
-    static _httpRequestMap = _system.__httpRequestMap;
-    static _cachedValueMap = _system.__cachedValueMap;
-    
     __HTTPEnsureObject();
     
-    var _hash = md5_string_utf8(_hashKey);
+    var _struct = new __HttpClassGet(_url, _callback, _callbackData, _forceRedownload, _hashKey);
     
-    if ((not _forceRedownload) && __HttpCacheExists(_hash))
+    if (_delay > 0)
     {
-        if (not is_callable(_callback))
-        {
-            return -1;
-        }
-        else
-        {
-            if (HTTP_CACHE_DISK_AVAILABLE)
-            {
-                var _asyncLoad = undefined;
-                try
-                {
-                    var _buffer = buffer_load(__HttpCacheGetPath(_hash));
-                    var _jsonString = buffer_read(_buffer, buffer_text);
-                    buffer_delete(_buffer);
-                    
-                    _asyncLoad = json_decode(_jsonString);
-                }
-                catch(_error)
-                {
-                    show_debug_message(json_stringify(_error, true));
-                    __HttpCacheTrace($"Warning! Failed to parse cached data for \"{_url}\" ({_hash})");
-                }
-            }
-            else
-            {
-                var _asyncLoad = _cachedValueMap[? _hash];
-            }
-            
-            if (_asyncLoad != undefined)
-            {
-                if (HTTP_CACHE_VERBOSE)
-                {
-                    __HttpCacheTrace($"Returning cached data for \"{_url}\" ({_hash})");
-                }
-                
-                call_later(1, time_source_units_frames, method({
-                    __asyncLoad:    _asyncLoad,
-                    __callback:     _callback,
-                    __callbackData: _callbackData,
-                },
-                function()
-                {
-                    var _success         = __HTTPResponseIsSuccess(__asyncLoad[? "http_status"]);
-                    var _result          = __asyncLoad[? "result"];
-                    var _responseHeaders = __asyncLoad[? "response_headers"];
-                    
-                    __callback(_success, _result, _responseHeaders, __callbackData);
-                    
-                    ds_map_destroy(__asyncLoad);
-                }), false);
-                
-                return -1;
-            }
-        }
+        call_later(max(1, _delay), time_source_units_frames, method(_struct, _struct.__Start));
     }
-    
-    var _requestID = http_get(_url);
-    if (_requestID < 0)
+    else if (_delay == 0)
     {
-        if (HTTP_CACHE_VERBOSE)
-        {
-            __HttpCacheTrace($"`http_get()` failed for \"{_url}\" ({_hash})");
-        }
-        
-        if (is_callable(__callback))
-        {
-            call_later(1, time_source_units_frames, method({
-                __callback:     _callback,
-                __callbackData: _callbackData,
-            },
-            function()
-            {
-                var _responseHeaders = ds_map_create();
-                __callback(false, "", _responseHeaders, __callbackData);
-                ds_map_destroy(_responseHeaders);
-            }), false);
-        }
+        _struct.__Start();
     }
     else
     {
-        if (HTTP_CACHE_VERBOSE)
-        {
-            __HttpCacheTrace($"Executed `http_get()` for \"{_url}\" ({_hash})");
-        }
-        
-        _httpRequestMap[? _requestID] = new __HTTPClassCacheRequest(_hash, _callback, _callbackData, _system.__globalDurationMins);
+        __HttpCacheQueue(_struct);
     }
     
-    return _requestID;
+    return _struct;
 }

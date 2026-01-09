@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"HttpCacheGetDurationMins",
+  "%Name":"HttpCacheGetLifetimeMins",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HttpCacheGetDurationMins",
+  "name":"HttpCacheGetLifetimeMins",
   "parent":{
     "name":"Miscellaneous",
     "path":"folders/HTTP Cache/Miscellaneous.yy",

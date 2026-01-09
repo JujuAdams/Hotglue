@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"HttpCacheRequest",
   "parent":{
-    "name":"HTTP",
-    "path":"folders/HTTP Cache/HTTP.yy",
+    "name":"HTTP Cache",
+    "path":"folders/HTTP Cache.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

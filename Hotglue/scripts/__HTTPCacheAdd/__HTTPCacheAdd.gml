@@ -1,14 +1,14 @@
 // Feather disable all
 
 /// @param hash
-/// @param durationMins
+/// @param lifetimeMins
 
-function __HttpCacheAdd(_hash, _durationMins)
+function __HttpCacheAdd(_hash, _lifetimeMins)
 {
     static _system       = __HttpCacheSystem();
     static _cacheTimeMap = _system.__cacheTimeMap;
     
-    var _elapseTime = date_inc_minute(__HTTPGetUTCTime(), _durationMins);
+    var _elapseTime = date_inc_minute(__HTTPGetUTCTime(), _lifetimeMins);
     
     if (HTTP_CACHE_VERBOSE)
     {

@@ -17,130 +17,35 @@
 /// pass `undefined` for the destination path.
 /// 
 /// Cached data will be considered valid for a limited time span, as determined by the duration set
-/// by `HttpCacheSetDurationMins()` (the default timeout is 5 minutes). Cached data is stored on
+/// by `HttpCacheSetLifetimeMins()` (the default timeout is 5 minutes). Cached data is stored on
 /// disk and can persist for hours or days if you so choose.
 /// 
 /// @param url
 /// @param destinationPath
 /// @param callback
 /// @param [callbackData]
+/// @param [delay=1]
 /// @param [forceRedownload=false]
-/// @param [cacheFileExtension]
 /// @param [hashKey]
 
-function HttpCacheGetFile(_url, _destinationPath, _callback, _callbackData = undefined, _forceRedownload = false, _cacheFileExtension = undefined, _hashKey = _url)
+function HttpCacheGetFile(_url, _destinationPath, _callback, _callbackData = undefined, _delay = 1, _forceRedownload = false, _hashKey = _url)
 {
-    static _system = __HttpCacheSystem();
-    static _httpFileMap = _system.__httpFileMap;
-    
     __HTTPEnsureObject();
     
-    var _hash = md5_string_utf8(_hashKey);
+    var _struct = new __HttpClassGetFile(_url, _destinationPath, _callback, _callbackData, _forceRedownload, _hashKey);
     
-    if (_cacheFileExtension != undefined)
+    if (_delay > 0)
     {
-        _hash += _cacheFileExtension;
+        call_later(max(1, _delay), time_source_units_frames, method(_struct, _struct.__Start));
     }
-    
-    var _cachePath = __HttpCacheGetPath(_hash);
-    _destinationPath ??= _cachePath;
-    
-    var _requestID = -1;
-    
-    if (not HTTP_CACHE_DISK_AVAILABLE)
+    else if (_delay == 0)
     {
-        _requestID = http_get_file(_url, _destinationPath);
-        if (_requestID < 0)
-        {
-            if (HTTP_CACHE_VERBOSE)
-            {
-                __HttpCacheTrace($"`http_get_file()` failed for \"{_url}\"");
-            }
-            
-            if (is_callable(__callback))
-            {
-                call_later(1, time_source_units_frames, method({
-                    __cachePath:       _cachePath,
-                    __destinationPath: _destinationPath,
-                    __callback:        _callback,
-                    __callbackData:    _callbackData,
-                },
-                function()
-                {
-                    __callback(false, __destinationPath, __callbackData);
-                }), false);
-            }
-        }
-        else
-        {
-            if (HTTP_CACHE_VERBOSE)
-            {
-                __HttpCacheTrace($"Executed `http_get_file()` for \"{_url}\"");
-            }
-            
-            _httpFileMap[? _requestID] = new __HTTPClassCacheFileGet(undefined, _destinationPath, _callback, _callbackData, _system.__globalDurationMins);
-        }
+        _struct.__Start();
     }
     else
     {
-        if ((not _forceRedownload) && __HttpCacheExists(_hash))
-        {
-            if (HTTP_CACHE_VERBOSE)
-            {
-                __HttpCacheTrace($"File has been cached for \"{_url}\" ({_hash})");
-            }
-            
-            file_copy(_cachePath, _destinationPath);
-            
-            if (is_callable(_callback))
-            {
-                call_later(1, time_source_units_frames, method({
-                    __cachePath:       _cachePath,
-                    __destinationPath: _destinationPath,
-                    __callback:        _callback,
-                    __callbackData:    _callbackData,
-                },
-                function()
-                {
-                    __callback(true, __destinationPath, __callbackData);
-                }), false);
-            }
-        }
-        else
-        {
-            _requestID = http_get_file(_url, __HttpCacheGetPath(_hash));
-            if (_requestID < 0)
-            {
-                if (HTTP_CACHE_VERBOSE)
-                {
-                    __HttpCacheTrace($"`http_get_file()` failed for \"{_url}\" ({_hash})");
-                }
-                
-                if (is_callable(__callback))
-                {
-                    call_later(1, time_source_units_frames, method({
-                        __cachePath:       _cachePath,
-                        __destinationPath: _destinationPath,
-                        __callback:        _callback,
-                        __callbackData:    _callbackData,
-                    },
-                    function()
-                    {
-                        __callback(false, __destinationPath, __callbackData);
-                    }), false);
-                }
-            }
-            else
-            {
-                if (HTTP_CACHE_VERBOSE)
-                {
-                    __HttpCacheTrace($"Executed `http_get_file()` for \"{_url}\" ({_hash})");
-                }
-                
-                _httpFileMap[? _requestID] = new __HTTPClassCacheFileGet(_hash, _destinationPath, _callback, _callbackData, _system.__globalDurationMins);
-            }
-        }
+        __HttpCacheQueue(_struct);
     }
     
-    return _requestID;
+    return _struct;
 }

@@ -4,19 +4,19 @@
 /// 
 /// @param minutes
 
-function HttpCacheSetDurationMins(_minutes)
+function HttpCacheSetLifetimeMins(_minutes)
 {
     static _system = __HttpCacheSystem();
     
     _minutes = max(0, _minutes);
     
-    if (_system.__globalDurationMins != _minutes)
+    if (_system.__globalLifetimeMins != _minutes)
     {
-        _system.__globalDurationMins = _minutes;
+        _system.__globalLifetimeMins = _minutes;
         
         if (HTTP_CACHE_VERBOSE)
         {
-            __HttpCacheTrace($"Set cache duration to {_minutes} minues");
+            __HttpCacheTrace($"Set cache lifetime to {_minutes} minues");
         }
     }
 }
