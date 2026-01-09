@@ -42,8 +42,33 @@ function __HotglueRepositoryItch(_url) : __HotglueRepositoryCommon(_url) constru
     
     static GetReadme = function()
     {
-        //TODO
-        return undefined;
+        if ((not __readmeCollected) && (__readmeRequest == undefined))
+        {
+            __HotglueTrace($"Getting description from \"{__url}\"");
+            
+            __readmeRequest = __HotglueHTTPRequest(__url, self, function(_success, _result, _responseHeaders, _callbackData)
+            {
+                with(_callbackData)
+                {
+                    __readmeCollected = true;
+                    __readmeRequest = undefined;
+                    
+                    if (not _success)
+                    {
+                        __HotglueWarning($"\"{__url}\" request failed");
+                    }
+                    else
+                    {
+                        __readme = _result;
+                        __HotglueTrace($"\"{__url}\" succeeded");
+                    }
+                    
+                    __ExecuteFinalCallback();
+                }
+            });
+        }
+        
+        return __readme;
     }
     
     static GetReleases = function()

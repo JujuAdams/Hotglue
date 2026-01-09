@@ -271,6 +271,9 @@ function ClassInterfaceRepositoryView(_repository) constructor
     
     static Build = function(_showDownloadButton)
     {
+        BuildRepositoryHeader();
+        ImGuiNewLine();
+        
         if (__repository.__isRemote)
         {
             ImGuiBeginTabBar("repoTabBar");
