@@ -61,16 +61,14 @@ function ClassInterfaceRepositoryView(_repository) constructor
         }
     }
     
-    static BuildRepositoryDescription = function(_height)
+    static BuildRepositoryDescription = function()
     {
-        ImGuiBeginChild("repoDescription", undefined, _height);
-        
         if (__repository.__isRemote)
         {
             var _readme = __repository.GetReadme();
             if (_readme == undefined)
             {
-                ImGuiText("Fetching README.md, please wait...");
+                ImGuiText("Fetching, please wait...");
             }
             else
             {
@@ -145,8 +143,36 @@ function ClassInterfaceRepositoryView(_repository) constructor
                 ImGuiText("Loading project...");
             }
         }
-        
-        ImGuiEndChild();
+    }
+    
+    static BuildReleaseDownloadButton = function()
+    {
+        if (__repository.__isRemote)
+        {
+            var _releaseArray = __repository.GetReleases();
+            ImGuiBeginDisabled((not is_array(_releaseArray)) || (array_length(_releaseArray) <= 0));
+            
+            if (ImGuiButton("Manual download"))
+            {
+                LogTraceAndStatus($"Downloading release \"{__selectedRelease.GetWebURL()}\"");
+                __selectedRelease.Download(function(_release, _success, _localURL)
+                {
+                    if (_success)
+                    {
+                        LogTraceAndStatus($"Downloaded \"{_release.GetWebURL()}\" successfully");
+                            
+                        var _filename = get_open_filename($"{filename_ext(_localURL)}|{filename_ext(_localURL)}", filename_name(__selectedRelease.GetPrimaryAssetURL()));
+                        if (_filename != "")
+                        {
+                            file_copy(_filename, _localURL);
+                            LogTraceAndStatus($"Copied \"{_localURL}\" to \"{_filename}\"");
+                        }
+                    }
+                });
+            }
+            
+            ImGuiEndDisabled();
+        }
     }
     
     static BuildReleaseDescription = function(_showDownloadButton)
@@ -156,7 +182,7 @@ function ClassInterfaceRepositoryView(_repository) constructor
             var _releaseArray = __repository.GetReleases();
             if (_releaseArray == undefined)
             {
-                ImGuiText("Fetching releases, please wait...");
+                ImGuiText("Fetching, please wait...");
             }
             else
             {
@@ -165,7 +191,15 @@ function ClassInterfaceRepositoryView(_repository) constructor
                     __selectedRelease = array_first(_releaseArray);
                 }
                 
-                ImGuiText($"Found {array_length(_releaseArray)} releases (max {HOTGLUE_MAX_GITHUB_RELEASES})");
+                if (is_instanceof(__repository, __HotglueRepositoryGitHub))
+                {
+                    ImGuiText($"Found {array_length(_releaseArray)} releases (max {HOTGLUE_MAX_GITHUB_RELEASES})");
+                }
+                else
+                {
+                    ImGuiText($"Found {array_length(_releaseArray)} downloads");
+                }
+                
                 ImGuiSameLine();
                 ImGuiSetNextItemWidth(ImGuiGetWindowWidth()/3);
                 if (ImGuiBeginCombo($"##combo_{ptr(self)}", (__selectedRelease == undefined)? "No release selected" : __selectedRelease.GetName(), ImGuiComboFlags.None))
@@ -196,24 +230,7 @@ function ClassInterfaceRepositoryView(_repository) constructor
                 if (_showDownloadButton)
                 {
                     ImGuiSameLine();
-                    if (ImGuiButton("Manual download"))
-                    {
-                        LogTraceAndStatus($"Downloading release \"{__selectedRelease.GetWebURL()}\"");
-                        __selectedRelease.Download(function(_release, _success, _localURL)
-                        {
-                            if (_success)
-                            {
-                                LogTraceAndStatus($"Downloaded \"{_release.GetWebURL()}\" successfully");
-                            
-                                var _filename = get_open_filename($"{filename_ext(_localURL)}|{filename_ext(_localURL)}", filename_name(__selectedRelease.GetPrimaryAssetURL()));
-                                if (_filename != "")
-                                {
-                                    file_copy(_filename, _localURL);
-                                    LogTraceAndStatus($"Copied \"{_localURL}\" to \"{_filename}\"");
-                                }
-                            }
-                        });
-                    }
+                    BuildReleaseDownloadButton();
                 }
                 
                 if (oInterface.settingsTab.__advanced)
@@ -226,6 +243,8 @@ function ClassInterfaceRepositoryView(_repository) constructor
                 }
                 
                 ImGuiEndDisabled();
+                
+                ImGuiNewLine();
                 
                 ImGuiBeginChild("releaseDecriptionPane");
                 if (__selectedRelease == undefined)
@@ -250,40 +269,63 @@ function ClassInterfaceRepositoryView(_repository) constructor
         }
     }
     
-    static BuildForProjectTab = function()
+    static Build = function(_showDownloadButton)
     {
         if (__repository.__isRemote)
         {
-            BuildRepositoryDescription(0.4*ImGuiGetWindowHeight());
+            ImGuiBeginTabBar("repoTabBar");
             
-            ImGuiBeginChild("releasePane", undefined, undefined, ImGuiChildFlags.Border);
-            BuildReleaseDescription(false);
-            ImGuiEndChild();
+            if (is_instanceof(__repository, __HotglueRepositoryGitHub))
+            {
+                if (ImGuiBeginTabItem("README"))
+                {
+                    BuildRepositoryDescription();
+                    ImGuiEndTabItem();
+                }
+                
+                if (ImGuiBeginTabItem("Releases"))
+                {
+                    BuildReleaseDescription(_showDownloadButton);
+                    ImGuiEndTabItem();
+                }
+            }
+            else if (is_instanceof(__repository, __HotglueRepositoryGist))
+            {
+                if (ImGuiBeginTabItem("Description"))
+                {
+                    if (_showDownloadButton)
+                    {
+                        BuildReleaseDownloadButton();
+                        ImGuiNewLine();
+                    }
+                    
+                    BuildRepositoryDescription();
+                    
+                    ImGuiEndTabItem();
+                }
+            }
+            else
+            {
+                if (ImGuiBeginTabItem("Description"))
+                {
+                    BuildRepositoryDescription();
+                    ImGuiEndTabItem();
+                }
+                
+                if (ImGuiBeginTabItem("Downloads"))
+                {
+                    BuildReleaseDescription(_showDownloadButton);
+                    ImGuiEndTabItem();
+                }
+            }
+            
+            ImGuiEndTabBar();
         }
         else
         {
-            BuildRepositoryDescription(undefined);
-        }
-    }
-    
-    static BuildForChannelTab = function()
-    {
-        if (__repository.__isRemote)
-        {
-            ImGuiNewLine();
-            BuildRepositoryHeader();
-            
-            ImGuiNewLine();
-            BuildRepositoryDescription(0.4*ImGuiGetWindowHeight());
-            
-            ImGuiNewLine();
-            ImGuiBeginChild("releasePane", undefined, undefined, ImGuiChildFlags.Border);
-            BuildReleaseDescription(true);
+            ImGuiBeginChild("##repoDescriptionPane");
+            BuildRepositoryDescription();
             ImGuiEndChild();
-        }
-        else
-        {
-            BuildRepositoryDescription(undefined);
         }
     }
 }
