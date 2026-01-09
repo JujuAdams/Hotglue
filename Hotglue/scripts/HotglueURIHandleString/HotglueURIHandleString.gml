@@ -131,7 +131,7 @@ function HotglueURIHandleString(_inString)
                     }
                 }
             },
-            self, undefined, true);
+            self, true);
             ds_map_destroy(_headerMap);
         }
     }

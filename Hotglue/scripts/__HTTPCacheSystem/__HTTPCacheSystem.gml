@@ -28,8 +28,7 @@ function __HttpCacheSystem()
         
         __HttpCacheTrace($"HTTP_CACHE_DISK_AVAILABLE = {HTTP_CACHE_DISK_AVAILABLE? "true" : "false"}");
         
-        __cacheDirectory = undefined;
-        HttpCacheSetDirectory(game_save_id + "httpCache/", (not HTTP_CACHE_DISK_AVAILABLE) || HTTP_CACHE_CLEAR_ON_BOOT);
+        __cacheDirectory = game_save_id + "httpCache/";
         
         time_source_start(time_source_create(time_source_global, 1, time_source_units_frames, function()
         {

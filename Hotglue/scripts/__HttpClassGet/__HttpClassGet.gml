@@ -16,7 +16,7 @@ function __HttpClassGet(_url, _callback, _callbackData, _forceRedownload, _hashK
     __callback        = _callback;
     __callbackData    = _callbackData;
     __forceRedownload = _forceRedownload;
-    __hashKey         = _hashKey;
+    __hashKey         = _hashKey ?? __url;
     
     __cacheLifetime = _system.__globalLifetimeMins;
     __hash = md5_string_utf8(__hashKey);
@@ -134,7 +134,7 @@ function __HttpClassGet(_url, _callback, _callbackData, _forceRedownload, _hashK
         {
             if (HTTP_CACHE_VERBOSE)
             {
-                __HttpCacheTrace($"Executed `http_get()` for \"{__url}\" ({__hash})");
+                __HttpCacheTrace($"Executed `http_get()` for \"{__url}\" ({__hash}, request={__requestID})");
             }
             
             _httpRequestMap[? __requestID] = self;

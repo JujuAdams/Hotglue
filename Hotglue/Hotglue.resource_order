@@ -109,6 +109,8 @@
     {"name":"__HotglueTrace","order":1,"path":"scripts/__HotglueTrace/__HotglueTrace.yy",},
     {"name":"__HotglueTryExpandingAssetID","order":8,"path":"scripts/__HotglueTryExpandingAssetID/__HotglueTryExpandingAssetID.yy",},
     {"name":"__HotglueWarning","order":2,"path":"scripts/__HotglueWarning/__HotglueWarning.yy",},
+    {"name":"__HttpClassGetFile","order":2,"path":"scripts/__HttpClassGetFile/__HttpClassGetFile.yy",},
+    {"name":"__HttpClassRequest","order":1,"path":"scripts/__HttpClassRequest/__HttpClassRequest.yy",},
     {"name":"__ImGuiConstants","order":2,"path":"scripts/__ImGuiConstants/__ImGuiConstants.yy",},
     {"name":"__InterfaceProjectViewBuildOverview","order":1,"path":"scripts/__InterfaceProjectViewBuildOverview/__InterfaceProjectViewBuildOverview.yy",},
     {"name":"__InterfaceProjectViewBuildTreeAsDestination","order":3,"path":"scripts/__InterfaceProjectViewBuildTreeAsDestination/__InterfaceProjectViewBuildTreeAsDestination.yy",},

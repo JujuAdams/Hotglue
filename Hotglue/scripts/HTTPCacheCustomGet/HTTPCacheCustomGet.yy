@@ -6,7 +6,7 @@
   "name":"HttpCacheCustomGet",
   "parent":{
     "name":"Custom",
-    "path":"folders/HTTP Cache/Custom.yy",
+    "path":"folders/HttpCache/Custom.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

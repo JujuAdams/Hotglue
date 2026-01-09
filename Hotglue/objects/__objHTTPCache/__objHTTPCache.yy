@@ -12,7 +12,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"(System)",
-    "path":"folders/HTTP Cache/(System).yy",
+    "path":"folders/HttpCache/(System).yy",
   },
   "parentObjectId":null,
   "persistent":true,

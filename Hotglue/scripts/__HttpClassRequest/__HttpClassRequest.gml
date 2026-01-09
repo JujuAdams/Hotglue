@@ -25,7 +25,7 @@ function __HttpClassRequest(_url, _method, _headerMap, _body, _callback, _callba
     __hashKey         = _hashKey ?? $"{_url}::{_method}::{json_encode(_headerMap)}::{_body}";
     
     __cacheLifetime = _system.__globalLifetimeMins;
-    __hash = md5_string_utf8(_hashKey);
+    __hash = md5_string_utf8(__hashKey);
     
     __asyncLoad = undefined;
     __requestID = undefined;
@@ -141,7 +141,7 @@ function __HttpClassRequest(_url, _method, _headerMap, _body, _callback, _callba
         {
             if (HTTP_CACHE_VERBOSE)
             {
-                __HttpCacheTrace($"Executed `http_request()` for \"{__hashKey}\" ({__hash})");
+                __HttpCacheTrace($"Executed `http_request()` for \"{__hashKey}\" ({__hash}, request={__requestID})");
             }
             
             _httpRequestMap[? __requestID] = self;

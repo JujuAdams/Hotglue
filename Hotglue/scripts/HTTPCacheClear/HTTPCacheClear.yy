@@ -6,7 +6,7 @@
   "name":"HttpCacheClear",
   "parent":{
     "name":"Miscellaneous",
-    "path":"folders/HTTP Cache/Miscellaneous.yy",
+    "path":"folders/HttpCache/Miscellaneous.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

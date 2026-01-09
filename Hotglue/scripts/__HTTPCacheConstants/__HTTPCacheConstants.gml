@@ -11,7 +11,7 @@
 //                                                                        //
 ////////////////////////////////////////////////////////////////////////////
 
-#macro HTTP_CACHE_VERSION  "1.2.0"
+#macro HTTP_CACHE_VERSION  "1.2.0.1"
 #macro HTTP_CACHE_DATE     "2026-01-09"
 
 /// Whether caching of data in local storage is permitted.

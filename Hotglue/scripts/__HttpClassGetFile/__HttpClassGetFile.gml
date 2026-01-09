@@ -17,7 +17,7 @@ function __HttpClassGetFile(_url, _destinationPath, _callback, _callbackData, _f
     __callback           = _callback;
     __callbackData       = _callbackData;
     __forceRedownload    = _forceRedownload;
-    __hashKey            = _hashKey;
+    __hashKey            = _hashKey ?? __url;
     
     __cacheLifetime = _system.__globalLifetimeMins;
     __hash = md5_string_utf8(__hashKey);
@@ -100,7 +100,7 @@ function __HttpClassGetFile(_url, _destinationPath, _callback, _callbackData, _f
             {
                 if (HTTP_CACHE_VERBOSE)
                 {
-                    __HttpCacheTrace($"Executed `http_get_file()` for \"{__url}\"");
+                    __HttpCacheTrace($"Executed `http_get_file()` for \"{__url}\" (request={__requestID})");
                 }
                 
                 _httpFileMap[? __requestID] = self;
@@ -157,7 +157,7 @@ function __HttpClassGetFile(_url, _destinationPath, _callback, _callbackData, _f
                 {
                     if (HTTP_CACHE_VERBOSE)
                     {
-                        __HttpCacheTrace($"Executed `http_get_file()` for \"{__url}\" ({__hash})");
+                        __HttpCacheTrace($"Executed `http_get_file()` for \"{__url}\" ({__hash}, request={__requestID})");
                     }
                     
                     _httpFileMap[? __requestID] = self;

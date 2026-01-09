@@ -6,7 +6,7 @@
   "name":"__HttpCacheSystem",
   "parent":{
     "name":"(System)",
-    "path":"folders/HTTP Cache/(System).yy",
+    "path":"folders/HttpCache/(System).yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

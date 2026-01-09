@@ -6,7 +6,7 @@
   "name":"__HttpClassRequest",
   "parent":{
     "name":"Class",
-    "path":"folders/HTTP Cache/(System)/Class.yy",
+    "path":"folders/HttpCache/(System)/Class.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
