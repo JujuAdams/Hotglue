@@ -10,29 +10,34 @@
 /// - result
 /// - responseHeaders
 /// - callbackData
+/// - requestURL
 /// 
 /// Cached data will be considered valid for a limited time span, as determined by the duration set
 /// by `HttpCacheSetLifetimeMins()` (the default timeout is 5 minutes). Cached data is stored on
 /// disk and can persist for hours or days if you so choose.
 /// 
+/// You can choose to delay a request by specifying a value for the optional `delaySeconds`
+/// parameter. If you don't specify a value, the request will be submitted instantly. If you set a
+/// negative value then the request will be put into a queue for execution.
+/// 
 /// @param url
 /// @param callback
 /// @param [callbackData]
-/// @param [delay=0]
 /// @param [forceRedownload=false]
+/// @param [delaySeconds=0]
 /// @param [hashKey]
 
-function HttpCacheGet(_url, _callback, _callbackData = undefined, _delay = 0, _forceRedownload = false, _hashKey = _url)
+function HttpCacheGet(_url, _callback, _callbackData = undefined, _forceRedownload = false, _delaySeconds = 0, _hashKey = _url)
 {
     __HTTPEnsureObject();
     
     var _struct = new __HttpClassGet(_url, _callback, _callbackData, _forceRedownload, _hashKey);
     
-    if (_delay > 0)
+    if (_delaySeconds > 0)
     {
-        call_later(max(1, _delay), time_source_units_frames, method(_struct, _struct.__Start));
+        call_later(max(1, _delaySeconds), time_source_units_seconds, method(_struct, _struct.__Start));
     }
-    else if (_delay == 0)
+    else if (_delaySeconds == 0)
     {
         _struct.__Start();
     }

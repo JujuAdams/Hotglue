@@ -54,7 +54,7 @@ function __HttpCacheAsyncEvent()
             
             if (is_callable(__callback))
             {
-                __callback(_success, _result, _responseHeaders, __callbackData);
+                __callback(_success, _result, _responseHeaders, __callbackData, __url);
             }
             
             __finished = true;
@@ -96,7 +96,7 @@ function __HttpCacheAsyncEvent()
             
             if (is_callable(__callback))
             {
-                __callback(_success, __destinationPath, __callbackData);
+                __callback(_success, __destinationPath, __callbackData, __url);
             }
             
             __finished = true;

@@ -87,7 +87,7 @@ function __HttpClassGetFile(_url, _destinationPath, _callback, _callbackData, _f
                 {
                     call_later(1, time_source_units_frames, function()
                     {
-                        __callback(false, __destinationPath, __callbackData);
+                        __callback(false, __destinationPath, __callbackData, __url);
                         __finished = true;
                     });
                 }
@@ -121,7 +121,7 @@ function __HttpClassGetFile(_url, _destinationPath, _callback, _callbackData, _f
                 {
                     call_later(1, time_source_units_frames, function()
                     {
-                        __callback(true, __destinationPath, __callbackData);
+                        __callback(true, __destinationPath, __callbackData, __url);
                         __finished = true;
                     });
                 }
@@ -144,7 +144,7 @@ function __HttpClassGetFile(_url, _destinationPath, _callback, _callbackData, _f
                     {
                         call_later(1, time_source_units_frames, function()
                         {
-                            __callback(false, __destinationPath, __callbackData);
+                            __callback(false, __destinationPath, __callbackData, __url);
                             __finished = true;
                         });
                     }

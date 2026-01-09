@@ -16,7 +16,7 @@ repeat(parameter_count())
     ++_i;
 }
 
-HttpCacheSetDurationMins(12*60);
+HttpCacheSetLifetimeMins(12*60);
 HttpCacheSetDirectory(HOTGLUE_HTTP_CACHE_DIRECTORY, false);
 
 if (HOTGLUE_RUNNING_FROM_IDE || HotglueUDPPortIsOpen())

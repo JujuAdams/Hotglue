@@ -93,7 +93,7 @@ function __HttpClassGet(_url, _callback, _callbackData, _forceRedownload, _hashK
                         var _result          = __asyncLoad[? "result"];
                         var _responseHeaders = __asyncLoad[? "response_headers"];
                         
-                        __callback(_success, _result, _responseHeaders, __callbackData);
+                        __callback(_success, _result, _responseHeaders, __callbackData, __url);
                         
                         ds_map_destroy(__asyncLoad);
                         __asyncLoad = undefined;
@@ -119,7 +119,7 @@ function __HttpClassGet(_url, _callback, _callbackData, _forceRedownload, _hashK
                 call_later(1, time_source_units_frames, function()
                 {
                     var _responseHeaders = ds_map_create();
-                    __callback(false, "", _responseHeaders, __callbackData);
+                    __callback(false, "", _responseHeaders, __callbackData, __url);
                     ds_map_destroy(_responseHeaders);
                     
                     __finished = true;
