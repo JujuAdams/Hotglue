@@ -1,5 +1,16 @@
 // Feather disable all
 
+////////////////////////////////////////////////////////////////////////////
+//                                                                        //
+// You're welcome to use any of the following macros in your game but ... //
+//                                                                        //
+//                       DO NOT EDIT THIS SCRIPT                          //
+//                       Bad things might happen.                         //
+//                                                                        //
+// Customisation options can be found in the `__HttpCacheConfig` scripts. //
+//                                                                        //
+////////////////////////////////////////////////////////////////////////////
+
 #macro HTTP_CACHE_VERSION  "1.1.0"
 #macro HTTP_CACHE_DATE     "2026-01-09"
 

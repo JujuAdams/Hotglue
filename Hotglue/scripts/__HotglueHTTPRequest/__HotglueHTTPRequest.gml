@@ -20,7 +20,7 @@ function __HotglueHTTPRequest(_url, _callbackMetadata = undefined, _callback, _f
         }
     }
     
-    var _id = HttpCacheRequest(_url, "GET", _headerMap, "", _callback, _callbackMetadata, _forceRedownload);
+    var _id = HttpCacheRequest(_url, "GET", _headerMap, "", _callback, _callbackMetadata, undefined, _forceRedownload);
     
     ds_map_clear(_headerMap);
     

@@ -7,7 +7,7 @@
 /// on disk if available.
 /// 
 /// You should specify a callback to execute when HttpCache receives a response. Your callback
-/// should take four parameters:
+/// should take four parameters which are (in order):
 /// - success
 /// - result
 /// - responseHeaders
@@ -35,7 +35,7 @@ function HttpCacheRequest(_url, _method, _headerMap, _body, _callback, _callback
     
     if (_delay > 0)
     {
-        call_later(max(1, _delay), time_source_units_frames, method(_struct, _struct.__Start));
+        call_later(max(1, _delay), time_source_units_seconds, method(_struct, _struct.__Start));
     }
     else if (_delay == 0)
     {

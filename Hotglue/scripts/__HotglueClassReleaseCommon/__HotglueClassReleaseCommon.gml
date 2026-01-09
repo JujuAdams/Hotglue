@@ -106,7 +106,9 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
     {
         __downloadCallback = _callback;
         
-        HttpCacheGetFile(_url, undefined, function(_success, _destinationPath, _callbackMetadata)
+        var _destinationPath = (_fileExtension == undefined)? undefined : _fileExtension;
+        
+        HttpCacheGetFile(_url, _destinationPath, function(_success, _destinationPath, _callbackMetadata)
         {
             with(_callbackMetadata)
             {
@@ -116,6 +118,6 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
                 }
             }
         },
-        self, undefined, _fileExtension, __downloadURL);
+        self, undefined, undefined, __downloadURL);
     }
 }

@@ -153,7 +153,7 @@ function __HotglueClassAutomation(_json) constructor
                 
                 if (HotglueGuessURLIsRemote(_import))
                 {
-                    HttpCacheGetFile(_import, undefined, function(_success, _destinationPath, _callbackData)
+                    HttpCacheGetFile(_import, filename_ext(_import), function(_success, _destinationPath, _callbackData)
                     {
                         with(_callbackData)
                         {
@@ -168,7 +168,7 @@ function __HotglueClassAutomation(_json) constructor
                             }
                         }
                     },
-                    self, undefined, filename_ext(_import));
+                    self);
                     
                     __operation = function() {}
                     return;
