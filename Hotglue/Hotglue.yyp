@@ -166,6 +166,7 @@
     {"id":{"name":"__HotglueSanitizeFilePath","path":"scripts/__HotglueSanitizeFilePath/__HotglueSanitizeFilePath.yy",},},
     {"id":{"name":"__HotglueSaveString","path":"scripts/__HotglueSaveString/__HotglueSaveString.yy",},},
     {"id":{"name":"__HotglueSplitHTMLResponse","path":"scripts/__HotglueSplitHTMLResponse/__HotglueSplitHTMLResponse.yy",},},
+    {"id":{"name":"__HotglueStripHTML","path":"scripts/__HotglueStripHTML/__HotglueStripHTML.yy",},},
     {"id":{"name":"__HotglueSystem","path":"scripts/__HotglueSystem/__HotglueSystem.yy",},},
     {"id":{"name":"__HotglueTrace","path":"scripts/__HotglueTrace/__HotglueTrace.yy",},},
     {"id":{"name":"__HotglueTryExpandingAssetID","path":"scripts/__HotglueTryExpandingAssetID/__HotglueTryExpandingAssetID.yy",},},

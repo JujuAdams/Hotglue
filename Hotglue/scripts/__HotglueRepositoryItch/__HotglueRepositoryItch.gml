@@ -65,7 +65,7 @@ function __HotglueRepositoryItch(_url) : __HotglueRepositoryCommon(_url) constru
                         var _posB = string_pos("</div><div class=\"more_information_toggle\">", _result);
                         
                         _posA += _lengthA;
-                        __readme = string_copy(_result, _posA, _posB - _posA);
+                        __readme = __HotglueStripHTML(string_copy(_result, _posA, _posB - _posA));
                         
                         __HotglueTrace(__readme);
                         __HotglueTrace($"\"{__url}\" succeeded");
