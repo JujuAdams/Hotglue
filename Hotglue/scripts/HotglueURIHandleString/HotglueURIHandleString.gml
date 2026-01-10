@@ -44,9 +44,13 @@ function HotglueURIHandleString(_inString)
         var _path = string_delete(_string, 1, string_length("add="));
         __HotglueTrace($"Received URI path \"{_path}\"");
         
-        //TODO - Ask for permission
-        
-        HotglueGetChannelByURL(HOTGLUE_CUSTOM_CHANNEL).AddRepository(_path);
+        with(oInterface)
+        {
+            if (popUpStruct == undefined)
+            {
+                popUpStruct = new ClassModalAddRepository(_path);
+            }
+        }
     }
     else if (string_copy(_string, 1, string_length("auth/?code=")) == "auth/?code=")
     {
