@@ -10,10 +10,26 @@ function InterfaceGitHubAuthFlow(_forceWeb = false)
         if (_success)
         {
             LogTraceAndStatus("GitHub access token acquired.");
+            
+            with(oInterface)
+            {
+                if (popUpStruct == undefined)
+                {
+                    popUpStruct = new ClassModalMessage("GitHub access token acquired.");
+                }
+            }
         }
         else
         {
             LogWarning("Failed to acquire GitHub access token.");
+            
+            with(oInterface)
+            {
+                if (popUpStruct == undefined)
+                {
+                    popUpStruct = new ClassModalMessage("Failed to acquire GitHub access token.");
+                }
+            }
         }
     },
     _forceWeb);

@@ -33,6 +33,14 @@ function HotglueURIHandleString(_inString)
             _system.__uriTestSuccess = true;
             _system.__uriTestTimeout = undefined;
             __HotglueTrace("URI test successful");
+            
+            with(oInterface)
+            {
+                if (popUpStruct == undefined)
+                {
+                    popUpStruct = new ClassModalMessage("URI test successful.");
+                }
+            }
         }
         else
         {
