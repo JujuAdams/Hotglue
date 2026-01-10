@@ -151,6 +151,7 @@
     {"name":"HotglueGetSuppressGitAssert","order":1,"path":"scripts/HotglueGetSuppressGitAssert/HotglueGetSuppressGitAssert.yy",},
     {"name":"HotglueGitHubWebAuthFlow","order":1,"path":"scripts/HotglueGitHubWebAuthFlow/HotglueGitHubWebAuthFlow.yy",},
     {"name":"HotglueGuessURLIsRemote","order":5,"path":"scripts/HotglueGuessURLIsRemote/HotglueGuessURLIsRemote.yy",},
+    {"name":"HotglueItchTest","order":7,"path":"scripts/HotglueItchTest/HotglueItchTest.yy",},
     {"name":"HotglueLoadLooseFile","order":12,"path":"scripts/HotglueLoadLooseFile/HotglueLoadLooseFile.yy",},
     {"name":"HotglueProjectLocalClose","order":2,"path":"scripts/HotglueProjectLocalClose/HotglueProjectLocalClose.yy",},
     {"name":"HotglueProjectLocalGet","order":1,"path":"scripts/HotglueProjectLocalGet/HotglueProjectLocalGet.yy",},

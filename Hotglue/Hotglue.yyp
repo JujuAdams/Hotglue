@@ -244,6 +244,7 @@
     {"id":{"name":"HotglueGitHubGetAccessTokenAvailable","path":"scripts/HotglueGitHubGetAccessTokenAvailable/HotglueGitHubGetAccessTokenAvailable.yy",},},
     {"id":{"name":"HotglueGitHubWebAuthFlow","path":"scripts/HotglueGitHubWebAuthFlow/HotglueGitHubWebAuthFlow.yy",},},
     {"id":{"name":"HotglueGuessURLIsRemote","path":"scripts/HotglueGuessURLIsRemote/HotglueGuessURLIsRemote.yy",},},
+    {"id":{"name":"HotglueItchTest","path":"scripts/HotglueItchTest/HotglueItchTest.yy",},},
     {"id":{"name":"HotglueLoadLooseFile","path":"scripts/HotglueLoadLooseFile/HotglueLoadLooseFile.yy",},},
     {"id":{"name":"HotglueProjectLocalClose","path":"scripts/HotglueProjectLocalClose/HotglueProjectLocalClose.yy",},},
     {"id":{"name":"HotglueProjectLocalEnsure","path":"scripts/HotglueProjectLocalEnsure/HotglueProjectLocalEnsure.yy",},},

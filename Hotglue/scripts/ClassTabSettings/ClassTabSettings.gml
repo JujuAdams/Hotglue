@@ -106,20 +106,36 @@ function ClassTabSettings() : ClassTab() constructor
         ImGuiText("itch.io:");
         ImGuiIndent();
         
-        ImGuiTextLink("How do I authorize itch.io?");
-        if (ImGuiBeginItemTooltip())
-        {
-            ImGuiText($"1. Visit the link below\n2. Create an API key\n3. Copy-paste the API key into the text field\n4. Clear the HTTP cache");
-            ImGuiEndTooltip();
-        }
-        
         InterfaceLinkText("https://itch.io/user/settings/api-keys");
         
+        ImGuiSetNextItemWidth(340);
         var _value = ImGuiInputText("##itchAPIKey", HotglueGetItchAPIKey());
         if (InterfaceSettingSet("itch", _value))
         {
             HotglueSetItchAPIKey(_value);
             InterfaceSettingsSave();
+        }
+        
+        ImGuiSameLine(undefined, 20);
+        if (ImGuiButton("Test itch.io API key"))
+        {
+            HotglueItchTest(function(_success)
+            {
+                with(oInterface)
+                {
+                    if (popUpStruct == undefined)
+                    {
+                        popUpStruct = new ClassModalMessage(_success? "itch.io API key test successsful." : "itch.io API key test failed.");
+                    }
+                }
+            });
+        }
+        
+        ImGuiTextLink("How do I authorize itch.io?");
+        if (ImGuiBeginItemTooltip())
+        {
+            ImGuiText($"1. Visit the link above and sign in if needed\n2. Create an API key\n3. Copy-paste the API key into the text field\n4. Clear the HTTP cache");
+            ImGuiEndTooltip();
         }
         
         ImGuiUnindent();
@@ -190,6 +206,10 @@ function ClassTabSettings() : ClassTab() constructor
         ImGuiUnindent();
         
         ImGuiNewLine();
+        
+        ///////
+        // Boot Behaviour
+        ///////
         
         ImGuiText("Boot Behaviour:");
         ImGuiIndent();
