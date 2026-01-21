@@ -51,7 +51,7 @@ function ClassInterfaceFileView(_file) constructor
         
         ImGuiSameLine();
         
-        if (variable_struct_exists(_quickAssetDict, __file.GetAssetName()))
+        if (variable_struct_exists(_quickAssetDict, __file.GetPID()))
         {
             ImGuiTextColored(filename_name(__file.GetPath()), INTERFACE_COLOR_RED_TEXT);
         }

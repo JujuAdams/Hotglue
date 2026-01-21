@@ -44,11 +44,6 @@ function __HotglueLooseFile(_path) constructor
         __name = undefined;
     }
     
-    static GetAssetName = function() //TODO - Unused?
-    {
-        return (__type == "included file")? $"included:{GetName()}" : $"resource:{GetName()}"
-    }
-    
     static SetType = function(_type)
     {
         if (_type != __type)
