@@ -6,8 +6,6 @@ function __HotglueResourceSprite(_resourceStruct) : __HotglueResourceCommon(_res
 {
     static resourceType = "sprite";
     
-    //TODO - Reset texture group on import
-    
     static __GetFiles = function(_project, _array = [])
     {
         var _localDirectory = filename_dir(data.path) + "/";
@@ -37,5 +35,29 @@ function __HotglueResourceSprite(_resourceStruct) : __HotglueResourceCommon(_res
         }
         
         return _array;
+    }
+    
+    static __FixYYReferencesSpecial = function(_string, _json)
+    {
+        //Replace the texture group for this resource
+        var _textureGroupStruct = _json[$ "textureGroupId"];
+        if (is_struct(_textureGroupStruct))
+        {
+            var _name = _textureGroupStruct[$ "name"];
+            var _path = _textureGroupStruct[$ "path"];
+            
+            var _find = $"  \"textureGroupId\":\{\n    \"name\":\"{_name}\",\n    \"path\":\"{_path}\",\n  \},";
+            if (string_pos(_find, _string) <= 0)
+            {
+                __HotglueWarning($"Could not find audio group information for {GetPID()}");
+            }
+            else
+            {
+                var _replace = "  \"textureGroupId\":{\n    \"name\":\"Default\",\n    \"path\":\"texturegroups/Default\",\n  },";
+                _string = string_replace(_string, _find, _replace);
+            }
+        }
+        
+        return _string;
     }
 }

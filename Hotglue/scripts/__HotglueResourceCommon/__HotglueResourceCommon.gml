@@ -87,6 +87,8 @@ function __HotglueResourceCommon(_resourceStruct) : __HotglueClassAssetCommon() 
         var _string = buffer_read(_buffer, buffer_text);
         buffer_delete(_buffer);
         
+        var _originalString = _string;
+        
         var _json =  json_parse(_string);
         var _jsonParentPath = _json.parent.path;
         var _jsonParentName = _json.parent.name;
@@ -103,29 +105,32 @@ function __HotglueResourceCommon(_resourceStruct) : __HotglueClassAssetCommon() 
             _string = string_replace_all(_string, $"    \"name\":\"{_jsonParentName}\"", $"    \"name\":\"{_newName}\"");
             _string = string_replace_all(_string, $"    \"path\":\"{_jsonParentPath}\"", $"    \"path\":\"{_newPath}\"");
             
+        }
+        else if (_parentPath == "")
+        {
+            //We'll always need to replace the parent folder for assets in the root
+            
+            var _newName = _project.__yypJson.name;
+            var _newPath = $"{_project.__yypJson.name}.yyp";
+            
+            _string = string_replace_all(_string, $"    \"name\":\"{_jsonParentName}\"", $"    \"name\":\"{_newName}\"");
+            _string = string_replace_all(_string, $"    \"path\":\"{_jsonParentPath}\"", $"    \"path\":\"{_newPath}\"");
+        }
+        
+        _string = __FixYYReferencesSpecial(_string, _json);
+        
+        if (_string != _originalString)
+        {
             var _buffer = buffer_create(string_byte_length(_string), buffer_fixed, 1);
             buffer_write(_buffer, buffer_text, _string);
             buffer_save(_buffer, _absolutePath);
             buffer_delete(_buffer);
         }
-        else
-        {
-            if (_parentPath == "")
-            {
-                //We'll always need to replace the parent folder for assets in the root
-                
-                var _newName = _project.__yypJson.name;
-                var _newPath = $"{_project.__yypJson.name}.yyp";
-                
-                _string = string_replace_all(_string, $"    \"name\":\"{_jsonParentName}\"", $"    \"name\":\"{_newName}\"");
-                _string = string_replace_all(_string, $"    \"path\":\"{_jsonParentPath}\"", $"    \"path\":\"{_newPath}\"");
-                
-                var _buffer = buffer_create(string_byte_length(_string), buffer_fixed, 1);
-                buffer_write(_buffer, buffer_text, _string);
-                buffer_save(_buffer, _absolutePath);
-                buffer_delete(_buffer);
-            }
-        }
+    }
+    
+    static __FixYYReferencesSpecial = function(_string, _json)
+    {
+        return _string;
     }
     
     static __GetYYPInsertString = function()
