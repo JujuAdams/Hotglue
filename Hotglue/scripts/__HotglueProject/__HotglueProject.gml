@@ -25,7 +25,8 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     __projectDirectory = filename_dir(__projectPath) + "/";
     __converted = false;
     
-    __yympsMetadata   = undefined;
+    __isPackage       = false;
+    __yympsVersion    = undefined;
     __hotglueMetadata = undefined;
     
     __structure = new __HotglueProjectStructure(self);
@@ -192,12 +193,12 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     
     static GetIsPackage = function()
     {
-        return is_struct(__yympsMetadata);
+        return __isPackage;
     }
     
     static GetVersionString = function()
     {
-        return is_struct(__yympsMetadata)? __yympsMetadata.version : "0.0.0";
+        return __isPackage? __yympsVersion : "0.0.0";
     }
     
     static GetPath = function()
@@ -242,7 +243,7 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     
     static GetYYPVersionSupported = function(_version = __yypVersion)
     {
-        return (is_string(_version) && (string_copy(_version, 1, 7) == "2024.14"));
+        return (is_string(_version) && (string_copy(_version, 1, 6) == "2026.0"));
     }
     
     static GetLoadedSuccessfully = function()
@@ -538,9 +539,10 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         }
     }
     
-    static __SetYYMPSMetadata = function(_yympsMetadata)
+    static __SetYYMPSVersion = function(_yympsVersion)
     {
-        __yympsMetadata = _yympsMetadata;
+        __isPackage = true;
+        __yympsVersion = _yympsVersion;
         return self;
     }
 }

@@ -31,20 +31,43 @@ function __HotglueLoadYYMPSUnpacked(_directory, _sourceURL = undefined, _inCache
     
     file_find_close();
     
+    var _yympsVersion = undefined;
     var _metadataPath = _directory + "metadata.json";
-    if (not file_exists(_metadataPath))
+    if (file_exists(_metadataPath))
     {
-        __HotglueError($"\"{_metadataPath}\" doesn't exist");
+        __HotglueTrace($"Loading .yymps version from \"{_metadataPath}\"");
+        
+        var _buffer = buffer_load(_metadataPath);
+        var _string = buffer_read(_buffer, buffer_text);
+        buffer_delete(_buffer);
+        var _json = json_parse(_string);
+        
+        _yympsVersion = _json.version;
     }
-    
-    var _buffer = buffer_load(_metadataPath);
-    var _string = buffer_read(_buffer, buffer_text);
-    buffer_delete(_buffer);
-    var _metadataJSON = json_parse(_string);
+    else
+    {
+        var _prefabPath = _directory + "prefab.json";
+        if (file_exists(_prefabPath))
+        {
+            __HotglueTrace($"Loading .yymps version from \"{_prefabPath}\"");
+            
+            var _buffer = buffer_load(_prefabPath);
+            var _string = buffer_read(_buffer, buffer_text);
+            buffer_delete(_buffer);
+            var _json = json_parse(_string);
+            
+            _yympsVersion = _json.Version;
+        }
+        else
+        {
+            __HotglueWarning($"Could not find either \"metadata.json\" or \"prefab.json\". Please check this .yymps is valid (directory = \"{_directory}\")");
+            return undefined;
+        }
+    }
     
     var _project = new __HotglueProject(_directory + _projectPath, true, _sourceURL, _inCache);
     _project.__VerifyFilesUnzipped();
-    _project.__SetYYMPSMetadata(_metadataJSON);
+    _project.__SetYYMPSVersion(_yympsVersion);
     
     return _project;
 }

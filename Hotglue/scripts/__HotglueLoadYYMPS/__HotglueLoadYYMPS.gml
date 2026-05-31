@@ -27,19 +27,17 @@ function __HotglueLoadYYMPS(_yympsPath, _sourceURL = _yympsPath)
     if (zip_unzip(_yympsPath, _directory) <= 0)
     {
         __HotglueWarning($"Failed to unzip \"{_yympsPath}\" to \"{_directory}\"");
-        directory_destroy(_directory);
-        
-        return undefined;
     }
-    
-    var _metadataPath = _directory + "metadata.json";
-    if (not file_exists(_metadataPath))
+    else
     {
-        __HotglueWarning($"\"{_metadataPath}\" doesn't exist, aborting");
-        directory_destroy(_directory);
-        
-        return undefined;
+        var _result = __HotglueLoadYYMPSUnpacked(_directory, _sourceURL, true);
     }
     
-    return __HotglueLoadYYMPSUnpacked(_directory, _sourceURL, true);
+    if (_result == undefined)
+    {
+        __HotglueTrace($"Cleaning up \"{_directory}\"");
+        directory_destroy(_directory);
+    }
+    
+    return _result;
 }
