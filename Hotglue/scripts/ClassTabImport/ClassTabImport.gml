@@ -408,6 +408,10 @@ function ClassTabImport() : ClassTab() constructor
                                     __loadSuccessful = true;
                                     LogTraceAndStatus("Loaded release successfully as a loose file.");
                                 }
+                                else
+                                {
+                                    LogWarning("Release content invalid. Please check the log for further information.");
+                                }
                             }
                             else
                             {

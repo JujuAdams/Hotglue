@@ -192,7 +192,7 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
     
     static GetIsPackage = function()
     {
-        return __yympsMetadata;
+        return is_struct(__yympsMetadata);
     }
     
     static GetVersionString = function()

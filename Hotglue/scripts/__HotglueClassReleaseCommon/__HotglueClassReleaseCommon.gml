@@ -62,7 +62,7 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
     {
         __loadCallback = _callback;
         
-        Download(function(_release, _success, _result)
+        Download(function(_release, _success, _filename)
         {
             var _struct = undefined;
             
@@ -72,21 +72,28 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
             }
             else
             {
-                var _extension = filename_ext(_result);
+                var _extension = filename_ext(_filename);
                 if ((_extension == ".yyp") || (_extension == ".yymps") || (_extension = ".yyz"))
                 {
-                    _struct = HotglueProjectRemoteEnsure(__webURL, _result);
-                    if (_struct == undefined)
-                    {
-                        __HotglueWarning($"Release \"{__webURL}\" downloaded a file with an invalid extension \"{_result}\"");
-                        _success = false;
-                    }
+                    _struct = HotglueProjectRemoteEnsure(__webURL, _filename);
                 }
-                else if ((_extension == ".txt") || (_extension == ".gml") || (_extension = ".md"))
+                else
                 {
-                    _struct = HotglueLoadLooseFile(_result);
-                    _struct.SetType("script");
-                    _struct.SetName(HotglueSanitizeResourceName(__name));
+                    //TODO - Refactor as async
+                    _struct = __OpenContentRecurse(_filename);
+                }
+                
+                if (_struct == undefined)
+                {
+                    __HotglueWarning($"Release \"{__webURL}\" downloaded file \"{_filename}\" which could not be opened");
+                    _success = false;
+                }
+                else
+                {
+                    if (is_instanceof(_struct, __HotglueLooseFile))
+                    {
+                        _struct.SetName(HotglueSanitizeResourceName(__name));
+                    }
                 }
             }
             
@@ -95,6 +102,162 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
                 __loadCallback(_struct, _success);
             }
         });
+    }
+    
+    static __OpenContentRecurse = function(_path)
+    {
+        //TODO - Refactor as async
+        var _struct = undefined;
+        
+        var _extension = filename_ext(_path);
+        if ((_extension == ".yyp") || (_extension == ".yymps") || (_extension = ".yyz"))
+        {
+            _struct = HotglueProjectLocalEnsure(_path);
+        }
+        else if ((_extension == ".txt") || (_extension == ".gml") || (_extension = ".md"))
+        {
+            _struct = HotglueLoadLooseFile(_path);
+            _struct.SetType("script");
+        }
+        else if (_extension == ".zip")
+        {
+            __HotglueTrace($"Decompressing \"{_path}\" as zip archive");
+            
+            var _buffer = buffer_load(_path);
+            var _archiveStruct = new HotglueClassZip(_buffer);
+            
+            var _foundLocalPath = undefined;
+            var _foundSize = 0;
+            
+            var _entryArray = _archiveStruct.__entries;
+            __HotglueTrace($"Found {array_length(_entryArray)} entries in zip");
+            
+            var _i = 0;
+            repeat(array_length(_entryArray))
+            {
+                var _entryStruct = _entryArray[_i];
+                var _fileExtension = filename_ext(_entryStruct.__filename);
+                
+                if ((_fileExtension == ".yyp") || (_fileExtension == ".yymps") || (_fileExtension == ".yyz"))
+                {
+                    if (_entryStruct.__size > _foundSize)
+                    {
+                        _foundLocalPath = _entryStruct.__filename;
+                        _foundSize = _entryStruct.__size;
+                    }
+                }
+                
+                ++_i;
+            }
+            
+            if (_foundLocalPath == undefined)
+            {
+                __HotglueWarning($"Failed to unarchive \"{_path}\"");
+            }
+            else
+            {
+                var _decompressionDirectory = $"{HOTGLUE_UNZIP_CACHE_DIRECTORY}{md5_string_unicode(_path)}/";
+                
+                __HotglueTrace($"Found archive file of interest \"{_foundLocalPath}\" (of {array_length(_entryArray)} files)");
+                __HotglueTrace($"Decompressing whole archive to directory \"{_decompressionDirectory}\"");
+                
+                _archiveStruct.Decompress(_decompressionDirectory);
+                _struct = __OpenContentRecurse($"{_decompressionDirectory}{_foundLocalPath}");
+            }
+            
+            _archiveStruct.Destroy();
+        }
+        else if (_extension == ".tar")
+        {
+            __HotglueTrace($"Decompressing \"{_path}\" as a tarball archive");
+            
+            var _buffer = buffer_load(_path);
+            var _archiveStruct = new HotglueClassTarball(_buffer);
+            
+            var _foundLocalPath = undefined;
+            var _foundSize = 0;
+            
+            var _entryArray = _archiveStruct.__entries;
+            __HotglueTrace($"Found {array_length(_entryArray)} entries in tarball");
+            
+            var _i = 0;
+            repeat(array_length(_entryArray))
+            {
+                var _entryStruct = _entryArray[_i];
+                var _fileExtension = filename_ext(_entryStruct.__filename);
+                
+                if ((_fileExtension == ".yyp") || (_fileExtension == ".yymps") || (_fileExtension == ".yyz"))
+                {
+                    if (_entryStruct.__size > _foundSize)
+                    {
+                        _foundLocalPath = _entryStruct.__filename;
+                        _foundSize = _entryStruct.__size;
+                    }
+                }
+                
+                ++_i;
+            }
+            
+            if (_foundLocalPath == undefined)
+            {
+                __HotglueWarning($"Failed to unarchive \"{_path}\"");
+            }
+            else
+            {
+                var _decompressionDirectory = $"{HOTGLUE_UNZIP_CACHE_DIRECTORY}{md5_string_unicode(_path)}/";
+                
+                __HotglueTrace($"Found archive file of interest \"{_foundLocalPath}\" (of {array_length(_entryArray)} files)");
+                __HotglueTrace($"Decompressing whole archive to directory \"{_decompressionDirectory}\"");
+                
+                _archiveStruct.Decompress(_decompressionDirectory);
+                _struct = __OpenContentRecurse($"{_decompressionDirectory}{_foundLocalPath}");
+            }
+            
+            _archiveStruct.Destroy();
+        }
+        else if (_extension == ".tgz") || ((_extension == ".gz") && (filename_ext(filename_change_ext(_path, "")) == ".tar"))
+        {
+            var _intermediatePath = $"{md5_string_unicode(_path)}.tar";
+            __HotglueTrace($"Decompressing \"{_path}\" as a gzipped tarball (intermediate file \"{_intermediatePath}\")");
+            
+            var _buffer = buffer_load(_path);
+            var _archiveStruct = new HotglueClassGzip(_buffer);
+            var _extractedFilename = _archiveStruct.Decompress(HOTGLUE_UNZIP_CACHE_DIRECTORY, _intermediatePath);
+            _archiveStruct.Destroy();
+            
+            if (_extractedFilename == undefined)
+            {
+                __HotglueWarning($"Failed to unarchive \"{_path}\"");
+            }
+            else
+            {
+                _struct = __OpenContentRecurse(_extractedFilename);
+            }
+        }
+        else if (_extension == ".gz")
+        {
+            __HotglueTrace($"Decompressing \"{_path}\" as gzipped archive");
+            
+            var _buffer = buffer_load(_path);
+            var _archiveStruct = new HotglueClassGzip(_buffer);
+            var _extractedFilename = _archiveStruct.Decompress(HOTGLUE_UNZIP_CACHE_DIRECTORY, undefined);
+            _archiveStruct.Destroy();
+            
+            if (_extractedFilename == undefined)
+            {
+                __HotglueWarning($"Failed to unarchive \"{_path}\"");
+            }
+            else
+            {
+                _struct = __OpenContentRecurse(_extractedFilename);
+            }
+        }
+        else
+        {
+            __HotglueWarning($"Release \"{__webURL}\" downloaded file \"{_path}\" with an invalid extension");
+        }
+        
+        return _struct;
     }
     
     static Download = function(_callback)

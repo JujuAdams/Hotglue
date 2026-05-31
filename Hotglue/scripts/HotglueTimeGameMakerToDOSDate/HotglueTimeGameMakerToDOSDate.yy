@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueTimeGameMakerToDOSDate",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueTimeGameMakerToDOSDate",
+  "parent":{
+    "name":"Utility",
+    "path":"folders/Hotglue/Utility.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
