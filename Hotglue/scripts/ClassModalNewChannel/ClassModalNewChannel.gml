@@ -58,6 +58,11 @@ function ClassModalNewChannel() constructor
                     __type = HOTGLUE_CHANNEL_GITHUB_ORG;
                 }
                 
+                if (ImGuiSelectable(HOTGLUE_CHANNEL_VERDACCIO, (__type == HOTGLUE_CHANNEL_VERDACCIO)))
+                {
+                    __type = HOTGLUE_CHANNEL_VERDACCIO;
+                }
+                
                 ImGuiEndCombo();
             }
             

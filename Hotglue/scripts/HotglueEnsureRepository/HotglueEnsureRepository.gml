@@ -24,6 +24,10 @@ function HotglueEnsureRepository(_url, _type = undefined)
             {
                 _type = HOTGLUE_REPOSITORY_ITCH;
             }
+            else if (__HotglueGuessURLIsVerdaccio(_url))
+            {
+                _type = HOTGLUE_REPOSITORY_VERDACCIO;
+            }
             else
             {
                 _type = HOTGLUE_REPOSITORY_LOCAL;
@@ -45,6 +49,10 @@ function HotglueEnsureRepository(_url, _type = undefined)
         else if (_type == HOTGLUE_REPOSITORY_ITCH)
         {
             _repository = new __HotglueRepositoryItch(_url);
+        }
+        else if (_type == HOTGLUE_REPOSITORY_VERDACCIO)
+        {
+            _repository = new __HotglueRepositoryVerdaccio(_url);
         }
         else
         {

@@ -1,0 +1,95 @@
+// Feather disable all
+
+/// @param name
+/// @param url
+/// @param protected
+
+function __HotglueChannelVerdaccio(_name, _url, _protected) : __HotglueChannelCommon(_name, _url, _protected) constructor
+{
+    static __type = HOTGLUE_CHANNEL_VERDACCIO;
+    
+    __httpRequest = undefined;
+    __httpSuccess = false;
+    
+    if (string_char_at(_url, string_length(_url)) != "/")
+    {
+        _url += "/";
+    }
+    
+    __url = _url;
+    __endpointURL = $"{_url}-/verdaccio/data/packages";
+    
+    
+    
+    static GetHTTPSuccess = function()
+    {
+        return __httpSuccess;
+    }
+    
+    static GetRefreshing = function()
+    {
+        return (__httpRequest != undefined);
+    }
+    
+    static Refresh = function(_callback)
+    {
+        //Always redefinition of the callback
+        __refreshCallback = _callback;
+        
+        if (__httpRequest == undefined)
+        {
+            __HotglueTrace($"Refreshing channel \"{__endpointURL}\"");
+            
+            __httpRequest = __HotglueHTTPRequest(__endpointURL, self, function(_success, _result, _responseHeaders, _callbackMetadata)
+            {
+                with(_callbackMetadata)
+                {
+                    __httpRequest = undefined;
+                    
+                    if (not _success)
+                    {
+                        __HotglueWarning($"\"{__endpointURL}\" HTTP request failed");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            var _json = json_parse(_result);
+                        }
+                        catch(_error)
+                        {
+                            show_debug_message(_error);
+                            __HotglueWarning($"\"{__endpointURL}\" HTTP request was successful but failed to parse JSON");
+                            _success = false;
+                        }
+                        
+                        if (_success)
+                        {
+                            ClearRepositories();
+                            
+                            __HotglueTrace($"Recevied {array_length(_json)} repositories from \"{__endpointURL}\"");
+                            
+                            var _i = 0;
+                            repeat(array_length(_json))
+                            {
+                                var _name = _json[_i].name;
+                                var _url = __url + _name;
+                                AddRepository(_url, HOTGLUE_REPOSITORY_VERDACCIO);
+                                ++_i;
+                            }
+                            
+                            SortArray();
+                        }
+                    }
+                    
+                    __httpSuccess = _success;
+                    
+                    if (is_callable(__refreshCallback))
+                    {
+                        __refreshCallback(self, _success);
+                    }
+                }
+            });
+        }
+    }
+}

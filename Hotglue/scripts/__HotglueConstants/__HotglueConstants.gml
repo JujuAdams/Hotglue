@@ -24,11 +24,13 @@
 #macro HOTGLUE_CHANNEL_GITHUB_USER       "GitHub User"
 #macro HOTGLUE_CHANNEL_GITHUB_ORG        "GitHub Organization"
 #macro HOTGLUE_CHANNEL_GITHUB_AUTH_USER  "GitHub Auth User"
+#macro HOTGLUE_CHANNEL_VERDACCIO         "Verdaccio (npm)"
 
-#macro HOTGLUE_REPOSITORY_LOCAL   "local"
-#macro HOTGLUE_REPOSITORY_GITHUB  "github"
-#macro HOTGLUE_REPOSITORY_GIST    "gist"
-#macro HOTGLUE_REPOSITORY_ITCH    "itch"
+#macro HOTGLUE_REPOSITORY_LOCAL      "local"
+#macro HOTGLUE_REPOSITORY_GITHUB     "github"
+#macro HOTGLUE_REPOSITORY_GIST       "gist"
+#macro HOTGLUE_REPOSITORY_ITCH       "itch"
+#macro HOTGLUE_REPOSITORY_VERDACCIO  "verdaccio"
 
 #macro HOTGLUE_DEFAULT_PATH_CACHE        game_save_id + "cache/"
 #macro HOTGLUE_DEFAULT_PATH_PROJECTTOOL  "C:/Program Files/GameMaker/packages/project-tool-win-x64/ProjectTool.exe"

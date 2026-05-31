@@ -106,7 +106,14 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
     {
         __downloadCallback = _callback;
         
-        var _destinationPath = (_fileExtension == undefined)? undefined : _fileExtension;
+        //FIXME - This all seems wonky. What is meant to happen here?
+        
+        var _destinationPath = filename_name(_url);
+        
+        if (_fileExtension != undefined)
+        {
+            _destinationPath = filename_change_ext(_destinationPath, _fileExtension)
+        }
         
         HttpCacheGetFile(_url, _destinationPath, function(_success, _destinationPath, _callbackMetadata)
         {

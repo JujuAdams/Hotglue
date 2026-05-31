@@ -7,6 +7,7 @@ function __HotglueRepositoryCommon(_url) constructor
     static __isRemote = false;
     
     __url = _url
+    __name = "???";
     
     __readme          = undefined;
     __readmeCollected = false;
