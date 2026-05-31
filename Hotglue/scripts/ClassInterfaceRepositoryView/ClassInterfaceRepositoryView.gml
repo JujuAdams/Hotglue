@@ -154,17 +154,17 @@ function ClassInterfaceRepositoryView(_repository) constructor
             
             if (ImGuiButton("Manual download"))
             {
-                LogTraceAndStatus($"Downloading release \"{__selectedRelease.GetWebURL()}\"");
+                LogTraceAndStatus($"Downloading release \"{__selectedRelease.GetDownloadURL()}\"");
                 __selectedRelease.Download(function(_release, _success, _localURL)
                 {
                     if (_success)
                     {
-                        LogTraceAndStatus($"Downloaded \"{_release.GetWebURL()}\" successfully");
-                            
-                        var _filename = get_open_filename($"{filename_ext(_localURL)}|{filename_ext(_localURL)}", filename_name(__selectedRelease.GetPrimaryAssetURL()));
+                        LogTraceAndStatus($"Downloaded \"{_release.GetDownloadURL()}\" successfully");
+                        
+                        var _filename = get_save_filename($"{filename_ext(_localURL)}|{filename_ext(_localURL)}", filename_name(__selectedRelease.GetPrimaryAssetURL()));
                         if (_filename != "")
                         {
-                            file_copy(_filename, _localURL);
+                            file_copy(_localURL, _filename);
                             LogTraceAndStatus($"Copied \"{_localURL}\" to \"{_filename}\"");
                         }
                     }
