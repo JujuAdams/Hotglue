@@ -2,7 +2,10 @@
 
 /// @param path
 
-function HotglueProjectLocalEnsure(_path)
+/// @param path
+/// @param [sourceURL=path]
+
+function HotglueProjectLocalEnsure(_path, _sourceURL = _path)
 {
     static _projectByPathDict = __HotglueSystem().__projectByPathDict;
     
@@ -12,20 +15,20 @@ function HotglueProjectLocalEnsure(_path)
         return _project;
     }
     
-    __HotglueTrace($"Path \"{_path}\" has not been loaded before");
+    __HotglueTrace($"Path \"{_path}\" has not been loaded before, origin = \"{_sourceURL}\"");
     
     var _extension = filename_ext(_path);
     if (_extension == ".yyp")
     {
-        _project = __HotglueLoadYYP(_path, false, _path, false);
+        _project = __HotglueLoadYYP(_path, false, _sourceURL, false);
     }
     else if (_extension == ".yyz")
     {
-        _project = __HotglueLoadYYZ(_path, _path);
+        _project = __HotglueLoadYYZ(_path, _sourceURL);
     }
     else if (_extension == ".yymps")
     {
-        _project = __HotglueLoadYYMPS(_path, _path);
+        _project = __HotglueLoadYYMPS(_path, _sourceURL);
     }
     else
     {

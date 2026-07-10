@@ -112,7 +112,7 @@ function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadU
         var _extension = filename_ext(_path);
         if ((_extension == ".yyp") || (_extension == ".yymps") || (_extension = ".yyz"))
         {
-            _struct = HotglueProjectLocalEnsure(_path);
+            _struct = HotglueProjectLocalEnsure(_path, __downloadURL);
         }
         else if ((_extension == ".txt") || (_extension == ".gml") || (_extension = ".md"))
         {
