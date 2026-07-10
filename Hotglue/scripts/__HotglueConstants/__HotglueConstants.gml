@@ -33,4 +33,4 @@
 #macro HOTGLUE_REPOSITORY_VERDACCIO  "verdaccio"
 
 #macro HOTGLUE_DEFAULT_PATH_CACHE        game_save_id + "cache/"
-#macro HOTGLUE_DEFAULT_PATH_PROJECTTOOL  "C:/Program Files/GameMaker-LTS2026/packages/gm-tools/project-tool-win-x64/ProjectTool.exe"
+#macro HOTGLUE_DEFAULT_PATH_PROJECTTOOL  "C:/ProgramData/GameMakerStudio2-LTS2026/Plugins/@gm-tools-project-tool-win-x64/ProjectTool.exe"
