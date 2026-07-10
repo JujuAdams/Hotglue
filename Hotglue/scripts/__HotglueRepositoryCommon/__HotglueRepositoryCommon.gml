@@ -1,12 +1,15 @@
 // Feather disable all
 
+/// @param channel
 /// @param url
 
-function __HotglueRepositoryCommon(_url) constructor
+function __HotglueRepositoryCommon(_channel, _url) constructor
 {
     static __isRemote = false;
     
-    __url = _url
+    __channel = _channel;
+    __url     = _url
+    
     __name = "???";
     
     __readme          = undefined;

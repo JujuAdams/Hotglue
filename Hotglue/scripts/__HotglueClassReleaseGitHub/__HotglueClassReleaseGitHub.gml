@@ -1,5 +1,6 @@
 // Feather disable all
 
+/// @param repository
 /// @param name
 /// @param datetimeString
 /// @param webURL
@@ -8,7 +9,7 @@
 /// @param stable
 /// @param assetsEndpoint
 
-function __HotglueClassReleaseGitHub(_name, _datetimeString, _webURL, _downloadURL, _description, _stable, _assetsEndpoint) : __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadURL, _description, _stable, undefined) constructor
+function __HotglueClassReleaseGitHub(_repository, _name, _datetimeString, _webURL, _downloadURL, _description, _stable, _assetsEndpoint) : __HotglueClassReleaseCommon(_repository, _name, _datetimeString, _webURL, _downloadURL, _description, _stable, undefined) constructor
 {
     __assetsEndpoint = _assetsEndpoint;
     

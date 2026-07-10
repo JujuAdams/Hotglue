@@ -78,7 +78,7 @@ function __HotglueChannelCommon(_name, _url, _protected) constructor
         var _repository = GetRepositoryFromURL(_url);
         if (_repository == undefined)
         {
-            _repository = HotglueEnsureRepository(_url, _forceType);
+            _repository = HotglueEnsureRepositoryFromURL(self, _url, _forceType);
             array_push(__repositoryArray, _repository);
             LogTraceAndStatus($"Added repository \"{_url}\" to channel \"{__name}\"");
         }

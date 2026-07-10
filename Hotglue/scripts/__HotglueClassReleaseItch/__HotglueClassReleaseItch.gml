@@ -1,5 +1,6 @@
 // Feather disable all
 
+/// @param repository
 /// @param name
 /// @param datetimeString
 /// @param webURL
@@ -8,7 +9,7 @@
 /// @param stable
 /// @param fileExtension
 
-function __HotglueClassReleaseItch(_name, _datetimeString, _webURL, _downloadURL, _description, _stable, _fileExtension) : __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadURL, _description, _stable, undefined) constructor
+function __HotglueClassReleaseItch(_repository, _name, _datetimeString, _webURL, _downloadURL, _description, _stable, _fileExtension) : __HotglueClassReleaseCommon(_repository, _name, _datetimeString, _webURL, _downloadURL, _description, _stable, undefined) constructor
 {
     __fileExtension = _fileExtension;
     

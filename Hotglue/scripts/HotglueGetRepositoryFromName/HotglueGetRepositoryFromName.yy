@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"HotglueGetRepository",
+  "%Name":"HotglueGetRepositoryFromName",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"HotglueGetRepository",
+  "name":"HotglueGetRepositoryFromName",
   "parent":{
     "name":"Repositories",
     "path":"folders/Hotglue/Repositories.yy",

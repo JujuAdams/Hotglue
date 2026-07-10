@@ -1,8 +1,9 @@
 // Feather disable all
 
+/// @param channel
 /// @param url
 
-function __HotglueRepositoryItch(_url) : __HotglueRepositoryCommon(_url) constructor
+function __HotglueRepositoryItch(_channel, _url) : __HotglueRepositoryCommon(_channel, _url) constructor
 {
     static __isRemote = true;
     

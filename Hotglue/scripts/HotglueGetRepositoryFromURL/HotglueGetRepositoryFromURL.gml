@@ -2,7 +2,7 @@
 
 /// @param url
 
-function HotglueGetRepository(_url)
+function HotglueGetRepositoryFromURL(_url)
 {
     static _repositoryArray = __HotglueSystem().__repositoryArray;
     

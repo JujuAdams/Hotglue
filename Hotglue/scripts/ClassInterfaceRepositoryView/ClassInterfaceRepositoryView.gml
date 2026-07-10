@@ -4,11 +4,17 @@
 
 function ClassInterfaceRepositoryView(_repository) constructor
 {
+    static _channelArray = __HotglueSystem().__channelArray;
+    
     __repository = _repository;
     
     __selectedRelease = __repository.GetLatestRelease();
     __selectedProject = undefined;
     __projectView = undefined;
+    
+    ___forceFirstTabSelected = false;
+    
+    
     
     static BuildRepositoryHeader = function()
     {
@@ -273,7 +279,7 @@ function ClassInterfaceRepositoryView(_repository) constructor
     {
         if (__selectedRelease == undefined)
         {
-            ImGuiTextWrapped("Please select a release.");
+            ImGuiTextWrapped("Please select a release from the \"NPM Package\" tab.");
             return;
         }
         
@@ -287,9 +293,15 @@ function ClassInterfaceRepositoryView(_repository) constructor
         ImGuiTextWrapped($"Showing dependencies for release \"{__selectedRelease.GetName()}\"");
         ImGuiNewLine();
         
+        ImGuiPushStyleColor(ImGuiCol.Text, INTERFACE_COLOR_RED_TEXT, 1);
+        ImGuiTextWrapped("These dependencies will not be automatically added to your project. ");
+        ImGuiPopStyleColor();
+        ImGuiTextWrapped("You should add these dependencies yourself manually.");
+        ImGuiNewLine();
+        
         ImGuiBeginTable("dependenciesTable", 2, ImGuiTableFlags.BordersInner | ImGuiTableFlags.BordersOuter);
         
-        ImGuiTableSetupColumn("Name", ImGuiTableColumnFlags.NoReorder);
+        ImGuiTableSetupColumn("Name");
         ImGuiTableSetupColumn("Version");
         ImGuiTableHeadersRow();
         
@@ -297,11 +309,57 @@ function ClassInterfaceRepositoryView(_repository) constructor
         repeat(array_length(_dependenciesArray))
         {
             var _dependencyReference = _dependenciesArray[_i];
+            var _dependencyName = _dependencyReference.__name;
             
             ImGuiTableNextRow();
             
             ImGuiTableNextColumn();
-            ImGuiText(_dependencyReference.__name);
+            
+            var _repository = HotglueGetRepositoryFromName(_dependencyName);
+            if (_repository != undefined)
+            {
+                ImGuiTextLink(_dependencyName);
+                var _clicked = ImGuiIsItemClicked();
+                
+                if (ImGuiBeginItemTooltip())
+                {
+                    ImGuiText("Click to show this dependency");
+                    ImGuiEndTooltip();
+                }
+                
+                if (_clicked)
+                {
+                    with(oInterface.projectTab)
+                    {
+                        __importMode = "channels";
+                        
+                        var _channelArray = __HotglueSystem().__channelArray;
+                        __selectedChannel = array_get_index(_channelArray, _repository.__channel);
+                        
+                        var _channelView = InterfaceEnsureChannelView(_repository.__channel);
+                        if (_channelView != undefined)
+                        {
+                            _channelView.__selectedRepository = _repository;
+                        }
+                        
+                        var _repositoryView = InterfaceEnsureRepositoryView(_repository);
+                        if (_repositoryView)
+                        {
+                            _repositoryView.___forceFirstTabSelected = true;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ImGuiTextColored(_dependencyName, INTERFACE_COLOR_RED_TEXT);
+                if (ImGuiBeginItemTooltip())
+                {
+                    ImGuiText("This dependency could not be found in Hotglue.");
+                    ImGuiEndTooltip();
+                }
+            }
+            
             ImGuiTableNextColumn();
             ImGuiText(_dependencyReference.__versionPattern);
             
@@ -318,11 +376,14 @@ function ClassInterfaceRepositoryView(_repository) constructor
         
         if (__repository.__isRemote)
         {
+            var _firstTabFlags = ___forceFirstTabSelected? ImGuiTabItemFlags.SetSelected : undefined;
+            ___forceFirstTabSelected = false;
+            
             ImGuiBeginTabBar("repoTabBar");
             
             if (is_instanceof(__repository, __HotglueRepositoryGitHub))
             {
-                if (ImGuiBeginTabItem("README"))
+                if (ImGuiBeginTabItem("README", undefined, _firstTabFlags))
                 {
                     BuildRepositoryDescription();
                     ImGuiEndTabItem();
@@ -336,7 +397,7 @@ function ClassInterfaceRepositoryView(_repository) constructor
             }
             else if (is_instanceof(__repository, __HotglueRepositoryGist))
             {
-                if (ImGuiBeginTabItem("Description"))
+                if (ImGuiBeginTabItem("Description", undefined, _firstTabFlags))
                 {
                     if (_showDownloadButton)
                     {
@@ -351,7 +412,7 @@ function ClassInterfaceRepositoryView(_repository) constructor
             }
             else if (is_instanceof(__repository, __HotglueRepositoryVerdaccio))
             {
-                if (ImGuiBeginTabItem("NPM Package"))
+                if (ImGuiBeginTabItem("NPM Package", undefined, _firstTabFlags))
                 {
                     BuildReleaseDescription(_showDownloadButton);
                     ImGuiEndTabItem();
@@ -365,7 +426,7 @@ function ClassInterfaceRepositoryView(_repository) constructor
             }
             else
             {
-                if (ImGuiBeginTabItem("Description"))
+                if (ImGuiBeginTabItem("Description", undefined, _firstTabFlags))
                 {
                     BuildRepositoryDescription();
                     ImGuiEndTabItem();

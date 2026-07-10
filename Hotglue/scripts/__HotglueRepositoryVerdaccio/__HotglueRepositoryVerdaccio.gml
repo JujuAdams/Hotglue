@@ -1,8 +1,9 @@
 // Feather disable all
 
+/// @param channel
 /// @param url
 
-function __HotglueRepositoryVerdaccio(_url) : __HotglueRepositoryCommon(_url) constructor
+function __HotglueRepositoryVerdaccio(_channel, _url) : __HotglueRepositoryCommon(_channel, _url) constructor
 {
     static __isRemote = true;
     
@@ -136,7 +137,8 @@ function __HotglueRepositoryVerdaccio(_url) : __HotglueRepositoryCommon(_url) co
                                 }
                             }
                             
-                            var _release = new __HotglueClassReleaseCommon(_versionName,
+                            var _release = new __HotglueClassReleaseCommon(self,
+                                                                           _versionName,
                                                                            _timeDict[$ _versionName],
                                                                            __url,
                                                                            _versionData.dist.tarball,

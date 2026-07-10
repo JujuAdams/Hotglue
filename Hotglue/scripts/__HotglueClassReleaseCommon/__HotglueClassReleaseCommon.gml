@@ -1,5 +1,6 @@
 // Feather disable all
 
+/// @param repository
 /// @param name
 /// @param datetimeString
 /// @param webURL
@@ -8,8 +9,9 @@
 /// @param stable
 /// @param [dependenciesArray]
 
-function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadURL, _description, _stable, _dependenciesArray = []) constructor
+function __HotglueClassReleaseCommon(_repository, _name, _datetimeString, _webURL, _downloadURL, _description, _stable, _dependenciesArray = []) constructor
 {
+    __repository        = _repository;
     __name              = (_name == "")? "<untitled>" : _name;
     __datetimeString    = _datetimeString;
     __webURL            = _webURL;

@@ -1,8 +1,9 @@
 // Feather disable all
 
+/// @param channel
 /// @param url
 
-function __HotglueRepositoryGist(_url) : __HotglueRepositoryCommon(_url) constructor
+function __HotglueRepositoryGist(_channel, _url) : __HotglueRepositoryCommon(_channel, _url) constructor
 {
     static __isRemote = true;
     
@@ -96,7 +97,8 @@ function __HotglueRepositoryGist(_url) : __HotglueRepositoryCommon(_url) constru
                                     __name   = $"{__username}/{_fileNamesArray[0]}";
                                     __readme = _json.description;
                                     
-                                    _release = new __HotglueClassReleaseCommon(__name,
+                                    _release = new __HotglueClassReleaseCommon(self,
+                                                                               __name,
                                                                                _json.updated_at,
                                                                                _json.html_url,
                                                                                _json.files[$ _fileNamesArray[0]].raw_url,
