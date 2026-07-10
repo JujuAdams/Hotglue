@@ -307,6 +307,14 @@ function ClassInterfaceRepositoryView(_repository) constructor
                     ImGuiEndTabItem();
                 }
             }
+            else if (is_instanceof(__repository, __HotglueRepositoryVerdaccio))
+            {
+                if (ImGuiBeginTabItem("NPM Package"))
+                {
+                    BuildReleaseDescription(_showDownloadButton);
+                    ImGuiEndTabItem();
+                }
+            }
             else
             {
                 if (ImGuiBeginTabItem("Description"))
