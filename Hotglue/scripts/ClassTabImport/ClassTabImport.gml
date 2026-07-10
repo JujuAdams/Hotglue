@@ -121,7 +121,7 @@ function ClassTabImport() : ClassTab() constructor
             if (__directProject != undefined)
             {
                 ImGuiText(__directProject.GetURL());
-                if (ImGuiSmallButton("Refresh"))
+                if (ImGuiSmallButton("Refresh###importTab"))
                 {
                     __directProject.Refresh();
                 }

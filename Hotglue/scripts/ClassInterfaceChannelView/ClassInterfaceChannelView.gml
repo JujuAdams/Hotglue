@@ -21,7 +21,7 @@ function ClassInterfaceChannelView(_channel) constructor
         ImGuiTextColored(__channel.GetName(), INTERFACE_COLOR_GREEN_TEXT);
         ImGuiSameLine(undefined, 20);
         
-        if (ImGuiSmallButton("Refresh"))
+        if (ImGuiSmallButton("Refresh###channelView"))
         {
             __channel.Refresh();
         }
@@ -108,7 +108,7 @@ function ClassInterfaceChannelView(_channel) constructor
         ImGuiTextColored(__channel.GetName(), INTERFACE_COLOR_GREEN_TEXT);
         ImGuiSameLine(undefined, 20);
         
-        if (ImGuiSmallButton("Refresh"))
+        if (ImGuiSmallButton("Refresh###channelView"))
         {
             __channel.Refresh();
         }

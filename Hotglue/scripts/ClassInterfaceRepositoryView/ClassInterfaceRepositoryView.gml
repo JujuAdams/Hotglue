@@ -41,7 +41,7 @@ function ClassInterfaceRepositoryView(_repository) constructor
         if (__repository.__isRemote)
         {
             ImGuiSameLine(undefined, 20);
-            if (ImGuiButton("Refresh"))
+            if (ImGuiButton("Refresh###repositoryView"))
             {
                 __repository.Refresh();
             }
