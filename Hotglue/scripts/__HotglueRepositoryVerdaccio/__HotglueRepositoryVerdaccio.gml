@@ -117,12 +117,32 @@ function __HotglueRepositoryVerdaccio(_url) : __HotglueRepositoryCommon(_url) co
                             var _versionName = _versionsNameArray[_i];
                             var _versionData = _versionsDict[$ _versionName];
                             
+                            var _dependenciesArray = [];
+                            
+                            var _dependencyDict = _versionData[$ "dependencies"];
+                            if (not is_struct(_dependencyDict))
+                            {
+                                __HotglueTrace($"Could not find dependencies for version \"{_versionName}\" of \"{__url}\"");
+                            }
+                            else
+                            {
+                                var _dependencyNamesArray = struct_get_names(_dependencyDict);
+                                var _j = 0;
+                                repeat(array_length(_dependencyNamesArray))
+                                {
+                                    var _dependencyName = _dependencyNamesArray[_j];
+                                    array_push(_dependenciesArray, new __HotglueClassDependencyReference(_dependencyName, _dependencyDict[$ _dependencyName]));
+                                    ++_j;
+                                }
+                            }
+                            
                             var _release = new __HotglueClassReleaseCommon(_versionName,
                                                                            _timeDict[$ _versionName],
                                                                            __url,
                                                                            _versionData.dist.tarball,
                                                                            _versionData.description,
-                                                                           true);
+                                                                           true,
+                                                                           _dependenciesArray);
                             array_push(_releasesArray, _release);
                             
                             if (_versionName == _latestReleaseName)

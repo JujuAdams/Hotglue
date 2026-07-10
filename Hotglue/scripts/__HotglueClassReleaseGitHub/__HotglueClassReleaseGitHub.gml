@@ -8,7 +8,7 @@
 /// @param stable
 /// @param assetsEndpoint
 
-function __HotglueClassReleaseGitHub(_name, _datetimeString, _webURL, _downloadURL, _description, _stable, _assetsEndpoint) : __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadURL, _description, _stable) constructor
+function __HotglueClassReleaseGitHub(_name, _datetimeString, _webURL, _downloadURL, _description, _stable, _assetsEndpoint) : __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadURL, _description, _stable, undefined) constructor
 {
     __assetsEndpoint = _assetsEndpoint;
     

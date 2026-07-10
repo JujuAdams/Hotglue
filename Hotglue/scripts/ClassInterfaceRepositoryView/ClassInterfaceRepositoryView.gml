@@ -269,6 +269,48 @@ function ClassInterfaceRepositoryView(_repository) constructor
         }
     }
     
+    static BuildReleaseDependencies = function()
+    {
+        if (__selectedRelease == undefined)
+        {
+            ImGuiTextWrapped("Please select a release.");
+            return;
+        }
+        
+        var _dependenciesArray = __selectedRelease.__dependenciesArray;
+        if (array_length(_dependenciesArray) <= 0)
+        {
+            ImGuiTextWrapped("No dependencies.");
+            return;
+        }
+        
+        ImGuiTextWrapped($"Showing dependencies for release \"{__selectedRelease.GetName()}\"");
+        ImGuiNewLine();
+        
+        ImGuiBeginTable("dependenciesTable", 2, ImGuiTableFlags.BordersInner | ImGuiTableFlags.BordersOuter);
+        
+        ImGuiTableSetupColumn("Name", ImGuiTableColumnFlags.NoReorder);
+        ImGuiTableSetupColumn("Version");
+        ImGuiTableHeadersRow();
+        
+        var _i = 0;
+        repeat(array_length(_dependenciesArray))
+        {
+            var _dependencyReference = _dependenciesArray[_i];
+            
+            ImGuiTableNextRow();
+            
+            ImGuiTableNextColumn();
+            ImGuiText(_dependencyReference.__name);
+            ImGuiTableNextColumn();
+            ImGuiText(_dependencyReference.__versionPattern);
+            
+            ++_i;
+        }
+        
+        ImGuiEndTable();
+    }
+    
     static Build = function(_showDownloadButton)
     {
         BuildRepositoryHeader();
@@ -312,6 +354,12 @@ function ClassInterfaceRepositoryView(_repository) constructor
                 if (ImGuiBeginTabItem("NPM Package"))
                 {
                     BuildReleaseDescription(_showDownloadButton);
+                    ImGuiEndTabItem();
+                }
+                
+                if (ImGuiBeginTabItem("Dependencies"))
+                {
+                    BuildReleaseDependencies();
                     ImGuiEndTabItem();
                 }
             }

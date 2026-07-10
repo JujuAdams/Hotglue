@@ -8,7 +8,7 @@
 /// @param stable
 /// @param fileExtension
 
-function __HotglueClassReleaseItch(_name, _datetimeString, _webURL, _downloadURL, _description, _stable, _fileExtension) : __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadURL, _description, _stable) constructor
+function __HotglueClassReleaseItch(_name, _datetimeString, _webURL, _downloadURL, _description, _stable, _fileExtension) : __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadURL, _description, _stable, undefined) constructor
 {
     __fileExtension = _fileExtension;
     

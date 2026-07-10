@@ -102,6 +102,7 @@
     {"id":{"name":"__HotglueChannelVerdaccio","path":"scripts/__HotglueChannelVerdaccio/__HotglueChannelVerdaccio.yy",},},
     {"id":{"name":"__HotglueClassAssetCommon","path":"scripts/__HotglueClassAssetCommon/__HotglueClassAssetCommon.yy",},},
     {"id":{"name":"__HotglueClassAutomation","path":"scripts/__HotglueClassAutomation/__HotglueClassAutomation.yy",},},
+    {"id":{"name":"__HotglueClassDependencyReference","path":"scripts/__HotglueClassDependencyReference/__HotglueClassDependencyReference.yy",},},
     {"id":{"name":"__HotglueClassHttpGetFile","path":"scripts/__HotglueClassHttpGetFile/__HotglueClassHttpGetFile.yy",},},
     {"id":{"name":"__HotglueClassJob","path":"scripts/__HotglueClassJob/__HotglueClassJob.yy",},},
     {"id":{"name":"__HotglueClassPointer","path":"scripts/__HotglueClassPointer/__HotglueClassPointer.yy",},},

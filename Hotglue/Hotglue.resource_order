@@ -47,6 +47,7 @@
     {"name":"__HotglueChannelVerdaccio","order":6,"path":"scripts/__HotglueChannelVerdaccio/__HotglueChannelVerdaccio.yy",},
     {"name":"__HotglueClassAssetCommon","order":4,"path":"scripts/__HotglueClassAssetCommon/__HotglueClassAssetCommon.yy",},
     {"name":"__HotglueClassAutomation","order":15,"path":"scripts/__HotglueClassAutomation/__HotglueClassAutomation.yy",},
+    {"name":"__HotglueClassDependencyReference","order":16,"path":"scripts/__HotglueClassDependencyReference/__HotglueClassDependencyReference.yy",},
     {"name":"__HotglueClassHttpGetFile","order":8,"path":"scripts/__HotglueClassHttpGetFile/__HotglueClassHttpGetFile.yy",},
     {"name":"__HotglueClassJob","order":14,"path":"scripts/__HotglueClassJob/__HotglueClassJob.yy",},
     {"name":"__HotglueClassPointer","order":13,"path":"scripts/__HotglueClassPointer/__HotglueClassPointer.yy",},

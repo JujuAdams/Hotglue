@@ -6,15 +6,17 @@
 /// @param downloadURL
 /// @param description
 /// @param stable
+/// @param [dependenciesArray]
 
-function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadURL, _description, _stable) constructor
+function __HotglueClassReleaseCommon(_name, _datetimeString, _webURL, _downloadURL, _description, _stable, _dependenciesArray = []) constructor
 {
-    __name           = (_name == "")? "<untitled>" : _name;
-    __datetimeString = _datetimeString;
-    __webURL         = _webURL;
-    __downloadURL    = _downloadURL;
-    __description    = _description;
-    __stable         = _stable;
+    __name              = (_name == "")? "<untitled>" : _name;
+    __datetimeString    = _datetimeString;
+    __webURL            = _webURL;
+    __downloadURL       = _downloadURL;
+    __description       = _description;
+    __stable            = _stable;
+    __dependenciesArray = _dependenciesArray;
     
     __primaryAssetURL = _downloadURL;
     
