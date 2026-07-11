@@ -240,6 +240,7 @@
     {"id":{"name":"HotglueEnsureRepositoryFromURL","path":"scripts/HotglueEnsureRepositoryFromURL/HotglueEnsureRepositoryFromURL.yy",},},
     {"id":{"name":"HotglueGetCachePath","path":"scripts/HotglueGetCachePath/HotglueGetCachePath.yy",},},
     {"id":{"name":"HotglueGetChannelByIndex","path":"scripts/HotglueGetChannelByIndex/HotglueGetChannelByIndex.yy",},},
+    {"id":{"name":"HotglueGetChannelByName","path":"scripts/HotglueGetChannelByName/HotglueGetChannelByName.yy",},},
     {"id":{"name":"HotglueGetChannelByURL","path":"scripts/HotglueGetChannelByURL/HotglueGetChannelByURL.yy",},},
     {"id":{"name":"HotglueGetChannelCount","path":"scripts/HotglueGetChannelCount/HotglueGetChannelCount.yy",},},
     {"id":{"name":"HotglueGetChannelExists","path":"scripts/HotglueGetChannelExists/HotglueGetChannelExists.yy",},},

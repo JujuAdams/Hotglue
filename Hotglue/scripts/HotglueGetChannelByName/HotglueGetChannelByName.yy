@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"HotglueGetChannelByName",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HotglueGetChannelByName",
+  "parent":{
+    "name":"Channels",
+    "path":"folders/Hotglue/Channels.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
