@@ -3,10 +3,11 @@
 /// Loads a .yyz file and returns an struct constructed by `__HotglueProject`. Please see
 /// `__HotglueLoadYYP()` for struct methods that you can use.
 /// 
+/// @param [releaseStruct]
 /// @param path
 /// @param [sourceURL=path]
 
-function __HotglueLoadYYZ(_yyzPath, _sourceURL = _yyzPath)
+function __HotglueLoadYYZ(_releaseStruct, _yyzPath, _sourceURL = _yyzPath)
 {
     if (GM_is_sandboxed)
     {
@@ -33,6 +34,6 @@ function __HotglueLoadYYZ(_yyzPath, _sourceURL = _yyzPath)
     }
     else
     {
-        return __HotglueLoadYYZUnpacked(_directory, _sourceURL, true);
+        return __HotglueLoadYYZUnpacked(_releaseStruct, _directory, _sourceURL, true);
     }
 }

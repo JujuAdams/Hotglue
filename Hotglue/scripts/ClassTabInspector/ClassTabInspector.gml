@@ -53,7 +53,7 @@ function ClassTabInspector() : ClassTab() constructor
                 }
                 else
                 {
-                    __project = HotglueProjectLocalEnsure(_openPath);
+                    __project = HotglueProjectLocalEnsure(undefined, _openPath);
                     __view = new ClassInterfaceProjectView(__project);
                     LogTraceAndStatus($"Loaded \"{__project.GetPath()}\" for inspection");
                     InterfaceRecentPush(_openPath);
@@ -112,7 +112,7 @@ function ClassTabInspector() : ClassTab() constructor
                 }
                 else
                 {
-                    __project = HotglueProjectLocalEnsure(_openPath);
+                    __project = HotglueProjectLocalEnsure(undefined, _openPath);
                     __view = new ClassInterfaceProjectView(__project);
                     LogTraceAndStatus($"Loaded \"{__project.GetPath()}\" for inspection");
                     InterfaceRecentPush(_openPath);

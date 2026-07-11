@@ -1,11 +1,12 @@
 // Feather disable all
 
+/// @param [releaseStruct]
 /// @param projectPath
 /// @param readOnly
 /// @param sourceURL
 /// @param inCache
 
-function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constructor
+function __HotglueProject(_releaseStruct, _projectPath, _readOnly, _sourceURL, _inCache) constructor
 {
     static _projectByPathDict = __HotglueSystem().__projectByPathDict;
     static _projectBySourceURLDict = __HotglueSystem().__projectBySourceURLDict;
@@ -17,10 +18,11 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         __HotglueError($"\"{_projectPath}\" doesn't exist");
     }
     
-    __projectPath = _projectPath;
-    __readOnly    = _readOnly;
-    __sourceURL   = _sourceURL;
-    __inCache     = _inCache;
+    __releaseStruct = _releaseStruct;
+    __projectPath   = _projectPath;
+    __readOnly      = _readOnly;
+    __sourceURL     = _sourceURL;
+    __inCache       = _inCache;
     
     __projectDirectory = filename_dir(__projectPath) + "/";
     __converted = false;
@@ -374,6 +376,7 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         var _job = new __HotglueClassJob(self);
         _job.SetSubfolder(_subfolder);
         _job.SetImportAllFrom(_sourceProject);
+        _job.SetContentDate(date_current_datetime());
         return _job;
     }
     
@@ -411,6 +414,7 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         var _job = new __HotglueClassJob(self);
         _job.SetSubfolder(_subfolder);
         _job.SetImportFrom(_sourceProject, _assetArray);
+        _job.SetContentDate(date_current_datetime());
         return _job;
     }
     
@@ -419,7 +423,42 @@ function __HotglueProject(_projectPath, _readOnly, _sourceURL, _inCache) constru
         var _job = new __HotglueClassJob(self);
         _job.SetSubfolder(_subfolder);
         _job.SetImportLooseFile(_looseFileArray);
+        _job.SetContentDate(date_current_datetime());
         return _job;
+    }
+    
+    static CheckForUpdate = function(_importedName)
+    {
+        var _importedArray = GetImported();
+        
+        var _found = undefined;
+        var _i = 0;
+        repeat(array_length(_importedArray))
+        {
+            var _imported = _importedArray[_i];
+            if (_imported.name == _importedName)
+            {
+                _found = _i;
+                break;
+            }
+            
+            ++_i;
+        }
+        
+        if (_found == undefined)
+        {
+            __HotglueWarning($"Could not find imported package \"{_importedName}\" in project \"{GetName()}\"");
+            return;
+        }
+        
+        var _channelStruct = undefined; //HotglueGetChannelByName(_imported.channelName);
+        if (_channelStruct == undefined)
+        {
+            __HotglueWarning($"Could not find channel with name \"{_imported.channelName}\" in package \"{_imported.name}\" in project \"{GetName()}\". Using temporary channel");
+            _channelStruct = HotglueGetChannelByName(HOTGLUE_CHANNEL_TEMPORARY);
+        }
+        
+        HotglueEnsureRepositoryFromURL(_channelStruct, _imported.repositoryURL);
     }
     
     static ImportAsLibrary = function(_sourceProject, _subfolder = "")

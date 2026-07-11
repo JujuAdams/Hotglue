@@ -1,10 +1,11 @@
 // Feather disable all
 
+/// @param [releaseStruct]
 /// @param directory
 /// @param [sourceURL]
 /// @param [inCache=false]
 
-function __HotglueLoadYYZUnpacked(_directory, _sourceURL = undefined, _inCache = false)
+function __HotglueLoadYYZUnpacked(_releaseStruct, _directory, _sourceURL = undefined, _inCache = false)
 {
     if (GM_is_sandboxed)
     {
@@ -36,7 +37,7 @@ function __HotglueLoadYYZUnpacked(_directory, _sourceURL = undefined, _inCache =
         __HotglueError("No .yyp file found inside directory");
     }
     
-    var _project = new __HotglueProject(_directory + _projectPath, true, _sourceURL, _inCache);
+    var _project = new __HotglueProject(_releaseStruct, _directory + _projectPath, true, _sourceURL, _inCache);
     _project.__VerifyFilesUnzipped();
     
     return _project;

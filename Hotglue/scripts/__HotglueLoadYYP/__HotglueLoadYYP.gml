@@ -1,11 +1,12 @@
 // Feather disable all
 
+/// @param [releaseStruct]
 /// @param path
 /// @param [readOnly=false]
 /// @param [sourceURL=path]
 /// @param [inCache=false]
 
-function __HotglueLoadYYP(_yypPath, _readOnly = false, _sourceURL = _yypPath, _inCache = false)
+function __HotglueLoadYYP(_releaseStruct, _yypPath, _readOnly = false, _sourceURL = _yypPath, _inCache = false)
 {
     if (GM_is_sandboxed)
     {
@@ -19,7 +20,7 @@ function __HotglueLoadYYP(_yypPath, _readOnly = false, _sourceURL = _yypPath, _i
     
     __HotglueTrace($"Loading \"{_yypPath}\" as a .yyp");
     
-    var _project = new __HotglueProject(_yypPath, _readOnly, _sourceURL, _inCache);
+    var _project = new __HotglueProject(_releaseStruct, _yypPath, _readOnly, _sourceURL, _inCache);
     _project.__VerifyIncludedFilesExist();
     
     return _project;

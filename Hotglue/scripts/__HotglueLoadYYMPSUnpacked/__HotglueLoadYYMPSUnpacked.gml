@@ -1,10 +1,11 @@
 // Feather disable all
 
+/// @param [releaseStruct]
 /// @param directory
 /// @param [sourceURL=path]
 /// @param [inCache=false]
 
-function __HotglueLoadYYMPSUnpacked(_directory, _sourceURL = undefined, _inCache = false)
+function __HotglueLoadYYMPSUnpacked(_releaseStruct, _directory, _sourceURL = undefined, _inCache = false)
 {
     if (GM_is_sandboxed)
     {
@@ -65,7 +66,7 @@ function __HotglueLoadYYMPSUnpacked(_directory, _sourceURL = undefined, _inCache
         }
     }
     
-    var _project = new __HotglueProject(_directory + _projectPath, true, _sourceURL, _inCache);
+    var _project = new __HotglueProject(_releaseStruct, _directory + _projectPath, true, _sourceURL, _inCache);
     _project.__VerifyFilesUnzipped();
     _project.__SetYYMPSVersion(_yympsVersion);
     

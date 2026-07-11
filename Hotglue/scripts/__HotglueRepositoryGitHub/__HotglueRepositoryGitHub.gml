@@ -136,7 +136,8 @@ function __HotglueRepositoryGitHub(_channel, _url) : __HotglueRepositoryCommon(_
                                     
                                     try
                                     {
-                                        var _release = new __HotglueClassReleaseGitHub(_githubRelease.name,
+                                        var _release = new __HotglueClassReleaseGitHub(self,
+                                                                                       _githubRelease.name,
                                                                                        _githubRelease.published_at,
                                                                                        _githubRelease.html_url,
                                                                                        _githubRelease.zipball_url,

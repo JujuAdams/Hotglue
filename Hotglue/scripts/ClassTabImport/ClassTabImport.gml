@@ -219,7 +219,7 @@ function ClassTabImport() : ClassTab() constructor
                 {
                     try
                     {
-                        __directProject = HotglueProjectLocalEnsure(_openPath);
+                        __directProject = HotglueProjectLocalEnsure(undefined, _openPath);
                         __directView = new ClassInterfaceProjectView(__directProject);
                         
                         LogTraceAndStatus($"Loaded \"{_openPath}\"");
@@ -521,7 +521,7 @@ function ClassTabImport() : ClassTab() constructor
                 {
                     try
                     {
-                        __destinationProject = HotglueProjectLocalEnsure(_openPath);
+                        __destinationProject = HotglueProjectLocalEnsure(undefined, _openPath);
                         __destinationView = new ClassInterfaceProjectView(__destinationProject);
                         
                         LogTraceAndStatus($"Loaded \"{_openPath}\"");

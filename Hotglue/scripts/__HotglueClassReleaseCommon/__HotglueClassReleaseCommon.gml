@@ -79,7 +79,7 @@ function __HotglueClassReleaseCommon(_repository, _name, _datetimeString, _webUR
                 var _extension = filename_ext(_filename);
                 if ((_extension == ".yyp") || (_extension == ".yymps") || (_extension = ".yyz"))
                 {
-                    _struct = HotglueProjectRemoteEnsure(__webURL, _filename);
+                    _struct = HotglueProjectRemoteEnsure(self, __webURL, _filename);
                 }
                 else
                 {
@@ -116,7 +116,7 @@ function __HotglueClassReleaseCommon(_repository, _name, _datetimeString, _webUR
         var _extension = filename_ext(_path);
         if ((_extension == ".yyp") || (_extension == ".yymps") || (_extension = ".yyz"))
         {
-            _struct = HotglueProjectLocalEnsure(_path, __downloadURL);
+            _struct = HotglueProjectLocalEnsure(self, _path, __downloadURL);
         }
         else if ((_extension == ".txt") || (_extension == ".gml") || (_extension = ".md"))
         {

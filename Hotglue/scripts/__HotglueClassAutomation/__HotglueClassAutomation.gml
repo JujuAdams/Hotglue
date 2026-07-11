@@ -67,7 +67,7 @@ function __HotglueClassAutomation(_json) constructor
                     return;
                 }
                 
-                var _project = HotglueProjectLocalEnsure(_value);
+                var _project = HotglueProjectLocalEnsure(undefined, _value);
                 if (_project == undefined)
                 {
                     __Error($"Failed to load \"{_value}\"");
@@ -159,7 +159,7 @@ function __HotglueClassAutomation(_json) constructor
                         {
                             if (_success)
                             {
-                                __sourceProject = HotglueProjectRemoteEnsure(_destinationPath, _destinationPath);
+                                __sourceProject = HotglueProjectRemoteEnsure(undefined, _destinationPath, _destinationPath);
                                 __LoadProject();
                             }
                             else
@@ -175,7 +175,7 @@ function __HotglueClassAutomation(_json) constructor
                 }
                 else
                 {
-                    __sourceProject = HotglueProjectLocalEnsure(_import);
+                    __sourceProject = HotglueProjectLocalEnsure(undefined, _import);
                     __LoadProject();
                 }
             }

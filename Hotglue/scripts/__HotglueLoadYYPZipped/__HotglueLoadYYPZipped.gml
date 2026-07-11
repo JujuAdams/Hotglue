@@ -1,9 +1,10 @@
 // Feather disable all
 
+/// @param [releaseStruct]
 /// @param path
 /// @param [sourceURL=path]
 
-function __HotglueLoadYYPZipped(_zipPath, _sourceURL = _zipPath)
+function __HotglueLoadYYPZipped(_releaseStruct, _zipPath, _sourceURL = _zipPath)
 {
     if (GM_is_sandboxed)
     {
@@ -28,6 +29,6 @@ function __HotglueLoadYYPZipped(_zipPath, _sourceURL = _zipPath)
     }
     else
     {
-        return __HotglueLoadYYZUnpacked(_directory, _sourceURL, true);
+        return __HotglueLoadYYZUnpacked(_releaseStruct, _directory, _sourceURL, true);
     }
 }

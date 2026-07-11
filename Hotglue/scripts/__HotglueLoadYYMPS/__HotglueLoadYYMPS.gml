@@ -3,10 +3,11 @@
 /// Loads a .yymps file and returns an struct constructed by `__HotglueProject`. Please see
 /// `HotglueLoadYYP()` for struct methods that you can use.
 /// 
+/// @param [releaseStruct]
 /// @param path
 /// @param [sourceURL=path]
 
-function __HotglueLoadYYMPS(_yympsPath, _sourceURL = _yympsPath)
+function __HotglueLoadYYMPS(_releaseStruct, _yympsPath, _sourceURL = _yympsPath)
 {
     if (GM_is_sandboxed)
     {
@@ -30,7 +31,7 @@ function __HotglueLoadYYMPS(_yympsPath, _sourceURL = _yympsPath)
     }
     else
     {
-        var _result = __HotglueLoadYYMPSUnpacked(_directory, _sourceURL, true);
+        var _result = __HotglueLoadYYMPSUnpacked(_releaseStruct, _directory, _sourceURL, true);
     }
     
     if (_result == undefined)

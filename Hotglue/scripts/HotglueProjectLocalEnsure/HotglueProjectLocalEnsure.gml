@@ -1,11 +1,10 @@
 // Feather disable all
 
-/// @param path
-
+/// @param [releaseStruct]
 /// @param path
 /// @param [sourceURL=path]
 
-function HotglueProjectLocalEnsure(_path, _sourceURL = _path)
+function HotglueProjectLocalEnsure(_releaseStruct, _path, _sourceURL = _path)
 {
     static _projectByPathDict = __HotglueSystem().__projectByPathDict;
     
@@ -20,15 +19,15 @@ function HotglueProjectLocalEnsure(_path, _sourceURL = _path)
     var _extension = filename_ext(_path);
     if (_extension == ".yyp")
     {
-        _project = __HotglueLoadYYP(_path, false, _sourceURL, false);
+        _project = __HotglueLoadYYP(_releaseStruct, _path, false, _sourceURL, false);
     }
     else if (_extension == ".yyz")
     {
-        _project = __HotglueLoadYYZ(_path, _sourceURL);
+        _project = __HotglueLoadYYZ(_releaseStruct, _path, _sourceURL);
     }
     else if (_extension == ".yymps")
     {
-        _project = __HotglueLoadYYMPS(_path, _sourceURL);
+        _project = __HotglueLoadYYMPS(_releaseStruct, _path, _sourceURL);
     }
     else
     {
