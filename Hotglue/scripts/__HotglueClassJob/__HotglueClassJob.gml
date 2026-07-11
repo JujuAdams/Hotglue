@@ -12,6 +12,9 @@ function __HotglueClassJob(_destinationProject) constructor
     __packageName    = "";
     __packageVersion = "";
     __packageURL     = "";
+    __contentDate    = 0;
+    __repositoryURL  = "";
+    __channelName    = undefined;
     
     __addPIDArray    = [];
     __addPIDDict     = {};
@@ -120,12 +123,62 @@ function __HotglueClassJob(_destinationProject) constructor
         return __packageURL;
     }
     
+    static SetContentDate = function(_contentDate)
+    {
+        if (__contentDate != _contentDate)
+        {
+            __contentDate = _contentDate;
+            __HotglueTrace($"Set job {ptr(self)} package date = \"{date_datetime_string(_contentDate)}\" ({_contentDate})");
+        }
+    }
+    
+    static GetContentDate = function()
+    {
+        return __contentDate;
+    }
+    
+    static SetRepositoryURL = function(_repositoryURL)
+    {
+        if (__repositoryURL != _repositoryURL)
+        {
+            __repositoryURL = _repositoryURL;
+            __HotglueTrace($"Set job {ptr(self)} repository URL = \"{_repositoryURL}\"");
+        }
+    }
+    
+    static GetRepositoryURL = function()
+    {
+        return __repositoryURL;
+    }
+    
+    static SetChannelName = function(_channelName)
+    {
+        if (__channelName != _channelName)
+        {
+            __channelName = _channelName;
+            __HotglueTrace($"Set job {ptr(self)} channel name = \"{_channelName}\"");
+        }
+    }
+    
+    static GetChannelName = function()
+    {
+        return __channelName;
+    }
+    
     static SetPackageFromProject = function(_project)
     {
         SetPackageEdit(true);
         SetPackageName(_project.GetName() ?? "");
         SetPackageVersion(_project.GetVersionString() ?? "");
         SetPackageURL(_project.GetURL() ?? "");
+        
+        var _release = _project.__release;
+        if (is_struct(_release))
+        {
+            SetContentDate(HotglueDatetimeToValue(_release.__datetimeString));
+            SetRepositoryURL(_release.__repository.GetURL());
+            SetChannelName(_release.__repository.__channel.GetName());
+        }
     }
     
     static SetImportAllFrom = function(_sourceProject)
@@ -371,6 +424,9 @@ function __HotglueClassJob(_destinationProject) constructor
         var _packageName    = __packageName;
         var _packageVersion = __packageVersion;
         var _packageURL     = __packageURL;
+        var _contentDate    = __contentDate;
+        var _repositoryURL  = __repositoryURL;
+        var _channelName    = __channelName;
         var _addPIDArray    = __addPIDArray;
         
         with(__destinationProject)
@@ -420,10 +476,14 @@ function __HotglueClassJob(_destinationProject) constructor
                     {
                         //Add the new package information to metadata
                         array_push(_hotglueMetadata.installed, {
-                            name:    _packageName,
-                            version: (_packageVersion == "")? "0.0.0" : _packageVersion,
-                            origin:  _packageURL,
-                            assets:  variable_clone(_addPIDArray),
+                            name:          _packageName,
+                            version:       (_packageVersion == "")? "0.0.0" : _packageVersion,
+                            origin:        _packageURL,
+                            assets:        variable_clone(_addPIDArray),
+                            importDate:    date_current_datetime(),
+                            packageDate:   _contentDate,
+                            repositoryURL: _repositoryURL,
+                            channelName:   _channelName,
                         });
                     }
                     

@@ -66,9 +66,10 @@ function __InterfaceProjectViewBuildOverview()
         else
         {
             ImGuiPopStyleVar();
-            ImGuiBeginTable("importedTable", 2);
+            ImGuiBeginTable("importedTable", 3);
             
             ImGuiTableSetupColumn("name");
+            ImGuiTableSetupColumn("update", ImGuiTableColumnFlags.WidthFixed, 120);
             ImGuiTableSetupColumn("delete", ImGuiTableColumnFlags.WidthFixed, 50);
             
             var _deleteIndex = undefined;
@@ -82,6 +83,13 @@ function __InterfaceProjectViewBuildOverview()
                 InterfaceLinkText(_imported.name, _imported.origin);
                 ImGuiSameLine();
                 ImGuiTextWrapped(_imported.version);
+                
+                ImGuiTableNextColumn();
+                if (ImGuiSmallButton($"Check For Update##{_i}"))
+                {
+                    __project.CheckForUpdate(_imported.name);
+                }
+                
                 ImGuiTableNextColumn();
                 if (ImGuiSmallButton($"Delete##{_i}"))
                 {

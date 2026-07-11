@@ -1,10 +1,10 @@
 // Feather disable all
 
-/// @param channel
+/// @param channelStruct
 /// @param url
 /// @param [forceType]
 
-function HotglueEnsureRepositoryFromURL(_channel, _url, _type = undefined)
+function HotglueEnsureRepositoryFromURL(_channelStruct, _url, _type = undefined)
 {
     static _repositoryArray = __HotglueSystem().__repositoryArray;
     
@@ -37,23 +37,23 @@ function HotglueEnsureRepositoryFromURL(_channel, _url, _type = undefined)
         
         if (_type == HOTGLUE_REPOSITORY_LOCAL)
         {
-            _repository = new __HotglueRepositoryLocal(_channel, _url);
+            _repository = new __HotglueRepositoryLocal(_channelStruct, _url);
         }
         else if (_type == HOTGLUE_REPOSITORY_GITHUB)
         {
-            _repository = new __HotglueRepositoryGitHub(_channel, _url);
+            _repository = new __HotglueRepositoryGitHub(_channelStruct, _url);
         }
         else if (_type == HOTGLUE_REPOSITORY_GIST)
         {
-            _repository = new __HotglueRepositoryGist(_channel, _url);
+            _repository = new __HotglueRepositoryGist(_channelStruct, _url);
         }
         else if (_type == HOTGLUE_REPOSITORY_ITCH)
         {
-            _repository = new __HotglueRepositoryItch(_channel, _url);
+            _repository = new __HotglueRepositoryItch(_channelStruct, _url);
         }
         else if (_type == HOTGLUE_REPOSITORY_VERDACCIO)
         {
-            _repository = new __HotglueRepositoryVerdaccio(_channel, _url);
+            _repository = new __HotglueRepositoryVerdaccio(_channelStruct, _url);
         }
         else
         {

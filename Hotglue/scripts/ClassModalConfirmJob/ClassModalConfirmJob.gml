@@ -88,8 +88,28 @@ function ClassModalConfirmJob(_job, _packageEditForce = false) constructor
             ImGuiText("Package origin");
             ImGuiTableNextColumn();
             var _url = __job.GetPackageURL();
-            if (_url == "") _url = "(no origin URL)";
-            ImGuiText(_url);
+            ImGuiText((_url == "")? "(no origin URL)" : _url);
+            
+            ImGuiTableNextRow();
+            ImGuiTableNextColumn();
+            ImGuiText("Content date");
+            ImGuiTableNextColumn();
+            var _contentDate = __job.GetContentDate();
+            ImGuiText((_contentDate == 0)? "(no content date)" : date_datetime_string(_contentDate));
+            
+            ImGuiTableNextRow();
+            ImGuiTableNextColumn();
+            ImGuiText("Repo URL");
+            ImGuiTableNextColumn();
+            var _repositoryURL = __job.GetRepositoryURL();
+            ImGuiText((_repositoryURL == "")? "(no repository URL)" : _repositoryURL);
+            
+            ImGuiTableNextRow();
+            ImGuiTableNextColumn();
+            ImGuiText("Channel name");
+            ImGuiTableNextColumn();
+            var _channelName = __job.GetChannelName();
+            ImGuiText((_channelName == undefined)? "(no channel name)" : _channelName);
             
             ImGuiEndDisabled();
             ImGuiEndDisabled();

@@ -18,7 +18,7 @@ function __HotglueProject(_releaseStruct, _projectPath, _readOnly, _sourceURL, _
         __HotglueError($"\"{_projectPath}\" doesn't exist");
     }
     
-    __releaseStruct = _releaseStruct;
+    __release = _releaseStruct;
     __projectPath   = _projectPath;
     __readOnly      = _readOnly;
     __sourceURL     = _sourceURL;

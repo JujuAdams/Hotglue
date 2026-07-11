@@ -143,6 +143,7 @@
     {"name":"HotglueClassZip","order":2,"path":"scripts/HotglueClassZip/HotglueClassZip.yy",},
     {"name":"HotglueClearTempCache","order":2,"path":"scripts/HotglueClearTempCache/HotglueClearTempCache.yy",},
     {"name":"HotglueClearUnzipCache","order":1,"path":"scripts/HotglueClearUnzipCache/HotglueClearUnzipCache.yy",},
+    {"name":"HotglueDatetimeToValue","order":8,"path":"scripts/HotglueDatetimeToValue/HotglueDatetimeToValue.yy",},
     {"name":"HotglueDeleteChannel","order":6,"path":"scripts/HotglueDeleteChannel/HotglueDeleteChannel.yy",},
     {"name":"HotglueDirectoryHasGit","order":3,"path":"scripts/HotglueDirectoryHasGit/HotglueDirectoryHasGit.yy",},
     {"name":"HotglueGetCachePath","order":4,"path":"scripts/HotglueGetCachePath/HotglueGetCachePath.yy",},
