@@ -451,14 +451,17 @@ function __HotglueProject(_releaseStruct, _projectPath, _readOnly, _sourceURL, _
             return;
         }
         
-        var _channelStruct = undefined; //HotglueGetChannelByName(_imported.channelName);
+        var _channelStruct = HotglueGetChannelByName(_imported.channelName);
         if (_channelStruct == undefined)
         {
-            __HotglueWarning($"Could not find channel with name \"{_imported.channelName}\" in package \"{_imported.name}\" in project \"{GetName()}\". Using temporary channel");
+            __HotglueWarning($"Could not find channel with name \"{_imported.channelName}\" for package \"{_imported.name}\" in project \"{GetName()}\". Using temporary channel");
             _channelStruct = HotglueGetChannelByName(HOTGLUE_CHANNEL_TEMPORARY);
         }
         
-        HotglueEnsureRepositoryFromURL(_channelStruct, _imported.repositoryURL);
+        var _repository = HotglueEnsureRepositoryFromURL(_channelStruct, _imported.repositoryURL);
+        var _latestRelease = _repository.GetLatestRelease();
+        
+        //TODO - Async operation
     }
     
     static ImportAsLibrary = function(_sourceProject, _subfolder = "")
