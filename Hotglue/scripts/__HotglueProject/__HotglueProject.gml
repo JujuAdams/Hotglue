@@ -35,7 +35,7 @@ function __HotglueProject(_releaseStruct, _projectPath, _readOnly, _sourceURL, _
     __structureDirty = true;
     __loadedSuccessfully = false;
     
-    __yypVersion = undefined;
+    __yypIDEVersion = undefined;
     __yypOriginalVersion = undefined;
     
     Refresh();
@@ -47,7 +47,7 @@ function __HotglueProject(_releaseStruct, _projectPath, _readOnly, _sourceURL, _
         __quickAssetArray = [];
         __quickAssetDict  = {};
         
-        __yypVersion = undefined;
+        __yypIDEVersion = undefined;
         __loadedSuccessfully = false;
         
         ///////
@@ -68,10 +68,10 @@ function __HotglueProject(_releaseStruct, _projectPath, _readOnly, _sourceURL, _
         }
         else
         {
-            __yypVersion = _yypMetadata[$ "IDEVersion"];
-            __yypOriginalVersion = __yypVersion;
+            __yypIDEVersion = _yypMetadata[$ "IDEVersion"];
+            __yypOriginalVersion = __yypIDEVersion;
             
-            if (__yypVersion == undefined)
+            if (__yypIDEVersion == undefined)
             {
                 __HotglueWarning($"Could not find \"MetaData.IDEVersion\" field in \"{__projectPath}\"");
                 return;
@@ -80,7 +80,7 @@ function __HotglueProject(_releaseStruct, _projectPath, _readOnly, _sourceURL, _
             {
                 if (not GetYYPVersionSupported())
                 {
-                    __HotglueWarning($"\"MetaData.IDEVersion\" value invalid ({__yypVersion}) for \"{__projectPath}\"");
+                    __HotglueWarning($"\"MetaData.IDEVersion\" value invalid ({__yypIDEVersion}) for \"{__projectPath}\"");
                     __HotglueTrace($"Running ProjectTool to convert to latest version");
                     
                     var _newProjectPath = $"{HOTGLUE_UNZIP_CACHE_DIRECTORY}{__HotglueGenerateUUID(false)}/{__yypJson.name}.yyp";
@@ -235,7 +235,7 @@ function __HotglueProject(_releaseStruct, _projectPath, _readOnly, _sourceURL, _
     
     static GetYYPVersion = function()
     {
-        return __yypVersion;
+        return __yypIDEVersion;
     }
     
     static GetYYPOriginalVersion = function()
@@ -243,7 +243,7 @@ function __HotglueProject(_releaseStruct, _projectPath, _readOnly, _sourceURL, _
         return __yypOriginalVersion;
     }
     
-    static GetYYPVersionSupported = function(_version = __yypVersion)
+    static GetYYPVersionSupported = function(_version = __yypIDEVersion)
     {
         return (is_string(_version) && (string_copy(_version, 1, 6) == "2026.0"));
     }
