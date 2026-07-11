@@ -128,7 +128,7 @@ function __HotglueClassJob(_destinationProject) constructor
         if (__contentDate != _contentDate)
         {
             __contentDate = _contentDate;
-            __HotglueTrace($"Set job {ptr(self)} package date = \"{date_datetime_string(_contentDate)}\" ({_contentDate})");
+            __HotglueTrace($"Set job {ptr(self)} content date = \"{date_datetime_string(_contentDate)}\" ({_contentDate})");
         }
     }
     
