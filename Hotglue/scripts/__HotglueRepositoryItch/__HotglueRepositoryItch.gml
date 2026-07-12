@@ -154,7 +154,8 @@ function __HotglueRepositoryItch(_channel, _url) : __HotglueRepositoryCommon(_ch
                                                 
                                                 var _description = $"Updated at {_itchRelease.updated_at}\nType = \"{_itchRelease.type}\"\nDemo = {_itchRelease.demo? "true" : "false"}";
                                                 
-                                                var _release = new __HotglueClassReleaseItch(_itchRelease.filename,
+                                                var _release = new __HotglueClassReleaseItch(self,
+                                                                                             _itchRelease.filename,
                                                                                              _itchRelease.updated_at,
                                                                                              __url,
                                                                                              _downloadURL,
@@ -177,7 +178,7 @@ function __HotglueRepositoryItch(_channel, _url) : __HotglueRepositoryCommon(_ch
                                         //itch.io uploads aren't necessarily sorted
                                         array_sort(_releasesArray, function(_a, _b)
                                         {
-                                            return (_a < _b)? -1 : 1;
+                                            return (HotglueDatetimeToValue(_a.__datetimeString) < HotglueDatetimeToValue(_b.__datetimeString))? -1 : 1;
                                         });
                                         
                                         //Find the first non-demo upload
