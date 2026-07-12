@@ -2,12 +2,17 @@
 
 <p align="center">GameMaker LTS 2026 package import and merge tool by <a href="https://www.jujuadams.com/" target="_blank">Juju Adams</a></p>
 
+# Introduction
+
+Hotglue is a package importer for LTS 2026 than I wrote to make it easier to quickly set up projects and keep their library cose updated. It makes working on multiple projects a smoother experience by removing friction from maintaining the codebase.
+
 ## Features
 
 - Download and import GameMaker packages from remote storage without going through the steps manually. Supports GitHub, gists, itch.io, and NPM (Verdaccio).
 - Import loose files directly (from either remote or local sources) as assets. Scripts, sprites, audio, and datafiles are supported.
 - Import packages and assets stored locally on your machine.
 - Check for updates to packages from the Hotglue tool and then download and import them automatically.
+- Custom "favourites" collection for you to have easy access to your preferred packages.
 
 ## Limitations
 
