@@ -123,7 +123,7 @@ function __HotglueProject(_releaseStruct, _projectPath, _readOnly, _sourceURL, _
         var _i = 0;
         repeat(array_length(_yyFoldersArray))
         {
-            __AddAsset(new __HotglueFolder(_yyFoldersArray[_i]));
+            __AddFolder(new __HotglueFolder(_yyFoldersArray[_i]));
             ++_i;
         }
         
@@ -319,7 +319,29 @@ function __HotglueProject(_releaseStruct, _projectPath, _readOnly, _sourceURL, _
         
         return __structure.GetRebuilding()? undefined : __structure;
     }
+    
+    static __AddFolder = function(_hotglueAsset)
+    {
+        array_push(__quickAssetArray, _hotglueAsset);
+        __quickAssetDict[$ _hotglueAsset.GetPID()] = _hotglueAsset;
         
+        //Sanitize
+        var _path = string_replace_all(_hotglueAsset.__friendlyPath, "\\", "/");
+        
+        //Iterate over every stage in the path to ensure we have all the folders set up along the path
+        repeat(string_count("/", _path))
+        {
+            _path = filename_dir(_path);
+            var _assetPID = $"folder:{_path}";
+            
+            if (not struct_exists(__quickAssetDict, _assetPID))
+            {
+                array_push(__quickAssetArray, _hotglueAsset);
+                __quickAssetDict[$ _assetPID] = _hotglueAsset;
+            }
+        }
+    }
+    
     static __AddAsset = function(_hotglueAsset)
     {
         array_push(__quickAssetArray, _hotglueAsset);
