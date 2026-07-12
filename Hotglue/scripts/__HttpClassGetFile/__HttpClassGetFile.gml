@@ -115,7 +115,10 @@ function __HttpClassGetFile(_url, _destinationPath = undefined, _callback, _call
                     __HttpCacheTrace($"File has been cached for \"{__url}\" ({__hash})");
                 }
                 
-                file_copy(__cachePath, __destinationPath);
+                if (__cachePath != __destinationPath)
+                {
+                    file_copy(__cachePath, __destinationPath);
+                }
                 
                 if (is_callable(__callback))
                 {
