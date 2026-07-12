@@ -14,7 +14,7 @@ function HotglueDatetimeToValue(_datetimeString)
         var _hour   = 0;
         var _minute = 0;
         var _second = 0;
-    
+        
         var _tPos = string_pos("T", _datetimeString);
         if (_tPos > 0)
         {
@@ -23,8 +23,17 @@ function HotglueDatetimeToValue(_datetimeString)
         }
         else
         {
-            var _dateString = _datetimeString;
-            var _timeString = "";
+            var _spacePos = string_pos(" ", _datetimeString);
+            if ((_spacePos > 0) && (string_count(" ", _datetimeString) == 1))
+            {
+                var _dateString = string_copy(_datetimeString, 1, _spacePos-1);
+                var _timeString = string_copy(_datetimeString, _spacePos+1, string_length(_datetimeString) - _spacePos);
+            }
+            else
+            {
+                var _dateString = _datetimeString;
+                var _timeString = "";
+            }
         }
     
         if (string_count("-", _dateString) != 2)
