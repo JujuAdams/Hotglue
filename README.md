@@ -16,6 +16,7 @@ Hotglue is a package importer for LTS 2026 than I wrote to make it easier to qui
 
 ## Limitations
 
+- Please use source control.
 - Does not resolve dependencies. If a package requires another separate package to operate normally then this tool will not automatically import the dependency for you.
 - Occasionally runs into GitHub rate limiting. This can be worked around by using a GitHub developer application.
 - Updating a package will replace all of the configuration macros you have changed. This is inconvenient but, to be fair, is no worse than doing the upgrade manually.
