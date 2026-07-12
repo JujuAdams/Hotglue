@@ -1,7 +1,7 @@
 // Feather disable all
 
-#macro HOTGLUE_VERSION  "0.4.0"
-#macro HOTGLUE_DATE  "2026-01-10"
+#macro HOTGLUE_VERSION  "0.5.0"
+#macro HOTGLUE_DATE  "2026-07-12"
 
 #macro HOTGLUE_RUNNING_FROM_IDE  (GM_build_type == "run")
 
