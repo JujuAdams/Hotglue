@@ -1,9 +1,9 @@
 // Feather disable all
 
 /// @param message
-/// @param callback
+/// @param [callback]
 
-function ClassModalMessage(_message, _callback) constructor
+function ClassModalMessage(_message, _callback = undefined) constructor
 {
     __message  = _message;
     __callback = _callback;
