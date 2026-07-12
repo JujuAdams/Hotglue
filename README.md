@@ -12,7 +12,7 @@
 ## Limitations
 
 - Does not resolve dependencies. If a package requires another separate package to operate normally then this tool will not automatically import the dependency for you.
-- Suffers from GitHub rate limiting. This can be worked around by using a GitHub developer application but this can only go so far.
+- Occasionally runs into GitHub rate limiting. This can be worked around by using a GitHub developer application.
 - Updating a package will replace all of the configuration macros you have changed. This is inconvenient but, to be fair, is no worse than doing the upgrade manually.
 - Downloading packages from itch.io is unreliable.
 - The UI is ugly, let's be honest. READMEs and other formatted documents are displayed as raw text which is often hard to read.
