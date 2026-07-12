@@ -427,7 +427,7 @@ function __HotglueProject(_releaseStruct, _projectPath, _readOnly, _sourceURL, _
         return _job;
     }
     
-    static CheckForUpdate = function(_importedName)
+    static GetRepositoryForPackage = function(_importedName)
     {
         var _importedArray = GetImported();
         
@@ -458,10 +458,7 @@ function __HotglueProject(_releaseStruct, _projectPath, _readOnly, _sourceURL, _
             _channelStruct = HotglueGetChannelByName(HOTGLUE_CHANNEL_TEMPORARY);
         }
         
-        var _repository = HotglueEnsureRepositoryFromURL(_channelStruct, _imported.repositoryURL);
-        var _latestRelease = _repository.GetLatestRelease();
-        
-        //TODO - Async operation
+        return HotglueEnsureRepositoryFromURL(_channelStruct, _imported.repositoryURL);
     }
     
     static ImportAsLibrary = function(_sourceProject, _subfolder = "")

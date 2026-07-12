@@ -87,7 +87,7 @@ function __InterfaceProjectViewBuildOverview()
                 ImGuiTableNextColumn();
                 if (ImGuiSmallButton($"Check For Update##{_i}"))
                 {
-                    __project.CheckForUpdate(_imported.name);
+                    oInterface.popUpStruct = new ClassModalCheckForUpdate(__project, _imported.name, _imported.version);
                 }
                 
                 ImGuiTableNextColumn();
