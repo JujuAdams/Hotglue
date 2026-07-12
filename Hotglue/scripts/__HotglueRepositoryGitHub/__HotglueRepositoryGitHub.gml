@@ -83,11 +83,6 @@ function __HotglueRepositoryGitHub(_channel, _url) : __HotglueRepositoryCommon(_
         return __readme;
     }
     
-    static GetReleasesCollected = function()
-    {
-        return __releasesCollected;
-    }
-    
     static GetReleases = function()
     {
         if ((not __releasesCollected) && (__releasesRequest == undefined))

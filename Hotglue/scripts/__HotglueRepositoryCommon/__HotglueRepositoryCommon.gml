@@ -37,6 +37,11 @@ function __HotglueRepositoryCommon(_channel, _url) constructor
         return __name;
     }
     
+    static GetReleasesCollected = function()
+    {
+        return __releasesCollected;
+    }
+    
     static SetFinalCallback = function(_callback)
     {
         __finalCallback = _callback;
