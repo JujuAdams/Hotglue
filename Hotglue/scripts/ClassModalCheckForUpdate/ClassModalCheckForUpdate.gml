@@ -29,7 +29,7 @@ function ClassModalCheckForUpdate(_project, _packageName, _currentReleaseName) c
         var _result = ImGuiBeginPopupModal(_name, true);
         if (_result & ImGuiReturnMask.Return)
         {
-            ImGuiText($"The currently imported release for package \"{__packageName}\" is \"{__currentReleaseName}\".");
+            ImGuiTextWrapped($"Currently imported release for package \"{__packageName}\" is \"{__currentReleaseName}\".");
             
             if ((not is_struct(_repository)) || (not _repository.GetReleasesCollected()))
             {
@@ -142,8 +142,6 @@ function ClassModalCheckForUpdate(_project, _packageName, _currentReleaseName) c
             ImGuiBeginDisabled((not is_struct(_repository)) || (not is_struct(__selectedRelease)) || (__currentReleaseName == __selectedRelease.GetName()) || __error);
             if (ImGuiButton($"Upgrade \"{__currentReleaseName}\" -> \"{is_struct(__selectedRelease)? __selectedRelease.GetName() : "???"}\""))
             {
-                oInterface.popUpStruct = undefined;
-                
                 var _modal = new ClassModalConfirmJob(__project.JobEmpty(), true);
                 oInterface.popUpStruct = _modal;
                 
