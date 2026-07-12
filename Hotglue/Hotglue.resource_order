@@ -152,7 +152,7 @@
     {"name":"HotglueGetChannelByName","order":3,"path":"scripts/HotglueGetChannelByName/HotglueGetChannelByName.yy",},
     {"name":"HotglueGetChannelByURL","order":2,"path":"scripts/HotglueGetChannelByURL/HotglueGetChannelByURL.yy",},
     {"name":"HotglueGetChannelCount","order":5,"path":"scripts/HotglueGetChannelCount/HotglueGetChannelCount.yy",},
-    {"name":"HotglueGetChannelExists","order":1,"path":"scripts/HotglueGetChannelExists/HotglueGetChannelExists.yy",},
+    {"name":"HotglueGetChannelExistsByURL","order":1,"path":"scripts/HotglueGetChannelExistsByURL/HotglueGetChannelExistsByURL.yy",},
     {"name":"HotglueGetItchAPIKey","order":3,"path":"scripts/HotglueGetItchAPIKey/HotglueGetItchAPIKey.yy",},
     {"name":"HotglueGetProjectToolExists","order":5,"path":"scripts/HotglueGetProjectToolExists/HotglueGetProjectToolExists.yy",},
     {"name":"HotglueGetProjectToolPath","order":1,"path":"scripts/HotglueGetProjectToolPath/HotglueGetProjectToolPath.yy",},

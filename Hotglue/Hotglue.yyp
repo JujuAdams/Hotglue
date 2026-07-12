@@ -244,7 +244,7 @@
     {"id":{"name":"HotglueGetChannelByName","path":"scripts/HotglueGetChannelByName/HotglueGetChannelByName.yy",},},
     {"id":{"name":"HotglueGetChannelByURL","path":"scripts/HotglueGetChannelByURL/HotglueGetChannelByURL.yy",},},
     {"id":{"name":"HotglueGetChannelCount","path":"scripts/HotglueGetChannelCount/HotglueGetChannelCount.yy",},},
-    {"id":{"name":"HotglueGetChannelExists","path":"scripts/HotglueGetChannelExists/HotglueGetChannelExists.yy",},},
+    {"id":{"name":"HotglueGetChannelExistsByURL","path":"scripts/HotglueGetChannelExistsByURL/HotglueGetChannelExistsByURL.yy",},},
     {"id":{"name":"HotglueGetItchAPIKey","path":"scripts/HotglueGetItchAPIKey/HotglueGetItchAPIKey.yy",},},
     {"id":{"name":"HotglueGetProjectToolExists","path":"scripts/HotglueGetProjectToolExists/HotglueGetProjectToolExists.yy",},},
     {"id":{"name":"HotglueGetProjectToolPath","path":"scripts/HotglueGetProjectToolPath/HotglueGetProjectToolPath.yy",},},

@@ -2,7 +2,7 @@
 
 /// @param url
 
-function HotglueGetChannelExists(_url)
+function HotglueGetChannelExistsByURL(_url)
 {
     return (HotglueGetChannelByURL(_url) != undefined);
 }
