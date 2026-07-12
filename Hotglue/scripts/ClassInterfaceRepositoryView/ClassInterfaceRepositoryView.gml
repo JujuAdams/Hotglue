@@ -172,7 +172,7 @@ function ClassInterfaceRepositoryView(_repository) constructor
             if (ImGuiButton("Manual download"))
             {
                 LogTraceAndStatus($"Downloading release \"{__selectedRelease.GetDownloadURL()}\"");
-                __selectedRelease.Download(function(_release, _success, _localURL)
+                __selectedRelease.Download(function(_release, _success, _localURL, _fileExtension)
                 {
                     if (_success)
                     {

@@ -66,7 +66,7 @@ function __HotglueClassReleaseCommon(_repository, _name, _datetimeString, _webUR
     {
         __loadCallback = _callback;
         
-        Download(function(_release, _success, _filename)
+        Download(function(_release, _success, _filename, _fileExtension)
         {
             var _struct = undefined;
             
@@ -76,10 +76,10 @@ function __HotglueClassReleaseCommon(_repository, _name, _datetimeString, _webUR
             }
             else
             {
-                var _extension = filename_ext(_filename);
+                var _extension = _fileExtension ?? filename_ext(_filename);
                 if ((_extension == ".yyp") || (_extension == ".yymps") || (_extension = ".yyz"))
                 {
-                    _struct = HotglueProjectRemoteEnsure(self, __webURL, _filename);
+                    _struct = HotglueProjectRemoteEnsure(self, __webURL, _filename, _extension);
                 }
                 else
                 {
@@ -273,25 +273,20 @@ function __HotglueClassReleaseCommon(_repository, _name, _datetimeString, _webUR
     {
         __downloadCallback = _callback;
         
-        //FIXME - This all seems wonky. What is meant to happen here?
-        
-        var _destinationPath = filename_name(_url);
-        
-        if (_fileExtension != undefined)
+        HttpCacheGetFile(_url, undefined, function(_success, _destinationPath, _callbackMetadata)
         {
-            _destinationPath = filename_change_ext(_destinationPath, _fileExtension)
-        }
-        
-        HttpCacheGetFile(_url, _destinationPath, function(_success, _destinationPath, _callbackMetadata)
-        {
-            with(_callbackMetadata)
+            with(_callbackMetadata.__release)
             {
                 if (is_callable(__downloadCallback))
                 {
-                    __downloadCallback(self, _success, _destinationPath);
+                    __downloadCallback(self, _success, _destinationPath, _callbackMetadata.__fileExtension);
                 }
             }
         },
-        self, undefined, undefined, __downloadURL);
+        {
+            __release: other,
+            __fileExtension: _fileExtension,
+        },
+        undefined, undefined, __downloadURL);
     }
 }

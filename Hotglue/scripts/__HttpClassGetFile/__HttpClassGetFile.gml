@@ -1,13 +1,13 @@
 // Feather disable all
 
 /// @param url
-/// @param destinationPath
+/// @param [destinationPath]
 /// @param callback
 /// @param callbackData
 /// @param forceRedownload
 /// @param hashKey
 
-function __HttpClassGetFile(_url, _destinationPath, _callback, _callbackData, _forceRedownload, _hashKey) constructor
+function __HttpClassGetFile(_url, _destinationPath = undefined, _callback, _callbackData, _forceRedownload, _hashKey) constructor
 {
     static _system = __HttpCacheSystem();
     static _httpFileMap = _system.__httpFileMap;

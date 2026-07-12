@@ -26,14 +26,14 @@
 /// negative value then the request will be put into a queue for execution.
 /// 
 /// @param url
-/// @param destinationPath
+/// @param [destinationPath]
 /// @param callback
 /// @param [callbackData]
 /// @param [forceRedownload=false]
 /// @param [delaySeconds=0]
 /// @param [hashKey]
 
-function HttpCacheGetFile(_url, _destinationPath, _callback, _callbackData = undefined, _forceRedownload = false, _delaySeconds = 0, _hashKey = _url)
+function HttpCacheGetFile(_url, _destinationPath = undefined, _callback, _callbackData = undefined, _forceRedownload = false, _delaySeconds = 0, _hashKey = _url)
 {
     __HTTPEnsureObject();
     

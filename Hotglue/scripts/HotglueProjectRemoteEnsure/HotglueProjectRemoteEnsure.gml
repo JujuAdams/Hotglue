@@ -3,8 +3,9 @@
 /// @param [releaseStruct]
 /// @param sourceURL
 /// @param cachePath
+/// @param [forceFileExtension]
 
-function HotglueProjectRemoteEnsure(_releaseStruct, _sourceURL, _cachePath)
+function HotglueProjectRemoteEnsure(_releaseStruct, _sourceURL, _cachePath, _forceFileExtension = undefined)
 {
     static _projectBySourceURLDict = __HotglueSystem().__projectBySourceURLDict;
     
@@ -14,7 +15,7 @@ function HotglueProjectRemoteEnsure(_releaseStruct, _sourceURL, _cachePath)
         return _project;
     }
     
-    var _extension = filename_ext(_cachePath);
+    var _extension = _forceFileExtension ?? filename_ext(_cachePath);
     if (_extension == ".yyp")
     {
         _project = __HotglueLoadYYP(_releaseStruct, _cachePath, true, _sourceURL, true);
