@@ -1,11 +1,12 @@
 // Feather disable all
 
 /// @param message
+/// @param callback
 
-function ClassModalMessage(_message) constructor
+function ClassModalMessage(_message, _callback) constructor
 {
-    __message = _message;
-    
+    __message  = _message;
+    __callback = _callback;
     
     
     static Build = function()
@@ -22,6 +23,11 @@ function ClassModalMessage(_message) constructor
             if (ImGuiButton("OK"))
             {
                 oInterface.popUpStruct = undefined;
+                
+                if (is_callable(__callback))
+                {
+                    __callback();
+                }
             }
             
             ImGuiEndPopup();
