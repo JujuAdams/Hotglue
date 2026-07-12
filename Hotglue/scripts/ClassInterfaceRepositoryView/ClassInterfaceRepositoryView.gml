@@ -65,6 +65,17 @@ function ClassInterfaceRepositoryView(_repository) constructor
                 ImGuiEndTooltip();
             }
         }
+        
+        if ((__selectedRelease != undefined) && (array_length(__selectedRelease.__dependenciesArray) > 0))
+        {
+            ImGuiPushStyleColor(ImGuiCol.Text, INTERFACE_COLOR_RED_TEXT, 1);
+            ImGuiTextWrapped("Dependencies will not be automatically added to your project. ");
+            ImGuiPopStyleColor();
+        }
+        else
+        {
+            ImGuiNewLine();
+        }
     }
     
     static BuildRepositoryDescription = function()
@@ -290,13 +301,10 @@ function ClassInterfaceRepositoryView(_repository) constructor
             return;
         }
         
-        ImGuiTextWrapped($"Showing dependencies for release \"{__selectedRelease.GetName()}\"");
+        ImGuiTextWrapped($"Showing dependencies for release \"{__selectedRelease.GetName()}\".");
         ImGuiNewLine();
         
-        ImGuiPushStyleColor(ImGuiCol.Text, INTERFACE_COLOR_RED_TEXT, 1);
-        ImGuiTextWrapped("These dependencies will not be automatically added to your project. ");
-        ImGuiPopStyleColor();
-        ImGuiTextWrapped("You should add these dependencies yourself manually.");
+        ImGuiTextWrapped("These dependencies will not be automatically added to your project. You should add these dependencies yourself manually.");
         ImGuiNewLine();
         
         ImGuiBeginTable("dependenciesTable", 2, ImGuiTableFlags.BordersInner | ImGuiTableFlags.BordersOuter);
@@ -418,10 +426,13 @@ function ClassInterfaceRepositoryView(_repository) constructor
                     ImGuiEndTabItem();
                 }
                 
-                if (ImGuiBeginTabItem("Dependencies"))
+                if ((__selectedRelease != undefined) && (array_length(__selectedRelease.__dependenciesArray) > 0))
                 {
-                    BuildReleaseDependencies();
-                    ImGuiEndTabItem();
+                    if (ImGuiBeginTabItem("Dependencies"))
+                    {
+                        BuildReleaseDependencies();
+                        ImGuiEndTabItem();
+                    }
                 }
             }
             else
