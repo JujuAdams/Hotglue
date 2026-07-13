@@ -83,34 +83,6 @@ function ClassModalConfirmJob(_job, _packageEditForce = false) constructor
                 __job.SetPackageVersion(ImGuiInputTextWithHint("##packageversion", "0.0.0", __job.GetPackageVersion()));
             }
             
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            ImGuiText("Package origin");
-            ImGuiTableNextColumn();
-            var _url = __job.GetPackageURL();
-            ImGuiText((_url == "")? "(no origin URL)" : _url);
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            ImGuiText("Content date");
-            ImGuiTableNextColumn();
-            var _contentDate = __job.GetContentDate();
-            ImGuiText((_contentDate == 0)? "(no content date)" : date_datetime_string(_contentDate));
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            ImGuiText("Repo URL");
-            ImGuiTableNextColumn();
-            var _repositoryURL = __job.GetRepositoryURL();
-            ImGuiText((_repositoryURL == "")? "(no repository URL)" : _repositoryURL);
-            
-            ImGuiTableNextRow();
-            ImGuiTableNextColumn();
-            ImGuiText("Repo type");
-            ImGuiTableNextColumn();
-            var _repositoryType = __job.GetRepositoryType();
-            ImGuiText((_repositoryType == undefined)? "(no repository type)" : _repositoryType);
-            
             ImGuiEndDisabled();
             ImGuiEndDisabled();
             
