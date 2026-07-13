@@ -391,7 +391,7 @@
     {"id":{"name":"SnapToXML","path":"scripts/SnapToXML/SnapToXML.yy",},},
     {"id":{"name":"SnapToYAML","path":"scripts/SnapToYAML/SnapToYAML.yy",},},
     {"id":{"name":"SnapVisualize","path":"scripts/SnapVisualize/SnapVisualize.yy",},},
-    {"id":{"name":"sJuju","path":"sprites/sJuju/sJuju.yy",},},
+    {"id":{"name":"sHotglue","path":"sprites/sHotglue/sHotglue.yy",},},
     {"id":{"name":"sJujuIcon","path":"sprites/sJujuIcon/sJujuIcon.yy",},},
   ],
   "resourceType":"GMProject",

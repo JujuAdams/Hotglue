@@ -1,6 +1,6 @@
 // Feather disable all
 
-draw_sprite(sJuju, 0, 0, 0);
+draw_sprite(sHotglue, 0, 0, 0);
 
 if (__automation != undefined)
 {
