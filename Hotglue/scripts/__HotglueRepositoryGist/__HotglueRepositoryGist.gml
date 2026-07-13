@@ -45,11 +45,6 @@ function __HotglueRepositoryGist(_channel, _url) : __HotglueRepositoryCommon(_ch
         return __latestRelease;
     }
     
-    static GetReadme = function()
-    {
-        return __readme;
-    }
-    
     static GetReleases = function()
     {
         if ((not __releasesCollected) && (__releasesRequest == undefined))
@@ -96,14 +91,14 @@ function __HotglueRepositoryGist(_channel, _url) : __HotglueRepositoryCommon(_ch
                                 {
                                     var _fileNamesArray = struct_get_names(_json.files);
                                     __name   = $"{__username}/{_fileNamesArray[0]}";
-                                    __readme = _json.description;
+                                    __readme = __HotglueStripReadmeFormatting(_json.description);
                                     
                                     _release = new __HotglueClassReleaseCommon(self,
                                                                                __name,
                                                                                _json.updated_at,
                                                                                _json.html_url,
                                                                                _json.files[$ _fileNamesArray[0]].raw_url,
-                                                                               _json.description,
+                                                                               __readme,
                                                                                true);
                                 }
                                 catch(_error)

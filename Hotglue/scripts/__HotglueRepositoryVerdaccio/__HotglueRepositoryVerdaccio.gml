@@ -159,7 +159,7 @@ function __HotglueRepositoryVerdaccio(_channel, _url) : __HotglueRepositoryCommo
                         __latestStable = __latestRelease;
                         
                         //Use the description from the latest version
-                        __readme = (__latestRelease == undefined)? undefined : __latestRelease.__description;
+                        __readme = (__latestRelease == undefined)? undefined : __HotglueStripReadmeFormatting(__latestRelease.__description);
                     }
                 }
                 

@@ -72,7 +72,7 @@ function __HotglueRepositoryGitHub(_channel, _url) : __HotglueRepositoryCommon(_
                     }
                     else
                     {
-                        __readme = _result;
+                        __readme = __HotglueStripReadmeFormatting(_result);
                         __HotglueTrace($"\"{__rawURL}master/README.md\" found README.md");
                     }
                     

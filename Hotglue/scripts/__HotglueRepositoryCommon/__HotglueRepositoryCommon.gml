@@ -43,6 +43,11 @@ function __HotglueRepositoryCommon(_channel, _url) constructor
         return __name;
     }
     
+    static GetReadme = function()
+    {
+        return __readme;
+    }
+    
     static GetReleasesCollected = function()
     {
         return __releasesCollected;
