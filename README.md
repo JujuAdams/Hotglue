@@ -49,14 +49,6 @@ You may build and run Hotglue from source using GameMaker LTS 2026. This is help
 
 &nbsp;
 
-## Basic operation
-
-Hotglue is intended to help with both setting up projects as well as keeping them up to date. This is helpful for using public libraries, such as Scribble, but is also useful if you'd like to deploy private studio-owned assets too.
-
-For most situations, you'll be interacting with the "Import" and "Project Inspector" tabs.
-
-&nbsp;
-
 ## Importing
 
 You may import the following types of file:
