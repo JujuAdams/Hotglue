@@ -6,9 +6,7 @@
 
 ## Introduction
 
-Hotglue is a package importer for LTS 2026 than I wrote to make it easier to quickly set up projects and keep their library cose updated. It makes working on multiple projects a smoother experience by removing friction from maintaining the codebase.
-
-**Please note** that the term "datafile" will be used in place of "included file" in this documentation.
+Hotglue is a package importer for GameMaker LTS 2026. It is primarily written in GML and the interface uses ImGUI. I wrote Hotglue to make it easier to quickly set up projects and keep their library code updated.
 
 ### Features
 
