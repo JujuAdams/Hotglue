@@ -107,12 +107,7 @@ Once you have added one or more files for import, click the "Import ->" button i
 
 ## Channels
 
-A "channel" is a collection of packages. Channels are used to collect together multiple repositories to make tools easier to find. A channel could be one of the following:
-- GitHub user
-- GitHub organisation
-- Verdaccio (npm) instance
-- JSON file hosted on a server that lists repository locations
-- Directory on your local machine
+A "channel" is a collection of packages. Channels are used to collect together multiple repositories to make tools easier to find.
 
 You may add a channel in the "Settings" tab. You may also remove most channels if you no longer have a need for them. The "GameMaker Kitchen" channel type is a special channel designed to read [GameMaker Kitchen](https://www.gamemakerkitchen.com/) links.
 
