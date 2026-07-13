@@ -85,9 +85,20 @@ function __InterfaceProjectViewBuildOverview()
                 ImGuiTextWrapped(_imported.version);
                 
                 ImGuiTableNextColumn();
+                ImGuiBeginDisabled(_imported.repositoryType == HOTGLUE_REPOSITORY_LOCAL);
                 if (ImGuiSmallButton($"Update##{_i}"))
                 {
                     oInterface.popUpStruct = new ClassModalUpdate(__project, _imported.name, _imported.version);
+                }
+                ImGuiEndDisabled();
+                
+                if (_imported.repositoryType == HOTGLUE_REPOSITORY_LOCAL)
+                {
+                    if (ImGuiBeginItemTooltip())
+                    {
+                        ImGuiText("Cannot check for updates because this package came from local storage.");
+                        ImGuiEndTooltip();
+                    }
                 }
                 
                 ImGuiTableNextColumn();
