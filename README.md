@@ -121,3 +121,7 @@ You may add a channel in the "Settings" tab. You may also remove most channels i
 |GameMaker Kitchen  |`https://www.gamemakerkitchen.com/resource.json`                                       |
 
 You can find an example of the JSON format [here](https://raw.githubusercontent.com/JujuAdams/Hotglue-Index/refs/heads/main/github.json).
+
+## "Custom" channel
+
+The "Custom" channel can be used for one-off links to repositories or packages in local storage. You may add repositories to the "Custom" channel via the "Explore Channels" tab. Click either button in the left-hand pane to add content.
