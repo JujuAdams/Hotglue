@@ -11,7 +11,7 @@ Hotglue is a package importer for GameMaker LTS 2026. It is primarily written in
 ### Features
 
 - Download and import GameMaker packages from remote storage without going through the steps manually. Supports GitHub, gists, itch.io, and Verdaccio (npm).
-- Private GitHub user and organisation repos are supported
+- Private GitHub user and organisation repos are supported.
 - Import loose files directly (from either remote or local sources) as assets. Scripts, sprites, audio, and datafiles are supported.
 - Import packages and assets stored locally on your machine.
 - Check for updates to packages from the Hotglue tool and then download and import them.
@@ -102,3 +102,27 @@ Hotglue can import individual files from local storage. You may add project asse
 Click on the "Add loose file..." button to open a file dialog. Choose the file that you would like to add; this file will then show up on the right-hand side of the screen. Hotglue will guess at the asset type you are looking to add and will also guess an asset name. You should review the asset name and asset type per file. Adjust as appropriate.
 
 Once you have added one or more files for import, click the "Import ->" button in the middle of the window. You may optionally choose to import the files as a package. You will be asked to confirm the import job. Be careful to examine the changes that Hotglue will make before confirming the operation.
+
+&nbsp;
+
+## Channels
+
+A "channel" is a collection of packages. Channels are used to collect together multiple repositories to make tools easier to find. A channel could be one of the following:
+- GitHub user
+- GitHub organisation
+- Verdaccio (npm) instance
+- JSON file hosted on a server that lists repository locations
+- Directory on your local machine
+
+You may add a channel in the "Settings" tab. You may also remove most channels if you no longer have a need for them. The "GameMaker Kitchen" channel type is a special channel designed to read [GameMaker Kitchen](https://www.gamemakerkitchen.com/) links.
+
+|Channel Type       |Example URL / Path                                                                     |
+|-------------------|---------------------------------------------------------------------------------------|
+|JSON               |`https://raw.githubusercontent.com/JujuAdams/Hotglue-Index/refs/heads/main/github.json`|
+|Directory          |`D:/Work/Local Packages`                                                               |
+|GitHub user        |`https://github.com/jujuadams`                                                         |
+|GitHub organisation|`https://github.com/GameMakerDiscord`                                                  |
+|Verdaccio (npm)    |`https://gmpm.gamemaker.io/`                                                           |
+|GameMaker Kitchen  |`https://www.gamemakerkitchen.com/resource.json`                                       |
+
+You can find an example of the JSON format [here](https://raw.githubusercontent.com/JujuAdams/Hotglue-Index/refs/heads/main/github.json).
