@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"ClassModalCheckForUpdate",
+  "%Name":"ClassModalUpdate",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ClassModalCheckForUpdate",
+  "name":"ClassModalUpdate",
   "parent":{
     "name":"Modals",
     "path":"folders/Interface/Classes/Modals.yy",

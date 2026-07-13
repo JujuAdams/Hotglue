@@ -4,7 +4,7 @@
 /// @param packageName
 /// @param currentReleaseName
 
-function ClassModalCheckForUpdate(_project, _packageName, _currentReleaseName) constructor
+function ClassModalUpdate(_project, _packageName, _currentReleaseName) constructor
 {
     __project            = _project;
     __packageName        = _packageName;

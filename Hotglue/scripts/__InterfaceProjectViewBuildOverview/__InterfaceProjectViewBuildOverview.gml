@@ -69,7 +69,7 @@ function __InterfaceProjectViewBuildOverview()
             ImGuiBeginTable("importedTable", 3);
             
             ImGuiTableSetupColumn("name");
-            ImGuiTableSetupColumn("update", ImGuiTableColumnFlags.WidthFixed, 120);
+            ImGuiTableSetupColumn("update", ImGuiTableColumnFlags.WidthFixed, 50);
             ImGuiTableSetupColumn("delete", ImGuiTableColumnFlags.WidthFixed, 50);
             
             var _deleteIndex = undefined;
@@ -85,9 +85,9 @@ function __InterfaceProjectViewBuildOverview()
                 ImGuiTextWrapped(_imported.version);
                 
                 ImGuiTableNextColumn();
-                if (ImGuiSmallButton($"Check For Update##{_i}"))
+                if (ImGuiSmallButton($"Update##{_i}"))
                 {
-                    oInterface.popUpStruct = new ClassModalCheckForUpdate(__project, _imported.name, _imported.version);
+                    oInterface.popUpStruct = new ClassModalUpdate(__project, _imported.name, _imported.version);
                 }
                 
                 ImGuiTableNextColumn();

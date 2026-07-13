@@ -84,7 +84,7 @@ function __HotglueClassReleaseCommon(_repository, _name, _datetimeString, _webUR
                 else
                 {
                     //TODO - Refactor as async
-                    _struct = __OpenContentRecurse(_filename);
+                    _struct = __OpenContentRecurse(_filename, _fileExtension);
                 }
                 
                 if (_struct == undefined)
@@ -108,12 +108,12 @@ function __HotglueClassReleaseCommon(_repository, _name, _datetimeString, _webUR
         });
     }
     
-    static __OpenContentRecurse = function(_path)
+    static __OpenContentRecurse = function(_path, _forceFileExtension = undefined)
     {
         //TODO - Refactor as async
         var _struct = undefined;
         
-        var _extension = filename_ext(_path);
+        var _extension = _forceFileExtension ?? filename_ext(_path);
         if ((_extension == ".yyp") || (_extension == ".yymps") || (_extension = ".yyz"))
         {
             _struct = HotglueProjectLocalEnsure(self, _path, __downloadURL);
