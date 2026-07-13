@@ -63,8 +63,6 @@
   ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[
-    {"$GMIncludedFile":"","%Name":"GmlSpec.xml","CopyToMask":-1,"filePath":"datafiles","name":"GmlSpec.xml","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"hotglue_reference.txt","CopyToMask":-1,"filePath":"datafiles","name":"hotglue_reference.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"snap_license.txt","CopyToMask":-1,"filePath":"datafiles","name":"snap_license.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"template_note.yy","CopyToMask":-1,"filePath":"datafiles","name":"template_note.yy","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"template_script.yy","CopyToMask":-1,"filePath":"datafiles","name":"template_script.yy","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

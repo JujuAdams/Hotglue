@@ -137,7 +137,7 @@ function ClassModalConfirmJob(_job, _packageEditForce = false) constructor
                 if ((array_length(_conflictArray) > 0) || (array_length(_overwriteArray) > 0))
                 {
                     ImGuiPushStyleColor(ImGuiCol.Text, INTERFACE_COLOR_RED_TEXT, 1);
-                    ImGuiTextWrapped("Be sure to back up any macros you have adjusted for this package.");
+                    ImGuiTextWrapped("Be sure to back up any configuration macros you may have adjusted.");
                     ImGuiPopStyleColor();
                 }
             }
