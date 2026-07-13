@@ -39,7 +39,7 @@ Hotglue is a package importer for GameMaker LTS 2026. It is primarily written in
 
 You may build and run Hotglue from source using GameMaker LTS 2026. This is helpful if you'd like to customise Hotglue or contribute to its development. Building from source is **optional** and if you'd rather then you can skip this section.
 
-1. Create a new GitHub developer [OAuth application](https://github.com/settings/developers). We will use this later to increase GitHub's rate limits.
+1. Create a new GitHub developer [OAuth application](https://github.com/settings/developers). We will use this to increase GitHub's rate limits.
 2. Clone the repo using the tool of your choice.
 3. Open the project in GameMaker LTS 2026.
 4. Open `__HotglueConfig`. Set `HOTGLUE_GITHUB_CLIENT_ID` and `HOTGLUE_GITHUB_CLIENT_SECRET`.
@@ -122,6 +122,10 @@ You may add a channel in the "Settings" tab. You may also remove most channels i
 
 You can find an example of the JSON format [here](https://raw.githubusercontent.com/JujuAdams/Hotglue-Index/refs/heads/main/github.json).
 
-## "Custom" channel
+### "Custom" channel
 
 The "Custom" channel can be used for one-off links to repositories or packages in local storage. You may add repositories to the "Custom" channel via the "Explore Channels" tab. Click either button in the left-hand pane to add content.
+
+### "Favourites" channel
+
+The "Favourites" channel can be used to make access to your most-used packages easier. You can make a repository into a favourite by clicking on the "Favourite" checkbox where it is visible.
