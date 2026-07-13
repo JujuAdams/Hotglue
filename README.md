@@ -4,11 +4,11 @@
 
 &nbsp;
 
-# Introduction
+## Introduction
 
 Hotglue is a package importer for LTS 2026 than I wrote to make it easier to quickly set up projects and keep their library cose updated. It makes working on multiple projects a smoother experience by removing friction from maintaining the codebase.
 
-## Features
+### Features
 
 - Download and import GameMaker packages from remote storage without going through the steps manually. Supports GitHub, gists, itch.io, and NPM (Verdaccio).
 - Import loose files directly (from either remote or local sources) as assets. Scripts, sprites, audio, and datafiles are supported.
@@ -16,7 +16,7 @@ Hotglue is a package importer for LTS 2026 than I wrote to make it easier to qui
 - Check for updates to packages from the Hotglue tool and then download and import them automatically.
 - Custom "favourites" collection for you to have easy access to your preferred packages.
 
-## Limitations
+### Limitations
 
 - Please use source control.
 - Hotglue only works on Windows. No macOS or Linux support is planned.
@@ -28,7 +28,7 @@ Hotglue is a package importer for LTS 2026 than I wrote to make it easier to qui
 
 &nbsp;
 
-# Building from source
+## Building from source
 
 You may build and run Hotglue from source using GameMaker LTS 2026. This is helpful if you'd like to customise Hotglue or contribute to its development. Building from source is **optional**.
 
@@ -40,9 +40,9 @@ You may build and run Hotglue from source using GameMaker LTS 2026. This is help
 6. Run the executable and follow the first time setup process. Be sure to register a URI. Verify that the interface works and that packages can be imported. Close the executable when you're done.
 7. Return to the IDE. Re-run the tool from the IDE and verify the interface and URI works as expected.
 
-&nsbp;
+&nbsp;
 
-# Setup
+## Setup
 
 1. Download the .zip file for the [latest release](https://github.com/JujuAdams/Hotglue/releases).
 2. Extract the .zip file to a **permanent location**. If you move the Hotglue executable then you will need to re-register URIs so it's best to choose a location and leave Hotglue there.
