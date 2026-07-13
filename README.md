@@ -39,7 +39,7 @@ Hotglue is a package importer for GameMaker LTS 2026. It is primarily written in
 
 You may build and run Hotglue from source using GameMaker LTS 2026. This is helpful if you'd like to customise Hotglue or contribute to its development. Building from source is **optional** and if you'd rather then you can skip this section.
 
-1. Create a new GitHub developer [OAuth application](https://github.com/settings/developers). We will use this later to increase GitHub's rate limits.
+1. Create a new GitHub developer [OAuth application](https://github.com/settings/developers). We will use this to increase GitHub's rate limits.
 2. Clone the repo using the tool of your choice.
 3. Open the project in GameMaker LTS 2026.
 4. Open `__HotglueConfig`. Set `HOTGLUE_GITHUB_CLIENT_ID` and `HOTGLUE_GITHUB_CLIENT_SECRET`.
