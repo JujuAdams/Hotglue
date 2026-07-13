@@ -2,8 +2,8 @@ function InterfaceSettingsSave()
 {
     with(oInterface)
     {
-        InterfaceSettingSet("favorites", HotglueGetChannelByURL(HOTGLUE_FAVORITES_CHANNEL).SerializeURLArray());
-        InterfaceSettingSet("custom", HotglueGetChannelByURL(HOTGLUE_CUSTOM_CHANNEL).SerializeURLArray());
+        InterfaceSettingSet("favorites", HotglueGetChannelByURL(HOTGLUE_FAVORITES_CHANNEL_URL).SerializeURLArray());
+        InterfaceSettingSet("custom", HotglueGetChannelByURL(HOTGLUE_CUSTOM_CHANNEL_URL).SerializeURLArray());
         
         settings.channels = HotglueChannelsSerialize();
         

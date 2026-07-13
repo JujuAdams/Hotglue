@@ -1,12 +1,17 @@
 // Feather disable all
 
-/// @param channelStruct
+/// @param [channelStruct]
 /// @param url
 /// @param [forceType]
 
-function HotglueEnsureRepositoryFromURL(_channelStruct, _url, _type = undefined)
+function HotglueEnsureRepositoryFromURL(_channelStruct = undefined, _url, _type = undefined)
 {
     static _repositoryArray = __HotglueSystem().__repositoryArray;
+    
+    if (_channelStruct == undefined)
+    {
+        _channelStruct = HotglueGetChannelByName(HOTGLUE_CHANNEL_TEMPORARY);
+    }
     
     var _repository = HotglueGetRepositoryFromURL(_url);
     if (_repository == undefined)

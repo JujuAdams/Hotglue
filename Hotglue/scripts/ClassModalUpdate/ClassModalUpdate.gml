@@ -22,7 +22,7 @@ function ClassModalUpdate(_project, _packageName, _currentReleaseName) construct
         var _repository = __project.GetRepositoryForPackage(__packageName);
         var _releaseArray = is_struct(_repository)? _repository.GetReleases() : undefined;
                     
-        var _name = $"Check For Update##modal_{string(ptr(self))}";
+        var _name = $"Update##modal_{string(ptr(self))}";
         
         ImGuiOpenPopup(_name);
         ImGuiSetNextWindowSize(0.5*oInterface.context.GetRegion().width, 0.666*oInterface.context.GetRegion().height);

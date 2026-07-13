@@ -33,7 +33,7 @@ function ClassModalAddRepository(_path) constructor
             
             if (ImGuiButton("Accept"))
             {
-                HotglueGetChannelByURL(HOTGLUE_CUSTOM_CHANNEL).AddRepository(__path);
+                HotglueGetChannelByURL(HOTGLUE_CUSTOM_CHANNEL_URL).AddRepository(__path);
                 InterfaceSettingsSave();
                 
                 oInterface.popUpStruct = undefined;

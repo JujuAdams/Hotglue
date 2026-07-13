@@ -124,7 +124,7 @@ function ClassTabInspector() : ClassTab() constructor
             ImGuiText(__project.GetPath());
             
             ImGuiSameLine();
-            if (ImGuiSmallButton("Refresh"))
+            if (ImGuiSmallButton($"Refresh##{ptr(self)}"))
             {
                 __project.Raefresh();
             }

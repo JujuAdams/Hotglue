@@ -37,7 +37,7 @@ function ClassModalNewRemoteContent() constructor
             
             if (ImGuiButton("Add remote content"))
             {
-                HotglueGetChannelByURL(HOTGLUE_CUSTOM_CHANNEL).AddRepository(__url);
+                HotglueGetChannelByURL(HOTGLUE_CUSTOM_CHANNEL_URL).AddRepository(__url);
                 oInterface.popUpStruct = undefined;
             }
             

@@ -18,7 +18,7 @@ function ClassInterfaceRepositoryView(_repository) constructor
     
     static BuildRepositoryHeader = function()
     {
-        var _favoritesChannel = HotglueGetChannelByURL(HOTGLUE_FAVORITES_CHANNEL);
+        var _favoritesChannel = HotglueGetChannelByURL(HOTGLUE_FAVORITES_CHANNEL_URL);
         var _url = __repository.GetURL();
         
         ImGuiText(__repository.GetName());

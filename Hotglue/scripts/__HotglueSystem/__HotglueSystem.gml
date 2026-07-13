@@ -54,9 +54,11 @@ function __HotglueSystem()
         __projectByPathDict = {};
         __projectBySourceURLDict = {};
         
+        __temporaryChannel = new __HotglueChannelLocal("Temporary", HOTGLUE_TEMPORARY_CHANNEL_URL, true);
+        
         __channelArray = [];
-        array_push(__channelArray, new __HotglueChannelFavorites("* Favourites *", HOTGLUE_FAVORITES_CHANNEL, true));
-        array_push(__channelArray, new __HotglueChannelLocal("Custom", HOTGLUE_CUSTOM_CHANNEL, true));
+        array_push(__channelArray, new __HotglueChannelFavorites("* Favourites *", HOTGLUE_FAVORITES_CHANNEL_URL, true));
+        array_push(__channelArray, new __HotglueChannelLocal("Custom", HOTGLUE_CUSTOM_CHANNEL_URL, true));
         
         __repositoryArray = [];
         
