@@ -1,3 +1,5 @@
+<p align="center"><img src="https://raw.githubusercontent.com/JujuAdams/hotglue/master/LOGO.png" style="display:block; margin:auto; width:300px"></p>
+
 <h1 align="center">Hotglue</h1>
 
 <p align="center">GameMaker LTS 2026 package import and merge tool by <a href="https://www.jujuadams.com/" target="_blank">Juju Adams</a></p>
