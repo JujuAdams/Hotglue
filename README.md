@@ -30,7 +30,7 @@ Hotglue is a package importer for LTS 2026 than I wrote to make it easier to qui
 
 ## Building from source
 
-You may build and run Hotglue from source using GameMaker LTS 2026. This is helpful if you'd like to customise Hotglue or contribute to its development. Building from source is **optional**.
+You may build and run Hotglue from source using GameMaker LTS 2026. This is helpful if you'd like to customise Hotglue or contribute to its development. Building from source is **optional** and if you'd rather then you can skip this section and proceed to "Setup".
 
 1. Create a new GitHub developer application. We will use this later to reduce GitHub rate limits.
 2. Clone the repo using the tool of your choice.
