@@ -4,5 +4,15 @@
 
 function __HotglueGuessURLIsVerdaccio(_url)
 {
-    return (string_pos("/verdaccio/", _url) > 0);
+    if (string_pos("/verdaccio/", _url) > 0)
+    {
+        return true;
+    }
+    
+    if (string_pos("/gmpm.", _url) > 0)
+    {
+        return true;
+    }
+    
+    return false;
 }

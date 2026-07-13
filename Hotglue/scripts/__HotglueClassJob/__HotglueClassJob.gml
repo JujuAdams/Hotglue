@@ -14,7 +14,7 @@ function __HotglueClassJob(_destinationProject) constructor
     __packageURL     = "";
     __contentDate    = 0;
     __repositoryURL  = "";
-    __channelName    = undefined;
+    __repositoryType = HOTGLUE_REPOSITORY_LOCAL;
     
     __addPIDArray    = [];
     __addPIDDict     = {};
@@ -151,18 +151,18 @@ function __HotglueClassJob(_destinationProject) constructor
         return __repositoryURL;
     }
     
-    static SetChannelName = function(_channelName)
+    static SetRepositoryType = function(_repositoryType)
     {
-        if (__channelName != _channelName)
+        if (__repositoryType != _repositoryType)
         {
-            __channelName = _channelName;
-            __HotglueTrace($"Set job {ptr(self)} channel name = \"{_channelName}\"");
+            __repositoryType = _repositoryType;
+            __HotglueTrace($"Set job {ptr(self)} repository type = \"{_repositoryType}\"");
         }
     }
     
-    static GetChannelName = function()
+    static GetRepositoryType = function()
     {
-        return __channelName;
+        return __repositoryType;
     }
     
     static SetPackageFromProject = function(_project)
@@ -177,7 +177,7 @@ function __HotglueClassJob(_destinationProject) constructor
         {
             SetContentDate(HotglueDatetimeToValue(_release.__datetimeString));
             SetRepositoryURL(_release.__repository.GetURL());
-            SetChannelName(_release.__repository.__channel.GetName());
+            SetRepositoryType(_release.__repository.GetType());
         }
     }
     
@@ -426,7 +426,7 @@ function __HotglueClassJob(_destinationProject) constructor
         var _packageURL     = __packageURL;
         var _contentDate    = __contentDate;
         var _repositoryURL  = __repositoryURL;
-        var _channelName    = __channelName;
+        var _repositoryType = __repositoryType;
         var _addPIDArray    = __addPIDArray;
         
         with(__destinationProject)
@@ -476,14 +476,14 @@ function __HotglueClassJob(_destinationProject) constructor
                     {
                         //Add the new package information to metadata
                         array_push(_hotglueMetadata.installed, {
-                            name:          _packageName,
-                            version:       (_packageVersion == "")? "0.0.0" : _packageVersion,
-                            origin:        _packageURL,
-                            assets:        variable_clone(_addPIDArray),
-                            importDate:    date_current_datetime(),
-                            packageDate:   _contentDate,
-                            repositoryURL: _repositoryURL,
-                            channelName:   _channelName,
+                            name:           _packageName,
+                            version:        (_packageVersion == "")? "0.0.0" : _packageVersion,
+                            origin:         _packageURL,
+                            assets:         variable_clone(_addPIDArray),
+                            importDate:     date_current_datetime(),
+                            contentDate:    _contentDate,
+                            repositoryURL:  _repositoryURL,
+                            repositoryType: _repositoryType,
                         });
                     }
                     

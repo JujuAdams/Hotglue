@@ -4,7 +4,13 @@
 
 function HotglueGetChannelByURL(_url)
 {
-    static _channelArray = __HotglueSystem().__channelArray;
+    static _system = __HotglueSystem();
+    static _channelArray = _system.__channelArray;
+    
+    if (_url == HOTGLUE_TEMPORARY_CHANNEL_URL)
+    {
+        return _system.__temporaryChannel;
+    }
     
     var _i = 0;
     repeat(array_length(_channelArray))

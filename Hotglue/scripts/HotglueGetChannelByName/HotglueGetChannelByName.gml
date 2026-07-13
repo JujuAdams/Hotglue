@@ -7,7 +7,7 @@ function HotglueGetChannelByName(_name)
     static _system = __HotglueSystem();
     static _channelArray = _system.__channelArray;
     
-    if (_name == HOTGLUE_TEMPORARY_CHANNEL_URL)
+    if (_name == "Temporary")
     {
         return _system.__temporaryChannel;
     }

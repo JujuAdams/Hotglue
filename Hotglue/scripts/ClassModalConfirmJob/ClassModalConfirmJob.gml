@@ -106,10 +106,10 @@ function ClassModalConfirmJob(_job, _packageEditForce = false) constructor
             
             ImGuiTableNextRow();
             ImGuiTableNextColumn();
-            ImGuiText("Channel name");
+            ImGuiText("Repo type");
             ImGuiTableNextColumn();
-            var _channelName = __job.GetChannelName();
-            ImGuiText((_channelName == undefined)? "(no channel name)" : _channelName);
+            var _repositoryType = __job.GetRepositoryType();
+            ImGuiText((_repositoryType == undefined)? "(no repository type)" : _repositoryType);
             
             ImGuiEndDisabled();
             ImGuiEndDisabled();

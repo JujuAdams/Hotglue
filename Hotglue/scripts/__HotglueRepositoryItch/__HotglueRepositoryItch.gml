@@ -5,6 +5,7 @@
 
 function __HotglueRepositoryItch(_channel, _url) : __HotglueRepositoryCommon(_channel, _url) constructor
 {
+    static __type = HOTGLUE_REPOSITORY_ITCH;
     static __isRemote = true;
     
     if (string_char_at(_url, string_length(_url)) != "/")

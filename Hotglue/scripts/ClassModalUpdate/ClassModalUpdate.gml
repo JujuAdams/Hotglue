@@ -33,7 +33,7 @@ function ClassModalUpdate(_project, _packageName, _currentReleaseName) construct
             
             if ((not is_struct(_repository)) || (not _repository.GetReleasesCollected()))
             {
-                ImGuiText($"Checking for updates to \"{__packageName}\", please wait ...");
+                ImGuiText($"Checking for updates to \"{__packageName}\", please wait...");
             }
             else
             {

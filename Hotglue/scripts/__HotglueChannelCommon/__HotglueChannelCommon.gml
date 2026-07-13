@@ -40,22 +40,35 @@ function __HotglueChannelCommon(_name, _url, _protected) constructor
         var _i = 0;
         repeat(array_length(_repositoryArray))
         {
-            array_push(_array, _repositoryArray[_i].GetURL());
+            var _repository = _repositoryArray[_i];
+            array_push(_array, {
+                url:  _repository.GetURL(),
+                type: _repository.GetType(),
+            });
             ++_i;
         }
         
         return _array;
     }
     
-    static DeserializeURLArray = function(_urlArray)
+    static DeserializeURLArray = function(_inputArray)
     {
         var _repositoryArray = __repositoryArray;
         array_resize(_repositoryArray, 0);
         
         var _i = 0;
-        repeat(array_length(_urlArray))
+        repeat(array_length(_inputArray))
         {
-            AddRepository(_urlArray[_i]);
+            var _input = _inputArray[_i];
+            if (is_struct(_input))
+            {
+                AddRepository(_input.url, _input[$ "type"]);
+            }
+            else
+            {
+                AddRepository(_input);
+            }
+            
             ++_i;
         }
     }

@@ -5,6 +5,7 @@
 
 function __HotglueRepositoryGist(_channel, _url) : __HotglueRepositoryCommon(_channel, _url) constructor
 {
+    static __type = HOTGLUE_REPOSITORY_GIST;
     static __isRemote = true;
     
     //Trim off the last backslash

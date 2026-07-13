@@ -5,6 +5,7 @@
 
 function __HotglueRepositoryVerdaccio(_channel, _url) : __HotglueRepositoryCommon(_channel, _url) constructor
 {
+    static __type = HOTGLUE_REPOSITORY_VERDACCIO;
     static __isRemote = true;
     
     if (string_char_at(_url, string_length(_url)) == "/")

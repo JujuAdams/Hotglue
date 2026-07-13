@@ -5,6 +5,7 @@
 
 function __HotglueRepositoryCommon(_channel, _url) constructor
 {
+    static __type = HOTGLUE_REPOSITORY_LOCAL;
     static __isRemote = false;
     
     __channel = _channel;
@@ -30,6 +31,11 @@ function __HotglueRepositoryCommon(_channel, _url) constructor
     static GetURL = function()
     {
         return __url;
+    }
+    
+    static GetType = function()
+    {
+        return __type;
     }
     
     static GetName = function()

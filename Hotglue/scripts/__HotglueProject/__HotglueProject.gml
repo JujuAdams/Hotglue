@@ -473,14 +473,7 @@ function __HotglueProject(_releaseStruct, _projectPath, _readOnly, _sourceURL, _
             return;
         }
         
-        var _channelStruct = HotglueGetChannelByName(_imported.channelName);
-        if (_channelStruct == undefined)
-        {
-            __HotglueWarning($"Could not find channel with name \"{_imported.channelName}\" for package \"{_imported.name}\" in project \"{GetName()}\". Using temporary channel");
-            _channelStruct = HotglueGetChannelByName(HOTGLUE_CHANNEL_TEMPORARY);
-        }
-        
-        return HotglueEnsureRepositoryFromURL(_channelStruct, _imported.repositoryURL);
+        return HotglueEnsureRepositoryFromURL(HotglueGetChannelByURL(HOTGLUE_TEMPORARY_CHANNEL_URL), _imported.repositoryURL, _imported.repositoryType);
     }
     
     static ImportAsLibrary = function(_sourceProject, _subfolder = "")
