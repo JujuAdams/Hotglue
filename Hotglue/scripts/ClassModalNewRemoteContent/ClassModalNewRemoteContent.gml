@@ -25,6 +25,7 @@ function ClassModalNewRemoteContent() constructor
             ImGuiText("- GitHub repositories");
             ImGuiText("- GitHub gists");
             ImGuiText("- Free & public itch.io pages");
+            ImGuiText("- Verdaccio (npm) packages");
             
             ImGuiNewLine();
             
